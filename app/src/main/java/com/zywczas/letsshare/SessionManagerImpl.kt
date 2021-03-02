@@ -3,23 +3,29 @@ package com.zywczas.letsshare
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.Network
+import androidx.databinding.ObservableBoolean
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
+import javax.inject.Singleton
 
 class SessionManagerImpl @Inject constructor(
     @ApplicationContext private val context: Context
 ) : SessionManager {
 
     private var isConnected = false
+    private var isLoggedIn = false
 
-    private var isLoggedIn = true //todo pozniej zamienic na false i dac sprawdzenie w funkcji ponizej
+    private val firebaseAuth = Firebase.auth
 
     init {
         registerNetworkCallback()
     }
 
     private fun registerNetworkCallback() {
-        val cm =
+        val cm  =
             context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
         cm.registerDefaultNetworkCallback(object : ConnectivityManager.NetworkCallback() {
@@ -41,10 +47,12 @@ class SessionManagerImpl @Inject constructor(
         if (isLoggedIn) {
             true
         } else {
-            //todo to na razie sprawdza tylko fejsa, ale trzeba bedzie dodac sprawdzanie np z google albo maila
-//            val token = AccessToken.getCurrentAccessToken()
-//            isLoggedIn = token != null && token.isExpired.not()
+            isLoggedIn = firebaseAuth.currentUser != null
             isLoggedIn
         }
+
+    //todo dodac fejsa
+//            val token = AccessToken.getCurrentAccessToken()
+//            isLoggedIn = token != null && token.isExpired.not()
 
 }

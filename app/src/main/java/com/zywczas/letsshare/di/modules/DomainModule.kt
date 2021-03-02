@@ -13,10 +13,6 @@ import javax.inject.Singleton
 @InstallIn(ActivityRetainedComponent::class)
 abstract class DomainModule {
 
-    @Binds
-    @Singleton
-    abstract fun provideSessionManager(manager: SessionManagerImpl): SessionManager
-
 //    @Binds
 //    @ActivityRetainedScoped
 //    abstract fun bindLoginRepository(repo: LoginRepositoryImpl) : LoginRepository

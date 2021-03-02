@@ -6,7 +6,7 @@ import javax.inject.Inject
 
 class LoginViewModel @Inject constructor(
     private val sessionManager: SessionManager
-) : ViewModel() {
+): ViewModel() {
 
 
 }
