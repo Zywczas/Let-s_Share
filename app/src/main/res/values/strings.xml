@@ -1,5 +1,12 @@
 <resources>
-    <string name="app_name">Let\'s Share</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_name">Let\'sShare</string>
+
+    <!--    login and registration messages-->
+    <string name="email_and_password_not_blank">You need to provide email and password.</string>
+    <string name="password_needs_6letters">Your password must have at least 6 characters.</string>
+    <string name="user_registered">You have successfully registered.</string>
+    <string name="problem_registration">Registration failure. Try again.</string>
+
+    <!--    other messages-->
+    <string name="problem_connection">No internet connection.</string>
 </resources>

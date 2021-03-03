@@ -8,10 +8,10 @@ class SingleLiveData<T> : MutableLiveData<T>() {
 
     override fun observe(owner: LifecycleOwner, observer: Observer<in T>) {
         super.observe(owner) { genericItem ->
-//            genericItem?.let { //todo moze to nie potrzebne
+            genericItem?.let {
                 observer.onChanged(genericItem)
                 postValue(null)
-//            }
+            }
         }
     }
 

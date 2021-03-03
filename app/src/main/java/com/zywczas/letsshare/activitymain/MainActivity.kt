@@ -1,7 +1,7 @@
 package com.zywczas.letsshare.activitymain
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.zywczas.letsshare.R
 import dagger.hilt.android.AndroidEntryPoint
 
