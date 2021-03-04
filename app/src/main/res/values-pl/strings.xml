@@ -7,6 +7,7 @@
     <string name="password_needs_6letters">Hasło musi mieć co najmniej 6 znaków.</string>
     <string name="user_registered">Udało Ci się zarejestrować.</string>
     <string name="problem_registration">Błąd rejestracji. Spróbuj ponownie.</string>
+    <string name="email_already_exists">Ten email już istnieje w bazie. Użyj innego.</string>
 
     <!--    other messages-->
     <string name="problem_connection">Brak połączenie z internetem.</string>
