@@ -3,9 +3,9 @@
     <string name="app_name">PodzielmySię</string>
 
     <!--    login and registration messages-->
-    <string name="email_and_password_not_blank">Musisz wpisać email i hasło.</string>
+    <string name="name_email_password_not_blank">Musisz wpisać imię, email i hasło.</string>
     <string name="password_needs_6letters">Hasło musi mieć co najmniej 6 znaków.</string>
-    <string name="user_registered">Udało Ci się zarejestrować.</string>
+    <string name="user_registered">Witaj %1$s. Udało Ci się zarejestrować.</string>
     <string name="problem_registration">Błąd rejestracji. Spróbuj ponownie.</string>
     <string name="email_already_exists">Ten email już istnieje w bazie. Użyj innego.</string>
 

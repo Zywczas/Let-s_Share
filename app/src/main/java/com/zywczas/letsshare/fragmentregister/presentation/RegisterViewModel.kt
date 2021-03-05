@@ -2,13 +2,16 @@ package com.zywczas.letsshare.fragmentregister.presentation
 
 import androidx.annotation.StringRes
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.SessionManager
 import com.zywczas.letsshare.di.modules.DispatchersModule.DispatchersIO
 import com.zywczas.letsshare.fragmentregister.domain.RegisterRepository
 import com.zywczas.letsshare.utils.SingleLiveData
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -21,31 +24,33 @@ class RegisterViewModel @Inject constructor(
     private val _message = SingleLiveData<@StringRes Int>()
     val message: LiveData<Int> = _message
 
-    private var email =""
-    private var password = ""
-    private var onRegistrationSuccessAction: () -> Unit = {}
+    private val _isUserRegisteredAndUserName = MutableLiveData<Pair<Boolean, String>>()
+    val isUserRegisteredAndUserName: LiveData<Pair<Boolean, String>> = _isUserRegisteredAndUserName
 
-    //todo dodac powitanie przy rejestrowaniu sie, podawac imie od razu przy tworzeniu uzytkownika
-    @Suppress("CascadeIf")
-    suspend fun registerNewUser(email: String, password: String, onRegistrationSuccessAction: () -> Unit) {
+    private val _isProgressBarVisible = MutableLiveData<Boolean>()
+    val isProgressBarVisible: LiveData<Boolean> = _isProgressBarVisible
+
+    suspend fun registerUser(name: String, email: String, password: String) {
         withContext(dispatchersIO) {
-            this@RegisterViewModel.email = email
-            this@RegisterViewModel.password = password
-            this@RegisterViewModel.onRegistrationSuccessAction = onRegistrationSuccessAction
-            if (areCredentialsValid().not()) {
-                return@withContext
-            } else if (sessionManager.isNetworkAvailable().not()) {
-                _message.postValue(R.string.problem_connection)
-            } else {
-                checkIfEmailIsFreeToUseAndRegisterToFirebase()
+            _isProgressBarVisible.postValue(true)
+            when { //todo sprawdzic czy to dobrze jest zamiast if'ow
+                areCredentialsValid(name, email, password).not() -> {
+                    _isProgressBarVisible.postValue(false)
+                    return@withContext
+                }
+                sessionManager.isNetworkAvailable().not() -> {
+                    _message.postValue(R.string.problem_connection)
+                    _isProgressBarVisible.postValue(false)
+                }
+                else -> checkIfEmailIsFreeToUseAndRegisterToFirebase(name, email, password)
             }
         }
     }
 
     //todo trzeba tez sprawdzic czy email ma poprawna forme
-    private fun areCredentialsValid(): Boolean =
-        if (email.isBlank() || password.isBlank()) {
-            _message.postValue(R.string.email_and_password_not_blank)
+    private fun areCredentialsValid(name: String, email: String, password: String): Boolean =
+        if (name.isBlank() || email.isBlank() || password.isBlank()) {
+            _message.postValue(R.string.name_email_password_not_blank)
             false
         } else if (password.length < 6) {
             _message.postValue(R.string.password_needs_6letters)
@@ -54,20 +59,33 @@ class RegisterViewModel @Inject constructor(
             true
         }
 
-    private suspend fun checkIfEmailIsFreeToUseAndRegisterToFirebase(){
+    private suspend fun checkIfEmailIsFreeToUseAndRegisterToFirebase(name: String, email: String, password: String){
         registerRepository.isEmailFreeToUse(email){ isEmailFreeToUse ->
-            if (isEmailFreeToUse) {
-                registerToFirebase()
-            } else {
+            if (isEmailFreeToUse) { viewModelScope.launch(dispatchersIO) { registerToFirebase(name, email, password) } }
+            else {
                 _message.postValue(R.string.email_already_exists)
+                _isProgressBarVisible.postValue(false)
             }
         }
     }
 
-    private fun registerToFirebase(){
-        registerRepository.registerToFirebase(email, password) { isRegistered ->
-            if (isRegistered) { onRegistrationSuccessAction.invoke() }
-            else { _message.postValue(R.string.problem_registration) }
+    private suspend fun registerToFirebase(name: String, email: String, password: String){
+        registerRepository.registerToFirebase(name, email, password) { isRegistered ->
+            if (isRegistered) { viewModelScope.launch(dispatchersIO) { addUserToFirestore(name, email) } }
+            else {
+                _message.postValue(R.string.problem_registration)
+                _isProgressBarVisible.postValue(false)
+            }
+        }
+    }
+
+    private suspend fun addUserToFirestore(name: String, email: String){
+        registerRepository.addNewUserToFirestore(name, email){ isUserAdded ->
+            if (isUserAdded) { _isUserRegisteredAndUserName.postValue(true to name) }
+            else {
+                _message.postValue(R.string.problem_registration)
+                _isProgressBarVisible.postValue(false)
+            }
         }
     }
 

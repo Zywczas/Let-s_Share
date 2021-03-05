@@ -11,3 +11,7 @@ package com.zywczas.letsshare.utils
 //todo sprawdzic czy za pomoca fejsbuka mozna sie zalogowac jak nie ma sie polaczenia internetowego
 //todo dodac sprawdzenie czy jest google play i czy jest zalogowany
 //todo dodac animacje do przejsc miedzy fragmentami
+//todo dodac progress bar przy rejestracji i logowaniu
+//todo dodac podwojne wpisywanie hasla i weryfikacje czy sa takie same
+//todo dodac podwojne wpisywanie emaila i weryfikacje czy sa takie same
+//todo przy rejestracji dodac akcje na guziku niebieski z klawiatury

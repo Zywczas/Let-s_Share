@@ -3,6 +3,7 @@ package com.zywczas.letsshare.di.modules
 import android.content.Context
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.zywczas.letsshare.SessionManager
 import com.zywczas.letsshare.SessionManagerImpl
@@ -26,5 +27,9 @@ class AppModule {
     @Provides
     @Singleton
     fun provideFirebaseAuth(): FirebaseAuth = Firebase.auth
+
+    @Provides
+    @Singleton
+    fun provideFirebaseFirestore(): FirebaseFirestore = FirebaseFirestore.getInstance()
 
 }
