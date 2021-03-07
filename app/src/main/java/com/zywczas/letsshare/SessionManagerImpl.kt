@@ -43,10 +43,13 @@ class SessionManagerImpl @Inject constructor(
         if (isLoggedIn) {
             true
         } else {
-            isLoggedIn = firebaseAuth.currentUser != null
+            isLoggedIn = firebaseAuth.currentUser != null && firebaseAuth.currentUser!!.isEmailVerified
             logD("czy jest zalogowany?: $isLoggedIn ")
             isLoggedIn
         }
 
+    override suspend fun delay(millis: Long) {
+        delay(millis)
+    }
 
 }

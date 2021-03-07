@@ -32,7 +32,7 @@ class LoginFragment @Inject constructor(
 
     private fun setupOnClickListeners(){
         binding.register.setOnClickListener{
-            findNavController().navigate(LoginFragmentDirections.actionToRegisterFragment())
+            findNavController().navigate(LoginFragmentDirections.actionLoginToRegisterFragment())
         }
     }
 

@@ -1,6 +1,8 @@
 package com.zywczas.letsshare.model
 
+import android.os.Parcelable
 import com.google.firebase.firestore.ServerTimestamp
+import kotlinx.parcelize.Parcelize
 import java.util.*
 
 data class User (

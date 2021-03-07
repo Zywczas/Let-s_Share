@@ -13,7 +13,7 @@ fun <T : Any> LifecycleOwner.autoRelease() =
 class AutoReleasedProperty<T : Any>(lifecycleOwner: LifecycleOwner) :
     ReadWriteProperty<Any, T> {
 
-    private var internalValue: T? = null //todo moze tutaj nie dawac private value
+    private var internalValue: T? = null
     private var ownerDestroyed = false
 
     init {
