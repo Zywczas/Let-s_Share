@@ -13,7 +13,6 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.databinding.FragmentMainBinding
-import com.zywczas.letsshare.databinding.FragmentRegisterBinding
 import com.zywczas.letsshare.utils.autoRelease
 import javax.inject.Inject
 

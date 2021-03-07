@@ -4,11 +4,8 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.Network
 import com.google.firebase.auth.FirebaseAuth
-import com.zywczas.letsshare.utils.logD
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class SessionManagerImpl @Inject constructor(
@@ -43,13 +40,15 @@ class SessionManagerImpl @Inject constructor(
     override suspend fun isNetworkAvailable(): Boolean = isConnected
 
     override suspend fun isUserLoggedIn(): Boolean =
-        if (isLoggedIn) { true }
+        if (isLoggedIn) {
+            true
+        } //todo chwilowo to wylaczam zeby zawse sprawdzalo z neta, pozniej pobierac info z shared prefs i neta
         else {
-            isLoggedIn = firebaseAuth.currentUser != null && firebaseAuth.currentUser!!.isEmailVerified
-            logD("czy jest zalogowany?: $isLoggedIn ")
-            isLoggedIn
+//            isLoggedIn =
+                firebaseAuth.currentUser != null && firebaseAuth.currentUser!!.isEmailVerified
+//            isLoggedIn
         }
-
+//todo przeniesc logout tutaj i dodac shared prefs
     override suspend fun delayCoroutine(millis: Long) = delay(millis)
 
 }

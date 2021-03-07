@@ -9,6 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.zywczas.letsshare.databinding.FragmentLoginBinding
 import com.zywczas.letsshare.utils.autoRelease
+import com.zywczas.letsshare.utils.hideSoftKeyboard
 import com.zywczas.letsshare.utils.showToast
 import javax.inject.Inject
 
@@ -41,9 +42,14 @@ class LoginFragment @Inject constructor(
             findNavController().navigate(LoginFragmentDirections.actionLoginToRegisterFragment())
         }
         binding.login.setOnClickListener {
-            lifecycleScope.launchWhenResumed {
-                viewModel.login(binding.email.text.toString(), binding.password.text.toString())
-            }
+            hideSoftKeyboard()
+            login()
+        }
+    }
+
+    private fun login(){
+        lifecycleScope.launchWhenResumed {
+            viewModel.login(binding.email.text.toString(), binding.password.text.toString())
         }
     }
 

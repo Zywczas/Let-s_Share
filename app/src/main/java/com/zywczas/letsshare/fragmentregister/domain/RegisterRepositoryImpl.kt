@@ -13,6 +13,7 @@ class RegisterRepositoryImpl @Inject constructor(
     private val firestore: FirebaseFirestore
 ) : RegisterRepository {
 
+    //todo to mi rzuca exception jak zly format maila, trzeba to poprawic na succeess i failure pewnie
     override suspend fun isEmailFreeToUse(email: String, onIsEmailFreeToUseAction: (Boolean) -> Unit) {
         firebaseAuth.fetchSignInMethodsForEmail(email).addOnCompleteListener {
             val isEmailAlreadyTaken = it.result?.signInMethods?.size != null && it.result!!.signInMethods!!.size > 0
@@ -41,14 +42,18 @@ class RegisterRepositoryImpl @Inject constructor(
         }
     }
 
+//todo to powinno dziac sie od razy przy rejestracji do firebase
     override suspend fun addNewUserToFirestore(name: String, email: String, onSuccessAction: (Boolean) -> Unit){
-        val newUserRef = firestore.collection(COLLECTION_USERS).document()
-        newUserRef.set(User(newUserRef.id, name, email)).addOnSuccessListener {
-            onSuccessAction(true)
-        }.addOnFailureListener {
-            logD(it)
-            onSuccessAction(false)
-        }
+        val newUserRef = firestore.collection(COLLECTION_USERS).document(email)
+        val userId = firebaseAuth.currentUser?.uid
+        if (userId != null){
+            newUserRef.set(User(userId, name, email)).addOnSuccessListener {
+                onSuccessAction(true)
+            }.addOnFailureListener {
+                logD(it)
+                onSuccessAction(false)
+            }
+        } else { onSuccessAction(false) }
     }
 
     override suspend fun sendEmailVerification(onSuccessAction: (Boolean) -> Unit) {

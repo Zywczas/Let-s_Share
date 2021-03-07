@@ -1,5 +1,6 @@
 package com.zywczas.letsshare.utils
 
+//todo nie pojawia sie info o weryfikacji maila, trzeba dac alert dialog i to info
 //todo dac wylogowywanie na guziku
 //todo dac wylogowywanie zaraz po zalogowaniu, zeby potwierdzic maila najpierw
 //todo dac potwierdzenie maila
