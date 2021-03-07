@@ -1,4 +1,4 @@
-package com.zywczas.letsshare.fragmenthome.presentation
+package com.zywczas.letsshare.fragmentwelcome.presentation
 
 import androidx.lifecycle.*
 import com.zywczas.letsshare.SessionManager
@@ -8,7 +8,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class HomeViewModel @Inject constructor(
+class WelcomeViewModel @Inject constructor(
     @DispatchersIO private val dispatchersIO: CoroutineDispatcher,
     private val sessionManager: SessionManager,
     ): ViewModel(), LifecycleObserver {

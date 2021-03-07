@@ -1,4 +1,4 @@
-package com.zywczas.letsshare.fragmenthome.presentation
+package com.zywczas.letsshare.fragmentwelcome.presentation
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,19 +6,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.zywczas.letsshare.databinding.FragmentHomeBinding
+import com.zywczas.letsshare.databinding.FragmentWelcomeBinding
 import com.zywczas.letsshare.utils.autoRelease
 import javax.inject.Inject
 
-class HomeFragment @Inject constructor(private val viewModel: HomeViewModel) : Fragment() {
+class WelcomeFragment @Inject constructor(private val viewModel: WelcomeViewModel) : Fragment() {
 
-    private var binding: FragmentHomeBinding by autoRelease()
+    private var binding: FragmentWelcomeBinding by autoRelease()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentHomeBinding.inflate(inflater, container, false)
+        binding = FragmentWelcomeBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -30,10 +30,10 @@ class HomeFragment @Inject constructor(private val viewModel: HomeViewModel) : F
 
     private fun setupObservers(){
         viewModel.goToMainFragment.observe(viewLifecycleOwner){
-            if (it) { findNavController().navigate(HomeFragmentDirections.actionHomeToMainFragment()) }
+            if (it) { findNavController().navigate(WelcomeFragmentDirections.actionWelcomeToMainFragment()) }
         }
         viewModel.goToLoginFragment.observe(viewLifecycleOwner){
-            if (it) { findNavController().navigate(HomeFragmentDirections.actionHomeToLoginFragment()) }
+            if (it) { findNavController().navigate(WelcomeFragmentDirections.actionWelcomeToLoginFragment()) }
         }
     }
 

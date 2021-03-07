@@ -2,7 +2,7 @@ package com.zywczas.letsshare.di.modules
 
 import androidx.fragment.app.Fragment
 import com.zywczas.letsshare.di.qualifiers.FragmentKey
-import com.zywczas.letsshare.fragmenthome.presentation.HomeFragment
+import com.zywczas.letsshare.fragmentwelcome.presentation.WelcomeFragment
 import com.zywczas.letsshare.fragmentlogin.presentation.LoginFragment
 import com.zywczas.letsshare.fragmentmain.presentation.MainFragment
 import com.zywczas.letsshare.fragmentregister.presentation.RegisterFragment
@@ -18,8 +18,8 @@ abstract class FragmentFactoryModule {
 
     @Binds
     @IntoMap
-    @FragmentKey(HomeFragment::class)
-    abstract fun bindHomeFragment(fragment: HomeFragment) : Fragment
+    @FragmentKey(WelcomeFragment::class)
+    abstract fun bindWelcomeFragment(fragment: WelcomeFragment) : Fragment
 
     @Binds
     @IntoMap

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav_graph"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/welcomeFragment">
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.zywczas.letsshare.fragmentlogin.presentation.LoginFragment"
@@ -32,32 +32,31 @@
         android:label="fragment_register"
         tools:layout="@layout/fragment_register" />
     <fragment
-        android:id="@+id/homeFragment"
-        android:name="com.zywczas.letsshare.fragmenthome.presentation.HomeFragment"
-        android:label="fragment_home"
-        tools:layout="@layout/fragment_home" >
+        android:id="@+id/welcomeFragment"
+        android:name="com.zywczas.letsshare.fragmentwelcome.presentation.WelcomeFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_welcome">
         <action
-            android:id="@+id/actionHomeToLoginFragment"
+            android:id="@+id/actionWelcomeToLoginFragment"
             app:destination="@id/loginFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"
-            app:popUpTo="@id/homeFragment"
+            app:popUpTo="@id/welcomeFragment"
             app:popUpToInclusive="true" />
         <action
-            android:id="@+id/actionHomeToMainFragment"
+            android:id="@+id/actionWelcomeToMainFragment"
             app:destination="@id/mainFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"
-            app:popUpTo="@id/homeFragment"
+            app:popUpTo="@id/welcomeFragment"
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.zywczas.letsshare.fragmentmain.presentation.MainFragment"
-        android:label="fragment_main"
         tools:layout="@layout/fragment_main" />
 </navigation>
