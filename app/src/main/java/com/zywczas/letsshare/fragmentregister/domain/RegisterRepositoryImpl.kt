@@ -1,6 +1,5 @@
 package com.zywczas.letsshare.fragmentregister.domain
 
-import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.firestore.FirebaseFirestore

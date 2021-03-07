@@ -39,7 +39,7 @@ class RegisterViewModel @Inject constructor(
                     return@withContext
                 }
                 sessionManager.isNetworkAvailable().not() -> {
-                    _message.postValue(R.string.problem_connection)
+                    _message.postValue(R.string.connection_problem)
                     _isProgressBarVisible.postValue(false)
                 }
                 else -> checkIfEmailIsFreeToUseAndRegisterToFirebase(name, email, password)

@@ -9,7 +9,9 @@
     <string name="verification_email_sent">Powinieneś otrzymać maila z linkiem weryfikacyjnym. Prosimy o potwierdzenie adresu email.</string>
     <string name="problem_registration">Błąd rejestracji. Spróbuj ponownie.</string>
     <string name="email_already_exists">Ten email już istnieje w bazie. Użyj innego.</string>
+    <string name="verify_email">Potwierdz swój adres email zanim się zalogujesz.</string>
+    <string name="login_problem">Nie można się zalogować. Sprawdź mail i hasło i spróbuj ponownie.</string>
 
     <!--    other messages-->
-    <string name="problem_connection">Brak połączenie z internetem.</string>
+    <string name="connection_problem">Brak połączenie z internetem.</string>
 </resources>

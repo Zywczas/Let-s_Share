@@ -2,7 +2,7 @@ package com.zywczas.letsshare.fragmenthome.presentation
 
 import androidx.lifecycle.*
 import com.zywczas.letsshare.SessionManager
-import com.zywczas.letsshare.di.modules.DispatchersModule.*
+import com.zywczas.letsshare.di.modules.DispatchersModule.DispatchersIO
 import com.zywczas.letsshare.utils.SingleLiveData
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
@@ -22,7 +22,7 @@ class HomeViewModel @Inject constructor(
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     private fun onResume(){
         viewModelScope.launch(dispatchersIO) {
-            sessionManager.delay(1000L)
+            sessionManager.sleep(1000L)
             chooseFragmentToGoNext()
         }
     }

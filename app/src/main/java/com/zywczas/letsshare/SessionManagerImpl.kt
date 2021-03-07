@@ -6,6 +6,9 @@ import android.net.Network
 import com.google.firebase.auth.FirebaseAuth
 import com.zywczas.letsshare.utils.logD
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class SessionManagerImpl @Inject constructor(
@@ -48,8 +51,6 @@ class SessionManagerImpl @Inject constructor(
             isLoggedIn
         }
 
-    override suspend fun delay(millis: Long) {
-        delay(millis)
-    }
+    override suspend fun sleep(millis: Long) = delay(millis)
 
 }
