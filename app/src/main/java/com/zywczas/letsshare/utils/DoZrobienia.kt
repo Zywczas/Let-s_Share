@@ -15,3 +15,5 @@ package com.zywczas.letsshare.utils
 //todo dodac podwojne wpisywanie hasla i weryfikacje czy sa takie same
 //todo dodac podwojne wpisywanie emaila i weryfikacje czy sa takie same
 //todo przy rejestracji dodac akcje na guziku niebieski z klawiatury
+//todo w shared prefs albo roomie powinno byc zapisywanie czy dany uzytkownik jest zalogowany, bo jak nie ma internetu to tez powinien byc w stanie odczytac liste i dodawac koszty, a wtedy jak
+//juz bedzie internet to odwiezy dane

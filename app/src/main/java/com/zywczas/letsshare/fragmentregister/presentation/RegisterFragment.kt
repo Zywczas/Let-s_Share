@@ -18,8 +18,7 @@ class RegisterFragment @Inject constructor(
     private val viewModel : RegisterViewModel
 ) : Fragment(){
 
-    private lateinit var binding: FragmentRegisterBinding
-//    by autoRelease()
+    private var binding: FragmentRegisterBinding by autoRelease()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,21 +42,21 @@ class RegisterFragment @Inject constructor(
 //todo dodac hide/show password
     private fun setupObservers(){
         viewModel.message.observe(viewLifecycleOwner){ showToast(it) }
-        viewModel.isUserRegisteredAndUserName.observe(viewLifecycleOwner) { isRegisteredAndName ->
+        viewModel.isRegisteredAndUserName.observe(viewLifecycleOwner) { isRegisteredAndName ->
             if (isRegisteredAndName.first){
                 val message = getString(R.string.user_registered, isRegisteredAndName.second)
-                showToast(message)
+                showToast(message) //todo tu powinien byc alert dialog informujacy o wyslaniu maila i sprawdzic czy moze byc dialog i jednoczesnie zmienic fragment
                 goBackToLoginFragment()
             }
         }
     }
 
-    private fun goBackToLoginFragment() = requireActivity().onBackPressed() //todo sprawdzic czy klawiatura dobrze sie zamyka i czy wraca do loginu
+    private fun goBackToLoginFragment() = requireActivity().onBackPressed() //todo sprawdzic czy klawiatura dobrze sie zamyka na moim stary telefonie i czy wraca do loginu
 
     private fun setupOnClickListeners(){
         binding.register.setOnClickListener{
             hideSoftKeyboard()
-            registerNewUser()
+            registerUser()
         }
     }
 
@@ -68,7 +67,7 @@ class RegisterFragment @Inject constructor(
         }
     }
 
-    private fun registerNewUser(){
+    private fun registerUser(){
         lifecycleScope.launchWhenResumed {
             viewModel.registerUser(
                 binding.name.text.toString(),

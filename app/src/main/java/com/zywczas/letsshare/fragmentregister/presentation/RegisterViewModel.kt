@@ -24,8 +24,8 @@ class RegisterViewModel @Inject constructor(
     private val _message = SingleLiveData<@StringRes Int>()
     val message: LiveData<Int> = _message
 
-    private val _isUserRegisteredAndUserName = MutableLiveData<Pair<Boolean, String>>()
-    val isUserRegisteredAndUserName: LiveData<Pair<Boolean, String>> = _isUserRegisteredAndUserName
+    private val _isRegisteredAndUserName = MutableLiveData<Pair<Boolean, String>>()
+    val isRegisteredAndUserName: LiveData<Pair<Boolean, String>> = _isRegisteredAndUserName
 
     private val _isProgressBarVisible = MutableLiveData<Boolean>()
     val isProgressBarVisible: LiveData<Boolean> = _isProgressBarVisible
@@ -81,7 +81,23 @@ class RegisterViewModel @Inject constructor(
 
     private suspend fun addUserToFirestore(name: String, email: String){
         registerRepository.addNewUserToFirestore(name, email){ isUserAdded ->
-            if (isUserAdded) { _isUserRegisteredAndUserName.postValue(true to name) }
+            if (isUserAdded) { viewModelScope.launch(dispatchersIO) { sendVerificationEmailAndLogout(name) } }
+            else {
+                _message.postValue(R.string.problem_registration)
+                _isProgressBarVisible.postValue(false)
+            }
+        }
+    }
+
+    private suspend fun sendVerificationEmailAndLogout(name: String){
+        registerRepository.sendEmailVerification { isEmailSent ->
+            if (isEmailSent){
+                viewModelScope.launch(dispatchersIO){
+                    registerRepository.logoutFromFirebase()
+                    _isProgressBarVisible.postValue(false)
+                    _isRegisteredAndUserName.postValue(true to name)
+                }
+            }
             else {
                 _message.postValue(R.string.problem_registration)
                 _isProgressBarVisible.postValue(false)

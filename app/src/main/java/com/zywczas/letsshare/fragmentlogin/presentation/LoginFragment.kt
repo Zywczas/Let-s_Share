@@ -27,19 +27,13 @@ class LoginFragment @Inject constructor(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.isLoggedIn.text = "na razie nie zalogowany"
         setupOnClickListeners()
     }
 
     private fun setupOnClickListeners(){
         binding.register.setOnClickListener{
-            findNavController().navigate(LoginFragmentDirections.toRegisterFragment())
+            findNavController().navigate(LoginFragmentDirections.actionToRegisterFragment())
         }
     }
-
-    private fun registerNewUser(){
-
-    }
-
 
 }

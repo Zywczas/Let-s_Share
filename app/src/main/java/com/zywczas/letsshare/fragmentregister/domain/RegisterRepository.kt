@@ -8,4 +8,8 @@ interface RegisterRepository {
 
     suspend fun addNewUserToFirestore(name: String, email: String, onSuccessAction: (Boolean) -> Unit)
 
+    suspend fun sendEmailVerification(onSuccessAction: (Boolean) -> Unit)
+
+    suspend fun logoutFromFirebase()
+
 }

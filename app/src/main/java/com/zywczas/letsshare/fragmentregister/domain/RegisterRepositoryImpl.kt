@@ -1,6 +1,8 @@
 package com.zywczas.letsshare.fragmentregister.domain
 
+import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.firestore.FirebaseFirestore
 import com.zywczas.letsshare.model.User
 import com.zywczas.letsshare.utils.COLLECTION_USERS
@@ -25,14 +27,15 @@ class RegisterRepositoryImpl @Inject constructor(
         }
     }
 
-    //todo  sendVerificationEmailMOjaFun()
-    //todo ta metoda autoamtycznie loguje uzytkownika jesli success, wiec ponizej jest wylogowanie
-//                firebaseAuth.signOut()
-//                logD("wylogowano")
-
      override suspend fun registerToFirebase(name: String, email: String, password: String, onSuccessAction: (Boolean) -> Unit) {
         firebaseAuth.createUserWithEmailAndPassword(email, password).addOnSuccessListener {
-            onSuccessAction(true)
+            val profileUpdate = UserProfileChangeRequest.Builder().setDisplayName(name).build()
+            firebaseAuth.currentUser?.updateProfile(profileUpdate)?.addOnCompleteListener {
+                onSuccessAction(true)
+            }?.addOnFailureListener {
+                logD(it)
+                onSuccessAction(false)
+            }
         }.addOnFailureListener {
             logD(it)
             onSuccessAction(false)
@@ -48,5 +51,16 @@ class RegisterRepositoryImpl @Inject constructor(
             onSuccessAction(false)
         }
     }
+
+    override suspend fun sendEmailVerification(onSuccessAction: (Boolean) -> Unit) {
+        firebaseAuth.currentUser?.sendEmailVerification()?.addOnSuccessListener {
+            onSuccessAction(true)
+        }?.addOnFailureListener {
+            logD(it)
+            onSuccessAction(false)
+        }
+    }
+
+    override suspend fun logoutFromFirebase() = firebaseAuth.signOut()
 
 }

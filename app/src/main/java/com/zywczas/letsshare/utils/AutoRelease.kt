@@ -13,7 +13,7 @@ fun <T : Any> LifecycleOwner.autoRelease() =
 class AutoReleasedProperty<T : Any>(lifecycleOwner: LifecycleOwner) :
     ReadWriteProperty<Any, T> {
 
-    private var internalValue: T? = null
+    private var internalValue: T? = null //todo moze tutaj nie dawac private value
     private var ownerDestroyed = false
 
     init {
@@ -24,8 +24,7 @@ class AutoReleasedProperty<T : Any>(lifecycleOwner: LifecycleOwner) :
                 internalValue = null
             }
         })
-    }
-    //todo pozniej sprawdzic czy ta funkcja ma sens
+    } //todo przeanalizowac te funckje pozniej
     override fun getValue(thisRef: Any, property: KProperty<*>): T {
         return internalValue ?: run {
             @Suppress("ReplaceGuardClauseWithFunctionCall")
