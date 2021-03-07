@@ -6,6 +6,6 @@ interface SessionManager {
 
     suspend fun isUserLoggedIn() : Boolean
 
-    suspend fun sleep(millis: Long)
+    suspend fun delayCoroutine(millis: Long)
 
 }

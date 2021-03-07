@@ -23,7 +23,6 @@ class WelcomeFragment @Inject constructor(private val viewModel: WelcomeViewMode
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         lifecycle.addObserver(viewModel)
         setupObservers()
     }

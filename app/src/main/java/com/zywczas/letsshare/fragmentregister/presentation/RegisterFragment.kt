@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.databinding.FragmentRegisterBinding
 import com.zywczas.letsshare.utils.autoRelease
+import com.zywczas.letsshare.utils.hideSoftKeyboard
 import com.zywczas.letsshare.utils.showToast
 import javax.inject.Inject
 
@@ -34,7 +35,6 @@ class RegisterFragment @Inject constructor(
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         setupObservers()
         setupOnClickListeners()
     }
@@ -57,13 +57,6 @@ class RegisterFragment @Inject constructor(
         binding.register.setOnClickListener{
             hideSoftKeyboard()
             registerUser()
-        }
-    }
-
-    private fun hideSoftKeyboard() {
-        val inputManager = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        if (inputManager.isAcceptingText) {
-            inputManager.hideSoftInputFromWindow(requireActivity().currentFocus?.windowToken, 0)
         }
     }
 

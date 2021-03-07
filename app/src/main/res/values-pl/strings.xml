@@ -14,4 +14,8 @@
 
     <!--    other messages-->
     <string name="connection_problem">Brak połączenie z internetem.</string>
+
+    <!--    UI elements - main app-->
+    <string name="friends">Znajomi</string>
+    <string name="groups">Grupy</string>
 </resources>

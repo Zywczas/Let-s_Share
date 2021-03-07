@@ -1,4 +1,4 @@
-package com.zywczas.letsshare.activitymain
+package com.zywczas.letsshare.activitymain.presentation
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

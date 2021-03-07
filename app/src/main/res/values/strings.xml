@@ -13,4 +13,8 @@
 
     <!--    other messages-->
     <string name="connection_problem">No internet connection.</string>
+
+    <!--    UI elements - main app-->
+    <string name="friends">Friends</string>
+    <string name="groups">Groups</string>
 </resources>

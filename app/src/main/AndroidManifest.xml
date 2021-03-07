@@ -16,7 +16,7 @@
         android:theme="@style/Theme.LetsShare"
         android:usesCleartextTraffic="true" >
 
-        <activity android:name=".activitymain.MainActivity">
+        <activity android:name=".activitymain.presentation.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

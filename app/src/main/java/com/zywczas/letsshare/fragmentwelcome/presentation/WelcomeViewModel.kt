@@ -10,8 +10,8 @@ import javax.inject.Inject
 
 class WelcomeViewModel @Inject constructor(
     @DispatchersIO private val dispatchersIO: CoroutineDispatcher,
-    private val sessionManager: SessionManager,
-    ): ViewModel(), LifecycleObserver {
+    private val sessionManager: SessionManager
+): ViewModel(), LifecycleObserver {
 
     private val _goToLoginFragment = SingleLiveData<Boolean>()
     val goToLoginFragment: LiveData<Boolean> = _goToLoginFragment
@@ -22,7 +22,7 @@ class WelcomeViewModel @Inject constructor(
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     private fun onResume(){
         viewModelScope.launch(dispatchersIO) {
-            sessionManager.sleep(1000L)
+            sessionManager.delayCoroutine(1000L)
             chooseFragmentToGoNext()
         }
     }

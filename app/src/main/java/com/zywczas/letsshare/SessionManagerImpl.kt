@@ -43,14 +43,13 @@ class SessionManagerImpl @Inject constructor(
     override suspend fun isNetworkAvailable(): Boolean = isConnected
 
     override suspend fun isUserLoggedIn(): Boolean =
-        if (isLoggedIn) {
-            true
-        } else {
+        if (isLoggedIn) { true }
+        else {
             isLoggedIn = firebaseAuth.currentUser != null && firebaseAuth.currentUser!!.isEmailVerified
             logD("czy jest zalogowany?: $isLoggedIn ")
             isLoggedIn
         }
 
-    override suspend fun sleep(millis: Long) = delay(millis)
+    override suspend fun delayCoroutine(millis: Long) = delay(millis)
 
 }

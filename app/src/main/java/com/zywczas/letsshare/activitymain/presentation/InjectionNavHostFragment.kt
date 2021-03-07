@@ -1,4 +1,4 @@
-package com.zywczas.letsshare.activitymain
+package com.zywczas.letsshare.activitymain.presentation
 
 import android.content.Context
 import androidx.navigation.fragment.NavHostFragment
