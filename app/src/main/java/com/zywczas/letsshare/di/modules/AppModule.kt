@@ -7,6 +7,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.zywczas.letsshare.SessionManager
 import com.zywczas.letsshare.SessionManagerImpl
+import com.zywczas.letsshare.activitymain.domain.SharedPrefsWrapper
+import com.zywczas.letsshare.activitymain.domain.SharedPrefsWrapperImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -31,5 +33,8 @@ class AppModule {
     @Provides
     @Singleton
     fun provideFirebaseFirestore(): FirebaseFirestore = FirebaseFirestore.getInstance()
+
+    @Provides
+    fun provideSharedPrefsWrapper(@ApplicationContext context: Context): SharedPrefsWrapper = SharedPrefsWrapperImpl(context)
 
 }

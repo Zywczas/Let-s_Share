@@ -44,15 +44,17 @@ class RegisterRepositoryImpl @Inject constructor(
 
 //todo to powinno dziac sie od razy przy rejestracji do firebase
     override suspend fun addNewUserToFirestore(name: String, email: String, onSuccessAction: (Boolean) -> Unit){
-        val newUserRef = firestore.collection(COLLECTION_USERS).document(email)
         val userId = firebaseAuth.currentUser?.uid
         if (userId != null){
-            newUserRef.set(User(userId, name, email)).addOnSuccessListener {
-                onSuccessAction(true)
-            }.addOnFailureListener {
-                logD(it)
-                onSuccessAction(false)
-            }
+            firestore.collection(COLLECTION_USERS)
+                .document(email)
+                .set(User(userId, name, email))
+                .addOnSuccessListener {
+                    onSuccessAction(true)
+                }.addOnFailureListener {
+                    logD(it)
+                    onSuccessAction(false)
+                }
         } else { onSuccessAction(false) }
     }
 

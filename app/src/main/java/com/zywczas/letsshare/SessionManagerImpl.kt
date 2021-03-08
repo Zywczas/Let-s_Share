@@ -8,10 +8,9 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.delay
 import javax.inject.Inject
 
-class SessionManagerImpl @Inject constructor(
-    @ApplicationContext private val context: Context,
-    private val firebaseAuth: FirebaseAuth
-) : SessionManager {
+class SessionManagerImpl (
+    private val context: Context,
+    private val firebaseAuth: FirebaseAuth) : SessionManager {
 
     private var isConnected = false
     private var isLoggedIn = false

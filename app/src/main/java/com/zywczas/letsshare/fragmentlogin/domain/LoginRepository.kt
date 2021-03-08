@@ -1,7 +1,11 @@
 package com.zywczas.letsshare.fragmentlogin.domain
 
+import com.zywczas.letsshare.model.User
+
 interface LoginRepository {
 
-    suspend fun loginToFirebase(email: String, password: String, onSuccessAction: (Boolean, Int?) -> Unit)
+    suspend fun loginToFirebase(email: String, password: String, onSuccessAction: (User?, Int?) -> Unit)
+
+    suspend fun saveUserLocally(user: User)
 
 }

@@ -18,3 +18,4 @@ package com.zywczas.letsshare.utils
 //todo w shared prefs albo roomie powinno byc zapisywanie czy dany uzytkownik jest zalogowany, bo jak nie ma internetu to tez powinien byc w stanie odczytac liste i dodawac koszty, a wtedy jak
 //juz bedzie internet to odwiezy dane
 //todo poustawiac label dla wszystkich destination
+//todo potworzyc rules i indexy - jak opisane w zeszycie

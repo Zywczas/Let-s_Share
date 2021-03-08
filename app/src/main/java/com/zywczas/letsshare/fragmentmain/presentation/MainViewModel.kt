@@ -1,6 +1,5 @@
 package com.zywczas.letsshare.fragmentmain.presentation
 
-import androidx.lifecycle.ViewModel
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.SessionManager
 import com.zywczas.letsshare.activitymain.presentation.BaseViewModel
@@ -30,7 +29,9 @@ class MainViewModel @Inject constructor(
 
     suspend fun addFriendByEmail(email: String){
         withContext(dispatchersIO){
-            if (sessionManager.isNetworkAvailable()) { mainRepository. }
+            if (sessionManager.isNetworkAvailable()) {
+                mainRepository.addFriendByEmail(email){message -> postMessage(message)}
+            }
             else { postMessage(R.string.connection_problem) }
         }
     }
