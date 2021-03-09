@@ -3,6 +3,7 @@ package com.zywczas.letsshare.fragmentmain.domain
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObject
+import com.google.firebase.firestore.ktx.toObjects
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.activitymain.domain.SharedPrefsWrapper
 import com.zywczas.letsshare.model.Friend
@@ -10,6 +11,7 @@ import com.zywczas.letsshare.model.User
 import com.zywczas.letsshare.utils.COLLECTION_FRIENDS
 import com.zywczas.letsshare.utils.COLLECTION_USERS
 import com.zywczas.letsshare.utils.logD
+import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class MainRepositoryImpl @Inject constructor(
@@ -19,6 +21,19 @@ class MainRepositoryImpl @Inject constructor(
 ): MainRepository {
 //todo wrzucic w session manager
     override suspend fun logout() = firebaseAuth.signOut()
+
+    override suspend fun getFriends(): List<Friend>? =
+        try {
+            firestore.collection(COLLECTION_USERS)
+                .document(sharedPrefs.userEmail)
+                .collection(COLLECTION_FRIENDS)
+                .get()
+                .await()
+                .toObjects()
+        } catch (e: Exception){
+            logD(e)
+            null
+        }
 
     override suspend fun addFriendByEmail(email: String, onFinishAction: (Int) -> Unit) {
         firebaseAuth.fetchSignInMethodsForEmail(email).addOnCompleteListener { task ->

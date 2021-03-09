@@ -51,7 +51,7 @@ class MainFragment @Inject constructor(private val viewModel: MainViewModel) : F
     private fun addFriend(){
         binding.addFriendLayout.isVisible = true
         binding.addFriendByEmail.setOnClickListener {
-
+            lifecycleScope.launchWhenResumed { viewModel.addFriendByEmail(binding.friendEmail.text.toString()) }
         }
     }
 

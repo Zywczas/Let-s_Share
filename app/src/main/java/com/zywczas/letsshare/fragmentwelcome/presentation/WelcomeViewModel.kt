@@ -5,6 +5,7 @@ import com.zywczas.letsshare.SessionManager
 import com.zywczas.letsshare.di.modules.DispatchersModule.DispatchersIO
 import com.zywczas.letsshare.utils.SingleLiveData
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -22,7 +23,7 @@ class WelcomeViewModel @Inject constructor(
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     private fun onResume(){
         viewModelScope.launch(dispatchersIO) {
-            sessionManager.delayCoroutine(1000L)
+            sessionManager.delayCoroutine(1000L) //just to present Welcome Screen to user
             chooseFragmentToGoNext()
         }
     }

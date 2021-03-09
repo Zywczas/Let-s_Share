@@ -17,6 +17,7 @@
     <string name="user_with_email_not_in_database">Nie ma użytkownika z tym mailem. Sprawdź maila i spróbuj ponownie.</string>
     <string name="cant_add_friend">Nie można dodać znajomego. Spróbuj ponownie.</string>
     <string name="friend_added">Znajomy dodany.</string>
+    <string name="cant_get_friends">Nie udało się pobrać listy znajomych.</string>
 
     <!--    UI elements - main app-->
     <string name="friends">Znajomi</string>
