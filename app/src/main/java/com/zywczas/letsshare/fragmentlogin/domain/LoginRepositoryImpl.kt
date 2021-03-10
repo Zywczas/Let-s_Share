@@ -92,7 +92,10 @@ suspend fun getDataFromFireStore(childName : String)
     private fun getUser(email: String, onSuccessAction: (User?, Int?) -> Unit){
         firestore.collection(COLLECTION_USERS).document(email).get().addOnSuccessListener { userDocument ->
             val user = userDocument.toObject<User>()
-            user?.let { onSuccessAction(it, null) }
+            user?.let {
+                logD("zalogowany uzytkownik: $user")
+                onSuccessAction(it, null)
+            }
         }.addOnFailureListener {
             logD(it)
             onSuccessAction(null, R.string.login_problem)

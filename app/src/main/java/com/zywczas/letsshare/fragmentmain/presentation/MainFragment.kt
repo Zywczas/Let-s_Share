@@ -11,14 +11,19 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.databinding.FragmentMainBinding
+import com.zywczas.letsshare.fragmentmain.FriendsAdapter
 import com.zywczas.letsshare.utils.autoRelease
+import com.zywczas.letsshare.utils.showToast
 import javax.inject.Inject
 
 class MainFragment @Inject constructor(private val viewModel: MainViewModel) : Fragment() {
 
     private var binding: FragmentMainBinding by autoRelease()
+    private val adapter by lazy { FriendsAdapter() }
+    private val layoutManager by lazy { LinearLayoutManager(requireContext()) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,7 +34,9 @@ class MainFragment @Inject constructor(private val viewModel: MainViewModel) : F
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        lifecycle.addObserver(viewModel)
         setupToolbar()
+        setupRecycler()
         setupObservers()
         setupOnClickListeners()
     }
@@ -39,8 +46,15 @@ class MainFragment @Inject constructor(private val viewModel: MainViewModel) : F
         binding.toolbar.setupWithNavController(findNavController(), appBarConfig)
     }
 
-    private fun setupObservers(){
+    private fun setupRecycler(){
+        binding.recycler.adapter = adapter
+        binding.recycler.layoutManager = layoutManager
+        binding.recycler.setHasFixedSize(true)
+    }
 
+    private fun setupObservers(){
+        viewModel.message.observe(viewLifecycleOwner){ showToast(it) }
+        viewModel.friends.observe(viewLifecycleOwner){ adapter.submitList(it.toMutableList()) }
     }
 
     private fun setupOnClickListeners(){

@@ -27,11 +27,9 @@ class AppModule {
         firebaseAuth: FirebaseAuth): SessionManager = SessionManagerImpl(context, firebaseAuth)
 
     @Provides
-    @Singleton
     fun provideFirebaseAuth(): FirebaseAuth = Firebase.auth
 
     @Provides
-    @Singleton
     fun provideFirebaseFirestore(): FirebaseFirestore = FirebaseFirestore.getInstance()
 
     @Provides

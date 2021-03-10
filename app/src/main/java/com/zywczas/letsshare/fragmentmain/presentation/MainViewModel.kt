@@ -7,6 +7,7 @@ import com.zywczas.letsshare.activitymain.presentation.BaseViewModel
 import com.zywczas.letsshare.di.modules.DispatchersModule.DispatchersIO
 import com.zywczas.letsshare.fragmentmain.domain.MainRepository
 import com.zywczas.letsshare.model.Friend
+import com.zywczas.letsshare.utils.logD
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -29,7 +30,7 @@ class MainViewModel @Inject constructor(
     private suspend fun getFriends() {
         val friends = mainRepository.getFriends()
         if (friends != null ) { _friends.postValue(friends!!) }
-        else { postMessage(R.string.cant_get_friends) }
+        else { postMessage(R.string.cant_get_friends) } //todo jak dodaje nowego znajomego to ta wiadomosc za szybko sie pojawia i pokrywa sie z ta ze znajomy dodany
     }
 
     suspend fun logout() {
