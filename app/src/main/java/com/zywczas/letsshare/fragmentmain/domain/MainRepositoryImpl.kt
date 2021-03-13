@@ -7,8 +7,8 @@ import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.firestore.ktx.toObjects
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.activitymain.domain.SharedPrefsWrapper
-import com.zywczas.letsshare.model.Friend
-import com.zywczas.letsshare.model.User
+import com.zywczas.letsshare.model.expenses.Friend
+import com.zywczas.letsshare.model.expenses.User
 import com.zywczas.letsshare.utils.COLLECTION_FRIENDS
 import com.zywczas.letsshare.utils.COLLECTION_USERS
 import com.zywczas.letsshare.utils.FIELD_TIME_CREATED

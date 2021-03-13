@@ -1,6 +1,6 @@
 package com.zywczas.letsshare.activitymain.domain
 
-import com.zywczas.letsshare.model.User
+import com.zywczas.letsshare.model.expenses.User
 
 interface SharedPrefsWrapper {
 

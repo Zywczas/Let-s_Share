@@ -1,6 +1,6 @@
 package com.zywczas.letsshare.fragmentlogin.domain
 
-import com.zywczas.letsshare.model.User
+import com.zywczas.letsshare.model.expenses.User
 
 interface LoginRepository {
 

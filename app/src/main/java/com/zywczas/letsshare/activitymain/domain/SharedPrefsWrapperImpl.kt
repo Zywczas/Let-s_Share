@@ -2,12 +2,12 @@ package com.zywczas.letsshare.activitymain.domain
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.zywczas.letsshare.model.User
+import com.zywczas.letsshare.model.expenses.User
 
 class SharedPrefsWrapperImpl (context: Context): SharedPrefsWrapper {
 
-    private val prefFileName = "com.zywczas.letsshare.prefs"
-    private val prefs: SharedPreferences = context.getSharedPreferences(prefFileName, 0)
+    private val prefsFileName = "com.zywczas.letsshare.prefs"
+    private val prefs: SharedPreferences = context.getSharedPreferences(prefsFileName, 0)
 
     private val isLoggedInKey = "isLoggedInKey"
     private val userIdKey = "userIdKey"

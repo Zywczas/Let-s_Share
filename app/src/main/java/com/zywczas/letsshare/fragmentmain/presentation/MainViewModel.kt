@@ -6,8 +6,7 @@ import com.zywczas.letsshare.SessionManager
 import com.zywczas.letsshare.activitymain.presentation.BaseViewModel
 import com.zywczas.letsshare.di.modules.DispatchersModule.DispatchersIO
 import com.zywczas.letsshare.fragmentmain.domain.MainRepository
-import com.zywczas.letsshare.model.Friend
-import com.zywczas.letsshare.utils.logD
+import com.zywczas.letsshare.model.expenses.Friend
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

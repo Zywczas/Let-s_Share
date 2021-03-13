@@ -9,12 +9,11 @@ import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.activitymain.domain.SharedPrefsWrapper
-import com.zywczas.letsshare.model.User
+import com.zywczas.letsshare.model.expenses.User
 import com.zywczas.letsshare.utils.COLLECTION_USERS
 import com.zywczas.letsshare.utils.logD
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
-import kotlin.math.log
 
 class LoginRepositoryImpl @Inject constructor(
     private val firebaseAuth: FirebaseAuth,

@@ -10,18 +10,22 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityRetainedComponent
+import dagger.hilt.android.scopes.ActivityRetainedScoped
 
 @Module
 @InstallIn(ActivityRetainedComponent::class)
 abstract class DomainModule {
 
     @Binds
+    @ActivityRetainedScoped
     abstract fun bindLoginRepository(repo: LoginRepositoryImpl): LoginRepository
 
     @Binds
+    @ActivityRetainedScoped
     abstract fun bindRegisterRepository(repo: RegisterRepositoryImpl): RegisterRepository
 
     @Binds
+    @ActivityRetainedScoped
     abstract fun bindMainRepository(repo: MainRepositoryImpl): MainRepository
 
 }
