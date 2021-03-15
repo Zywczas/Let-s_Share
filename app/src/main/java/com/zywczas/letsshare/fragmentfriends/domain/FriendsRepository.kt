@@ -1,8 +1,8 @@
-package com.zywczas.letsshare.fragmentmain.domain
+package com.zywczas.letsshare.fragmentfriends.domain
 
-import com.zywczas.letsshare.model.expenses.Friend
+import com.zywczas.letsshare.model.Friend
 
-interface MainRepository {
+interface FriendsRepository {
 
     suspend fun logout()
     

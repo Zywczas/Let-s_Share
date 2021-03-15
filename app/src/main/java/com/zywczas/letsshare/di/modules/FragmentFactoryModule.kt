@@ -3,7 +3,7 @@ package com.zywczas.letsshare.di.modules
 import androidx.fragment.app.Fragment
 import com.zywczas.letsshare.di.qualifiers.FragmentKey
 import com.zywczas.letsshare.fragmentlogin.presentation.LoginFragment
-import com.zywczas.letsshare.fragmentmain.presentation.MainFragment
+import com.zywczas.letsshare.fragmentfriends.presentation.FriendsFragment
 import com.zywczas.letsshare.fragmentregister.presentation.RegisterFragment
 import com.zywczas.letsshare.fragmentwelcome.presentation.WelcomeFragment
 import dagger.Binds
@@ -33,7 +33,7 @@ abstract class FragmentFactoryModule {
 
     @Binds
     @IntoMap
-    @FragmentKey(MainFragment::class)
-    abstract fun bindMainFragment(fragment: MainFragment) : Fragment
+    @FragmentKey(FriendsFragment::class)
+    abstract fun bindMainFragment(fragment: FriendsFragment) : Fragment
 
 }

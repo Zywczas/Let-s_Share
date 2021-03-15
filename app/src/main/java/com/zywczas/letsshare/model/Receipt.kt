@@ -1,4 +1,4 @@
-package com.zywczas.letsshare.model.expenses
+package com.zywczas.letsshare.model
 
 data class Receipt (
     val id: String = "",

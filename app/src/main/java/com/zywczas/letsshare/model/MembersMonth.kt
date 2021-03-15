@@ -1,4 +1,4 @@
-package com.zywczas.letsshare.model.expenses
+package com.zywczas.letsshare.model
 
 data class MembersMonth (
     var group_share: Double = 0.0,

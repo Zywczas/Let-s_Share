@@ -3,7 +3,7 @@ package com.zywczas.letsshare.fragmentregister.domain
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.firestore.FirebaseFirestore
-import com.zywczas.letsshare.model.expenses.User
+import com.zywczas.letsshare.model.User
 import com.zywczas.letsshare.utils.COLLECTION_USERS
 import com.zywczas.letsshare.utils.logD
 import javax.inject.Inject

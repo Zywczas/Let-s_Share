@@ -1,4 +1,4 @@
-package com.zywczas.letsshare.fragmentmain.utils
+package com.zywczas.letsshare.fragmentfriends.utils
 
 enum class MainTabsCategory {
     FRIENDS, GROUPS

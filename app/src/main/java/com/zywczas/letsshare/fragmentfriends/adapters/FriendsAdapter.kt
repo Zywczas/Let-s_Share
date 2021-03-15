@@ -1,4 +1,4 @@
-package com.zywczas.letsshare.fragmentmain.adapters
+package com.zywczas.letsshare.fragmentfriends.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.zywczas.letsshare.R
-import com.zywczas.letsshare.model.expenses.Friend
+import com.zywczas.letsshare.model.Friend
 
 class FriendsAdapter : ListAdapter<Friend, FriendsAdapter.ViewHolder>(object : DiffUtil.ItemCallback<Friend>() {
 

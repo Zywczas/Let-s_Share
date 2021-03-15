@@ -2,9 +2,11 @@ package com.zywczas.letsshare.activitymain.domain
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.zywczas.letsshare.model.expenses.User
+import com.zywczas.letsshare.model.User
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
 
-class SharedPrefsWrapperImpl (context: Context): SharedPrefsWrapper {
+class SharedPrefsWrapperImpl @Inject constructor (@ApplicationContext context: Context): SharedPrefsWrapper {
 
     private val prefsFileName = "com.zywczas.letsshare.prefs"
     private val prefs: SharedPreferences = context.getSharedPreferences(prefsFileName, 0)

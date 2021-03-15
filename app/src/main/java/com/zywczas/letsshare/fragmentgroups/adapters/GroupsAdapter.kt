@@ -1,4 +1,4 @@
-package com.zywczas.letsshare.fragmentmain.adapters
+package com.zywczas.letsshare.fragmentgroups.adapters
 
 //
 //class GroupsAdapter (

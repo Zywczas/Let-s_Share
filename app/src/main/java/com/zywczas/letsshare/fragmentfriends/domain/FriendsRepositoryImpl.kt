@@ -1,4 +1,4 @@
-package com.zywczas.letsshare.fragmentmain.domain
+package com.zywczas.letsshare.fragmentfriends.domain
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -7,8 +7,8 @@ import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.firestore.ktx.toObjects
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.activitymain.domain.SharedPrefsWrapper
-import com.zywczas.letsshare.model.expenses.Friend
-import com.zywczas.letsshare.model.expenses.User
+import com.zywczas.letsshare.model.Friend
+import com.zywczas.letsshare.model.User
 import com.zywczas.letsshare.utils.COLLECTION_FRIENDS
 import com.zywczas.letsshare.utils.COLLECTION_USERS
 import com.zywczas.letsshare.utils.FIELD_TIME_CREATED
@@ -16,11 +16,11 @@ import com.zywczas.letsshare.utils.logD
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
-class MainRepositoryImpl @Inject constructor(
+class FriendsRepositoryImpl @Inject constructor(
     private val firebaseAuth: FirebaseAuth,
     private val firestore: FirebaseFirestore,
     private val sharedPrefs: SharedPrefsWrapper
-) : MainRepository {
+) : FriendsRepository {
     //todo wrzucic w session manager
     override suspend fun logout() = firebaseAuth.signOut()
 

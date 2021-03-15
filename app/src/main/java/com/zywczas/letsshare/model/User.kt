@@ -1,4 +1,4 @@
-package com.zywczas.letsshare.model.expenses
+package com.zywczas.letsshare.model
 
 import com.google.firebase.firestore.ServerTimestamp
 import java.util.*

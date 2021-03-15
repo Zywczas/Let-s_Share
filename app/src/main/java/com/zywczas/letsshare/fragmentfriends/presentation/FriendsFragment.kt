@@ -1,5 +1,5 @@
 
-package com.zywczas.letsshare.fragmentmain.presentation
+package com.zywczas.letsshare.fragmentfriends.presentation
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,13 +15,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.tabs.TabLayout
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.databinding.FragmentMainBinding
-import com.zywczas.letsshare.fragmentmain.adapters.FriendsAdapter
-import com.zywczas.letsshare.fragmentmain.utils.MainTabsCategory
+import com.zywczas.letsshare.fragmentfriends.adapters.FriendsAdapter
+import com.zywczas.letsshare.fragmentfriends.utils.MainTabsCategory
 import com.zywczas.letsshare.utils.autoRelease
 import com.zywczas.letsshare.utils.showToast
 import javax.inject.Inject
 //todo prawdopodobnie zamienic main fragment na friends fragment
-class MainFragment @Inject constructor(private val viewModel: MainViewModel) : Fragment() {
+class FriendsFragment @Inject constructor(private val viewModel: FriendsViewModel) : Fragment() {
 
     private var binding: FragmentMainBinding by autoRelease()
     private val adapter by lazy { FriendsAdapter() }
@@ -46,7 +46,7 @@ class MainFragment @Inject constructor(private val viewModel: MainViewModel) : F
     }
 
     private fun setupToolbar(){
-        val appBarConfig = AppBarConfiguration(setOf(R.id.mainFragment))
+        val appBarConfig = AppBarConfiguration(setOf(R.id.friendsFragment))
         binding.toolbar.setupWithNavController(findNavController(), appBarConfig)
     }
 
