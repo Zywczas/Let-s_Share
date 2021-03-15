@@ -12,28 +12,23 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.tabs.TabLayout
 import com.zywczas.letsshare.R
-import com.zywczas.letsshare.databinding.FragmentMainBinding
-import com.zywczas.letsshare.fragmentfriends.adapters.FriendsAdapter
-import com.zywczas.letsshare.fragmentfriends.utils.MainTabsCategory
+import com.zywczas.letsshare.databinding.FragmentFriendsBinding
+import com.zywczas.letsshare.fragmentfriends.adapter.FriendsAdapter
 import com.zywczas.letsshare.utils.autoRelease
 import com.zywczas.letsshare.utils.showToast
 import javax.inject.Inject
-//todo prawdopodobnie zamienic main fragment na friends fragment
+
 class FriendsFragment @Inject constructor(private val viewModel: FriendsViewModel) : Fragment() {
 
-    private var binding: FragmentMainBinding by autoRelease()
+    private var binding: FragmentFriendsBinding by autoRelease()
     private val adapter by lazy { FriendsAdapter() }
-    private val layoutManager by lazy { LinearLayoutManager(requireContext()) }
-
-    private var displayedCategory: MainTabsCategory = MainTabsCategory.FRIENDS //todo to pewnie pozniej usunac zeby
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentMainBinding.inflate(inflater, container, false)
+        binding = FragmentFriendsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -43,6 +38,7 @@ class FriendsFragment @Inject constructor(private val viewModel: FriendsViewMode
         setupRecycler()
         setupObservers()
         setupOnClickListeners()
+        setupBottomNavBar()
     }
 
     private fun setupToolbar(){
@@ -52,7 +48,7 @@ class FriendsFragment @Inject constructor(private val viewModel: FriendsViewMode
 
     private fun setupRecycler(){
         binding.recycler.adapter = adapter
-        binding.recycler.layoutManager = layoutManager
+        binding.recycler.layoutManager = LinearLayoutManager(requireContext())
         binding.recycler.setHasFixedSize(true)
     }
 
@@ -63,56 +59,21 @@ class FriendsFragment @Inject constructor(private val viewModel: FriendsViewMode
 
     private fun setupOnClickListeners(){
         binding.logout.setOnClickListener { lifecycleScope.launchWhenResumed { viewModel.logout() } }
-        binding.addFriendBtn.setOnClickListener { addFriend() }
-        setupTabs()
+        binding.addFriendBtn.setOnClickListener { addFriendOnClickListener() }
     }
 
-    private fun addFriend(){
+    private fun addFriendOnClickListener(){
         binding.addFriendLayout.isVisible = true
         binding.addFriendByEmail.setOnClickListener {
             lifecycleScope.launchWhenResumed { viewModel.addFriendByEmail(binding.friendEmail.text.toString()) }
         }
     }
 
-    private fun setupTabs(){
-        setupTabsTags{
-            setupTabsOnClickListeners()
+    private fun setupBottomNavBar(){
+        binding.bottomNavBar.setupWithNavController(findNavController())
+        binding.bottomNavBar.setOnNavigationItemReselectedListener {
+            //do nothing, don't refresh the fragment
         }
     }
 
-    private fun setupTabsTags(onFinishAction: () -> Unit){
-        binding.tabs.getTabAt(0)?.tag = MainTabsCategory.FRIENDS
-        binding.tabs.getTabAt(1)?.tag = MainTabsCategory.GROUPS
-        onFinishAction.invoke()
-    }
-//todo chwilowe rozwiazanie
-    private fun setupTabsOnClickListeners(){
-        binding.tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                tab?.let {
-                    val category = it.tag as MainTabsCategory
-                    setNewDisplayedItems(category)
-                }
-            }
-            override fun onTabUnselected(tab: TabLayout.Tab?) {}
-            override fun onTabReselected(tab: TabLayout.Tab?) {}
-        })
-    }
-
-    private fun setNewDisplayedItems(category: MainTabsCategory){
-        when(category){
-            MainTabsCategory.FRIENDS -> setupFriendsRecycler()
-            MainTabsCategory.GROUPS -> setupGroupsRecycler()
-        }
-    }
-
-    private fun setupFriendsRecycler() = setupRecycler()
-
-    //todo chwilowo:
-
-    private val groupsAdapter by lazy {  }
-
-    private fun setupGroupsRecycler(){
-
-    }
 }

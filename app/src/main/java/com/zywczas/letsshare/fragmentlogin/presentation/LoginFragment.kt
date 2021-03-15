@@ -56,7 +56,7 @@ class LoginFragment @Inject constructor(
     private fun setupObservers(){
         viewModel.message.observe(viewLifecycleOwner){ showToast(it) }
         viewModel.isLoggedIn.observe(viewLifecycleOwner){
-            if (it){ findNavController().navigate(LoginFragmentDirections.actionLoginToMainFragment()) }
+            if (it){ findNavController().navigate(LoginFragmentDirections.actionLoginToFriendsFragment()) }
         }
     }
 

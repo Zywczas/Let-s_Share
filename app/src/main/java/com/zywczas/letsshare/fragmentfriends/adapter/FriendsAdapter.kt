@@ -1,4 +1,4 @@
-package com.zywczas.letsshare.fragmentfriends.adapters
+package com.zywczas.letsshare.fragmentfriends.adapter
 
 import android.view.LayoutInflater
 import android.view.View

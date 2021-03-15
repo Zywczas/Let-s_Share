@@ -29,6 +29,9 @@ package com.zywczas.letsshare.utils
 //todo czesto dobre jest nasluchiwanie danych z bazy, jak np sprawdzamy sume czegos, bo w miedzy czasie np. dane moga sie zmienic
 //todo przy dodawaniu znajomego dawac potwierdzenie ze chce sie byc znajomym, i wtedy dopiero moze pokazac obu, nie wiem czy to dobrze ze mowi jak kogos nie ma
 //todo jak sie doda znajomego to znajomy tez od razu powinien nas widziec i miec w nas w swoich znajomych
+//todo dac side nav rail dla tabletow
+//todo sprawdzi czy jak bottom nav bar jest klikany na tym samym guziki to czy fragment sie od nowa nie laduje czasem
+//todo nie ma ladnego przejscia miedzy fragmentami jak klikam na nav bar, dac przejscie akcjami
 
 private fun test(){
 //    firestore.runTransaction {  } //todo dobra funkcja do updatowania, jak jakis dokument w miedzy czasie sie zmieni to transakcja leci od nowa

@@ -28,8 +28,8 @@ class WelcomeFragment @Inject constructor(private val viewModel: WelcomeViewMode
     }
 
     private fun setupObservers(){
-        viewModel.goToMainFragment.observe(viewLifecycleOwner){
-            if (it) { findNavController().navigate(WelcomeFragmentDirections.actionWelcomeToMainFragment()) }
+        viewModel.goToFriendsFragment.observe(viewLifecycleOwner){
+            if (it) { findNavController().navigate(WelcomeFragmentDirections.actionWelcomeToFriendsFragment()) }
         }
         viewModel.goToLoginFragment.observe(viewLifecycleOwner){
             if (it) { findNavController().navigate(WelcomeFragmentDirections.actionWelcomeToLoginFragment()) }
