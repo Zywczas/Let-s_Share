@@ -9,10 +9,7 @@ import com.zywczas.letsshare.R
 import com.zywczas.letsshare.activitymain.domain.SharedPrefsWrapper
 import com.zywczas.letsshare.model.Friend
 import com.zywczas.letsshare.model.User
-import com.zywczas.letsshare.utils.COLLECTION_FRIENDS
-import com.zywczas.letsshare.utils.COLLECTION_USERS
-import com.zywczas.letsshare.utils.FIELD_TIME_CREATED
-import com.zywczas.letsshare.utils.logD
+import com.zywczas.letsshare.utils.*
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
@@ -29,7 +26,7 @@ class FriendsRepositoryImpl @Inject constructor(
             val friends = firestore.collection(COLLECTION_USERS)
                 .document(sharedPrefs.userEmail)
                 .collection(COLLECTION_FRIENDS)
-                .orderBy(FIELD_TIME_CREATED, Query.Direction.DESCENDING)
+                .orderBy(FIELD_NAME, Query.Direction.ASCENDING)
                 .get()
                 .await()
                 .toObjects<Friend>()
@@ -69,6 +66,7 @@ class FriendsRepositoryImpl @Inject constructor(
             .addOnSuccessListener {
                 onFinishAction(R.string.friend_added)
             }.addOnFailureListener {
+                logD(it)
                 onFinishAction(R.string.cant_add_friend)
             }
     }

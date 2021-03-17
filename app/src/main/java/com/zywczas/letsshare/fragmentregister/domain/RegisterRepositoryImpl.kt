@@ -5,7 +5,9 @@ import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.firestore.FirebaseFirestore
 import com.zywczas.letsshare.model.User
 import com.zywczas.letsshare.utils.COLLECTION_USERS
+import com.zywczas.letsshare.utils.getCurrentDateString
 import com.zywczas.letsshare.utils.logD
+import java.util.*
 import javax.inject.Inject
 
 class RegisterRepositoryImpl @Inject constructor(
@@ -48,7 +50,7 @@ class RegisterRepositoryImpl @Inject constructor(
         if (userId != null){
             firestore.collection(COLLECTION_USERS)
                 .document(email)
-                .set(User(userId, name, email))
+                .set(User(userId, name, email, Date().getCurrentDateString()))
                 .addOnSuccessListener {
                     onSuccessAction(true)
                 }.addOnFailureListener {

@@ -6,6 +6,8 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
+import java.text.SimpleDateFormat
+import java.util.*
 
 fun Any.logD(msg : String) = Log.d("LetsShareTag in ${this.javaClass.simpleName}", msg)
 fun Any.logD(e : Exception) = Log.d("LetsShareTag  in ${this.javaClass.simpleName}", "${e.message}")
@@ -21,3 +23,7 @@ fun Fragment.hideSoftKeyboard(){
         inputManager.hideSoftInputFromWindow(requireActivity().currentFocus?.windowToken, 0)
     }
 }
+
+fun Date.getMonthId(): String = SimpleDateFormat("MM.yyyy", Locale.GERMANY).format(this)
+
+fun Date.getCurrentDateString(): String = SimpleDateFormat("d.MM.yyyy", Locale.GERMANY).format(this)

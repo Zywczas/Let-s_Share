@@ -33,7 +33,7 @@ class SharedPrefsWrapperImpl @Inject constructor (@ApplicationContext context: C
         set(value) = prefs.edit().putString(userEmailKey, value).apply()
 
     override suspend fun saveUserLocally(user: User) {
-        userId = user.id
+        userId = user.auth_id
         userName = user.name
         userEmail = user.email
     }
