@@ -5,7 +5,7 @@ import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.firestore.FirebaseFirestore
 import com.zywczas.letsshare.model.User
 import com.zywczas.letsshare.utils.COLLECTION_USERS
-import com.zywczas.letsshare.utils.getCurrentDateString
+import com.zywczas.letsshare.utils.today
 import com.zywczas.letsshare.utils.logD
 import java.util.*
 import javax.inject.Inject
@@ -44,13 +44,13 @@ class RegisterRepositoryImpl @Inject constructor(
         }
     }
 
-//todo to powinno dziac sie od razy przy rejestracji do firebase
+//todo to powinno dziac sie od razy przy rejestracji do firebase, a nie dopiero inicjowane w view modelu
     override suspend fun addNewUserToFirestore(name: String, email: String, onSuccessAction: (Boolean) -> Unit){
         val userId = firebaseAuth.currentUser?.uid
         if (userId != null){
             firestore.collection(COLLECTION_USERS)
                 .document(email)
-                .set(User(userId, name, email, Date().getCurrentDateString()))
+                .set(User(userId, name, email, Date().today()))
                 .addOnSuccessListener {
                     onSuccessAction(true)
                 }.addOnFailureListener {

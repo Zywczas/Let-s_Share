@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 class LoginViewModel @Inject constructor(
     @DispatchersIO private val dispatchersIO: CoroutineDispatcher,
-    private val loginRepository: LoginRepository,
+    private val repository: LoginRepository,
     private val sessionManager: SessionManager
 ): BaseViewModel() {
 
@@ -33,7 +33,7 @@ class LoginViewModel @Inject constructor(
 
     private suspend fun loginToFirebase(email: String, password: String){
         showProgressBar(true)
-        loginRepository.loginToFirebase(email, password){ user, message ->
+        repository.loginToFirebase(email, password){ user, message ->
             viewModelScope.launch(dispatchersIO) {
                 showProgressBar(false)
                 if (user != null) {
@@ -46,6 +46,6 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    private suspend fun saveUserLocally(user: User) = loginRepository.saveUserLocally(user)
+    private suspend fun saveUserLocally(user: User) = repository.saveUserLocally(user)
 
 }

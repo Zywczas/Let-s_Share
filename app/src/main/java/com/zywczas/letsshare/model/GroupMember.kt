@@ -1,6 +1,6 @@
 package com.zywczas.letsshare.model
 
-data class GroupsMember (
+data class GroupMember (
     val name: String = "",
     val email: String = ""
 )

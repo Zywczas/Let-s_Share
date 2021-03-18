@@ -24,6 +24,6 @@ fun Fragment.hideSoftKeyboard(){
     }
 }
 
-fun Date.getMonthId(): String = SimpleDateFormat("MM.yyyy", Locale.GERMANY).format(this)
+fun Date.thisMonth(): String = SimpleDateFormat("MM.yyyy", Locale.GERMANY).format(this)
 
-fun Date.getCurrentDateString(): String = SimpleDateFormat("d.MM.yyyy", Locale.GERMANY).format(this)
+fun Date.today(): String = SimpleDateFormat("d.MM.yyyy", Locale.GERMANY).format(this)

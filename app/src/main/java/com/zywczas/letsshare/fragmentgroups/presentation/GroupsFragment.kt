@@ -7,11 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
-import com.zywczas.letsshare.R
 import com.zywczas.letsshare.databinding.FragmentGroupsBinding
 import com.zywczas.letsshare.utils.autoRelease
-import com.zywczas.letsshare.utils.getCurrentDateString
-import com.zywczas.letsshare.utils.getMonthId
+import com.zywczas.letsshare.utils.today
 import java.util.*
 import javax.inject.Inject
 
@@ -30,7 +28,7 @@ class GroupsFragment @Inject constructor(private val viewModel: GroupsViewModel)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         lifecycle.addObserver(viewModel)
         setupBottomNavBar()
-        binding.data.text = Date().getCurrentDateString()
+        binding.data.text = Date().today()
     }
 
     private fun setupBottomNavBar(){

@@ -17,10 +17,11 @@
     <string name="cant_add_friend">Couldn\'t add the friend. Try again.</string>
     <string name="friend_added">Friend added.</string>
     <string name="cant_get_friends">Couldn\'t get friends list.</string>
+    <string name="cant_add_group">Couldn\'t add the group. Try again.</string>
+    <string name="group_added">Group added.</string>
+    <string name="too_many_groups">1 user can be in 10 groups max.</string>
 
     <!--    UI elements - main app-->
     <string name="friends">Friends</string>
     <string name="groups">Groups</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

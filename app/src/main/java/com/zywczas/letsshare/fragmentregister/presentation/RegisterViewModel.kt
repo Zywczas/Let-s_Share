@@ -16,7 +16,7 @@ import javax.inject.Inject
 class RegisterViewModel @Inject constructor(
     @DispatchersIO private val dispatchersIO: CoroutineDispatcher,
     private val sessionManager: SessionManager,
-    private val registerRepository: RegisterRepository
+    private val repository: RegisterRepository
 ) : BaseViewModel() {
 
     private val _isRegisteredAndUserName = MutableLiveData<Pair<Boolean, String>>()
@@ -52,7 +52,7 @@ class RegisterViewModel @Inject constructor(
         }
 
     private suspend fun checkIfEmailIsFreeToUseAndRegisterToFirebase(name: String, email: String, password: String){
-        registerRepository.isEmailFreeToUse(email){ isEmailFreeToUse ->
+        repository.isEmailFreeToUse(email){ isEmailFreeToUse ->
             if (isEmailFreeToUse) { viewModelScope.launch(dispatchersIO) { registerToFirebase(name, email, password) } }
             else {
                 postMessage(R.string.email_already_exists)
@@ -62,7 +62,7 @@ class RegisterViewModel @Inject constructor(
     }
 
     private suspend fun registerToFirebase(name: String, email: String, password: String){
-        registerRepository.registerToFirebase(name, email, password) { isRegistered ->
+        repository.registerToFirebase(name, email, password) { isRegistered ->
             if (isRegistered) { viewModelScope.launch(dispatchersIO) { addUserToFirestore(name, email) } }
             else {
                 postMessage(R.string.problem_registration)
@@ -72,7 +72,7 @@ class RegisterViewModel @Inject constructor(
     }
 
     private suspend fun addUserToFirestore(name: String, email: String){
-        registerRepository.addNewUserToFirestore(name, email){ isUserAdded ->
+        repository.addNewUserToFirestore(name, email){ isUserAdded ->
             if (isUserAdded) { viewModelScope.launch(dispatchersIO) { sendVerificationEmailAndLogout(name) } }
             else {
                 postMessage(R.string.problem_registration)
@@ -82,10 +82,10 @@ class RegisterViewModel @Inject constructor(
     }
 
     private suspend fun sendVerificationEmailAndLogout(name: String){
-        registerRepository.sendEmailVerification { isEmailSent ->
+        repository.sendEmailVerification { isEmailSent ->
             if (isEmailSent){
                 viewModelScope.launch(dispatchersIO){
-                    registerRepository.logoutFromFirebase()
+                    repository.logoutFromFirebase()
                     showProgressBar(false)
                     _isRegisteredAndUserName.postValue(true to name)
                 }

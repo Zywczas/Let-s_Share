@@ -8,6 +8,7 @@ package com.zywczas.letsshare.utils
 //todo dodac fejsa
 //            val token = AccessToken.getCurrentAccessToken()
 //            isLoggedIn = token != null && token.isExpired.not()
+//todo dodac progress bar do wszystkich ladowan
 //todo pousuwac logi
 //todo sprawdzic czy za pomoca fejsbuka mozna sie zalogowac jak nie ma sie polaczenia internetowego
 //todo dodac sprawdzenie czy jest google play i czy jest zalogowany
@@ -32,6 +33,7 @@ package com.zywczas.letsshare.utils
 //todo dac side nav rail dla tabletow
 //todo sprawdzi czy jak bottom nav bar jest klikany na tym samym guziki to czy fragment sie od nowa nie laduje czasem
 //todo nie ma ladnego przejscia miedzy fragmentami jak klikam na nav bar, dac przejscie akcjami
+//todo dodac nasluchiwanie do grup, czy jakas sie nie pokazala w ktorej jestesmy
 
 private fun test(){
 //    firestore.runTransaction {  } //todo dobra funkcja do updatowania, jak jakis dokument w miedzy czasie sie zmieni to transakcja leci od nowa

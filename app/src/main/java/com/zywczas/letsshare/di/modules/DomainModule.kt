@@ -4,6 +4,8 @@ import com.zywczas.letsshare.fragmentlogin.domain.LoginRepository
 import com.zywczas.letsshare.fragmentlogin.domain.LoginRepositoryImpl
 import com.zywczas.letsshare.fragmentfriends.domain.FriendsRepository
 import com.zywczas.letsshare.fragmentfriends.domain.FriendsRepositoryImpl
+import com.zywczas.letsshare.fragmentgroups.domain.GroupsRepository
+import com.zywczas.letsshare.fragmentgroups.domain.GroupsRepositoryImpl
 import com.zywczas.letsshare.fragmentregister.domain.RegisterRepository
 import com.zywczas.letsshare.fragmentregister.domain.RegisterRepositoryImpl
 import dagger.Binds
@@ -27,5 +29,9 @@ abstract class DomainModule {
     @Binds
     @ActivityRetainedScoped
     abstract fun bindMainRepository(repo: FriendsRepositoryImpl): FriendsRepository
+
+    @Binds
+    @ActivityRetainedScoped
+    abstract fun bindGroupsRepository(repo: GroupsRepositoryImpl): GroupsRepository
 
 }

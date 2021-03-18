@@ -16,26 +16,19 @@ class SharedPrefsWrapperImpl @Inject constructor (@ApplicationContext context: C
     private val userNameKey = "userNameKey"
     private val userEmailKey = "userEmailKey"
 
-    override var isLoggedInLocally: Boolean
-        get() = prefs.getBoolean(isLoggedInKey, false)
-        set(value) = prefs.edit().putBoolean(isLoggedInKey, value).apply()
+//    override var isLoggedInLocally: Boolean
+//        get() = prefs.getBoolean(isLoggedInKey, false)
+//        set(value) = prefs.edit().putBoolean(isLoggedInKey, value).apply()
 
-    private var userId: String
-        get() = prefs.getString(userIdKey, "")!!
-        set(value) = prefs.edit().putString(userIdKey, value).apply()
+    override val userId: String = prefs.getString(userIdKey, "")!!
+    override val userName: String = prefs.getString(userNameKey, "")!!
+    override val userEmail: String = prefs.getString(userEmailKey, "")!!
 
-    private var userName: String
-        get() = prefs.getString(userNameKey, "")!!
-        set(value) = prefs.edit().putString(userNameKey, value).apply()
-
-    override var userEmail: String
-        get() = prefs.getString(userEmailKey, "")!!
-        set(value) = prefs.edit().putString(userEmailKey, value).apply()
 
     override suspend fun saveUserLocally(user: User) {
-        userId = user.auth_id
-        userName = user.name
-        userEmail = user.email
+        prefs.edit().putString(userIdKey, user.auth_id).apply()
+        prefs.edit().putString(userNameKey, user.name).apply()
+        prefs.edit().putString(userEmailKey, user.email).apply()
     }
 
 }

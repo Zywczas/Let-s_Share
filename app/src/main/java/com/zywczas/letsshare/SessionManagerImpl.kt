@@ -43,6 +43,7 @@ class SessionManagerImpl @Inject constructor(
         if (isLoggedIn) {
             true
         } //todo chwilowo to wylaczam zeby zawse sprawdzalo z neta, pozniej pobierac info z shared prefs i neta
+        //todo pytanie czy tu trzeba tez zapisywac za kazdym razem przy wlczaniu aplikacji, dane do shared prefs czy nie trzeba, stad mozna wziac email, display name i id
         else {
 //            isLoggedIn =
                 firebaseAuth.currentUser != null && firebaseAuth.currentUser!!.isEmailVerified

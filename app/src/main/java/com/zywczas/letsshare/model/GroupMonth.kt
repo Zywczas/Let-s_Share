@@ -1,6 +1,6 @@
 package com.zywczas.letsshare.model
 
-data class GroupsMonth (
+data class GroupMonth (
     val id: String = "",
     val group_id: String = "",
     var total_expenses: Double = 0.0,
