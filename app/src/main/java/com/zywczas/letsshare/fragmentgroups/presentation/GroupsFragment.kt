@@ -14,6 +14,7 @@ import com.zywczas.letsshare.databinding.FragmentGroupsBinding
 import com.zywczas.letsshare.fragmentfriends.adapter.FriendsAdapter
 import com.zywczas.letsshare.fragmentgroups.adapter.GroupsAdapter
 import com.zywczas.letsshare.utils.autoRelease
+import com.zywczas.letsshare.utils.hideSoftKeyboard
 import com.zywczas.letsshare.utils.showToast
 import com.zywczas.letsshare.utils.today
 import java.util.*
@@ -60,6 +61,7 @@ class GroupsFragment @Inject constructor(private val viewModel: GroupsViewModel)
 
     private fun setupOnClickListeners(){
         binding.addGroup.setOnClickListener { lifecycleScope.launchWhenResumed {
+            hideSoftKeyboard()
             viewModel.addGroup(binding.groupName.text.toString(), "zł") //todo pozniej dac rozne waluty
         }}
     }

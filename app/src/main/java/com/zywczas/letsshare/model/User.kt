@@ -5,7 +5,7 @@ data class User(
     val name: String = "",
     val email: String = "",
     val date_created: String = "",
-    val groupsIds: Array<String> = emptyArray()
+    val groupsIds: List<String> = emptyList()
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

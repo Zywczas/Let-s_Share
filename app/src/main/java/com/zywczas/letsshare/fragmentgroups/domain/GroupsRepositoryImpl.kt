@@ -38,8 +38,8 @@ class GroupsRepositoryImpl @Inject constructor(
             val userRef = firestore.collection(COLLECTION_USERS).document(userEmail) //todo sprobowac to rozbic na mniejsze funkcje, np dodaj jesli mniej niz 10 rgrup
             firestore.runTransaction { transaction ->
                 transaction.get(userRef).toObject<User>()?.let { user ->
-                    val newGroups: Array<String> = when {
-                        user.groupsIds.isEmpty() -> arrayOf(newGroup.id)
+                    val newGroups: List<String> = when {
+                        user.groupsIds.isEmpty() -> listOf(newGroup.id)
                         user.groupsIds.size < 10 -> user.groupsIds.plus(newGroup.id)
                         else -> return@runTransaction R.string.too_many_groups //todo sprawdzi czy to dobrze dziala, np dac ze moze byc tylko 2 grupy na chwile
                     }

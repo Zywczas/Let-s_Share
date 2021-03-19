@@ -7,3 +7,5 @@ const val COLLECTION_MEMBERS = "members"
 
 const val FIELD_NAME = "name"
 const val FIELD_GROUPS_IDS = "groupsIds"
+
+//todo sprawdzic pozniej czy ich nie poprzenosic tylko do odpowiednich klas
