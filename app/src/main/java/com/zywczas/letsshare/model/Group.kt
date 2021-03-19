@@ -1,5 +1,9 @@
 package com.zywczas.letsshare.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class Group(
     val id: String = "",
     val founder_id: String = "",
@@ -7,4 +11,4 @@ data class Group(
     val date_created: String = "",
     val currency: String = "",
     var members_num: Int = 0
-)
+) : Parcelable

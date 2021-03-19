@@ -32,8 +32,6 @@ class FriendsAdapter : ListAdapter<Friend, FriendsAdapter.ViewHolder>(object : D
         return ViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bindFriend(getItem(position))
-    }
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bindFriend(getItem(position))
 
 }

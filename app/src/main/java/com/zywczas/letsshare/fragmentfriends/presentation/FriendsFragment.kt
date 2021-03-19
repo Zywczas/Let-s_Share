@@ -34,16 +34,11 @@ class FriendsFragment @Inject constructor(private val viewModel: FriendsViewMode
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         lifecycle.addObserver(viewModel)
-        setupToolbar()
+        binding.toolbar.setTitle(R.string.friends)
         setupRecycler()
         setupObservers()
         setupOnClickListeners()
         setupBottomNavBar()
-    }
-
-    private fun setupToolbar(){
-        val appBarConfig = AppBarConfiguration(setOf(R.id.friendsFragment))
-        binding.toolbar.setupWithNavController(findNavController(), appBarConfig)
     }
 
     private fun setupRecycler(){

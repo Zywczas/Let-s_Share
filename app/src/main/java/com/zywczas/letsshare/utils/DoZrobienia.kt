@@ -1,5 +1,7 @@
 package com.zywczas.letsshare.utils
 
+import com.google.firebase.firestore.FieldValue
+
 //todo dac tak: app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
 //todo nie pojawia sie info o weryfikacji maila, trzeba dac alert dialog i to info
 //todo dac wylogowywanie na guziku
@@ -34,10 +36,18 @@ package com.zywczas.letsshare.utils
 //todo sprawdzi czy jak bottom nav bar jest klikany na tym samym guziki to czy fragment sie od nowa nie laduje czasem
 //todo nie ma ladnego przejscia miedzy fragmentami jak klikam na nav bar, dac przejscie akcjami
 //todo dodac nasluchiwanie do grup, czy jakas sie nie pokazala w ktorej jestesmy
+//todo poustawiac tytuly dla wszystkich toolbar i usunac wszystkie ich label z nav graf
+//todo dac pozniej groups fragment jako pierwszy, przed friends
+//todo przy klikaniu na nav bottom bar dac czyszczenie stacka, spradzic kilkajac z group details do friends np.
+//todo dac nienulowalne array dla usera
+//todo to dodawanie znajomych i grup dac w alertdialogach
+//todo dodac ograniczenia ilosci znakow w edit tekstach dla hasel, imion, nazw, itd...
+//todo sprawdzic czy jak dam crashlytics to moge usunac wszystkie logi z programu
 
 private fun test(){
 //    firestore.runTransaction {  } //todo dobra funkcja do updatowania, jak jakis dokument w miedzy czasie sie zmieni to transakcja leci od nowa
 //    FieldValue.increment(23.0) //todo to jest dobbre to zwiekszania wartosci bez koniecznosci pobierania wartosci przed updatem
+//    FieldValue.arrayUnion(...)
 }
 //przyklad transakcji
 //val sfDocRef = db.collection("cities").document("SF")

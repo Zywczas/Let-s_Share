@@ -50,7 +50,7 @@ class RegisterRepositoryImpl @Inject constructor(
         if (userId != null){
             firestore.collection(COLLECTION_USERS)
                 .document(email)
-                .set(User(userId, name, email, Date().today()))
+                .set(User(userId!!, name, email, Date().today()))
                 .addOnSuccessListener {
                     onSuccessAction(true)
                 }.addOnFailureListener {

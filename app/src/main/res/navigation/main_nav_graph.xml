@@ -26,11 +26,13 @@
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
     </fragment>
+
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.zywczas.letsshare.fragmentregister.presentation.RegisterFragment"
         android:label="fragment_register"
         tools:layout="@layout/fragment_register" />
+
     <fragment
         android:id="@+id/welcomeFragment"
         android:name="com.zywczas.letsshare.fragmentwelcome.presentation.WelcomeFragment"
@@ -58,11 +60,26 @@
     <fragment
         android:id="@+id/friendsFragment"
         android:name="com.zywczas.letsshare.fragmentfriends.presentation.FriendsFragment"
-        android:label="@string/app_name"
         tools:layout="@layout/fragment_friends" />
     <fragment
         android:id="@+id/groupsFragment"
         android:name="com.zywczas.letsshare.fragmentgroups.presentation.GroupsFragment"
-        android:label="@string/app_name"
-        tools:layout="@layout/fragment_groups" />
+        tools:layout="@layout/fragment_groups" >
+        <action
+            android:id="@+id/actionGroupsToGroupDetailsFragment"
+            app:destination="@id/groupDetailsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/groupDetailsFragment"
+        android:name="com.zywczas.letsshare.fragmentgroupdetails.presentation.GroupDetailsFragment"
+        android:label="fragment_group_details"
+        tools:layout="@layout/fragment_group_details" >
+        <argument
+            android:name="group"
+            app:argType="com.zywczas.letsshare.model.Group" />
+    </fragment>
 </navigation>
