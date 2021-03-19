@@ -6,4 +6,4 @@ const val COLLECTION_GROUPS = "groups"
 const val COLLECTION_MEMBERS = "members"
 
 const val FIELD_NAME = "name"
-const val FIELD_GROUPS = "groups"
+const val FIELD_GROUPS_IDS = "groupsIds"

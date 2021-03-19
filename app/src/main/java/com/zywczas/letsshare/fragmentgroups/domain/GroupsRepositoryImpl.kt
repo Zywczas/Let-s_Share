@@ -39,13 +39,13 @@ class GroupsRepositoryImpl @Inject constructor(
             firestore.runTransaction { transaction ->
                 transaction.get(userRef).toObject<User>()?.let { user ->
                     val newGroups: Array<String> = when {
-                        user.groupIds.isEmpty() -> arrayOf(newGroup.id)
-                        user.groupIds.size < 10 -> user.groupIds.plus(newGroup.id)
+                        user.groupsIds.isEmpty() -> arrayOf(newGroup.id)
+                        user.groupsIds.size < 10 -> user.groupsIds.plus(newGroup.id)
                         else -> return@runTransaction R.string.too_many_groups //todo sprawdzi czy to dobrze dziala, np dac ze moze byc tylko 2 grupy na chwile
                     }
                     transaction.set(newGroupRef, newGroup)
                     transaction.set(newGroupMemberRef, newMember)
-                    transaction.update(userRef, FIELD_GROUPS, newGroups)
+                    transaction.update(userRef, FIELD_GROUPS_IDS, newGroups)
                 }
             }.await()
             R.string.group_added
@@ -59,7 +59,7 @@ class GroupsRepositoryImpl @Inject constructor(
             val groups = mutableListOf<Group>()
             firestore.collection(COLLECTION_USERS).document(sharedPrefs.userEmail)
                 .get().await().toObject<User>()?.let { user ->
-                    user.groupIds.forEach { id ->
+                    user.groupsIds.forEach { id ->
                         firestore.collection(COLLECTION_GROUPS).document(id)
                             .get().await().toObject<Group>()?.let { group -> groups.add(group) }
                     }

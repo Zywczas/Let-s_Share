@@ -5,7 +5,7 @@ data class User(
     val name: String = "",
     val email: String = "",
     val date_created: String = "",
-    val groupIds: Array<String> = emptyArray()
+    val groupsIds: Array<String> = emptyArray()
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -24,4 +24,5 @@ data class User(
         result = 31 * result + email.hashCode()
         return result
     }
+
 }
