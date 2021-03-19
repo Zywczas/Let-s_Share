@@ -18,6 +18,10 @@ class FriendsRepositoryImpl @Inject constructor(
     private val firestore: FirebaseFirestore,
     private val sharedPrefs: SharedPrefsWrapper
 ) : FriendsRepository {
+
+    private val collectionFriends = "friends"
+    private val fieldName = "name"
+
     //todo wrzucic w session manager
     override suspend fun logout() = firebaseAuth.signOut()
 
@@ -25,8 +29,8 @@ class FriendsRepositoryImpl @Inject constructor(
         try {
             val friends = firestore.collection(COLLECTION_USERS)
                 .document(sharedPrefs.userEmail)
-                .collection(COLLECTION_FRIENDS)
-                .orderBy(FIELD_NAME, Query.Direction.ASCENDING)
+                .collection(collectionFriends)
+                .orderBy(fieldName, Query.Direction.ASCENDING)
                 .get()
                 .await()
                 .toObjects<Friend>()
@@ -60,7 +64,7 @@ class FriendsRepositoryImpl @Inject constructor(
     private fun addFriendToFirestoreCollection(friend: Friend, onFinishAction: (Int) -> Unit) {
         firestore.collection(COLLECTION_USERS)
             .document(sharedPrefs.userEmail)
-            .collection(COLLECTION_FRIENDS)
+            .collection(collectionFriends)
             .document(friend.email)
             .set(friend)
             .addOnSuccessListener {

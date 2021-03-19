@@ -18,9 +18,13 @@ class GroupsRepositoryImpl @Inject constructor(
     private val sharedPrefs: SharedPrefsWrapper
 ) : GroupsRepository {
 
+    private val collectionGroups = "groups"
+    private val collectionMembers = "members"
+    private val fieldGroupsIds = "groupsIds"
+
     override suspend fun addGroup(name: String, currency: String): Int =
         try {
-            val newGroupRef = firestore.collection(COLLECTION_GROUPS).document()
+            val newGroupRef = firestore.collection(collectionGroups).document()
             val newGroup = Group(
                 id = newGroupRef.id,
                 founder_id = sharedPrefs.userId,
@@ -30,9 +34,9 @@ class GroupsRepositoryImpl @Inject constructor(
                 members_num = 1)
             val userEmail = sharedPrefs.userEmail
             val newGroupMemberRef = firestore
-                .collection(COLLECTION_GROUPS)
+                .collection(collectionGroups)
                 .document(newGroup.id)
-                .collection(COLLECTION_MEMBERS)
+                .collection(collectionMembers)
                 .document(userEmail)
             val newMember = GroupMember(sharedPrefs.userName, userEmail)
             val userRef = firestore.collection(COLLECTION_USERS).document(userEmail) //todo sprobowac to rozbic na mniejsze funkcje, np dodaj jesli mniej niz 10 rgrup
@@ -45,7 +49,7 @@ class GroupsRepositoryImpl @Inject constructor(
                     }
                     transaction.set(newGroupRef, newGroup)
                     transaction.set(newGroupMemberRef, newMember)
-                    transaction.update(userRef, FIELD_GROUPS_IDS, newGroups)
+                    transaction.update(userRef, fieldGroupsIds, newGroups)
                 }
             }.await()
             R.string.group_added
@@ -60,7 +64,7 @@ class GroupsRepositoryImpl @Inject constructor(
             firestore.collection(COLLECTION_USERS).document(sharedPrefs.userEmail)
                 .get().await().toObject<User>()?.let { user ->
                     user.groupsIds.forEach { id ->
-                        firestore.collection(COLLECTION_GROUPS).document(id)
+                        firestore.collection(collectionGroups).document(id)
                             .get().await().toObject<Group>()?.let { group -> groups.add(group) }
                     }
                 }
