@@ -43,6 +43,9 @@ import com.google.firebase.firestore.FieldValue
 //todo to dodawanie znajomych i grup dac w alertdialogach
 //todo dodac ograniczenia ilosci znakow w edit tekstach dla hasel, imion, nazw, itd...
 //todo sprawdzic czy jak dam crashlytics to moge usunac wszystkie logi z programu
+//todo czyscic backstack przy klikaniu w bottom nav bar bo jak sie wciska wstecz to cofa do fragmentu ale nie odswieza kliknietego nav bar
+//todo dodac swipe to refresh w groups fragment
+//todo dodac sprawdzenie czy miesiac nie jest juz stary, i wtedy zablokowac operacje dopoki nie zostanie rozliczony
 
 private fun test(){
 //    firestore.runTransaction {  } //todo dobra funkcja do updatowania, jak jakis dokument w miedzy czasie sie zmieni to transakcja leci od nowa

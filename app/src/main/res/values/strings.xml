@@ -26,6 +26,5 @@
     <!--    UI elements - main app-->
     <string name="friends">Friends</string>
     <string name="groups">Groups</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="percentage_share">%1$.2f\%</string>
 </resources>
