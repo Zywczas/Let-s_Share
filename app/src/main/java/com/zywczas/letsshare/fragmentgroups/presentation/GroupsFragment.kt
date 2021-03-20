@@ -41,6 +41,7 @@ class GroupsFragment @Inject constructor(private val viewModel: GroupsViewModel)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         lifecycle.addObserver(viewModel)
         binding.toolbar.setTitle(R.string.groups)
         setupRecycler()

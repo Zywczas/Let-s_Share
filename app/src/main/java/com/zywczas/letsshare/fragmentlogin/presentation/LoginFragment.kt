@@ -33,6 +33,7 @@ class LoginFragment @Inject constructor(
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         setupOnClickListeners()
         setupObservers()
     }

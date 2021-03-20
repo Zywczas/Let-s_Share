@@ -5,7 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.navigation.ui.setupWithNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -38,7 +42,7 @@ class GroupDetailsFragment @Inject constructor(private val viewModel: GroupDetai
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        lifecycle.addObserver(viewModel)
+        super.onViewCreated(view, savedInstanceState)
         setupToolbar()
         setupRecyclers()
         setupObservers()
@@ -47,18 +51,36 @@ class GroupDetailsFragment @Inject constructor(private val viewModel: GroupDetai
 
     private fun setupToolbar(){
         binding.toolbar.title = args.group.name
+        binding.toolbar.setupWithNavController(findNavController())
     }
 
     private fun setupRecyclers(){
+        setupGroupMembersRecycler()
+        setupExpensesRecycler()
+    }
 
+    private fun setupGroupMembersRecycler(){
+        binding.membersRecycler.adapter = membersAdapter
+        binding.membersRecycler.layoutManager = LinearLayoutManager(requireContext())
+        binding.membersRecycler.setHasFixedSize(true)
+    }
+
+    private fun setupExpensesRecycler(){
+        //todo
     }
 
     private fun setupObservers(){
         viewModel.message.observe(viewLifecycleOwner){ showToast(it) }
+        viewModel.members.observe(viewLifecycleOwner){ membersAdapter.submitList(it.toMutableList()) }
     }
 
     private fun setupOnClickListeners(){
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        lifecycleScope.launchWhenResumed { viewModel.getMembers(args.group.id) }
     }
 
 }

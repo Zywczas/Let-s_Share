@@ -6,6 +6,7 @@ import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.firestore.ktx.toObjects
 import com.zywczas.letsshare.R
+import com.zywczas.letsshare.activitymain.domain.CrashlyticsWrapper
 import com.zywczas.letsshare.activitymain.domain.SharedPrefsWrapper
 import com.zywczas.letsshare.model.Friend
 import com.zywczas.letsshare.model.User
@@ -16,7 +17,8 @@ import javax.inject.Inject
 class FriendsRepositoryImpl @Inject constructor(
     private val firebaseAuth: FirebaseAuth,
     private val firestore: FirebaseFirestore,
-    private val sharedPrefs: SharedPrefsWrapper
+    private val sharedPrefs: SharedPrefsWrapper,
+    private val crashlyticsWrapper: CrashlyticsWrapper
 ) : FriendsRepository {
 
     private val collectionFriends = "friends"
@@ -27,16 +29,15 @@ class FriendsRepositoryImpl @Inject constructor(
 
     override suspend fun getFriends(): List<Friend>? =
         try {
-            val friends = firestore.collection(COLLECTION_USERS)
+            firestore.collection(COLLECTION_USERS)
                 .document(sharedPrefs.userEmail)
                 .collection(collectionFriends)
                 .orderBy(fieldName, Query.Direction.ASCENDING)
                 .get()
                 .await()
-                .toObjects<Friend>()
-            friends.forEach { logD("pobrany znajomy: $it") }
-            friends
+                .toObjects()
         } catch (e: Exception) {
+            crashlyticsWrapper.sendExceptionToFirebase(e)
             logD(e)
             null
         }
@@ -51,7 +52,7 @@ class FriendsRepositoryImpl @Inject constructor(
                     .addOnSuccessListener { firestoreUser ->
                         val user = firestoreUser.toObject<User>()
                         user?.let { addFriendToFirestoreCollection(it.toFriend(), onFinishAction) }
-                    }.addOnFailureListener {
+                    }.addOnFailureListener { //todo dodac crashlytics
                     logD(it)
                     onFinishAction(R.string.cant_add_friend)
                 }
@@ -69,7 +70,7 @@ class FriendsRepositoryImpl @Inject constructor(
             .set(friend)
             .addOnSuccessListener {
                 onFinishAction(R.string.friend_added)
-            }.addOnFailureListener {
+            }.addOnFailureListener { //todo dodac crashlitics
                 logD(it)
                 onFinishAction(R.string.cant_add_friend)
             }

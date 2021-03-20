@@ -29,7 +29,7 @@ class LoginRepositoryImpl @Inject constructor(
                 firebaseAuth.signOut()
                 onSuccessAction(null, R.string.verify_email)
             }
-        }.addOnFailureListener {
+        }.addOnFailureListener { //todo dac crashlytics
             logD(it)
             onSuccessAction(null, R.string.login_problem)
         }
@@ -39,7 +39,7 @@ class LoginRepositoryImpl @Inject constructor(
     suspend fun loginToFirebase2(email: String, password: String): AuthResult? =
         try {
             firebaseAuth.signInWithEmailAndPassword(email, password).await()
-        } catch (e: Exception){
+        } catch (e: Exception){ //todo dac crashlytics
             logD(e)
             null
         }

@@ -4,5 +4,6 @@ import com.zywczas.letsshare.model.GroupMember
 
 interface GroupDetailsRepository {
 
-    suspend fun getMembers(): List<GroupMember>?
+    suspend fun getMembers(groupId: String): List<GroupMember>?
+
 }

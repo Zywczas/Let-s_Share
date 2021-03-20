@@ -20,7 +20,7 @@ class SharedPrefsWrapperImpl @Inject constructor (@ApplicationContext context: C
 //        get() = prefs.getBoolean(isLoggedInKey, false)
 //        set(value) = prefs.edit().putBoolean(isLoggedInKey, value).apply()
 
-    override val userId: String = prefs.getString(userIdKey, "")!!
+//    override val userAuthId: String = prefs.getString(userIdKey, "")!!
     override val userName: String = prefs.getString(userNameKey, "")!!
     override val userEmail: String = prefs.getString(userEmailKey, "")!!
 

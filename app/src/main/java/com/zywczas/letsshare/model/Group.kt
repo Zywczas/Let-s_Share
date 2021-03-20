@@ -6,7 +6,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class Group(
     val id: String = "",
-    val founder_id: String = "",
+    val founder_email: String = "",
     val name: String = "",
     val date_created: String = "",
     val currency: String = "",

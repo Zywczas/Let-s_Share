@@ -34,6 +34,7 @@ class FriendsFragment @Inject constructor(private val viewModel: FriendsViewMode
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         lifecycle.addObserver(viewModel)
         binding.toolbar.setTitle(R.string.friends)
         setupRecycler()

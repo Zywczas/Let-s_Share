@@ -6,7 +6,7 @@ interface SharedPrefsWrapper {
 
 //    var isLoggedInLocally: Boolean //todo na razie nie uzywane
 
-    val userId: String
+//    val userAuthId: String
     val userName: String
     val userEmail: String
 

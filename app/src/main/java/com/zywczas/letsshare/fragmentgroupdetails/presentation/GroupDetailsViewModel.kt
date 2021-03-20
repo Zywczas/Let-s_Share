@@ -14,22 +14,19 @@ import javax.inject.Inject
 class GroupDetailsViewModel @Inject constructor(
     @DispatchersIO private val dispatchersIO: CoroutineDispatcher,
     private val repository: GroupDetailsRepository
-) : BaseViewModel(), LifecycleObserver {
+) : BaseViewModel() {
 
     private val _members = MutableLiveData<List<GroupMember>>()
     val members: LiveData<List<GroupMember>> = _members
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
-    private fun onResume() {
-        viewModelScope.launch(dispatchersIO) { getMembers() }
-    }
-
-    private suspend fun getMembers() = withContext(dispatchersIO){
-        showProgressBar(true)
-        val membersList = repository.getMembers()
-        if (membersList != null) { _members.postValue(membersList!!) }
-        else { postMessage(R.string.cant_get_group_members) }
-        showProgressBar(false)
+    suspend fun getMembers(groupId: String) {
+        withContext(dispatchersIO){
+            showProgressBar(true)
+            val membersList = repository.getMembers(groupId)
+            if (membersList != null) { _members.postValue(membersList!!) }
+            else { postMessage(R.string.cant_get_group_members) }
+            showProgressBar(false)
+        }
     }
 
 }
