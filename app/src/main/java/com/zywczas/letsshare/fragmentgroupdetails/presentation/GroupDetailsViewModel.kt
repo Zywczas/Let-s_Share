@@ -1,6 +1,7 @@
 package com.zywczas.letsshare.fragmentgroupdetails.presentation
 
 import androidx.lifecycle.*
+import com.zywczas.letsshare.R
 import com.zywczas.letsshare.activitymain.presentation.BaseViewModel
 import com.zywczas.letsshare.di.modules.DispatchersModule.DispatchersIO
 import com.zywczas.letsshare.fragmentgroupdetails.domain.GroupDetailsRepository
@@ -25,7 +26,9 @@ class GroupDetailsViewModel @Inject constructor(
 
     private suspend fun getMembers() = withContext(dispatchersIO){
         showProgressBar(true)
-
+        val membersList = repository.getMembers()
+        if (membersList != null) { _members.postValue(membersList!!) }
+        else { postMessage(R.string.cant_get_group_members) }
         showProgressBar(false)
     }
 

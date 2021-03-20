@@ -23,6 +23,7 @@
     <string name="too_many_groups">Jeden użytkownik może być maksymalnie w 10 grupach.</string>
     <string name="cant_get_groups">Nie udało się pobrać listy grup.</string>
     <string name="no_group_name">Podaj nazwę dla swojej grupy.</string>
+    <string name="cant_get_group_members">Nie udało się pobrać listy członków grupy.</string>
 
     <!--    UI elements - main app-->
     <string name="friends">Znajomi</string>
