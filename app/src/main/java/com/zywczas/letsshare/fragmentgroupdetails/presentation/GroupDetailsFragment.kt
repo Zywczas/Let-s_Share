@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.leinardi.android.speeddial.SpeedDialView
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.databinding.FragmentFriendsBinding
 import com.zywczas.letsshare.databinding.FragmentGroupDetailsBinding
@@ -42,11 +44,21 @@ class GroupDetailsFragment @Inject constructor(private val viewModel: GroupDetai
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onResume() {
+        super.onResume()
+        binding.button.setOnClickListener {
+            lifecycleScope.launchWhenResumed { viewModel.getMembers(args.group.id) }
+        }
+
         setupToolbar()
         setupObservers()
+        setupSpeedDialMenu()
         setupOnClickListeners()
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
     }
 
     private fun setupToolbar(){
@@ -59,13 +71,35 @@ class GroupDetailsFragment @Inject constructor(private val viewModel: GroupDetai
         viewModel.members.observe(viewLifecycleOwner){ membersAdapter.submitList(it.toMutableList()) }
     }
 
-    private fun setupOnClickListeners(){
+    private fun setupSpeedDialMenu(){
 
     }
 
-    override fun onResume() {
-        super.onResume()
-        lifecycleScope.launchWhenResumed { viewModel.getMembers(args.group.id) }
+    private fun setupOnClickListeners(){
+        setupSpeedDialMainBtnClick()
+//        setupSpeedDialMenuClick()
+    }
+
+    private fun setupSpeedDialMainBtnClick(){
+        binding.speedDial.setOnChangeListener(object : SpeedDialView.OnChangeListener{
+            override fun onMainActionSelected(): Boolean {
+                return false
+            }
+            override fun onToggleChanged(isOpen: Boolean) {
+                dimOrRestoreBackground(isOpen)
+            }
+        })
+    }
+
+    private fun dimOrRestoreBackground(isDialOpen : Boolean){
+        val window = requireActivity().window
+        if (isDialOpen){
+            window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.purple_700_alpha03)
+            binding.mainLayout.alpha = 0.3F
+        } else {
+            window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.purple_700) //todo poprawic te kolory, zeby bralo ten z theme
+            binding.mainLayout.alpha = 1F
+        }
     }
 
 }

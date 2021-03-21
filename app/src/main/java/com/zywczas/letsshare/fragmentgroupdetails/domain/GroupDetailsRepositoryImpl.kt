@@ -17,6 +17,10 @@ class GroupDetailsRepositoryImpl @Inject constructor(
     private val crashlyticsWrapper: CrashlyticsWrapper
 ) : GroupDetailsRepository {
 
+    init {
+        logD("GroupDetailsRepository jest tworzony")
+    }
+
     private val fieldExpenses = "expenses"
 
     override suspend fun getMembers(groupId: String): List<GroupMember>? =
