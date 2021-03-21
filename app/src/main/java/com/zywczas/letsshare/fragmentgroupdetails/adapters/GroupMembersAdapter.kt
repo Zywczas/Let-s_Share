@@ -1,5 +1,6 @@
 package com.zywczas.letsshare.fragmentgroupdetails.adapters
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,14 +24,13 @@ class GroupMembersAdapter(private val currency: String) : ListAdapter<GroupMembe
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val name: TextView = itemView.findViewById(R.id.memberName)
         private val expenses: TextView = itemView.findViewById(R.id.memberExpenses)
-        private val currencyView: TextView = itemView.findViewById(R.id.memberCurrency)
         private val share: TextView = itemView.findViewById(R.id.percentageShare)
 
+        @SuppressLint("SetTextI18n")
         fun bindMember(member: GroupMember) {
             name.text = member.name
-            expenses.text = member.expenses.toString()
-            currencyView.text = currency
-            share.text = itemView.context.getString(R.string.percentage_share, member.percentage_share)
+            expenses.text = "${member.expenses} $currency"
+            share.text = "${member.percentage_share} %"
         }
     }
 

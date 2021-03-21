@@ -37,6 +37,7 @@ class GroupDetailsFragment @Inject constructor(private val viewModel: GroupDetai
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             vm = viewModel
+            membersAdapterXML = membersAdapter
         }
         return binding.root
     }
@@ -44,7 +45,6 @@ class GroupDetailsFragment @Inject constructor(private val viewModel: GroupDetai
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupToolbar()
-        setupRecyclers()
         setupObservers()
         setupOnClickListeners()
     }
@@ -52,21 +52,6 @@ class GroupDetailsFragment @Inject constructor(private val viewModel: GroupDetai
     private fun setupToolbar(){
         binding.toolbar.title = args.group.name
         binding.toolbar.setupWithNavController(findNavController())
-    }
-
-    private fun setupRecyclers(){
-        setupGroupMembersRecycler()
-        setupExpensesRecycler()
-    }
-
-    private fun setupGroupMembersRecycler(){
-        binding.membersRecycler.adapter = membersAdapter
-        binding.membersRecycler.layoutManager = LinearLayoutManager(requireContext())
-        binding.membersRecycler.setHasFixedSize(true)
-    }
-
-    private fun setupExpensesRecycler(){
-        //todo
     }
 
     private fun setupObservers(){

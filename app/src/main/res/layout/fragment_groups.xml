@@ -7,6 +7,9 @@
         <variable
             name="vm"
             type="com.zywczas.letsshare.fragmentgroups.presentation.GroupsViewModel" />
+        <variable
+            name="adapter"
+            type="com.zywczas.letsshare.fragmentgroups.adapter.GroupsAdapter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -29,6 +32,8 @@
             android:id="@+id/recycler"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:adapter="@{adapter}"
             app:layout_constraintBottom_toTopOf="@+id/bottomNavBar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"

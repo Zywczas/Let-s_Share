@@ -27,5 +27,4 @@
     <!--    UI elements - main app-->
     <string name="friends">Friends</string>
     <string name="groups">Groups</string>
-    <string name="percentage_share">%1$.2f\%</string>
 </resources>

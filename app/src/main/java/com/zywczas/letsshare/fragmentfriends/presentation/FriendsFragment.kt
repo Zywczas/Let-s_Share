@@ -5,14 +5,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.get
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.databinding.FragmentFriendsBinding
 import com.zywczas.letsshare.fragmentfriends.adapter.FriendsAdapter
@@ -23,7 +20,7 @@ import javax.inject.Inject
 class FriendsFragment @Inject constructor(private val viewModel: FriendsViewModel) : Fragment() {
 
     private var binding: FragmentFriendsBinding by autoRelease()
-    private val adapter by lazy { FriendsAdapter() }
+    private val friendsAdapter by lazy { FriendsAdapter() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,14 +41,14 @@ class FriendsFragment @Inject constructor(private val viewModel: FriendsViewMode
     }
 
     private fun setupRecycler(){
-        binding.recycler.adapter = adapter
-        binding.recycler.layoutManager = LinearLayoutManager(requireContext())
-        binding.recycler.setHasFixedSize(true)
+        binding.recycler.adapter = friendsAdapter //todo wrzucic to pozniej w live data
+//        binding.recycler.layoutManager = LinearLayoutManager(requireContext())
+//        binding.recycler.setHasFixedSize(true)
     }
 
     private fun setupObservers(){
         viewModel.message.observe(viewLifecycleOwner){ showToast(it) }
-        viewModel.friends.observe(viewLifecycleOwner){ adapter.submitList(it.toMutableList()) }
+        viewModel.friends.observe(viewLifecycleOwner){ friendsAdapter.submitList(it.toMutableList()) }
     }
 
     private fun setupOnClickListeners(){
