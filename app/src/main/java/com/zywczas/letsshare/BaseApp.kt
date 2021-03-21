@@ -1,7 +1,12 @@
 package com.zywczas.letsshare
 
-import android.app.Application
-import dagger.hilt.android.HiltAndroidApp
+import com.zywczas.letsshare.di.DaggerAppComponent
+import dagger.android.AndroidInjector
+import dagger.android.DaggerApplication
 
-@HiltAndroidApp
-class BaseApp : Application()
+class BaseApp : DaggerApplication(){
+
+    override fun applicationInjector(): AndroidInjector<out DaggerApplication> =
+        DaggerAppComponent.factory().create(this)
+
+}

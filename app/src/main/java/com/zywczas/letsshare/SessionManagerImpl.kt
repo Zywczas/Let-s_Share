@@ -5,12 +5,13 @@ import android.net.ConnectivityManager
 import android.net.Network
 import com.google.firebase.auth.FirebaseAuth
 import com.zywczas.letsshare.utils.logD
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.delay
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class SessionManagerImpl @Inject constructor(
-    @ApplicationContext private val context: Context,
+    private val context: Context,
     private val firebaseAuth: FirebaseAuth) : SessionManager {
 
     private var isConnected = false

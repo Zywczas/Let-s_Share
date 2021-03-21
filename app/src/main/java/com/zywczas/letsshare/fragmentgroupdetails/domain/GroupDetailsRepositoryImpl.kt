@@ -9,17 +9,12 @@ import com.zywczas.letsshare.utils.COLLECTION_GROUPS
 import com.zywczas.letsshare.utils.COLLECTION_MEMBERS
 import com.zywczas.letsshare.utils.logD
 import kotlinx.coroutines.tasks.await
-import java.lang.Exception
 import javax.inject.Inject
 
 class GroupDetailsRepositoryImpl @Inject constructor(
     private val firestore: FirebaseFirestore,
     private val crashlyticsWrapper: CrashlyticsWrapper
 ) : GroupDetailsRepository {
-
-    init {
-        logD("GroupDetailsRepository jest tworzony")
-    }
 
     private val fieldExpenses = "expenses"
 

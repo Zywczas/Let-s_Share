@@ -7,18 +7,21 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.databinding.FragmentFriendsBinding
+import com.zywczas.letsshare.di.factories.UniversalViewModelFactory
 import com.zywczas.letsshare.fragmentfriends.adapter.FriendsAdapter
 import com.zywczas.letsshare.utils.autoRelease
 import com.zywczas.letsshare.utils.showToast
 import javax.inject.Inject
 
-class FriendsFragment @Inject constructor(private val viewModel: FriendsViewModel) : Fragment() {
+class FriendsFragment @Inject constructor(private val viewModelFactory: UniversalViewModelFactory) : Fragment() {
 
+    private val viewModel: FriendsViewModel by viewModels { viewModelFactory }
     private var binding: FragmentFriendsBinding by autoRelease()
     private val friendsAdapter by lazy { FriendsAdapter() }
 

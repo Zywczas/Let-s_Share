@@ -10,12 +10,9 @@ import com.zywczas.letsshare.fragmentregister.presentation.RegisterFragment
 import com.zywczas.letsshare.fragmentwelcome.presentation.WelcomeFragment
 import dagger.Binds
 import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ActivityComponent
 import dagger.multibindings.IntoMap
 
 @Module
-@InstallIn(ActivityComponent::class)
 abstract class FragmentFactoryModule {
 
     @Binds

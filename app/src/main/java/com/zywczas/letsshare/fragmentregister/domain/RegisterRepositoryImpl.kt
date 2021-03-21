@@ -5,8 +5,8 @@ import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.firestore.FirebaseFirestore
 import com.zywczas.letsshare.model.User
 import com.zywczas.letsshare.utils.COLLECTION_USERS
-import com.zywczas.letsshare.utils.today
 import com.zywczas.letsshare.utils.logD
+import com.zywczas.letsshare.utils.today
 import java.util.*
 import javax.inject.Inject
 

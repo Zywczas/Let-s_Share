@@ -4,8 +4,7 @@ import androidx.lifecycle.*
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.SessionManager
 import com.zywczas.letsshare.activitymain.presentation.BaseViewModel
-import com.zywczas.letsshare.di.modules.DispatchersModule
-import com.zywczas.letsshare.di.modules.DispatchersModule.*
+import com.zywczas.letsshare.di.modules.DispatchersModule.DispatchersIO
 import com.zywczas.letsshare.fragmentgroups.domain.GroupsRepository
 import com.zywczas.letsshare.model.Group
 import kotlinx.coroutines.CoroutineDispatcher

@@ -5,18 +5,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.databinding.FragmentRegisterBinding
+import com.zywczas.letsshare.di.factories.UniversalViewModelFactory
 import com.zywczas.letsshare.utils.autoRelease
 import com.zywczas.letsshare.utils.hideSoftKeyboard
 import com.zywczas.letsshare.utils.showToast
 import javax.inject.Inject
 
-class RegisterFragment @Inject constructor(
-    private val viewModel : RegisterViewModel
-) : Fragment(){
+class RegisterFragment @Inject constructor(private val viewModelFactory: UniversalViewModelFactory) : Fragment(){
 
+    private val viewModel: RegisterViewModel by viewModels { viewModelFactory }
     private var binding: FragmentRegisterBinding by autoRelease()
 
     override fun onCreateView(

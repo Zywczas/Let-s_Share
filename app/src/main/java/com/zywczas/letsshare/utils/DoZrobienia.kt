@@ -1,7 +1,5 @@
 package com.zywczas.letsshare.utils
 
-import com.google.firebase.firestore.FieldValue
-
 //todo dac tak: app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
 //todo nie pojawia sie info o weryfikacji maila, trzeba dac alert dialog i to info
 //todo dac wylogowywanie na guziku

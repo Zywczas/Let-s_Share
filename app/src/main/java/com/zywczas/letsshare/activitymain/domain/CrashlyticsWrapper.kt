@@ -1,7 +1,5 @@
 package com.zywczas.letsshare.activitymain.domain
 
-import java.lang.Exception
-
 interface CrashlyticsWrapper {
 
     suspend fun sendExceptionToFirebase(

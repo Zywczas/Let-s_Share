@@ -5,7 +5,6 @@ plugins {
     id 'com.google.firebase.crashlytics'
     id 'kotlin-kapt'
     id 'androidx.navigation.safeargs.kotlin'
-    id 'dagger.hilt.android.plugin'
     id 'kotlin-parcelize'
 }
 
@@ -79,10 +78,11 @@ dependencies {
 
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.2'
 
-    implementation "com.google.dagger:hilt-android:2.28-alpha"
-    kapt "com.google.dagger:hilt-android-compiler:2.28-alpha"
-
-    implementation "com.leinardi.android:speed-dial:3.1.1"
+    //dagger
+    implementation 'com.google.dagger:dagger:2.33'
+    implementation 'com.google.dagger:dagger-android-support:2.27'
+    kapt 'com.google.dagger:dagger-android-processor:2.27'
+    kapt 'com.google.dagger:dagger-compiler:2.33'
 
     //FAB speed dial
     implementation "com.leinardi.android:speed-dial:3.1.1"

@@ -10,7 +10,8 @@ import com.zywczas.letsshare.activitymain.domain.CrashlyticsWrapper
 import com.zywczas.letsshare.activitymain.domain.SharedPrefsWrapper
 import com.zywczas.letsshare.model.Friend
 import com.zywczas.letsshare.model.User
-import com.zywczas.letsshare.utils.*
+import com.zywczas.letsshare.utils.COLLECTION_USERS
+import com.zywczas.letsshare.utils.logD
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 

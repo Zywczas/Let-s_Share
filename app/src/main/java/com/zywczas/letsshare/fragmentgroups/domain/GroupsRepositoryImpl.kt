@@ -12,7 +12,6 @@ import com.zywczas.letsshare.utils.*
 import kotlinx.coroutines.tasks.await
 import java.util.*
 import javax.inject.Inject
-import kotlin.Exception
 
 class GroupsRepositoryImpl @Inject constructor(
     private val firestore: FirebaseFirestore,

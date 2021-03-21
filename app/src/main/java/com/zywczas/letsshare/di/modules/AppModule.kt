@@ -1,5 +1,7 @@
 package com.zywczas.letsshare.di.modules
 
+import android.app.Application
+import android.content.Context
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.crashlytics.FirebaseCrashlytics
@@ -9,12 +11,12 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import dagger.Module
 import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
 
 @Module
-@InstallIn(ApplicationComponent::class)
-class AppModuleProvides {
+class AppModule {
+
+    @Provides
+    fun provideAppContext(app: Application) : Context = app.applicationContext
 
     @Provides
     fun provideFirebaseAuth(): FirebaseAuth = Firebase.auth
