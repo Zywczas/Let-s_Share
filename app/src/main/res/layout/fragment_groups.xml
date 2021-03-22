@@ -6,10 +6,10 @@
     <data>
         <variable
             name="vm"
-            type="com.zywczas.letsshare.fragmentgroups.presentation.GroupsViewModel" />
+            type="com.zywczas.letsshare.fragments.groups.presentation.GroupsViewModel" />
         <variable
             name="adapter"
-            type="com.zywczas.letsshare.fragmentgroups.adapter.GroupsAdapter" />
+            type="com.zywczas.letsshare.fragments.groups.adapter.GroupsAdapter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

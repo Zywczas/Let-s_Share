@@ -2,12 +2,12 @@ package com.zywczas.letsshare.di.modules
 
 import androidx.fragment.app.Fragment
 import com.zywczas.letsshare.di.qualifiers.FragmentKey
-import com.zywczas.letsshare.fragmentfriends.presentation.FriendsFragment
-import com.zywczas.letsshare.fragmentgroupdetails.presentation.GroupDetailsFragment
-import com.zywczas.letsshare.fragmentgroups.presentation.GroupsFragment
-import com.zywczas.letsshare.fragmentlogin.presentation.LoginFragment
-import com.zywczas.letsshare.fragmentregister.presentation.RegisterFragment
-import com.zywczas.letsshare.fragmentwelcome.presentation.WelcomeFragment
+import com.zywczas.letsshare.fragments.friends.presentation.FriendsFragment
+import com.zywczas.letsshare.fragments.groupdetails.presentation.GroupDetailsFragment
+import com.zywczas.letsshare.fragments.groups.presentation.GroupsFragment
+import com.zywczas.letsshare.fragments.login.presentation.LoginFragment
+import com.zywczas.letsshare.fragments.register.presentation.RegisterFragment
+import com.zywczas.letsshare.fragments.welcome.presentation.WelcomeFragment
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap

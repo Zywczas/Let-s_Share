@@ -7,11 +7,11 @@
 
         <variable
             name="vm"
-            type="com.zywczas.letsshare.fragmentgroupdetails.presentation.GroupDetailsViewModel" />
+            type="com.zywczas.letsshare.fragments.groupdetails.presentation.GroupDetailsViewModel" />
 
         <variable
             name="membersAdapterXML"
-            type="com.zywczas.letsshare.fragmentgroupdetails.adapters.GroupMembersAdapter" />
+            type="com.zywczas.letsshare.fragments.groupdetails.adapters.GroupMembersAdapter" />
     </data>
 
     <FrameLayout
@@ -22,7 +22,7 @@
             android:id="@+id/mainLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".fragmentgroupdetails.presentation.GroupDetailsFragment">
+            tools:context=".fragments.groupdetails.presentation.GroupDetailsFragment">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/membersRecycler"

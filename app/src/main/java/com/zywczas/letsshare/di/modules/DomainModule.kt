@@ -6,19 +6,18 @@ import com.zywczas.letsshare.activitymain.domain.CrashlyticsWrapper
 import com.zywczas.letsshare.activitymain.domain.CrashlyticsWrapperImpl
 import com.zywczas.letsshare.activitymain.domain.SharedPrefsWrapper
 import com.zywczas.letsshare.activitymain.domain.SharedPrefsWrapperImpl
-import com.zywczas.letsshare.fragmentfriends.domain.FriendsRepository
-import com.zywczas.letsshare.fragmentfriends.domain.FriendsRepositoryImpl
-import com.zywczas.letsshare.fragmentgroupdetails.domain.GroupDetailsRepository
-import com.zywczas.letsshare.fragmentgroupdetails.domain.GroupDetailsRepositoryImpl
-import com.zywczas.letsshare.fragmentgroups.domain.GroupsRepository
-import com.zywczas.letsshare.fragmentgroups.domain.GroupsRepositoryImpl
-import com.zywczas.letsshare.fragmentlogin.domain.LoginRepository
-import com.zywczas.letsshare.fragmentlogin.domain.LoginRepositoryImpl
-import com.zywczas.letsshare.fragmentregister.domain.RegisterRepository
-import com.zywczas.letsshare.fragmentregister.domain.RegisterRepositoryImpl
+import com.zywczas.letsshare.fragments.friends.domain.FriendsRepository
+import com.zywczas.letsshare.fragments.friends.domain.FriendsRepositoryImpl
+import com.zywczas.letsshare.fragments.groupdetails.domain.GroupDetailsRepository
+import com.zywczas.letsshare.fragments.groupdetails.domain.GroupDetailsRepositoryImpl
+import com.zywczas.letsshare.fragments.groups.domain.GroupsRepository
+import com.zywczas.letsshare.fragments.groups.domain.GroupsRepositoryImpl
+import com.zywczas.letsshare.fragments.login.domain.LoginRepository
+import com.zywczas.letsshare.fragments.login.domain.LoginRepositoryImpl
+import com.zywczas.letsshare.fragments.register.domain.RegisterRepository
+import com.zywczas.letsshare.fragments.register.domain.RegisterRepositoryImpl
 import dagger.Binds
 import dagger.Module
-import javax.inject.Singleton
 
 @Module
 abstract class DomainModule {
