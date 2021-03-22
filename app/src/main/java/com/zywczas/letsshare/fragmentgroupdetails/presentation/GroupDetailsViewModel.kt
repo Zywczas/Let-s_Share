@@ -20,11 +20,10 @@ class GroupDetailsViewModel @Inject constructor(
     val members: LiveData<List<GroupMember>> = _members
 
     suspend fun getMembers(groupId: String) {
-        withContext(dispatchersIO){
+        withContext(dispatchersIO){ //todo da gdzie indziej tak samo :)
             showProgressBar(true)
-            val membersList = repository.getMembers(groupId)
-            if (membersList != null) { _members.postValue(membersList!!) }
-            else { postMessage(R.string.cant_get_group_members) }
+            repository.getMembers(groupId)?.let{ _members.postValue(it) }
+                ?: kotlin.run { postMessage(R.string.cant_get_group_members) }
             showProgressBar(false)
         }
     }

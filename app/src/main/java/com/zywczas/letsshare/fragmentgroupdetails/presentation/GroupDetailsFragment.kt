@@ -113,7 +113,7 @@ class GroupDetailsFragment @Inject constructor(private val viewModelFactory: Uni
             when(item.id){
                 R.id.addFriendToGroup -> {
                     binding.speedDial.close()
-                    showToast("dodaje znajomego")
+                    viewModel
                     true
                 }
                 R.id.addExpense -> {
