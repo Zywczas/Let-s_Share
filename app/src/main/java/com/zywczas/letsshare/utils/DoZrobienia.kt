@@ -1,5 +1,6 @@
 package com.zywczas.letsshare.utils
 
+//todo zamienic shared prefs n Jetpack DataStore
 //todo dac tak: app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
 //todo nie pojawia sie info o weryfikacji maila, trzeba dac alert dialog i to info
 //todo dac wylogowywanie na guziku
@@ -45,6 +46,9 @@ package com.zywczas.letsshare.utils
 //todo dodac swipe to refresh w groups fragment
 //todo dodac sprawdzenie czy miesiac nie jest juz stary, i wtedy zablokowac operacje dopoki nie zostanie rozliczony
 //todo dodac crashlitycs do wszystkich catch w repo
+//todo jak group details bedzie za wolno sie ladowac to doac to przed ustawianiem guzikow
+//todo jak nie bedzie neta to dac info w footerze wszystkich recycler view
+
 
 private fun test(){
 //    firestore.runTransaction {  } //todo dobra funkcja do updatowania, jak jakis dokument w miedzy czasie sie zmieni to transakcja leci od nowa

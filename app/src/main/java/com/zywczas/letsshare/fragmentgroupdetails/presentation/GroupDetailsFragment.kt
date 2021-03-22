@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.setupWithNavController
+import com.leinardi.android.speeddial.SpeedDialActionItem
 import com.leinardi.android.speeddial.SpeedDialView
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.databinding.FragmentGroupDetailsBinding
@@ -40,22 +41,20 @@ class GroupDetailsFragment @Inject constructor(private val viewModelFactory: Uni
         return binding.root
     }
 
-    override fun onResume() {
-        super.onResume()
-        binding.button.setOnClickListener {
-            lifecycleScope.launchWhenResumed { viewModel.getMembers(args.group.id) }
-        }
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         setupToolbar()
         setupObservers()
         setupSpeedDialMenu()
         setupOnClickListeners()
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
+    override fun onResume() {
+        super.onResume()
+        lifecycleScope.launchWhenResumed { viewModel.getMembers(args.group.id) }
     }
+
+
 
     private fun setupToolbar(){
         binding.toolbar.title = args.group.name
@@ -67,13 +66,24 @@ class GroupDetailsFragment @Inject constructor(private val viewModelFactory: Uni
         viewModel.members.observe(viewLifecycleOwner){ membersAdapter.submitList(it.toMutableList()) }
     }
 
-    private fun setupSpeedDialMenu(){
-
+    private fun setupSpeedDialMenu(){ //todo dokonczyc
+        binding.speedDial.addActionItem(
+            SpeedDialActionItem.Builder(R.id.addFriendToGroup, R.drawable.ic_launcher_foreground)
+                .setLabel("Dodaj znajomego")
+                .setLabelClickable(false)
+                .create()
+        )
+        binding.speedDial.addActionItem(
+            SpeedDialActionItem.Builder(R.id.addExpense, R.drawable.ic_launcher_foreground)
+                .setLabel("Dodaj wydatki")
+                .setLabelClickable(false)
+                .create()
+        )
     }
 
     private fun setupOnClickListeners(){
         setupSpeedDialMainBtnClick()
-//        setupSpeedDialMenuClick()
+        setupSpeedDialMenuClick()
     }
 
     private fun setupSpeedDialMainBtnClick(){
@@ -95,6 +105,24 @@ class GroupDetailsFragment @Inject constructor(private val viewModelFactory: Uni
         } else {
             window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.purple_700) //todo poprawic te kolory, zeby bralo ten z theme
             binding.mainLayout.alpha = 1F
+        }
+    }
+
+    private fun setupSpeedDialMenuClick(){
+        binding.speedDial.setOnActionSelectedListener { item ->
+            when(item.id){
+                R.id.addFriendToGroup -> {
+                    binding.speedDial.close()
+                    showToast("dodaje znajomego")
+                    true
+                }
+                R.id.addExpense -> {
+                    binding.speedDial.close()
+                    showToast("dodaje koszty")
+                    true
+                }
+                else -> false
+            }
         }
     }
 
