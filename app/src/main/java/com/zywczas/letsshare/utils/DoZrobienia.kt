@@ -48,6 +48,10 @@ package com.zywczas.letsshare.utils
 //todo dodac crashlitycs do wszystkich catch w repo
 //todo jak group details bedzie za wolno sie ladowac to doac to przed ustawianiem guzikow
 //todo jak nie bedzie neta to dac info w footerze wszystkich recycler view
+//todo przy pobierniu friends najpierw pobierac z bazy danych, a pozniej w miedzy czasie aktualizowac z neta
+//todo poprawic wyglad listy Firends - ukryc maila, moze pokazac po dluzszym nacisnieciu na niego :)
+//todo nasluchiwac nowuch uzytkownikoww grupie
+//todo nasluchiwac nowych wydatkow w grupie
 
 
 private fun test(){

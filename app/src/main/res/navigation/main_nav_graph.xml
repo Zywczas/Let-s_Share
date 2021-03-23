@@ -80,5 +80,16 @@
         <argument
             android:name="group"
             app:argType="com.zywczas.letsshare.model.Group" />
+        <action
+            android:id="@+id/actionShowAddFriendToGroupDialog"
+            app:destination="@id/addFriendToGroupDialog" />
     </fragment>
+    <dialog
+        android:id="@+id/addFriendToGroupDialog"
+        android:name="com.zywczas.letsshare.fragments.groups.domain.AddGroupMemberDialog"
+        android:label="AddFriendToGroupDialog" >
+        <argument
+            android:name="groupId"
+            app:argType="string" />
+    </dialog>
 </navigation>

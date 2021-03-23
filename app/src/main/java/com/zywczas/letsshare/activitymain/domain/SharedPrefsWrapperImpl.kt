@@ -14,6 +14,7 @@ class SharedPrefsWrapperImpl @Inject constructor (context: Context): SharedPrefs
     private val userIdKey = "userIdKey"
     private val userNameKey = "userNameKey"
     private val userEmailKey = "userEmailKey"
+    private val currentGroupIdKey = "currentGroupIdKey"
 
 //    override var isLoggedInLocally: Boolean
 //        get() = prefs.getBoolean(isLoggedInKey, false)
@@ -22,7 +23,6 @@ class SharedPrefsWrapperImpl @Inject constructor (context: Context): SharedPrefs
 //    override val userAuthId: String = prefs.getString(userIdKey, "")!!
     override val userName: String = prefs.getString(userNameKey, "")!!
     override val userEmail: String = prefs.getString(userEmailKey, "")!!
-
 
     override suspend fun saveUserLocally(user: User) {
         prefs.edit().putString(userIdKey, user.auth_id).apply()

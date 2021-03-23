@@ -17,6 +17,8 @@ import com.zywczas.letsshare.R
 import com.zywczas.letsshare.databinding.FragmentGroupDetailsBinding
 import com.zywczas.letsshare.di.factories.UniversalViewModelFactory
 import com.zywczas.letsshare.fragments.groupdetails.adapters.GroupMembersAdapter
+import com.zywczas.letsshare.fragments.groups.domain.AddGroupMemberDialog
+import com.zywczas.letsshare.utils.GROUP_ID_KEY
 import com.zywczas.letsshare.utils.autoRelease
 import com.zywczas.letsshare.utils.showToast
 import javax.inject.Inject
@@ -33,16 +35,16 @@ class GroupDetailsFragment @Inject constructor(private val viewModelFactory: Uni
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentGroupDetailsBinding.inflate(inflater, container, false)
-        binding.apply {
-            lifecycleOwner = viewLifecycleOwner
-            vm = viewModel
-            membersAdapterXML = membersAdapter
-        }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.apply {
+            lifecycleOwner = viewLifecycleOwner
+            vm = viewModel
+            membersAdapterXML = membersAdapter
+        }
         setupToolbar()
         setupObservers()
         setupSpeedDialMenu()
@@ -51,10 +53,11 @@ class GroupDetailsFragment @Inject constructor(private val viewModelFactory: Uni
 
     override fun onResume() {
         super.onResume()
-        lifecycleScope.launchWhenResumed { viewModel.getMembers(args.group.id) }
+        lifecycleScope.launchWhenResumed {
+            viewModel.getMembers(args.group.id)
+//            viewModel.saveCurrentGroupId(args.group.id)
+        }
     }
-
-
 
     private fun setupToolbar(){
         binding.toolbar.title = args.group.name
@@ -113,7 +116,7 @@ class GroupDetailsFragment @Inject constructor(private val viewModelFactory: Uni
             when(item.id){
                 R.id.addFriendToGroup -> {
                     binding.speedDial.close()
-                    viewModel
+                    showAddFriendToGroupDialog()
                     true
                 }
                 R.id.addExpense -> {
@@ -124,6 +127,13 @@ class GroupDetailsFragment @Inject constructor(private val viewModelFactory: Uni
                 else -> false
             }
         }
+    }
+
+    private fun showAddFriendToGroupDialog(){
+//        findNavController().navigate(GroupDetailsFragmentDirections.actionShowAddFriendToGroupDialog(args.group.id)) //todo sprobowc to zrobic albo usunac z nav graph, albo zauktualizowac nazwy w nav graph
+        val dialog = AddGroupMemberDialog()
+        dialog.arguments = Bundle().apply { putString(GROUP_ID_KEY, args.group.id) }
+        dialog.show(childFragmentManager, "AddGroupMemberDialog")
     }
 
 }

@@ -4,7 +4,10 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.toObjects
 import com.zywczas.letsshare.activitymain.domain.CrashlyticsWrapper
+import com.zywczas.letsshare.activitymain.domain.SharedPrefsWrapper
+import com.zywczas.letsshare.model.Friend
 import com.zywczas.letsshare.model.GroupMember
+import com.zywczas.letsshare.model.db.FriendsDao
 import com.zywczas.letsshare.utils.COLLECTION_GROUPS
 import com.zywczas.letsshare.utils.COLLECTION_MEMBERS
 import com.zywczas.letsshare.utils.FIELD_EXPENSES
@@ -14,7 +17,9 @@ import javax.inject.Inject
 
 class GroupDetailsRepositoryImpl @Inject constructor(
     private val firestore: FirebaseFirestore,
-    private val crashlyticsWrapper: CrashlyticsWrapper
+    private val crashlyticsWrapper: CrashlyticsWrapper,
+    private val friendsDao: FriendsDao,
+    private val sharedPrefs: SharedPrefsWrapper
 ) : GroupDetailsRepository {
 
     override suspend fun getMembers(groupId: String): List<GroupMember>? =
@@ -29,5 +34,11 @@ class GroupDetailsRepositoryImpl @Inject constructor(
             logD(e)
             null
         }
+
+//    override suspend fun saveCurrentGroupId(groupId: String) {
+//        sharedPrefs.currentGroupId = groupId
+//    }
+
+    override suspend fun getFriends(): List<Friend> = friendsDao.getFriends()
 
 }

@@ -10,7 +10,10 @@ import com.zywczas.letsshare.activitymain.domain.CrashlyticsWrapper
 import com.zywczas.letsshare.activitymain.domain.SharedPrefsWrapper
 import com.zywczas.letsshare.model.Friend
 import com.zywczas.letsshare.model.User
+import com.zywczas.letsshare.model.db.FriendsDao
+import com.zywczas.letsshare.utils.COLLECTION_FRIENDS
 import com.zywczas.letsshare.utils.COLLECTION_USERS
+import com.zywczas.letsshare.utils.FIELD_NAME
 import com.zywczas.letsshare.utils.logD
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
@@ -19,24 +22,24 @@ class FriendsRepositoryImpl @Inject constructor(
     private val firebaseAuth: FirebaseAuth,
     private val firestore: FirebaseFirestore,
     private val sharedPrefs: SharedPrefsWrapper,
-    private val crashlyticsWrapper: CrashlyticsWrapper
+    private val crashlyticsWrapper: CrashlyticsWrapper,
+    private val friendsDao: FriendsDao
 ) : FriendsRepository {
-
-    private val collectionFriends = "friends"
-    private val fieldName = "name"
 
     //todo wrzucic w session manager
     override suspend fun logout() = firebaseAuth.signOut()
 
     override suspend fun getFriends(): List<Friend>? =
         try {
-            firestore.collection(COLLECTION_USERS)
+            val friends = firestore.collection(COLLECTION_USERS)
                 .document(sharedPrefs.userEmail)
-                .collection(collectionFriends)
-                .orderBy(fieldName, Query.Direction.ASCENDING)
+                .collection(COLLECTION_FRIENDS)
+                .orderBy(FIELD_NAME, Query.Direction.ASCENDING)
                 .get()
                 .await()
-                .toObjects()
+                .toObjects<Friend>()        //todo pozniej to poprawic, dac najpierw pobieranie z bazy, potem z firestore, i wtedy update, albo dac swipe to refresh albo nasluchiwanie zmian, moze lepiej nasluchiwanie zmian dla treningu
+            friendsDao.insert(friends)
+            friends
         } catch (e: Exception) {
             crashlyticsWrapper.sendExceptionToFirebase(e)
             logD(e)
@@ -66,7 +69,7 @@ class FriendsRepositoryImpl @Inject constructor(
     private fun addFriendToFirestoreCollection(friend: Friend, onFinishAction: (Int) -> Unit) {
         firestore.collection(COLLECTION_USERS)
             .document(sharedPrefs.userEmail)
-            .collection(collectionFriends)
+            .collection(COLLECTION_FRIENDS)
             .document(friend.email)
             .set(friend)
             .addOnSuccessListener {

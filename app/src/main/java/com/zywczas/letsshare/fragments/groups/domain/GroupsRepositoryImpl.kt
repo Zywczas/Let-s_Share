@@ -37,7 +37,7 @@ class GroupsRepositoryImpl @Inject constructor(
                 .document(newGroup.id)
                 .collection(COLLECTION_MEMBERS)
                 .document(userEmail)
-            val newMember = GroupMember(sharedPrefs.userName, userEmail)
+            val newMember = GroupMember(sharedPrefs.userName, userEmail,0 , 100.0)
             val userRef = firestore.collection(COLLECTION_USERS).document(userEmail) //todo sprobowac to rozbic na mniejsze funkcje, np dodaj jesli mniej niz 10 rgrup
             firestore.runTransaction { transaction ->
                 val user = transaction.get(userRef).toObject<User>()!!

@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.model.Friend
 
-class FriendsAdapter : ListAdapter<Friend, FriendsAdapter.ViewHolder>(object : DiffUtil.ItemCallback<Friend>() {
+class FriendsAdapter(private val onClick: (Friend) -> Unit) : ListAdapter<Friend, FriendsAdapter.ViewHolder>(object : DiffUtil.ItemCallback<Friend>() {
 
     override fun areItemsTheSame(oldItem: Friend, newItem: Friend): Boolean = oldItem.email == newItem.email
 
@@ -24,6 +24,7 @@ class FriendsAdapter : ListAdapter<Friend, FriendsAdapter.ViewHolder>(object : D
         fun bindFriend(friend: Friend) {
             name.text = friend.name
             email.text = friend.email
+            itemView.setOnClickListener { onClick(friend) }
         }
     }
 
