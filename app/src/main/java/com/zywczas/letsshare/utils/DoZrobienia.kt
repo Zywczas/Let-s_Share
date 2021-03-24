@@ -52,6 +52,8 @@ package com.zywczas.letsshare.utils
 //todo poprawic wyglad listy Firends - ukryc maila, moze pokazac po dluzszym nacisnieciu na niego :)
 //todo nasluchiwac nowuch uzytkownikoww grupie
 //todo nasluchiwac nowych wydatkow w grupie
+//todo sprawdzic czy live data puszcza value nawet jak nie ma observers
+//todo dac pozniej cos takiego jak groupRef() = firestore.coll.doc
 
 
 private fun test(){

@@ -37,18 +37,20 @@ class GroupDetailsViewModel @Inject constructor(
         }
     }
 
-//    suspend fun saveCurrentGroupId(groupId: String){
-//        withContext(dispatchersIO) { repository.saveCurrentGroupId(groupId) } //todo nie wiem czy ta funkcja nie bedzie wywolywana za wczesnie, czy zdazy sie zapisac zanim ktos kliknie, sprawdzic...
-//    }
-
     suspend fun getFriends(){
         withContext(dispatchersIO){ _friends.postValue(repository.getFriends()) }
     }
 
     suspend fun addNewMember(friend: Friend, groupId: String){
         withContext(dispatchersIO){
-
+            showProgressBar(true)
+            repository.addNewMemberIfBelow7InGroup(friend.toGroupMember(), groupId)?.let { error ->
+                postMessage(error)
+                showProgressBar(false)
+            } ?: kotlin.run { getMembers(groupId) }
         }
     }
+
+    private fun Friend.toGroupMember() = GroupMember(name, email)
 
 }

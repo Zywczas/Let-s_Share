@@ -24,6 +24,9 @@
     <string name="cant_get_groups">Nie udało się pobrać listy grup.</string>
     <string name="no_group_name">Podaj nazwę dla swojej grupy.</string>
     <string name="cant_get_group_members">Nie udało się pobrać listy członków grupy.</string>
+    <string name="too_many_members">Jedna grupa może mieć siedmiu członków max.</string>
+    <string name="cant_add_member">Nie udało się dodać członka. Spróbuj ponownie.</string>
+    <string name="member_exists">Ta osoba już jest w tej grupie.</string>
 
     <!--    UI elements - main app-->
     <string name="friends">Znajomi</string>

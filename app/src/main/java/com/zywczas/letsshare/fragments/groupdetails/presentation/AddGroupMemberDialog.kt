@@ -1,4 +1,4 @@
-package com.zywczas.letsshare.fragments.groups.domain
+package com.zywczas.letsshare.fragments.groupdetails.presentation
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,13 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.NavArgsLazy
-import androidx.navigation.fragment.navArgs
-import com.zywczas.letsshare.R
 import com.zywczas.letsshare.databinding.DialogAddFriendToGroupBinding
 import com.zywczas.letsshare.fragments.friends.adapter.FriendsAdapter
-import com.zywczas.letsshare.fragments.groupdetails.presentation.GroupDetailsFragmentArgs
-import com.zywczas.letsshare.fragments.groupdetails.presentation.GroupDetailsViewModel
 import com.zywczas.letsshare.utils.GROUP_ID_KEY
 import com.zywczas.letsshare.utils.autoRelease
 import com.zywczas.letsshare.utils.showToast
@@ -22,10 +17,14 @@ class AddGroupMemberDialog : DialogFragment() {
 
     private val viewModel: GroupDetailsViewModel by viewModels({ requireParentFragment() })
     private var binding: DialogAddFriendToGroupBinding by autoRelease()
+    private val groupId by lazy { requireArguments().getString(GROUP_ID_KEY)!! } //todo zamienic pozniej na safe args, jak ogarne view model
+
     private val adapter by lazy { FriendsAdapter{ friend ->
-        viewModel.postMessage(R.string.group_added)
+        lifecycleScope.launchWhenCreated {
+            viewModel.addNewMember(friend, groupId)
+            dismiss()
+        }
     } }
-    private val groupId by lazy { requireArguments().getString(GROUP_ID_KEY)!! }
 
     override fun onCreateView(
         inflater: LayoutInflater,

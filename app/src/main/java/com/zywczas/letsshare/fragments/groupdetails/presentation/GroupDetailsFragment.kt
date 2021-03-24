@@ -17,7 +17,6 @@ import com.zywczas.letsshare.R
 import com.zywczas.letsshare.databinding.FragmentGroupDetailsBinding
 import com.zywczas.letsshare.di.factories.UniversalViewModelFactory
 import com.zywczas.letsshare.fragments.groupdetails.adapters.GroupMembersAdapter
-import com.zywczas.letsshare.fragments.groups.domain.AddGroupMemberDialog
 import com.zywczas.letsshare.utils.GROUP_ID_KEY
 import com.zywczas.letsshare.utils.autoRelease
 import com.zywczas.letsshare.utils.showToast
@@ -53,7 +52,7 @@ class GroupDetailsFragment @Inject constructor(private val viewModelFactory: Uni
 
     override fun onResume() {
         super.onResume()
-        lifecycleScope.launchWhenResumed {
+        lifecycleScope.launchWhenResumed { //todo dac to przed on setupem layoutu ale bez whenResumed, sprawdzic co ta funkcja dokladnie robi
             viewModel.getMembers(args.group.id)
 //            viewModel.saveCurrentGroupId(args.group.id)
         }
@@ -128,8 +127,11 @@ class GroupDetailsFragment @Inject constructor(private val viewModelFactory: Uni
             }
         }
     }
-
+//todo zmienic nazwe na mamber i layoutu tez
     private fun showAddFriendToGroupDialog(){
+        //todo tu jescze mozna sprobowac wstrzykiwac daggerem fabryke w konstruktor i
+        //todo dc odpowiedni scope dla tego view modelu :)
+    //todo sprawdzic co sie stanie jak dam fabryke jako singleton, czy bedzie mi wstzykiwac wszedzie te same view modele
 //        findNavController().navigate(GroupDetailsFragmentDirections.actionShowAddFriendToGroupDialog(args.group.id)) //todo sprobowc to zrobic albo usunac z nav graph, albo zauktualizowac nazwy w nav graph
         val dialog = AddGroupMemberDialog()
         dialog.arguments = Bundle().apply { putString(GROUP_ID_KEY, args.group.id) }

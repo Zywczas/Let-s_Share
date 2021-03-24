@@ -23,7 +23,7 @@ class FriendsFragment @Inject constructor(private val viewModelFactory: Universa
 
     private val viewModel: FriendsViewModel by viewModels { viewModelFactory }
     private var binding: FragmentFriendsBinding by autoRelease()
-    private val friendsAdapter by lazy { FriendsAdapter{} }
+    private val friendsAdapter by lazy { FriendsAdapter() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

@@ -86,7 +86,7 @@
     </fragment>
     <dialog
         android:id="@+id/addFriendToGroupDialog"
-        android:name="com.zywczas.letsshare.fragments.groups.domain.AddGroupMemberDialog"
+        android:name="com.zywczas.letsshare.fragments.groupdetails.presentation.AddGroupMemberDialog"
         android:label="AddFriendToGroupDialog" >
         <argument
             android:name="groupId"
