@@ -3,8 +3,8 @@ package com.zywczas.letsshare.fragments.groups.domain
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObject
 import com.zywczas.letsshare.R
-import com.zywczas.letsshare.activitymain.domain.CrashlyticsWrapper
-import com.zywczas.letsshare.activitymain.domain.SharedPrefsWrapper
+import com.zywczas.letsshare.utils.wrappers.CrashlyticsWrapper
+import com.zywczas.letsshare.utils.wrappers.SharedPrefsWrapper
 import com.zywczas.letsshare.model.Group
 import com.zywczas.letsshare.model.GroupMember
 import com.zywczas.letsshare.model.User

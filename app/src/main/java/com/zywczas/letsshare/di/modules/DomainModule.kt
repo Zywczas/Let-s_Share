@@ -2,7 +2,6 @@ package com.zywczas.letsshare.di.modules
 
 import com.zywczas.letsshare.SessionManager
 import com.zywczas.letsshare.SessionManagerImpl
-import com.zywczas.letsshare.activitymain.domain.*
 import com.zywczas.letsshare.fragments.friends.domain.FriendsRepository
 import com.zywczas.letsshare.fragments.friends.domain.FriendsRepositoryImpl
 import com.zywczas.letsshare.fragments.groupdetails.domain.GroupDetailsRepository
@@ -13,6 +12,7 @@ import com.zywczas.letsshare.fragments.login.domain.LoginRepository
 import com.zywczas.letsshare.fragments.login.domain.LoginRepositoryImpl
 import com.zywczas.letsshare.fragments.register.domain.RegisterRepository
 import com.zywczas.letsshare.fragments.register.domain.RegisterRepositoryImpl
+import com.zywczas.letsshare.utils.wrappers.*
 import dagger.Binds
 import dagger.Module
 
@@ -26,7 +26,7 @@ abstract class DomainModule {
     abstract fun bindSharedPrefsWrapper(repo: SharedPrefsWrapperImpl): SharedPrefsWrapper
 
     @Binds
-    abstract fun bindFirestoreWrapper(repo: FirestoreWrapperImpl): FirestoreWrapper
+    abstract fun bindFirestoreWrapper(repo: FirestoreReferencesImpl): FirestoreReferences
 
     @Binds
     abstract fun bindCrashlyticsWrapper(repo: CrashlyticsWrapperImpl): CrashlyticsWrapper

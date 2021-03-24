@@ -1,8 +1,9 @@
-package com.zywczas.letsshare.activitymain.domain
+package com.zywczas.letsshare.utils.wrappers
 
 import android.content.Context
 import android.content.SharedPreferences
 import com.zywczas.letsshare.model.User
+import com.zywczas.letsshare.utils.wrappers.SharedPrefsWrapper
 import javax.inject.Inject
 
 class SharedPrefsWrapperImpl @Inject constructor (context: Context): SharedPrefsWrapper {
@@ -17,7 +18,7 @@ class SharedPrefsWrapperImpl @Inject constructor (context: Context): SharedPrefs
     private val currentGroupIdKey = "currentGroupIdKey"
 
 //    override var isLoggedInLocally: Boolean
-//        get() = prefs.getBoolean(isLoggedInKey, false)
+//        get() = prefs.getBoolean(isLoggedInKey, false) //todo
 //        set(value) = prefs.edit().putBoolean(isLoggedInKey, value).apply()
 
 //    override val userAuthId: String = prefs.getString(userIdKey, "")!!

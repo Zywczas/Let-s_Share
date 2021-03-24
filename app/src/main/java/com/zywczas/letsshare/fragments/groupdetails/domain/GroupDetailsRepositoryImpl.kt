@@ -6,21 +6,19 @@ import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.firestore.ktx.toObjects
 import com.zywczas.letsshare.R
-import com.zywczas.letsshare.activitymain.domain.CrashlyticsWrapper
-import com.zywczas.letsshare.activitymain.domain.FirestoreWrapper
+import com.zywczas.letsshare.utils.wrappers.CrashlyticsWrapper
+import com.zywczas.letsshare.utils.wrappers.FirestoreReferences
 import com.zywczas.letsshare.model.Friend
 import com.zywczas.letsshare.model.Group
 import com.zywczas.letsshare.model.GroupMember
 import com.zywczas.letsshare.model.db.FriendsDao
-import com.zywczas.letsshare.utils.COLLECTION_GROUPS
-import com.zywczas.letsshare.utils.COLLECTION_MEMBERS
 import com.zywczas.letsshare.utils.FIELD_EXPENSES
 import com.zywczas.letsshare.utils.logD
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class GroupDetailsRepositoryImpl @Inject constructor(
-    private val firestoreWrapper: FirestoreWrapper,
+    private val firestoreReferences: FirestoreReferences,
     private val firestore: FirebaseFirestore,
     private val crashlyticsWrapper: CrashlyticsWrapper,
     private val friendsDao: FriendsDao
@@ -28,8 +26,7 @@ class GroupDetailsRepositoryImpl @Inject constructor(
 
     override suspend fun getMembers(groupId: String): List<GroupMember>? =
         try {
-            firestore.collection(COLLECTION_GROUPS).document(groupId)
-                .collection(COLLECTION_MEMBERS)
+            firestoreReferences.collectionMembersRef(groupId)
                 .orderBy(FIELD_EXPENSES, Query.Direction.DESCENDING)
                 .get().await()
                 .toObjects()
@@ -46,14 +43,14 @@ class GroupDetailsRepositoryImpl @Inject constructor(
             if (isMemberInTheGroupAlready(newMember.email, groupId)) {
                 R.string.member_exists
             } else {
-                val groupRef = firestoreWrapper.groupRef(groupId)
-                val newMemberRef = firestoreWrapper.newGroupMemberRef(newMember.email, groupId)
+                val groupRef = firestoreReferences.groupRef(groupId)
+                val newMemberRef = firestoreReferences.newGroupMemberRef(newMember.email, groupId)
 
                 firestore.runTransaction { transaction ->
                     val group = transaction.get(groupRef).toObject<Group>()!!
                     if (group.members_num < 7){
                         transaction.set(newMemberRef, newMember)
-                        transaction.update(groupRef, firestoreWrapper.members_num, FieldValue.increment(1))
+                        transaction.update(groupRef, firestoreReferences.members_num, FieldValue.increment(1))
                         return@runTransaction null
                     } else {
                         return@runTransaction R.string.too_many_members
