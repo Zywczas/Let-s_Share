@@ -7,12 +7,13 @@ import com.zywczas.letsshare.model.User
 import com.zywczas.letsshare.utils.COLLECTION_USERS
 import com.zywczas.letsshare.utils.logD
 import com.zywczas.letsshare.utils.today
+import com.zywczas.letsshare.utils.wrappers.FirestoreReferences
 import java.util.*
 import javax.inject.Inject
 
 class RegisterRepositoryImpl @Inject constructor(
     private val firebaseAuth: FirebaseAuth,
-    private val firestore: FirebaseFirestore
+    private val firestoreRefs: FirestoreReferences
 ) : RegisterRepository {
 
     //todo to mi rzuca exception jak zly format maila, trzeba to poprawic na succeess i failure pewnie
@@ -48,9 +49,8 @@ class RegisterRepositoryImpl @Inject constructor(
     override suspend fun addNewUserToFirestore(name: String, email: String, onSuccessAction: (Boolean) -> Unit){
         val userId = firebaseAuth.currentUser?.uid
         if (userId != null){
-            firestore.collection(COLLECTION_USERS)
-                .document(email)
-                .set(User(userId!!, name, email, Date().today()))
+            firestoreRefs.userRefs(email)
+                .set(User(userId, name, email, Date().today()))
                 .addOnSuccessListener {
                     onSuccessAction(true)
                 }.addOnFailureListener {

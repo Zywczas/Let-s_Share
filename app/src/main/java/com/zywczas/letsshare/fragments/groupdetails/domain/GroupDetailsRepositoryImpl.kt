@@ -18,7 +18,7 @@ import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class GroupDetailsRepositoryImpl @Inject constructor(
-    private val firestoreReferences: FirestoreReferences,
+    private val firestoreRefs: FirestoreReferences,
     private val firestore: FirebaseFirestore,
     private val crashlyticsWrapper: CrashlyticsWrapper,
     private val friendsDao: FriendsDao
@@ -26,7 +26,7 @@ class GroupDetailsRepositoryImpl @Inject constructor(
 
     override suspend fun getMembers(groupId: String): List<GroupMember>? =
         try {
-            firestoreReferences.collectionMembersRef(groupId)
+            firestoreRefs.collectionMembersRefs(groupId)
                 .orderBy(FIELD_EXPENSES, Query.Direction.DESCENDING)
                 .get().await()
                 .toObjects()
@@ -43,14 +43,14 @@ class GroupDetailsRepositoryImpl @Inject constructor(
             if (isMemberInTheGroupAlready(newMember.email, groupId)) {
                 R.string.member_exists
             } else {
-                val groupRef = firestoreReferences.groupRef(groupId)
-                val newMemberRef = firestoreReferences.newGroupMemberRef(newMember.email, groupId)
+                val groupRef = firestoreRefs.groupRefs(groupId)
+                val newMemberRef = firestoreRefs.newGroupMemberRefs(newMember.email, groupId)
 
                 firestore.runTransaction { transaction ->
                     val group = transaction.get(groupRef).toObject<Group>()!!
                     if (group.members_num < 7){
                         transaction.set(newMemberRef, newMember)
-                        transaction.update(groupRef, firestoreReferences.members_num, FieldValue.increment(1))
+                        transaction.update(groupRef, firestoreRefs.membersNumField, FieldValue.increment(1))
                         return@runTransaction null
                     } else {
                         return@runTransaction R.string.too_many_members

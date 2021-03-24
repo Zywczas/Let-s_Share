@@ -15,12 +15,14 @@ import com.zywczas.letsshare.utils.COLLECTION_FRIENDS
 import com.zywczas.letsshare.utils.COLLECTION_USERS
 import com.zywczas.letsshare.utils.FIELD_NAME
 import com.zywczas.letsshare.utils.logD
+import com.zywczas.letsshare.utils.wrappers.FirestoreReferences
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class FriendsRepositoryImpl @Inject constructor(
     private val firebaseAuth: FirebaseAuth,
     private val firestore: FirebaseFirestore,
+    private val firestoreRefs: FirestoreReferences,
     private val sharedPrefs: SharedPrefsWrapper,
     private val crashlyticsWrapper: CrashlyticsWrapper,
     private val friendsDao: FriendsDao
@@ -35,8 +37,7 @@ class FriendsRepositoryImpl @Inject constructor(
                 .document(sharedPrefs.userEmail)
                 .collection(COLLECTION_FRIENDS)
                 .orderBy(FIELD_NAME, Query.Direction.ASCENDING)
-                .get()
-                .await()
+                .get().await()
                 .toObjects<Friend>()        //todo pozniej to poprawic, dac najpierw pobieranie z bazy, potem z firestore, i wtedy update, albo dac swipe to refresh albo nasluchiwanie zmian, moze lepiej nasluchiwanie zmian dla treningu
             friendsDao.insert(friends)
             friends

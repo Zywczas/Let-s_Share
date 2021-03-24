@@ -12,12 +12,14 @@ import com.zywczas.letsshare.utils.wrappers.SharedPrefsWrapper
 import com.zywczas.letsshare.model.User
 import com.zywczas.letsshare.utils.COLLECTION_USERS
 import com.zywczas.letsshare.utils.logD
+import com.zywczas.letsshare.utils.wrappers.FirestoreReferences
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class LoginRepositoryImpl @Inject constructor(
     private val firebaseAuth: FirebaseAuth,
     private val firestore: FirebaseFirestore,
+    private val firestoreRefs: FirestoreReferences,
     private val sharedPrefs: SharedPrefsWrapper
     ): LoginRepository {
 
@@ -90,6 +92,7 @@ suspend fun getDataFromFireStore(childName : String)
 
     private fun getUser(email: String, onSuccessAction: (User?, Int?) -> Unit){
         firestore.collection(COLLECTION_USERS).document(email).get().addOnSuccessListener { userDocument ->
+//        firestoreRefs.userRefs(email).get().addOnSuccessListener { userDocument -> //todo tak pozniej dac
             val user = userDocument.toObject<User>()
             user?.let {
                 logD("zalogowany uzytkownik: $user")
