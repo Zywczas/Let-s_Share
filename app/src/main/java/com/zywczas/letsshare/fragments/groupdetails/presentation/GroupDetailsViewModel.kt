@@ -11,6 +11,7 @@ import com.zywczas.letsshare.model.GroupMember
 import com.zywczas.letsshare.utils.logD
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
+import java.math.BigDecimal
 import javax.inject.Inject
 
 class GroupDetailsViewModel @Inject constructor(
@@ -53,9 +54,9 @@ class GroupDetailsViewModel @Inject constructor(
 
     private fun Friend.toGroupMember() = GroupMember(name, email)
 
-    suspend fun addNewExpense(groupId: String, name: String, amount: Double){
+    suspend fun addNewExpense(groupId: String, name: String, amount: BigDecimal){
         withContext(dispatchersIO){
-            //todo
+            val roundedAmount = amount.setScale(2, BigDecimal.ROUND_HALF_UP)
         }
     }
 

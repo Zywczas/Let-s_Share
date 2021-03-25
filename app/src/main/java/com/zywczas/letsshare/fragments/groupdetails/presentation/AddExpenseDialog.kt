@@ -35,23 +35,17 @@ class AddExpenseDialog : DialogFragment() {
     }
 
     private fun verifyValuesAndAddExpense() {
-        when {
+        when { //todo dac tutaj pozniej cofanie na normaly background jak jest wartosc
             binding.name.text.toString().isBlank() -> binding.name.setBackgroundResource(R.drawable.edittext_red_stroke)
             binding.amout.text.toString().isBlank() -> binding.amout.setBackgroundResource(R.drawable.edittext_red_stroke)
             else -> lifecycleScope.launchWhenResumed { addExpense() }
         }
     }
 
-//    fun test(){ //todo
-//        binding.name.setBackgroundResource(R.drawable.edittext_red_stroke)
-//    }
-
 //todo zamienic pozniej double na BigDecimal wszedzie gdzie kwoty i udzialy
 
-    //todo dac sprawdzenie czy nie za duzo cyfr po przecinku
-
     private suspend fun addExpense(){
-        val amount = binding.amout.text.toString().toDoubleOrNull()
+        val amount = binding.amout.text.toString().toBigDecimalOrNull()
         amount?.let {
             viewModel.addNewExpense(groupId, binding.name.text.toString(), it)
             dismiss()
