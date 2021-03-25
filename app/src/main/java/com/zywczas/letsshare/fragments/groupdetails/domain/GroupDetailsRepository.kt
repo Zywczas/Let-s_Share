@@ -2,6 +2,7 @@ package com.zywczas.letsshare.fragments.groupdetails.domain
 
 import com.zywczas.letsshare.model.Friend
 import com.zywczas.letsshare.model.GroupMember
+import java.math.BigDecimal
 
 interface GroupDetailsRepository {
 
@@ -10,5 +11,7 @@ interface GroupDetailsRepository {
     suspend fun getFriends(): List<Friend>
 
     suspend fun addNewMemberIfBelow7InGroup(newMember: GroupMember, groupId: String): Int?
+
+    suspend fun addNewExpense(groupId: String, name: String, amount: BigDecimal): Int?
 
 }

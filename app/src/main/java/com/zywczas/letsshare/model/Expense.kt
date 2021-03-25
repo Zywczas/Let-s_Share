@@ -1,9 +1,12 @@
 package com.zywczas.letsshare.model
 
-data class Receipt (
+import java.math.BigDecimal
+
+data class Expense (
     val id: String = "",
     val name: String = "",
     val payee_email: String = "",
     val payee_name: String = "",
-    val value: Double = 0.0
+    val value: BigDecimal = BigDecimal.ZERO,
+    val date_created: String = "",
 )

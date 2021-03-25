@@ -15,6 +15,7 @@ import com.zywczas.letsshare.model.db.FriendsDao
 import com.zywczas.letsshare.utils.FIELD_EXPENSES
 import com.zywczas.letsshare.utils.logD
 import kotlinx.coroutines.tasks.await
+import java.math.BigDecimal
 import javax.inject.Inject
 
 class GroupDetailsRepositoryImpl @Inject constructor(
@@ -44,7 +45,7 @@ class GroupDetailsRepositoryImpl @Inject constructor(
                 R.string.member_exists
             } else {
                 val groupRef = firestoreRefs.groupRefs(groupId)
-                val newMemberRef = firestoreRefs.newGroupMemberRefs(newMember.email, groupId)
+                val newMemberRef = firestoreRefs.groupMemberRefs(newMember.email, groupId)
 
                 firestore.runTransaction { transaction ->
                     val group = transaction.get(groupRef).toObject<Group>()!!
@@ -65,5 +66,11 @@ class GroupDetailsRepositoryImpl @Inject constructor(
 
     private suspend fun isMemberInTheGroupAlready(memberEmail: String, groupId: String): Boolean =
         getMembers(groupId)!!.firstOrNull{ it.email == memberEmail } != null
+
+    override suspend fun addNewExpense(groupId: String, name: String, amount: BigDecimal): Int? {
+        TODO("Not yet implemented")
+    }
+
+    //todo przy tworzeniu miesiaca trzeba bedzie dac sprawdzeie czy juz nie istnieje w transakcji
 
 }

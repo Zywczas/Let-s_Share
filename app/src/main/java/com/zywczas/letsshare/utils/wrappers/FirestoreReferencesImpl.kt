@@ -11,8 +11,11 @@ import javax.inject.Inject
 
 class FirestoreReferencesImpl @Inject constructor(private val firestore: FirebaseFirestore) :
     FirestoreReferences {
-
+//todo moze przeniesc pozniej wszystkie const tutaj
     override val membersNumField = "members_num"
+
+    private val collectionMonths = "months"
+    private val collectionExpenses = "expenses"
 
     override suspend fun userRefs(email: String): DocumentReference =
         firestore.collection(COLLECTION_USERS)
@@ -26,9 +29,30 @@ class FirestoreReferencesImpl @Inject constructor(private val firestore: Firebas
         firestore.collection(COLLECTION_GROUPS).document(groupId)
             .collection(COLLECTION_MEMBERS)
 
-    override suspend fun newGroupMemberRefs(memberEmail: String, groupId: String): DocumentReference =
+    override suspend fun groupMemberRefs(memberEmail: String, groupId: String): DocumentReference =
         firestore.collection(COLLECTION_GROUPS).document(groupId)
             .collection(COLLECTION_MEMBERS)
             .document(memberEmail)
 
+    override suspend fun groupMonthRefs(monthId: String, groupId: String): DocumentReference =
+        firestore.collection(COLLECTION_GROUPS).document(groupId)
+            .collection(collectionMonths)
+            .document(monthId)
+
+    override suspend fun collectionExpensesRefs(monthId: String, groupId: String): CollectionReference =
+        firestore.collection(COLLECTION_GROUPS).document(groupId)
+            .collection(collectionMonths).document(monthId)
+            .collection(collectionExpenses)
+
+    override suspend fun newExpenseRefs(monthId: String, groupId: String): DocumentReference =
+        firestore.collection(COLLECTION_GROUPS).document(groupId)
+            .collection(collectionMonths).document(monthId)
+            .collection(collectionExpenses)
+            .document()
+
+    override suspend fun expenseRefs(monthId: String, groupId: String, expenseId: String): DocumentReference =
+        firestore.collection(COLLECTION_GROUPS).document(groupId)
+            .collection(collectionMonths).document(monthId)
+            .collection(collectionExpenses)
+            .document(expenseId)
 }

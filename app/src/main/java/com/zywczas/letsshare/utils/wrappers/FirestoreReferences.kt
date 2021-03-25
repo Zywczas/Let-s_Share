@@ -13,6 +13,14 @@ interface FirestoreReferences {
 
     suspend fun collectionMembersRefs(groupId: String): CollectionReference
 
-    suspend fun newGroupMemberRefs(memberEmail: String, groupId: String): DocumentReference
+    suspend fun groupMemberRefs(memberEmail: String, groupId: String): DocumentReference
+
+    suspend fun groupMonthRefs(monthId: String, groupId: String): DocumentReference
+
+    suspend fun collectionExpensesRefs(monthId: String, groupId: String): CollectionReference
+
+    suspend fun newExpenseRefs(monthId: String, groupId: String): DocumentReference
+
+    suspend fun expenseRefs(monthId: String, groupId: String, expenseId: String): DocumentReference
 
 }
