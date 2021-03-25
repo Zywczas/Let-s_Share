@@ -68,17 +68,17 @@ class GroupDetailsFragment @Inject constructor(private val viewModelFactory: Uni
         viewModel.members.observe(viewLifecycleOwner){ membersAdapter.submitList(it.toMutableList()) }
     }
 
-    private fun setupSpeedDialMenu(){ //todo dokonczyc
+    private fun setupSpeedDialMenu(){ //todo dokonczyc, kolory, ikonki, text ze stringow
         binding.speedDial.addActionItem(
             SpeedDialActionItem.Builder(R.id.addFriendToGroup, R.drawable.ic_launcher_foreground)
                 .setLabel("Dodaj znajomego")
-                .setLabelClickable(false)
+                .setLabelClickable(true)
                 .create()
         )
         binding.speedDial.addActionItem(
             SpeedDialActionItem.Builder(R.id.addExpense, R.drawable.ic_launcher_foreground)
-                .setLabel("Dodaj wydatki")
-                .setLabelClickable(false)
+                .setLabel("Dodaj wydatek")
+                .setLabelClickable(true)
                 .create()
         )
     }
@@ -120,7 +120,7 @@ class GroupDetailsFragment @Inject constructor(private val viewModelFactory: Uni
                 }
                 R.id.addExpense -> {
                     binding.speedDial.close()
-                    showToast("dodaje koszty")
+                    showAddExpenseDialog()
                     true
                 }
                 else -> false
@@ -136,6 +136,13 @@ class GroupDetailsFragment @Inject constructor(private val viewModelFactory: Uni
         val dialog = AddGroupMemberDialog()
         dialog.arguments = Bundle().apply { putString(GROUP_ID_KEY, args.group.id) }
         dialog.show(childFragmentManager, "AddGroupMemberDialog")
+    }
+
+    private fun showAddExpenseDialog(){
+        //todo tu jescze mozna sprobowac wstrzykiwac daggerem fabryke w konstruktor i
+        val dialog = AddExpenseDialog()
+        dialog.arguments = Bundle().apply { putString(GROUP_ID_KEY, args.group.id) }
+        dialog.show(childFragmentManager, "AddExpenseDialog")
     }
 
 }

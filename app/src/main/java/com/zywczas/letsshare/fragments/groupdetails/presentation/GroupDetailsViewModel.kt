@@ -53,4 +53,10 @@ class GroupDetailsViewModel @Inject constructor(
 
     private fun Friend.toGroupMember() = GroupMember(name, email)
 
+    suspend fun addNewExpense(groupId: String, name: String, amount: Double){
+        withContext(dispatchersIO){
+            //todo
+        }
+    }
+
 }

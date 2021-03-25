@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <stroke
+        android:width="1dp"
+        android:color="@color/red3" />
+</shape>
+<!--todo do usuniecia-->
+<!--<selector xmlns:android="http://schemas.android.com/apk/res/android">-->
+
+<!--    <item>-->
+<!--        <shape android:shape="rectangle">-->
+<!--&lt;!&ndash;            <solid android:color="#ffffff" />&ndash;&gt;-->
+<!--            <stroke android:width="1dp"-->
+<!--                android:color="@color/red3"/>-->
+<!--        </shape>-->
+<!--    </item>-->
+
+<!--</selector>-->
+
+
