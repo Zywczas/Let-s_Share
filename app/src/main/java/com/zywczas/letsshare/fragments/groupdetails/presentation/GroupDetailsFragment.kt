@@ -41,6 +41,7 @@ class GroupDetailsFragment @Inject constructor(private val viewModelFactory: Uni
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         lifecycleScope.launch { viewModel.getMembers(args.group.id) }
+        lifecycleScope.launch { viewModel.getExpenses(args.group.id) }
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             vm = viewModel

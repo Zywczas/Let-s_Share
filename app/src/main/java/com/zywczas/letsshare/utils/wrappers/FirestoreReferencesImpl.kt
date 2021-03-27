@@ -12,9 +12,11 @@ import javax.inject.Inject
 class FirestoreReferencesImpl @Inject constructor(private val firestore: FirebaseFirestore) : FirestoreReferences {
 //todo moze przeniesc pozniej wszystkie const tutaj
 
+    override val dateCreatedField = "date_created"
     override val membersNumField = "members_num"
     override val totalExpensesField = "total_expenses"
     override val expensesField = "expenses"
+    override val valueField = "value"
 
     private val collectionMonths = "months"
     private val collectionExpenses = "expenses"

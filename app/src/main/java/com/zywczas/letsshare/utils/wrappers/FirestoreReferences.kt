@@ -5,9 +5,11 @@ import com.google.firebase.firestore.DocumentReference
 
 interface FirestoreReferences {
 
+    val dateCreatedField: String
     val membersNumField: String
     val totalExpensesField: String
     val expensesField: String
+    val valueField: String
 
     suspend fun userRefs(email: String): DocumentReference
 

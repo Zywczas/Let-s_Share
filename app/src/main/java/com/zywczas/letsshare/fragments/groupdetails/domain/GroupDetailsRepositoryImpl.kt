@@ -6,9 +6,7 @@ import com.google.firebase.firestore.ktx.toObjects
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.model.*
 import com.zywczas.letsshare.model.db.FriendsDao
-import com.zywczas.letsshare.utils.logD
-import com.zywczas.letsshare.utils.thisMonth
-import com.zywczas.letsshare.utils.today
+import com.zywczas.letsshare.utils.*
 import com.zywczas.letsshare.utils.wrappers.CrashlyticsWrapper
 import com.zywczas.letsshare.utils.wrappers.FirestoreReferences
 import com.zywczas.letsshare.utils.wrappers.SharedPrefsWrapper
@@ -70,11 +68,27 @@ class GroupDetailsRepositoryImpl @Inject constructor(
     private suspend fun isMemberInTheGroupAlready(memberEmail: String, groupId: String): Boolean =
         getMembers(groupId)!!.firstOrNull{ it.email == memberEmail } != null
 
-//            .orderBy(FIELD_NAME, Query.Direction.ASCENDING).orderBy(FIELD_TIME_CREATED, Query.Direction.DESCENDING)
+    override suspend fun getExpenses(groupId: String): List<ExpenseDomain>? =
+        try {
+            firestoreRefs.collectionExpensesRefs(Date().monthFormat(), groupId)
+                .orderBy(firestoreRefs.dateCreatedField, Query.Direction.DESCENDING)
+                .orderBy(firestoreRefs.valueField, Query.Direction.DESCENDING)
+                .get().await()
+                .toObjects<Expense>().map { it.toDomain() }
+        } catch (e: Exception){
+            crashlyticsWrapper.sendExceptionToFirebase(e)
+            logD(e)
+            null
+        }
+//todo pozmieniac daty na tak jak to jest w Expense
+    private fun Expense.toDomain() = ExpenseDomain(id, name, payee_email, payee_name,
+        value = value.toBigDecimal(),
+        date_created = date_created.dayFormat()
+    )
 
     override suspend fun updateThisMonthAndAddNewExpense(groupId: String, name: String, amount: BigDecimal): Int? =
         try {
-            val monthId = Date().thisMonth()
+            val monthId = Date().monthFormat()
             val monthRefs = firestoreRefs.groupMonthRefs(monthId, groupId)
             val newExpenseRefs = firestoreRefs.newExpenseRefs(monthId, groupId)
             val newExpense = Expense(
@@ -83,7 +97,7 @@ class GroupDetailsRepositoryImpl @Inject constructor(
                 payee_email = sharedPrefs.userEmail,
                 payee_name = sharedPrefs.userName,
                 value = amount.toString(),
-                date_created = Date().today()
+                date_created = dateInPoland()
             )
             val memberRef = firestoreRefs.groupMemberRefs(sharedPrefs.userEmail, groupId)
             firestore.runTransaction { transaction ->

@@ -9,13 +9,17 @@ import androidx.fragment.app.Fragment
 import java.text.SimpleDateFormat
 import java.util.*
 
-fun Any.logD(msg : String) = Log.d("LetsShareTag in ${this.javaClass.simpleName}", msg)
-fun Any.logD(e : Exception) = Log.d("LetsShareTag  in ${this.javaClass.simpleName}", "${e.message}")
+fun Any.logD(msg: String) = Log.d("LetsShareTag in ${this.javaClass.simpleName}", msg)
+fun Any.logD(e: Exception) = Log.d("LetsShareTag  in ${this.javaClass.simpleName}", "${e.message}")
 
 //todo pozniej to usunac i zamienic wszedzie na snackbar albo alert dialog
-fun Fragment.showToast(@StringRes msg : Int) = Toast.makeText(requireContext(), msg, Toast.LENGTH_LONG).show()
+fun Fragment.showToast(@StringRes msg: Int) = Toast.makeText(
+    requireContext(),
+    msg,
+    Toast.LENGTH_LONG
+).show()
 
-fun Fragment.showToast(msg : String) = Toast.makeText(requireContext(), msg, Toast.LENGTH_LONG).show()
+fun Fragment.showToast(msg: String) = Toast.makeText(requireContext(), msg, Toast.LENGTH_LONG).show()
 
 fun Fragment.hideSoftKeyboard(){
     val inputManager = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -24,6 +28,8 @@ fun Fragment.hideSoftKeyboard(){
     }
 }
 
-fun Date.thisMonth(): String = SimpleDateFormat("MM.yyyy", Locale.GERMANY).format(this)
+fun dateInPoland(): Date = Calendar.getInstance(LOCALE_POLAND).time
 
-fun Date.today(): String = SimpleDateFormat("d.MM.yyyy", Locale.GERMANY).format(this)
+fun Date.monthFormat(): String = SimpleDateFormat("MM.yyyy", Locale.GERMANY).format(this)
+
+fun Date.dayFormat(): String = SimpleDateFormat("d.MM.yyyy", Locale.GERMANY).format(this)

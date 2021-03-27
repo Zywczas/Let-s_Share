@@ -6,6 +6,7 @@ import com.zywczas.letsshare.R
 import com.zywczas.letsshare.activitymain.presentation.BaseViewModel
 import com.zywczas.letsshare.di.modules.DispatchersModule.DispatchersIO
 import com.zywczas.letsshare.fragments.groupdetails.domain.GroupDetailsRepository
+import com.zywczas.letsshare.model.ExpenseDomain
 import com.zywczas.letsshare.model.Friend
 import com.zywczas.letsshare.model.GroupMember
 import com.zywczas.letsshare.model.GroupMemberDomain
@@ -21,7 +22,7 @@ class GroupDetailsViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     init {
-        logD("init")
+        logD("init") //todo usunac jak zaczne wstrzykiwac view model w dialogi
     }
 
     private val _members = MutableLiveData<List<GroupMemberDomain>>()
@@ -29,6 +30,9 @@ class GroupDetailsViewModel @Inject constructor(
 
     private val _friends = MutableLiveData<List<Friend>>()
     val friends: LiveData<List<Friend>> = _friends
+
+    private val _expenses = MutableLiveData<List<ExpenseDomain>>()
+    val expenses: LiveData<List<ExpenseDomain>> = _expenses
 
     suspend fun getMembers(groupId: String) {
         withContext(dispatchersIO){ //todo da gdzie indziej tak samo :) - czyli ?.let i run
@@ -55,10 +59,23 @@ class GroupDetailsViewModel @Inject constructor(
 
     private fun Friend.toGroupMember() = GroupMember(name, email)
 
+    suspend fun getExpenses(groupId: String){
+        withContext(dispatchersIO){
+            showProgressBar(true)
+            repository.getExpenses(groupId)?.let { _expenses.postValue(it) }
+                ?: kotlin.run { postMessage(R.string.cant_get_expenses) }
+            showProgressBar(false)
+        }
+    }
+
     suspend fun addNewExpenseToThisMonth(groupId: String, name: String, amount: BigDecimal){
         withContext(dispatchersIO){
+            showProgressBar(true)
             val roundedAmount = amount.setScale(2, BigDecimal.ROUND_HALF_UP)
-            repository.updateThisMonthAndAddNewExpense(groupId, name, roundedAmount)
+            repository.updateThisMonthAndAddNewExpense(groupId, name, roundedAmount)?.let { error ->
+                postMessage(error)
+                showProgressBar(false)
+            } ?: kotlin.run { getExpenses(groupId) }
         }
     }
 

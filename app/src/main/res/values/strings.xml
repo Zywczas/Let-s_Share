@@ -27,6 +27,7 @@
     <string name="cant_add_member">Couldn\'t add the member. Try again.</string>
     <string name="member_exists">This person is already in the group.</string>
     <string name="cant_add_expense">Couldn\'t add the expense. Try again.</string>
+    <string name="cant_get_expenses">Couldn\'t get expenses list.</string>
 
     <!--    UI elements - main app-->
     <string name="friends">Friends</string>

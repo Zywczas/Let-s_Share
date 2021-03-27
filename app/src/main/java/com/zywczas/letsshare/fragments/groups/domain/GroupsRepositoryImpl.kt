@@ -29,7 +29,7 @@ class GroupsRepositoryImpl @Inject constructor(
                 id = newGroupRef.id,
                 founder_email = userEmail,
                 name = name,
-                date_created = Date().today(),
+                date_created = Date().dayFormat(),
                 currency = currency,
                 members_num = 1)
             val newGroupMemberRef = firestore
