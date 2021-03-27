@@ -16,29 +16,31 @@ class GroupsViewModel @Inject constructor(
     @DispatchersIO private val dispatchersIO: CoroutineDispatcher,
     private val sessionManager: SessionManager,
     private val repository: GroupsRepository
-) : BaseViewModel(), LifecycleObserver {
+) : BaseViewModel() {
 
     private val _groups = MutableLiveData<List<Group>>()
     val groups: LiveData<List<Group>> = _groups
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
-    private fun onResume() {
-        viewModelScope.launch(dispatchersIO) { getGroups() }
-    }
+//    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
+//    private fun onResume() {
+//        viewModelScope.launch(dispatchersIO) { getGroups() }
+//    }
 
-    private suspend fun getGroups() = withContext(dispatchersIO){
-        if (sessionManager.isNetworkAvailable()) {
-            showProgressBar(true)
-            val groupsList = repository.getGroups()
-            if (groupsList != null) {
-                _groups.postValue(groupsList!!)
-                showProgressBar(false)
+    suspend fun getGroups() {
+        withContext(dispatchersIO){
+            if (sessionManager.isNetworkAvailable()) {
+                showProgressBar(true)
+                val groupsList = repository.getGroups()
+                if (groupsList != null) {
+                    _groups.postValue(groupsList!!)
+                    showProgressBar(false)
+                } else {
+                    postMessage(R.string.cant_get_groups)
+                    showProgressBar(false)
+                }
             } else {
-                postMessage(R.string.cant_get_groups)
-                showProgressBar(false)
+                postMessage(R.string.connection_problem)
             }
-        } else {
-            postMessage(R.string.connection_problem)
         }
     }
 

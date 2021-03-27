@@ -6,6 +6,8 @@ import com.google.firebase.firestore.DocumentReference
 interface FirestoreReferences {
 
     val membersNumField: String
+    val totalExpensesField: String
+    val expensesField: String
 
     suspend fun userRefs(email: String): DocumentReference
 
@@ -21,6 +23,6 @@ interface FirestoreReferences {
 
     suspend fun newExpenseRefs(monthId: String, groupId: String): DocumentReference
 
-    suspend fun expenseRefs(monthId: String, groupId: String, expenseId: String): DocumentReference
+//    suspend fun expenseRefs(monthId: String, groupId: String, expenseId: String): DocumentReference
 
 }

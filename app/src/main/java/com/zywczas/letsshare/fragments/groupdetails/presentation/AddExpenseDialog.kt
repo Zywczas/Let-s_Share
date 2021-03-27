@@ -11,7 +11,6 @@ import com.zywczas.letsshare.R
 import com.zywczas.letsshare.databinding.DialogAddExpenseBinding
 import com.zywczas.letsshare.utils.GROUP_ID_KEY
 import com.zywczas.letsshare.utils.autoRelease
-import com.zywczas.letsshare.utils.showToast
 
 class AddExpenseDialog : DialogFragment() {
 
@@ -38,18 +37,15 @@ class AddExpenseDialog : DialogFragment() {
         when { //todo dac tutaj pozniej cofanie na normaly background jak jest wartosc
             binding.name.text.toString().isBlank() -> binding.name.setBackgroundResource(R.drawable.edittext_red_stroke)
             binding.amout.text.toString().isBlank() -> binding.amout.setBackgroundResource(R.drawable.edittext_red_stroke)
-            else -> lifecycleScope.launchWhenResumed { addExpense() }
+            else -> lifecycleScope.launchWhenResumed {
+                viewModel.addNewExpenseToThisMonth(
+                    groupId,
+                    binding.name.text.toString(),
+                    binding.amout.text.toString().toBigDecimal()
+                )
+                dismiss()
+            }
         }
-    }
-
-//todo zamienic pozniej double na BigDecimal wszedzie gdzie kwoty i udzialy
-
-    private suspend fun addExpense(){
-        val amount = binding.amout.text.toString().toBigDecimalOrNull()
-        amount?.let {
-            viewModel.addNewExpense(groupId, binding.name.text.toString(), it)
-            dismiss()
-        } ?: kotlin.run { showToast(R.string.incorrect_amount_format) }
     }
 
 }

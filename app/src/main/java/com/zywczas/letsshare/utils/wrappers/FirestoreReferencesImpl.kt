@@ -9,10 +9,12 @@ import com.zywczas.letsshare.utils.COLLECTION_USERS
 import com.zywczas.letsshare.utils.wrappers.FirestoreReferences
 import javax.inject.Inject
 
-class FirestoreReferencesImpl @Inject constructor(private val firestore: FirebaseFirestore) :
-    FirestoreReferences {
+class FirestoreReferencesImpl @Inject constructor(private val firestore: FirebaseFirestore) : FirestoreReferences {
 //todo moze przeniesc pozniej wszystkie const tutaj
+
     override val membersNumField = "members_num"
+    override val totalExpensesField = "total_expenses"
+    override val expensesField = "expenses"
 
     private val collectionMonths = "months"
     private val collectionExpenses = "expenses"
@@ -50,9 +52,10 @@ class FirestoreReferencesImpl @Inject constructor(private val firestore: Firebas
             .collection(collectionExpenses)
             .document()
 
-    override suspend fun expenseRefs(monthId: String, groupId: String, expenseId: String): DocumentReference =
-        firestore.collection(COLLECTION_GROUPS).document(groupId)
-            .collection(collectionMonths).document(monthId)
-            .collection(collectionExpenses)
-            .document(expenseId)
+//    override suspend fun expenseRefs(monthId: String, groupId: String, expenseId: String): DocumentReference =
+//        firestore.collection(COLLECTION_GROUPS).document(groupId)
+//            .collection(collectionMonths).document(monthId)
+//            .collection(collectionExpenses)
+//            .document(expenseId)
+
 }

@@ -16,6 +16,7 @@ import com.zywczas.letsshare.fragments.groups.adapter.GroupsAdapter
 import com.zywczas.letsshare.utils.autoRelease
 import com.zywczas.letsshare.utils.hideSoftKeyboard
 import com.zywczas.letsshare.utils.showToast
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class GroupsFragment @Inject constructor(private val viewModelFactory: UniversalViewModelFactory) : Fragment() {
@@ -31,17 +32,17 @@ class GroupsFragment @Inject constructor(private val viewModelFactory: Universal
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentGroupsBinding.inflate(inflater, container, false)
-        binding.apply {
-            lifecycleOwner = viewLifecycleOwner
-            vm = viewModel
-            adapter = groupsAdapter
-        }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        lifecycle.addObserver(viewModel)
+        lifecycleScope.launch { viewModel.getGroups() }
+        binding.apply {
+            lifecycleOwner = viewLifecycleOwner
+            vm = viewModel
+            adapter = groupsAdapter
+        }
         binding.toolbar.setTitle(R.string.groups)
         setupObservers()
         setupOnClickListeners()

@@ -26,8 +26,7 @@
     <string name="too_many_members">1 group can have 7 members max.</string>
     <string name="cant_add_member">Couldn\'t add the member. Try again.</string>
     <string name="member_exists">This person is already in the group.</string>
-    <string name="incorrect_amount_format">Incorrect amount format.</string>
-
+    <string name="cant_add_expense">Couldn\'t add the expense. Try again.</string>
 
     <!--    UI elements - main app-->
     <string name="friends">Friends</string>

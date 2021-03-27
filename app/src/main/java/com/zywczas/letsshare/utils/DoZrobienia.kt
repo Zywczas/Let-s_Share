@@ -54,6 +54,10 @@ package com.zywczas.letsshare.utils
 //todo nasluchiwac nowych wydatkow w grupie
 //todo sprawdzic czy live data puszcza value nawet jak nie ma observers
 //todo dac pozniej cos takiego jak groupRef() = firestore.coll.doc
+//todo zamienic pozniej double na BigDecimal wszedzie gdzie kwoty i udzialy
+//todo launchWhenResumed dac tylko do klikania guzikow, a na start normalne launch
+//todo przejrzec wszystkie klasy i pousuwac komentarze
+//todo w gruopdetails dac podluzny progres bar zeby kolko sie ciagle tam nie krecilo
 
 
 private fun test(){

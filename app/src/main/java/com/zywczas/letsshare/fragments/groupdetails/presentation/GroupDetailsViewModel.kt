@@ -8,6 +8,7 @@ import com.zywczas.letsshare.di.modules.DispatchersModule.DispatchersIO
 import com.zywczas.letsshare.fragments.groupdetails.domain.GroupDetailsRepository
 import com.zywczas.letsshare.model.Friend
 import com.zywczas.letsshare.model.GroupMember
+import com.zywczas.letsshare.model.GroupMemberDomain
 import com.zywczas.letsshare.utils.logD
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
@@ -23,14 +24,14 @@ class GroupDetailsViewModel @Inject constructor(
         logD("init")
     }
 
-    private val _members = MutableLiveData<List<GroupMember>>()
-    val members: LiveData<List<GroupMember>> = _members
+    private val _members = MutableLiveData<List<GroupMemberDomain>>()
+    val members: LiveData<List<GroupMemberDomain>> = _members
 
     private val _friends = MutableLiveData<List<Friend>>()
     val friends: LiveData<List<Friend>> = _friends
 
     suspend fun getMembers(groupId: String) {
-        withContext(dispatchersIO){ //todo da gdzie indziej tak samo :)
+        withContext(dispatchersIO){ //todo da gdzie indziej tak samo :) - czyli ?.let i run
             showProgressBar(true)
             repository.getMembers(groupId)?.let{ _members.postValue(it) }
                 ?: kotlin.run { postMessage(R.string.cant_get_group_members) }
@@ -54,9 +55,10 @@ class GroupDetailsViewModel @Inject constructor(
 
     private fun Friend.toGroupMember() = GroupMember(name, email)
 
-    suspend fun addNewExpense(groupId: String, name: String, amount: BigDecimal){
+    suspend fun addNewExpenseToThisMonth(groupId: String, name: String, amount: BigDecimal){
         withContext(dispatchersIO){
             val roundedAmount = amount.setScale(2, BigDecimal.ROUND_HALF_UP)
+            repository.updateThisMonthAndAddNewExpense(groupId, name, roundedAmount)
         }
     }
 

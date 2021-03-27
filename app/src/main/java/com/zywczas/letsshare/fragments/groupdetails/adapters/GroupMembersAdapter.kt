@@ -9,13 +9,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.zywczas.letsshare.R
-import com.zywczas.letsshare.model.GroupMember
+import com.zywczas.letsshare.model.GroupMemberDomain
 
-class GroupMembersAdapter(private val currency: String) : ListAdapter<GroupMember, GroupMembersAdapter.ViewHolder>(object : DiffUtil.ItemCallback<GroupMember>() {
+class GroupMembersAdapter(private val currency: String) : ListAdapter<GroupMemberDomain, GroupMembersAdapter.ViewHolder>(object : DiffUtil.ItemCallback<GroupMemberDomain>() {
 
-    override fun areItemsTheSame(oldItem: GroupMember, newItem: GroupMember): Boolean = oldItem.email == newItem.email
+    override fun areItemsTheSame(oldItem: GroupMemberDomain, newItem: GroupMemberDomain): Boolean = oldItem.email == newItem.email
 
-    override fun areContentsTheSame(oldItem: GroupMember, newItem: GroupMember): Boolean =
+    override fun areContentsTheSame(oldItem: GroupMemberDomain, newItem: GroupMemberDomain): Boolean =
         oldItem.email == newItem.email &&
             oldItem.percentage_share == newItem.percentage_share &&
             oldItem.expenses == newItem.expenses
@@ -27,7 +27,7 @@ class GroupMembersAdapter(private val currency: String) : ListAdapter<GroupMembe
         private val share: TextView = itemView.findViewById(R.id.percentageShare)
 
         @SuppressLint("SetTextI18n")
-        fun bindMember(member: GroupMember) {
+        fun bindMember(member: GroupMemberDomain) {
             name.text = member.name
             expenses.text = "${member.expenses} $currency"
             share.text = "${member.percentage_share} %"

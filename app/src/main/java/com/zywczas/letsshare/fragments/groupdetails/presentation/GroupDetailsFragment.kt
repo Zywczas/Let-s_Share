@@ -20,6 +20,7 @@ import com.zywczas.letsshare.fragments.groupdetails.adapters.GroupMembersAdapter
 import com.zywczas.letsshare.utils.GROUP_ID_KEY
 import com.zywczas.letsshare.utils.autoRelease
 import com.zywczas.letsshare.utils.showToast
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class GroupDetailsFragment @Inject constructor(private val viewModelFactory: UniversalViewModelFactory): Fragment() {
@@ -39,6 +40,7 @@ class GroupDetailsFragment @Inject constructor(private val viewModelFactory: Uni
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        lifecycleScope.launch { viewModel.getMembers(args.group.id) }
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             vm = viewModel
@@ -48,14 +50,6 @@ class GroupDetailsFragment @Inject constructor(private val viewModelFactory: Uni
         setupObservers()
         setupSpeedDialMenu()
         setupOnClickListeners()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        lifecycleScope.launchWhenResumed { //todo dac to przed on setupem layoutu ale bez whenResumed, sprawdzic co ta funkcja dokladnie robi
-            viewModel.getMembers(args.group.id)
-//            viewModel.saveCurrentGroupId(args.group.id)
-        }
     }
 
     private fun setupToolbar(){
