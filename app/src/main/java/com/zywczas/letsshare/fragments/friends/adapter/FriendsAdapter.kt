@@ -18,8 +18,8 @@ class FriendsAdapter(private val onClick: (Friend) -> Unit = {}) : ListAdapter<F
 }) {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val name: TextView = itemView.findViewById(R.id.nameFriendsListItem)
-        private val email: TextView = itemView.findViewById(R.id.emailFriendsListItem)
+        private val name: TextView = itemView.findViewById(R.id.name)
+        private val email: TextView = itemView.findViewById(R.id.email)
 
         fun bindFriend(friend: Friend) {
             name.text = friend.name

@@ -39,7 +39,7 @@ class FriendsRepositoryImpl @Inject constructor(
                 .orderBy(FIELD_NAME, Query.Direction.ASCENDING)
                 .get().await()
                 .toObjects<Friend>()        //todo pozniej to poprawic, dac najpierw pobieranie z bazy, potem z firestore, i wtedy update, albo dac swipe to refresh albo nasluchiwanie zmian, moze lepiej nasluchiwanie zmian dla treningu
-            friendsDao.insert(friends)
+            friendsDao.insert(friends) //todo wyniesc to do view modelu, zeby tam byla rozpisana logika
             friends
         } catch (e: Exception) {
             crashlyticsWrapper.sendExceptionToFirebase(e)
@@ -81,8 +81,6 @@ class FriendsRepositoryImpl @Inject constructor(
             }
     }
 
-    private fun User.toFriend() = Friend(this.name, this.email)
-
-//    private fun User.toDomain() = UserDomain(this.name, this.email)
+    private fun User.toFriend() = Friend(email, name)
 
 }
