@@ -8,7 +8,6 @@ import com.zywczas.letsshare.di.modules.DispatchersModule.DispatchersIO
 import com.zywczas.letsshare.fragments.groups.domain.GroupsRepository
 import com.zywczas.letsshare.model.Group
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -49,7 +48,7 @@ class GroupsViewModel @Inject constructor(
             if (name.isNotEmpty()){
                 if (sessionManager.isNetworkAvailable()) {
                     showProgressBar(true)
-                    postMessage(repository.addGroup(name, currency))
+                    postMessage(repository.addGroupIfUserIsInLessThan10Groups(name, currency))
                     showProgressBar(false)
                     getGroups()         //todo nie wiem czy tu nie za szybko bedzie pobierac grupy, czy zdaz sie zapisac w bazie, zanim zacznie je pobierac, jak dam pozniej nasluchiwanie bazy to nie bedzie
                     //trzeba tej funkcji tutaj wywolywac

@@ -10,6 +10,7 @@ interface FirestoreReferences {
     val totalExpensesField: String
     val expensesField: String
     val valueField: String
+    val groupsIdsField: String
 
     suspend fun userRefs(email: String): DocumentReference
 
@@ -24,7 +25,5 @@ interface FirestoreReferences {
     suspend fun collectionExpensesRefs(monthId: String, groupId: String): CollectionReference
 
     suspend fun newExpenseRefs(monthId: String, groupId: String): DocumentReference
-
-//    suspend fun expenseRefs(monthId: String, groupId: String, expenseId: String): DocumentReference
 
 }

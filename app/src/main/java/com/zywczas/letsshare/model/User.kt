@@ -1,10 +1,13 @@
 package com.zywczas.letsshare.model
 
+import com.zywczas.letsshare.utils.dateInPoland
+import java.util.*
+
 data class User(
     val auth_id: String = "",
     val name: String = "",
     val email: String = "",
-    val date_created: String = "",
+    val date_created: Date = dateInPoland(),
     val groupsIds: List<String> = emptyList()
 ) {
     override fun equals(other: Any?): Boolean {

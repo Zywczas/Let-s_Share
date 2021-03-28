@@ -21,7 +21,7 @@ class GroupsRepositoryImpl @Inject constructor(
 
     private val fieldGroupsIds = "groupsIds"
 
-    override suspend fun addGroup(name: String, currency: String): Int =
+    override suspend fun addGroupIfUserIsInLessThan10Groups(name: String, currency: String): Int =
         try {
             val userEmail = sharedPrefs.userEmail
             val newGroupRef = firestore.collection(COLLECTION_GROUPS).document()
@@ -29,16 +29,14 @@ class GroupsRepositoryImpl @Inject constructor(
                 id = newGroupRef.id,
                 founder_email = userEmail,
                 name = name,
-                date_created = Date().dayFormat(),
                 currency = currency,
                 members_num = 1)
             val newGroupMemberRef = firestore
-                .collection(COLLECTION_GROUPS)
-                .document(newGroup.id)
+                .collection(COLLECTION_GROUPS).document(newGroup.id)
                 .collection(COLLECTION_MEMBERS)
                 .document(userEmail)
             val newMember = GroupMember(sharedPrefs.userName, userEmail)
-            val userRef = firestore.collection(COLLECTION_USERS).document(userEmail) //todo sprobowac to rozbic na mniejsze funkcje, np dodaj jesli mniej niz 10 rgrup
+            val userRef = firestore.collection(COLLECTION_USERS).document(userEmail)
 
             firestore.runTransaction { transaction ->
                 val user = transaction.get(userRef).toObject<User>()!!
@@ -68,7 +66,7 @@ class GroupsRepositoryImpl @Inject constructor(
                     .get().await().toObject<Group>()!!
                 groups.add(group)
             }
-            groups.toList()
+            groups.sortedByDescending { it.date_created }
         } catch (e: Exception) {
             crashlyticsWrapper.sendExceptionToFirebase(e)
             logD(e)

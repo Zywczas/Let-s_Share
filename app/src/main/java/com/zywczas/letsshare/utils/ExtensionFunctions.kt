@@ -30,6 +30,6 @@ fun Fragment.hideSoftKeyboard(){
 
 fun dateInPoland(): Date = Calendar.getInstance(LOCALE_POLAND).time
 
-fun Date.monthFormat(): String = SimpleDateFormat("MM.yyyy", Locale.GERMANY).format(this)
+fun Date.monthIdFormat(): String = SimpleDateFormat("yyyy.MM", LOCALE_POLAND).format(this)
 
-fun Date.dayFormat(): String = SimpleDateFormat("d.MM.yyyy", Locale.GERMANY).format(this)
+fun Date.dayFormat(): String = SimpleDateFormat("d.MM", LOCALE_POLAND).format(this)

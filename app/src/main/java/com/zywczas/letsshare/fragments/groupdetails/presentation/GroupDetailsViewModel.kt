@@ -50,10 +50,28 @@ class GroupDetailsViewModel @Inject constructor(
     suspend fun addNewMember(friend: Friend, groupId: String){
         withContext(dispatchersIO){
             showProgressBar(true)
-            repository.addNewMemberIfBelow7InGroup(friend.toGroupMember(), groupId)?.let { error ->
-                postMessage(error)
+            if (repository.isFriendInTheGroupAlready(friend.email, groupId)) {
+                postMessage(R.string.member_exists)
                 showProgressBar(false)
-            } ?: kotlin.run { getMembers(groupId) }
+            }  else {
+                when(repository.isFriendIn10GroupsAlready(friend.email)){
+                    null -> {
+                        postMessage(R.string.cant_verify_friend)
+                        showProgressBar(false)
+                    }
+                    true -> {
+                        postMessage(R.string.friend_in_too_many_groups)
+                        showProgressBar(false)
+                    }
+                    else -> {
+                        repository.addNewMemberIfBelow7InGroup(friend.toGroupMember(), groupId)
+                            ?.let { error ->
+                                postMessage(error)
+                                showProgressBar(false)
+                            } ?: kotlin.run { getMembers(groupId) }
+                    }
+                }
+            }
         }
     }
 

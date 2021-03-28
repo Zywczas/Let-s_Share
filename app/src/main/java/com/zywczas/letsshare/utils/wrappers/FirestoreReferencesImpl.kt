@@ -17,6 +17,7 @@ class FirestoreReferencesImpl @Inject constructor(private val firestore: Firebas
     override val totalExpensesField = "total_expenses"
     override val expensesField = "expenses"
     override val valueField = "value"
+    override val groupsIdsField = "groupsIds"
 
     private val collectionMonths = "months"
     private val collectionExpenses = "expenses"
@@ -53,11 +54,5 @@ class FirestoreReferencesImpl @Inject constructor(private val firestore: Firebas
             .collection(collectionMonths).document(monthId)
             .collection(collectionExpenses)
             .document()
-
-//    override suspend fun expenseRefs(monthId: String, groupId: String, expenseId: String): DocumentReference =
-//        firestore.collection(COLLECTION_GROUPS).document(groupId)
-//            .collection(collectionMonths).document(monthId)
-//            .collection(collectionExpenses)
-//            .document(expenseId)
 
 }

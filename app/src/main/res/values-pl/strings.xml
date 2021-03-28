@@ -29,6 +29,8 @@
     <string name="member_exists">Ta osoba już jest w tej grupie.</string>
     <string name="cant_add_expense">Nie udało się dodać wydatku. Spróbuj ponownie.</string>
     <string name="cant_get_expenses">Nie udało się pobrać listy wydatków.</string>
+    <string name="cant_verify_friend">Nie można zweryfikować znajomego. Spróbuj ponownie.</string>
+    <string name="friend_in_too_many_groups">Znajomy już jest w maksymalnej ilości dziesięciu grup.</string>
 
     <!--    UI elements - main app-->
     <string name="friends">Znajomi</string>

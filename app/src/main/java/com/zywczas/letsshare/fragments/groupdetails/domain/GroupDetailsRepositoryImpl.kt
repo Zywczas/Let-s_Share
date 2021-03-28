@@ -40,37 +40,44 @@ class GroupDetailsRepositoryImpl @Inject constructor(
 
     override suspend fun getFriends(): List<Friend> = friendsDao.getFriends()
 
-    override suspend fun addNewMemberIfBelow7InGroup(newMember: GroupMember, groupId: String): Int? =
-        try  {
-            if (isMemberInTheGroupAlready(newMember.email, groupId)) {
-                R.string.member_exists
-            } else {
-                val groupRef = firestoreRefs.groupRefs(groupId)
-                val newMemberRef = firestoreRefs.groupMemberRefs(newMember.email, groupId)
+    //todo getMembers moze rzucic nullem jak firestore cos nie pyknie, poprawic te funkcje
+    override suspend fun isFriendInTheGroupAlready(memberEmail: String, groupId: String): Boolean =
+        getMembers(groupId)!!.find{ it.email == memberEmail } != null
 
-                firestore.runTransaction { transaction ->
-                    val group = transaction.get(groupRef).toObject<Group>()!!
-                    if (group.members_num < 7){
-                        transaction.set(newMemberRef, newMember)
-                        transaction.update(groupRef, firestoreRefs.membersNumField, FieldValue.increment(1))
-                        return@runTransaction null
-                    } else {
-                        return@runTransaction R.string.too_many_members
-                    }
-                }.await()
-            }
+    override suspend fun isFriendIn10GroupsAlready(memberEmail: String): Boolean? = try {
+        firestoreRefs.userRefs(memberEmail).get().await().toObject<User>()!!.groupsIds.size >= 10
+    } catch (e: Exception){
+        crashlyticsWrapper.sendExceptionToFirebase(e)
+        logD(e)
+        null
+    }
+
+    override suspend fun addNewMemberIfBelow7InGroup(member: GroupMember, groupId: String): Int? =
+        try  {
+            val userToBeUpdatedRefs = firestoreRefs.userRefs(member.email)
+            val groupRef = firestoreRefs.groupRefs(groupId)
+            val newMemberRef = firestoreRefs.groupMemberRefs(member.email, groupId)
+
+            firestore.runTransaction { transaction ->
+                val group = transaction.get(groupRef).toObject<Group>()!!
+                if (group.members_num < 7){
+                    transaction.set(newMemberRef, member)
+                    transaction.update(groupRef, firestoreRefs.membersNumField, FieldValue.increment(1))
+                    transaction.update(userToBeUpdatedRefs, firestoreRefs.groupsIdsField, FieldValue.arrayUnion(groupId))
+                    return@runTransaction null
+                } else {
+                    return@runTransaction R.string.too_many_members
+                }
+            }.await()
         } catch (e: Exception) {
             crashlyticsWrapper.sendExceptionToFirebase(e)
             logD(e)
             R.string.cant_add_member
         }
 
-    private suspend fun isMemberInTheGroupAlready(memberEmail: String, groupId: String): Boolean =
-        getMembers(groupId)!!.firstOrNull{ it.email == memberEmail } != null
-
     override suspend fun getExpenses(groupId: String): List<ExpenseDomain>? =
         try {
-            firestoreRefs.collectionExpensesRefs(Date().monthFormat(), groupId)
+            firestoreRefs.collectionExpensesRefs(Date().monthIdFormat(), groupId)
                 .orderBy(firestoreRefs.dateCreatedField, Query.Direction.DESCENDING)
                 .orderBy(firestoreRefs.valueField, Query.Direction.DESCENDING)
                 .get().await()
@@ -80,15 +87,13 @@ class GroupDetailsRepositoryImpl @Inject constructor(
             logD(e)
             null
         }
-//todo pozmieniac daty na tak jak to jest w Expense
+
     private fun Expense.toDomain() = ExpenseDomain(id, name, payee_email, payee_name,
-        value = value.toBigDecimal(),
-        date_created = date_created.dayFormat()
-    )
+        value.toBigDecimal(), date_created.dayFormat())
 
     override suspend fun updateThisMonthAndAddNewExpense(groupId: String, name: String, amount: BigDecimal): Int? =
         try {
-            val monthId = Date().monthFormat()
+            val monthId = Date().monthIdFormat()
             val monthRefs = firestoreRefs.groupMonthRefs(monthId, groupId)
             val newExpenseRefs = firestoreRefs.newExpenseRefs(monthId, groupId)
             val newExpense = Expense(
@@ -117,6 +122,7 @@ class GroupDetailsRepositoryImpl @Inject constructor(
             null
         } catch (e: Exception){
             crashlyticsWrapper.sendExceptionToFirebase(e)
+            e.printStackTrace()
             logD(e)
         R.string.cant_add_expense
     }

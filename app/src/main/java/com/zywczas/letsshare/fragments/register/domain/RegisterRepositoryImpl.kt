@@ -3,6 +3,7 @@ package com.zywczas.letsshare.fragments.register.domain
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.zywczas.letsshare.model.User
+import com.zywczas.letsshare.utils.dateInPoland
 import com.zywczas.letsshare.utils.logD
 import com.zywczas.letsshare.utils.dayFormat
 import com.zywczas.letsshare.utils.wrappers.FirestoreReferences
@@ -48,7 +49,7 @@ class RegisterRepositoryImpl @Inject constructor(
         val userId = firebaseAuth.currentUser?.uid
         if (userId != null){
             firestoreRefs.userRefs(email)
-                .set(User(userId, name, email, Date().dayFormat()))
+                .set(User(userId, name, email, dateInPoland()))
                 .addOnSuccessListener {
                     onSuccessAction(true)
                 }.addOnFailureListener {
