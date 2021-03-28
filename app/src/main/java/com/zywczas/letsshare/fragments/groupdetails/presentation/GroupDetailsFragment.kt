@@ -16,6 +16,7 @@ import com.leinardi.android.speeddial.SpeedDialView
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.databinding.FragmentGroupDetailsBinding
 import com.zywczas.letsshare.di.factories.UniversalViewModelFactory
+import com.zywczas.letsshare.fragments.groupdetails.adapters.ExpensesAdapter
 import com.zywczas.letsshare.fragments.groupdetails.adapters.GroupMembersAdapter
 import com.zywczas.letsshare.utils.GROUP_ID_KEY
 import com.zywczas.letsshare.utils.autoRelease
@@ -29,6 +30,7 @@ class GroupDetailsFragment @Inject constructor(private val viewModelFactory: Uni
     private var binding: FragmentGroupDetailsBinding by autoRelease()
     private val args: GroupDetailsFragmentArgs by navArgs()
     private val membersAdapter by lazy { GroupMembersAdapter(args.group.currency) }
+    private val expensesAdapter by lazy { ExpensesAdapter(args.group.currency) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,6 +48,7 @@ class GroupDetailsFragment @Inject constructor(private val viewModelFactory: Uni
             lifecycleOwner = viewLifecycleOwner
             vm = viewModel
             membersAdapterXML = membersAdapter
+            expensesAdapterXML = expensesAdapter
         }
         setupToolbar()
         setupObservers()
@@ -61,6 +64,7 @@ class GroupDetailsFragment @Inject constructor(private val viewModelFactory: Uni
     private fun setupObservers(){
         viewModel.message.observe(viewLifecycleOwner){ showToast(it) }
         viewModel.members.observe(viewLifecycleOwner){ membersAdapter.submitList(it.toMutableList()) }
+        viewModel.expenses.observe(viewLifecycleOwner){ expensesAdapter.submitList(it.toMutableList()) }
     }
 
     private fun setupSpeedDialMenu(){ //todo dokonczyc, kolory, ikonki, text ze stringow

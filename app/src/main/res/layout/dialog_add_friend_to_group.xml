@@ -26,6 +26,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
             tools:itemCount="2"
-            tools:listitem="@layout/friends_list_item" />
+            tools:listitem="@layout/list_item_friends" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

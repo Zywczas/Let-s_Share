@@ -1,5 +1,6 @@
 package com.zywczas.letsshare.fragments.groupdetails.domain
 
+import com.google.firebase.crashlytics.internal.model.CrashlyticsReport
 import com.google.firebase.firestore.*
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.firestore.ktx.toObjects
@@ -79,7 +80,6 @@ class GroupDetailsRepositoryImpl @Inject constructor(
         try {
             firestoreRefs.collectionExpensesRefs(Date().monthIdFormat(), groupId)
                 .orderBy(firestoreRefs.dateCreatedField, Query.Direction.DESCENDING)
-                .orderBy(firestoreRefs.valueField, Query.Direction.DESCENDING)
                 .get().await()
                 .toObjects<Expense>().map { it.toDomain() }
         } catch (e: Exception){

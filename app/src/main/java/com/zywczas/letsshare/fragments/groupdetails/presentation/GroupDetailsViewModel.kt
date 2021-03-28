@@ -93,7 +93,10 @@ class GroupDetailsViewModel @Inject constructor(
             repository.updateThisMonthAndAddNewExpense(groupId, name, roundedAmount)?.let { error ->
                 postMessage(error)
                 showProgressBar(false)
-            } ?: kotlin.run { getExpenses(groupId) }
+            } ?: kotlin.run {
+                getExpenses(groupId)
+                getMembers(groupId)
+            }
         }
     }
 

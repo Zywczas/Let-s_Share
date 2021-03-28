@@ -58,6 +58,7 @@ package com.zywczas.letsshare.utils
 //todo launchWhenResumed dac tylko do klikania guzikow, a na start normalne launch
 //todo przejrzec wszystkie klasy i pousuwac komentarze
 //todo w gruopdetails dac podluzny progres bar zeby kolko sie ciagle tam nie krecilo
+//todo zamiast dawac date w Polsce to trzeba dac date default zeby dla kazdego kraju byla odpowiednia
 
 
 private fun test(){

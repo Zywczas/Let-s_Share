@@ -29,13 +29,13 @@ class GroupMembersAdapter(private val currency: String) : ListAdapter<GroupMembe
         @SuppressLint("SetTextI18n")
         fun bindMember(member: GroupMemberDomain) {
             name.text = member.name
-            expenses.text = "${member.expenses} $currency"
+            expenses.text = "${member.expenses} $currency" //todo dac string format zeby przecinek dobrze pokazywalo
             share.text = "${member.percentage_share} %"
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.group_members_list_item, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item_group_members, parent, false)
         return ViewHolder(view)
     }
 
