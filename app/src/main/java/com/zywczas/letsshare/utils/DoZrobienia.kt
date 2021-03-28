@@ -1,5 +1,6 @@
 package com.zywczas.letsshare.utils
 
+//todo poprawic kolory w dark mode
 //todo zamienic shared prefs n Jetpack DataStore
 //todo dac tak: app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
 //todo nie pojawia sie info o weryfikacji maila, trzeba dac alert dialog i to info
