@@ -63,6 +63,7 @@ package com.zywczas.letsshare.utils
 //todo jak sie dodaje znajomego to w jego grupie friends tez powinien pokazywac sie nowy znajomy
 //todo jak sie usuwa znajomego to usunac go tez z rooma, albo dac czyszczenie bazy przed kazdym updatem
 //todo dodac guziki anuluj do dialogow
+//todo poustawiac motywy dla wszystkich guzikow, paskow i innych
 
 private fun test(){
 //    firestore.runTransaction {  } //todo dobra funkcja do updatowania, jak jakis dokument w miedzy czasie sie zmieni to transakcja leci od nowa

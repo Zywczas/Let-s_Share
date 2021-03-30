@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -101,6 +102,7 @@ class GroupDetailsFragment @Inject constructor(private val viewModelFactory: Uni
     private fun dimOrRestoreBackground(isDialOpen : Boolean){
         val window = requireActivity().window
         if (isDialOpen){
+//            AppCompatResources.getColorStateList(requireContext(), R.color.purple_700) todo inny sposob na pobranie zasobow
             window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.purple_700_alpha03)
             binding.mainLayout.alpha = 0.3F
         } else {
