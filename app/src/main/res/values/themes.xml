@@ -1,14 +1,15 @@
 <resources>
     <!-- Primary brand color. -->
-    <color name="myColorPrimary">@color/purple_500</color>
-    <color name="myColorPrimaryVariant">@color/purple_700</color>
-    <color name="myColorOnPrimary">@color/white</color>
+    <color name="myColorPrimary">@color/green700</color>
+    <color name="myColorPrimaryVariant">@color/green700Dark</color>
+    <color name="myColorOnPrimary">@color/lime600</color>
     <!-- Secondary brand color. -->
-    <color name="myColorSecondary">@color/teal_200</color>
-    <color name="myColorSecondaryVariant">@color/teal_700</color>
-    <color name="myColorOnSecondary">@color/black</color>
+    <color name="myColorSecondary">@color/green700</color>
+    <color name="myColorSecondaryVariant">@color/green700Dark</color>
+    <color name="myColorOnSecondary">@color/lime600</color>
     <!-- Customize your theme here. -->
+    <color name="myColorPrimaryVariantAlpha03">@color/green700DarkAlpha03</color>
     <color name="myTextColor">@color/black</color>
-    <color name="myToolbarTitleTextColor">@color/white</color>
-    <color name="myDrawerArrowColor">@color/white</color>
+    <color name="myToolbarTitleTextColor">@color/lime600</color>
+    <color name="myDrawerArrowColor">@color/lime600</color>
 </resources>

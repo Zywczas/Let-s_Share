@@ -52,7 +52,7 @@ class GroupDetailsRepositoryImpl @Inject constructor(
         logD(e)
         null
     }
-
+//todo pamietac zeby przy nowym miesiac resetowac tez wydatki wszystkich czlonkow
     override suspend fun addNewMemberIfBelow7InGroup(member: GroupMember, groupId: String): Int? =
         try  {
             val userToBeUpdatedRefs = firestoreRefs.userRefs(member.email)

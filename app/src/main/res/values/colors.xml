@@ -1,11 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="purple_700_alpha03">#4D3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
+
+    <color name="green700">#388E3C</color>
+    <color name="green700Dark">#00600f</color>
+    <color name="green700DarkAlpha03">#4D00600f</color>
+    <color name="green900">#1B5E20</color>
+    <color name="green900Dark">#003300</color>
+    <color name="green900DarkAlpha03">#4D003300</color>
+    <color name="lime600">#C0CA33</color>
+    <color name="blueGrey300">#90A4AE</color>
+
+    <color name="cyan800">#00838E</color>
+    <color name="cyan800Dark">#005662</color>
+    <color name="cyan900">#006064</color>
+    <color name="cyan900Dark">#00363a</color>
+    <color name="purple200">#FFBB86FC</color>
+    <color name="purple500">#FF6200EE</color>
+    <color name="purple700">#FF3700B3</color>
+    <color name="purple700Alpha03">#4D3700B3</color>
+    <color name="teal200">#FF03DAC5</color>
+    <color name="teal700">#FF018786</color>
     <color name="white">#FFFFFFFF</color>
     <color name="black">#FF000000 </color>
 
@@ -24,6 +38,6 @@
     <color name="grey">#c3c3c3 </color>
     <color name="lightGrey">#f2f2f2 </color>
     <color name="transparentGrey">#8f737373 </color>
-    <color name="darkGrey">#737373 </color>
+    <color name="darkGrey">#737373</color>
 
 </resources>
