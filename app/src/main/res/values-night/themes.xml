@@ -12,4 +12,8 @@
     <color name="myTextColor">@android:color/white</color>
     <color name="myToolbarTitleTextColor">@color/lime600</color>
     <color name="myDrawerArrowColor">@color/lime600</color>
+    <color name="addFriendFABColor">@color/deepPurple900</color>
+    <color name="addExpenseFABColor">@color/lightBlue500Dark</color>
+    <!--    text-->
+    <color name="listItemHeader">@color/lightBlue500Dark</color>
 </resources>

@@ -1,5 +1,6 @@
 package com.zywczas.letsshare.fragments.groupdetails.presentation
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -69,17 +70,23 @@ class GroupDetailsFragment @Inject constructor(private val viewModelFactory: Uni
         viewModel.expenses.observe(viewLifecycleOwner){ expensesAdapter.submitList(it.toMutableList()) }
     }
 
-    private fun setupSpeedDialMenu(){ //todo dokonczyc, kolory, ikonki, text ze stringow
+    private fun setupSpeedDialMenu(){ //todo dokonczyc text ze stringow
         binding.speedDial.addActionItem(
-            SpeedDialActionItem.Builder(R.id.addFriendToGroup, R.drawable.ic_launcher_foreground)
+            SpeedDialActionItem.Builder(R.id.addFriendToGroup, R.drawable.ic_add_friend)
+                .setFabBackgroundColor(ContextCompat.getColor(requireContext(), R.color.addFriendFABColor))
+                .setFabImageTintColor(Color.WHITE) //todo sprobowac wrzucic to w layout, moze w item
                 .setLabel("Dodaj znajomego")
                 .setLabelClickable(true)
+                .setLabelBackgroundColor(Color.WHITE)
                 .create()
         )
         binding.speedDial.addActionItem(
-            SpeedDialActionItem.Builder(R.id.addExpense, R.drawable.ic_launcher_foreground)
+            SpeedDialActionItem.Builder(R.id.addExpense, R.drawable.ic_add_expense)
+                .setFabBackgroundColor(ContextCompat.getColor(requireContext(), R.color.addExpenseFABColor))
+                .setFabImageTintColor(Color.WHITE)
                 .setLabel("Dodaj wydatek")
                 .setLabelClickable(true)
+                .setLabelBackgroundColor(Color.WHITE)
                 .create()
         )
     }

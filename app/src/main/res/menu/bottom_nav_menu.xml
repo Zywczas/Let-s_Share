@@ -3,8 +3,10 @@
 
     <item
         android:id="@+id/friendsFragment"
+        android:icon="@drawable/ic_friends"
         android:title="Friends" />
     <item
         android:id="@+id/groupsFragment"
+        android:icon="@drawable/ic_groups"
         android:title="Groups" />
 </menu>

@@ -51,7 +51,6 @@ class AddGroupMemberDialog : DialogFragment() {
     override fun onResume() {
         super.onResume()
         lifecycleScope.launchWhenResumed { viewModel.getFriends() }
-        showToast("id: ${groupId}")
     }
 
 }

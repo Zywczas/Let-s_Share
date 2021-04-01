@@ -9,6 +9,7 @@
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/myColorSecondary</item>
         <item name="colorSecondaryVariant">@color/myColorSecondaryVariant</item>
+<!--        //todo moze zmienic secondary np. na ciemniejszy? zobaczyc co to da-->
         <item name="colorOnSecondary">@color/myColorOnSecondary</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
@@ -16,6 +17,8 @@
         <item name="android:textColor">@color/myTextColor</item>
         <item name="toolbarStyle">@style/Widget.MyToolbarStyle</item>
         <item name="drawerArrowStyle">@style/Widget.MyDrawerArrowStyle</item>
+<!--        <item name="bottomNavigationStyle">@style/MyBottomNavStyle</item> todo nie chce dzialac :(-->
+<!--        <item name="bottom">@style/MyBottomNavStyle</item>-->
     </style>
 
     <style name="Widget.MyToolbarStyle" parent="Widget.MaterialComponents.Toolbar">
@@ -24,6 +27,14 @@
 
     <style name="Widget.MyDrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
         <item name="color">@color/myDrawerArrowColor</item>
+    </style>
+
+    <style name="MyBottomNavStyle" parent="Widget.Design.BottomNavigationView">
+        <item name="color">@android:color/holo_red_light</item>
+        <item name="colorControlNormal">@android:color/holo_blue_bright</item>
+        <item name="colorAccent">@android:color/white</item>
+        <item name="colorButtonNormal">@android:color/holo_orange_dark</item>
+        <item name="colorControlHighlight">@android:color/black</item>
     </style>
 
 </resources>
