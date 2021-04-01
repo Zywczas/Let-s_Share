@@ -8,6 +8,9 @@
     <color name="green900Dark">#003300</color>
     <color name="green900DarkAlpha03">#4D003300</color>
     <color name="lime600">#C0CA33</color>
+    <color name="grey200">#EDEDED</color>
+    <color name="silver">#C0C0C0</color>
+    <color name="golden">#FFD700</color>
     <color name="blueGrey300">#90A4AE</color>
 
     <color name="cyan800">#00838E</color>
