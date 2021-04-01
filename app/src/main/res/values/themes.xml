@@ -9,7 +9,7 @@
     <color name="myColorOnSecondary">@color/golden</color>
     <!-- Customize your theme here. -->
     <color name="myColorPrimaryVariantAlpha03">@color/green700DarkAlpha03</color>
-    <color name="myTextColor">@color/black</color>
+    <color name="myTextColor">@android:color/black</color>
     <color name="myToolbarTitleTextColor">@color/golden</color>
     <color name="myDrawerArrowColor">@color/golden</color>
 </resources>

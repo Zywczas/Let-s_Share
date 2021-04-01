@@ -66,6 +66,10 @@ package com.zywczas.letsshare.utils
 //todo poustawiac motywy dla wszystkich guzikow, paskow i innych
 //todo dac kto sie ostatnio logowal, zeby maila samo wpisywalo
 //todo dac input edit texty z ramka, tak jak w OTS w R.layout.item_type_key_value
+//todo zmienic kolor paska dolnego, bo na moim telefonie jest bialy i sie wyroznia od zielonego
+
+
+
 
 private fun test(){
 //    firestore.runTransaction {  } //todo dobra funkcja do updatowania, jak jakis dokument w miedzy czasie sie zmieni to transakcja leci od nowa

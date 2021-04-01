@@ -9,7 +9,7 @@
     <color name="myColorOnSecondary">@color/lime600</color>
     <!-- Customize your theme here. -->
     <color name="myColorPrimaryVariantAlpha03">@color/green900DarkAlpha03</color>
-    <color name="myTextColor">@color/white</color>
+    <color name="myTextColor">@android:color/white</color>
     <color name="myToolbarTitleTextColor">@color/lime600</color>
     <color name="myDrawerArrowColor">@color/lime600</color>
 </resources>
