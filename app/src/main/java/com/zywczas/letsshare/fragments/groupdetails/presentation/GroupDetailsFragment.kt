@@ -137,6 +137,7 @@ class GroupDetailsFragment @Inject constructor(private val viewModelFactory: Uni
         }
     }
 //todo zmienic nazwe na mamber i layoutu tez
+
     private fun showAddFriendToGroupDialog(){
         //todo tu jescze mozna sprobowac wstrzykiwac daggerem fabryke w konstruktor i
         //todo dc odpowiedni scope dla tego view modelu :)
@@ -146,6 +147,10 @@ class GroupDetailsFragment @Inject constructor(private val viewModelFactory: Uni
         dialog.arguments = Bundle().apply { putString(GROUP_ID_KEY, args.group.id) }
         dialog.show(childFragmentManager, "AddGroupMemberDialog")
     }
+//todo usunac i dac normalnie
+//    private fun showAddFriendToGroupDialog(){
+//        findNavController().navigate(GroupDetailsFragmentDirections.toTestFragment())
+//    }
 
     private fun showAddExpenseDialog(){
         //todo tu jescze mozna sprobowac wstrzykiwac daggerem fabryke w konstruktor i

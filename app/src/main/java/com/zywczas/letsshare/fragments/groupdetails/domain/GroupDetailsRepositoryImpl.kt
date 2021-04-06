@@ -27,9 +27,8 @@ class GroupDetailsRepositoryImpl @Inject constructor(
     override suspend fun getMembers(groupId: String): List<GroupMemberDomain>? =
         try {
             firestoreRefs.collectionMembersRefs(groupId)
-                .orderBy(firestoreRefs.expensesField, Query.Direction.DESCENDING)
                 .get().await()
-                .toObjects<GroupMember>().map { it.toDomain() }
+                .toObjects<GroupMember>().map { it.toDomain() }.sortedByDescending { it.expenses }
         } catch (e: Exception) {
             crashlyticsWrapper.sendExceptionToFirebase(e)
             logD(e)

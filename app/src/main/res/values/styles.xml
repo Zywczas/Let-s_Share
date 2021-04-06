@@ -15,6 +15,8 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
         <item name="android:textColor">@color/myTextColor</item>
+<!--        todo zmienia kolor tla :)-->
+<!--        <item name="android:background">@color/myTextColor</item>-->
         <item name="toolbarStyle">@style/Widget.MyToolbarStyle</item>
         <item name="drawerArrowStyle">@style/Widget.MyDrawerArrowStyle</item>
 <!--        <item name="bottomNavigationStyle">@style/MyBottomNavStyle</item> todo nie chce dzialac :(-->

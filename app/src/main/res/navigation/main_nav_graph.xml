@@ -83,6 +83,9 @@
         <action
             android:id="@+id/actionShowAddFriendToGroupDialog"
             app:destination="@id/addFriendToGroupDialog" />
+        <action
+            android:id="@+id/toTestFragment"
+            app:destination="@id/testFragment" />
     </fragment>
     <dialog
         android:id="@+id/addFriendToGroupDialog"
@@ -92,4 +95,8 @@
             android:name="groupId"
             app:argType="string" />
     </dialog>
+    <fragment
+        android:id="@+id/testFragment"
+        android:name="com.zywczas.letsshare.fragments.TestFragment"
+        android:label="TestFragment" />
 </navigation>

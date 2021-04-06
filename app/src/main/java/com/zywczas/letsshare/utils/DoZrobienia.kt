@@ -67,30 +67,11 @@ package com.zywczas.letsshare.utils
 //todo dac kto sie ostatnio logowal, zeby maila samo wpisywalo
 //todo dac input edit texty z ramka, tak jak w OTS w R.layout.item_type_key_value
 //todo zmienic kolor paska dolnego, bo na moim telefonie jest bialy i sie wyroznia od zielonego
+//todo zmienic ikonke apki an tak bez cienia i zobaczyc czy bedzie wyrazniejsza
+//todo sortowanie w firestore po stringach jest bez sensu, sprawdzic czy nie ma gdzies sortowania i nie przeniesc na apke
+//todo poprawic kolory members
+//todo sprawdzic to glupie przeskakiwanie ekranu jak sie wchodzi w jakas grupe
 
-
-
-
-private fun test(){
-//    firestore.runTransaction {  } //todo dobra funkcja do updatowania, jak jakis dokument w miedzy czasie sie zmieni to transakcja leci od nowa
-//    FieldValue.increment(23.0) //todo to jest dobbre to zwiekszania wartosci bez koniecznosci pobierania wartosci przed updatem
-//    FieldValue.arrayUnion(...)
-}
-//przyklad transakcji
-//val sfDocRef = db.collection("cities").document("SF")
-//
-//db.runTransaction { transaction ->
-//    val snapshot = transaction.get(sfDocRef)
-//
-//    // Note: this could be done without a transaction
-//    //       by updating the population using FieldValue.increment()
-//    val newPopulation = snapshot.getDouble("population")!! + 1
-//    transaction.update(sfDocRef, "population", newPopulation)
-//
-//    // Success
-//    null
-//}.addOnSuccessListener { Log.d(TAG, "Transaction success!") }
-//.addOnFailureListener { e -> Log.w(TAG, "Transaction failure.", e) }
 
 //todo batche sa do update i tworzenia kilku dokumentow na raz
 //val nycRef = db.collection("cities").document("NYC")
