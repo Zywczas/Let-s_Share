@@ -69,9 +69,7 @@ package com.zywczas.letsshare.utils
 //todo zmienic kolor paska dolnego, bo na moim telefonie jest bialy i sie wyroznia od zielonego
 //todo zmienic ikonke apki an tak bez cienia i zobaczyc czy bedzie wyrazniejsza
 //todo sortowanie w firestore po stringach jest bez sensu, sprawdzic czy nie ma gdzies sortowania i nie przeniesc na apke
-//todo poprawic kolory members
-//todo sprawdzic to glupie przeskakiwanie ekranu jak sie wchodzi w jakas grupe
-
+//todo sprawdzic to glupie przeskakiwanie ekranu jak sie wchodzi w jakas grupe, moze zmienic sposob w jakis toolbar jest podawany, bo nie jest to oryginalne roziazanie
 
 //todo batche sa do update i tworzenia kilku dokumentow na raz
 //val nycRef = db.collection("cities").document("NYC")

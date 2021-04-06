@@ -14,6 +14,8 @@
     <color name="myDrawerArrowColor">@color/golden</color>
     <color name="addFriendFABColor">@color/deepPurple700</color>
     <color name="addExpenseFABColor">@color/lightBlue500</color>
-    <!--    text-->
+    <!--    font-->
     <color name="listItemHeader">@color/teal700</color>
+    <color name="listItemHeaderOnPrimary">@color/silver</color>
+    <color name="textOnPrimary">@color/blueGrey300</color>
 </resources>
