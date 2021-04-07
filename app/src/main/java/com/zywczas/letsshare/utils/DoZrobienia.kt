@@ -69,11 +69,7 @@ package com.zywczas.letsshare.utils
 //todo zmienic kolor paska dolnego, bo na moim telefonie jest bialy i sie wyroznia od zielonego
 //todo zmienic ikonke apki an tak bez cienia i zobaczyc czy bedzie wyrazniejsza
 //todo sortowanie w firestore po stringach jest bez sensu, sprawdzic czy nie ma gdzies sortowania i nie przeniesc na apke
-
-
-
-//todo sprawdzic to glupie przeskakiwanie ekranu jak sie wchodzi w jakas grupe, moze zmienic sposob w jakis toolbar jest podawany, bo nie jest to oryginalne roziazanie
-//moze dac bez frame layoutu
+//todo sprawdzic czy jak usune frame layout to czy speed dial moze byc w samym coordinator layout
 
 
 

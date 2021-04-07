@@ -112,9 +112,13 @@ class GroupDetailsFragment @Inject constructor(private val viewModelFactory: Uni
         if (isDialOpen){
 //            AppCompatResources.getColorStateList(requireContext(), R.color.purple_700) todo inny sposob na pobranie zasobow
             window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.myColorPrimaryVariantAlpha03)
+            binding.appbar.alpha = 0.3F
+            binding.toolbar.alpha = 0.3F
             binding.mainLayout.alpha = 0.3F
         } else {
             window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.myColorPrimaryVariant)
+            binding.appbar.alpha = 1F
+            binding.toolbar.alpha = 1F
             binding.mainLayout.alpha = 1F
         }
     }
