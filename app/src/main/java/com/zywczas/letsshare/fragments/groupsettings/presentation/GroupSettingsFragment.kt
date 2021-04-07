@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.databinding.FragmentGroupSettingsBinding
 import com.zywczas.letsshare.di.factories.UniversalViewModelFactory
@@ -13,6 +14,7 @@ import javax.inject.Inject
 
 class GroupSettingsFragment @Inject constructor(private val viewModelFactory: UniversalViewModelFactory) : Fragment() {
 
+    private val viewModel: GroupSettingsViewModel by viewModels { viewModelFactory }
     private var binding: FragmentGroupSettingsBinding by autoRelease()
 
     override fun onCreateView(

@@ -5,6 +5,7 @@ import com.zywczas.letsshare.di.qualifiers.ViewModelKey
 import com.zywczas.letsshare.fragments.friends.presentation.FriendsViewModel
 import com.zywczas.letsshare.fragments.groupdetails.presentation.GroupDetailsViewModel
 import com.zywczas.letsshare.fragments.groups.presentation.GroupsViewModel
+import com.zywczas.letsshare.fragments.groupsettings.presentation.GroupSettingsViewModel
 import com.zywczas.letsshare.fragments.login.presentation.LoginViewModel
 import com.zywczas.letsshare.fragments.register.presentation.RegisterViewModel
 import com.zywczas.letsshare.fragments.welcome.presentation.WelcomeViewModel
@@ -44,5 +45,10 @@ abstract class ViewModelFactoryModule {
     @IntoMap
     @ViewModelKey(GroupDetailsViewModel::class)
     abstract fun bindGroupDetailsViewModel(vm: GroupDetailsViewModel) : ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(GroupSettingsViewModel::class)
+    abstract fun bindGroupSettingsViewModel(vm: GroupSettingsViewModel): ViewModel
 
 }
