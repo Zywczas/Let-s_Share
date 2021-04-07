@@ -9,6 +9,7 @@ interface SharedPrefsWrapper {
 //    val userAuthId: String
     val userName: String
     val userEmail: String
+    var currentGroupId: String
 
     suspend fun saveUserLocally(user: User)
 

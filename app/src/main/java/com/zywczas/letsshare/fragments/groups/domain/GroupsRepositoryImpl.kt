@@ -73,4 +73,8 @@ class GroupsRepositoryImpl @Inject constructor(
             null
         }
 
+    override suspend fun saveCurrentlyOpenGroupId(groupId: String) {
+        sharedPrefs.currentGroupId = groupId
+    }
+
 }

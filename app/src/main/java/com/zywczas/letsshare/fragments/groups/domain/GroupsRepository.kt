@@ -7,4 +7,7 @@ interface GroupsRepository {
     suspend fun addGroupIfUserIsInLessThan10Groups(name: String, currency: String): Int
 
     suspend fun getGroups(): List<Group>?
+
+    suspend fun saveCurrentlyOpenGroupId(groupId: String)
+
 }

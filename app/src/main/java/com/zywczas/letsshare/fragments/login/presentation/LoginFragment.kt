@@ -41,7 +41,7 @@ class LoginFragment @Inject constructor(private val viewModelFactory: UniversalV
 
     private fun setupOnClickListeners(){
         binding.register.setOnClickListener{
-            findNavController().navigate(LoginFragmentDirections.actionLoginToRegisterFragment())
+            findNavController().navigate(LoginFragmentDirections.toRegisterFragment())
         }
         binding.login.setOnClickListener {
             hideSoftKeyboard()
@@ -58,7 +58,7 @@ class LoginFragment @Inject constructor(private val viewModelFactory: UniversalV
     private fun setupObservers(){
         viewModel.message.observe(viewLifecycleOwner){ showToast(it) }
         viewModel.isLoggedIn.observe(viewLifecycleOwner){
-            if (it){ findNavController().navigate(LoginFragmentDirections.actionLoginToFriendsFragment()) }
+            if (it){ findNavController().navigate(LoginFragmentDirections.toFriendsFragment()) }
         }
     }
 

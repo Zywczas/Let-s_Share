@@ -33,10 +33,10 @@ class WelcomeFragment @Inject constructor(private val viewModelFactory: Universa
 
     private fun setupObservers(){
         viewModel.goToFriendsFragment.observe(viewLifecycleOwner){
-            if (it) { findNavController().navigate(WelcomeFragmentDirections.actionWelcomeToFriendsFragment()) }
+            if (it) { findNavController().navigate(WelcomeFragmentDirections.toFriendsFragment()) }
         }
         viewModel.goToLoginFragment.observe(viewLifecycleOwner){
-            if (it) { findNavController().navigate(WelcomeFragmentDirections.actionWelcomeToLoginFragment()) }
+            if (it) { findNavController().navigate(WelcomeFragmentDirections.toLoginFragment()) }
         }
     }
 

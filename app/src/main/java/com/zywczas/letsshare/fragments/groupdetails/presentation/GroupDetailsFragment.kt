@@ -136,7 +136,7 @@ class GroupDetailsFragment @Inject constructor(private val viewModelFactory: Uni
     }
 
     private fun goToGroupSettingFragment(){
-
+        findNavController().navigate(GroupDetailsFragmentDirections.toGroupSettingsFragment(args.group.currency))
     }
 
     private fun showAddGroupMemberDialog(){

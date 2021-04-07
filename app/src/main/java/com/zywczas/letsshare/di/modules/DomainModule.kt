@@ -8,6 +8,8 @@ import com.zywczas.letsshare.fragments.groupdetails.domain.GroupDetailsRepositor
 import com.zywczas.letsshare.fragments.groupdetails.domain.GroupDetailsRepositoryImpl
 import com.zywczas.letsshare.fragments.groups.domain.GroupsRepository
 import com.zywczas.letsshare.fragments.groups.domain.GroupsRepositoryImpl
+import com.zywczas.letsshare.fragments.groupsettings.domain.GroupSettingsRepository
+import com.zywczas.letsshare.fragments.groupsettings.domain.GroupSettingsRepositoryImpl
 import com.zywczas.letsshare.fragments.login.domain.LoginRepository
 import com.zywczas.letsshare.fragments.login.domain.LoginRepositoryImpl
 import com.zywczas.letsshare.fragments.register.domain.RegisterRepository
@@ -45,5 +47,8 @@ abstract class DomainModule {
 
     @Binds
     abstract fun bindGroupDetailsRepository(repo: GroupDetailsRepositoryImpl): GroupDetailsRepository
+
+    @Binds
+    abstract fun bindGroupSettingsRepository(repo: GroupSettingsRepositoryImpl): GroupSettingsRepository
 
 }

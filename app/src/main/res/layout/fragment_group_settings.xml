@@ -1,8 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".fragments.groupsettings.presentation.GroupSettingsFragment">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <data>
+        <variable
+            name="vm"
+            type="com.zywczas.letsshare.fragments.groupsettings.presentation.GroupSettingsViewModel" />
+
+        <variable
+            name="membersAdapterXML"
+            type="com.zywczas.letsshare.fragments.groupdetails.adapters.GroupMembersAdapter" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".fragments.groupsettings.presentation.GroupSettingsFragment">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/membersRecycler"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            app:adapter="@{membersAdapterXML}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar"
+            tools:itemCount="3"
+            tools:listitem="@layout/list_item_group_members" />
+
+        <com.leinardi.android.speeddial.SpeedDialView
+            android:id="@+id/speedDial"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            android:theme="@style/Theme.LetsShare"
+            app:fabSize="normal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:sdMainFabAnimationRotateAngle="360"
+            app:sdMainFabClosedSrc="@drawable/ic_plus_35_white"
+            app:sdMainFabOpenedSrc="@drawable/ic_x_35_white"
+            app:sdUseReverseAnimationOnClose="true" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

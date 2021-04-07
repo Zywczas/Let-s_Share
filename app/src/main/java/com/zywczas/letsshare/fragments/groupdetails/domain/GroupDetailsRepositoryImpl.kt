@@ -5,6 +5,7 @@ import com.google.firebase.firestore.*
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.firestore.ktx.toObjects
 import com.zywczas.letsshare.R
+import com.zywczas.letsshare.activitymain.domain.toDomain
 import com.zywczas.letsshare.model.*
 import com.zywczas.letsshare.model.db.FriendsDao
 import com.zywczas.letsshare.utils.*
@@ -35,9 +36,6 @@ class GroupDetailsRepositoryImpl @Inject constructor(
             null
         }
 
-    private fun GroupMember.toDomain() =
-        GroupMemberDomain(name, email, expenses.toBigDecimal(), percentage_share.toBigDecimal())
-
     override suspend fun getFriends(): List<Friend> = friendsDao.getFriends()
 
     //todo getMembers moze rzucic nullem jak firestore cos nie pyknie, poprawic te funkcje
@@ -51,7 +49,7 @@ class GroupDetailsRepositoryImpl @Inject constructor(
         logD(e)
         null
     }
-//todo pamietac zeby przy nowym miesiac resetowac tez wydatki wszystkich czlonkow
+//todo pamietac zeby przy nowym miesiac resetowac tez wydatki wszystkich czlonkow - teraz chyba nie resetuje
     override suspend fun addNewMemberIfBelow7InGroup(member: GroupMember, groupId: String): Int? =
         try  {
             val userToBeUpdatedRefs = firestoreRefs.userRefs(member.email)

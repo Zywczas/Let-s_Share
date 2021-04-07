@@ -19,7 +19,7 @@ class GroupsViewModel @Inject constructor(
 
     private val _groups = MutableLiveData<List<Group>>()
     val groups: LiveData<List<Group>> = _groups
-
+//todo
 //    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
 //    private fun onResume() {
 //        viewModelScope.launch(dispatchersIO) { getGroups() }
@@ -55,6 +55,10 @@ class GroupsViewModel @Inject constructor(
                 } else { postMessage(R.string.connection_problem) }
             } else { postMessage(R.string.no_group_name) }
         }
+    }
+
+    suspend fun saveCurrentlyOpenGroupId(groupId: String){
+        withContext(dispatchersIO) { repository.saveCurrentlyOpenGroupId(groupId) }
     }
 
 }

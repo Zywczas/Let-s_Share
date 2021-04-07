@@ -24,6 +24,9 @@ class SharedPrefsWrapperImpl @Inject constructor (context: Context): SharedPrefs
 //    override val userAuthId: String = prefs.getString(userIdKey, "")!!
     override val userName: String = prefs.getString(userNameKey, "")!!
     override val userEmail: String = prefs.getString(userEmailKey, "")!!
+    override var currentGroupId: String
+        get() = prefs.getString(currentGroupIdKey, "")!!
+        set(value) = prefs.edit().putString(currentGroupIdKey, value).apply()
 
     override suspend fun saveUserLocally(user: User) {
         prefs.edit().putString(userIdKey, user.auth_id).apply()

@@ -34,6 +34,7 @@ class GroupDetailsViewModel @Inject constructor(
     private val _expenses = MutableLiveData<List<ExpenseDomain>>()
     val expenses: LiveData<List<ExpenseDomain>> = _expenses
 
+    //todo pousuwac wszystkie groupId z funkcji viewmodeli i fragmentow bo zapisuje je do shre prefs, i brac stamtad
     suspend fun getMembers(groupId: String) {
         withContext(dispatchersIO){ //todo da gdzie indziej tak samo :) - czyli ?.let i run
             showProgressBar(true)
