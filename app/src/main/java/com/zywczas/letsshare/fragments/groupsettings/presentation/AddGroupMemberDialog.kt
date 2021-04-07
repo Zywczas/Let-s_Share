@@ -1,4 +1,4 @@
-package com.zywczas.letsshare.fragments.groupdetails.presentation
+package com.zywczas.letsshare.fragments.groupsettings.presentation
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,22 +9,21 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.zywczas.letsshare.databinding.DialogAddFriendToGroupBinding
 import com.zywczas.letsshare.fragments.friends.adapter.FriendsAdapter
+import com.zywczas.letsshare.fragments.groupdetails.presentation.GroupDetailsViewModel
 import com.zywczas.letsshare.utils.GROUP_ID_KEY
 import com.zywczas.letsshare.utils.autoRelease
-import com.zywczas.letsshare.utils.showToast
+import kotlinx.coroutines.launch
 
 class AddGroupMemberDialog : DialogFragment() {
 
-    private val viewModel: GroupDetailsViewModel by viewModels({ requireParentFragment() })
+    private val viewModel: GroupSettingsViewModel by viewModels({ requireParentFragment() })
     private var binding: DialogAddFriendToGroupBinding by autoRelease()
-    private val groupId by lazy { requireArguments().getString(GROUP_ID_KEY)!! } //todo zamienic pozniej na safe args, jak ogarne view model
 
     private val adapter by lazy { FriendsAdapter{ friend ->
-        lifecycleScope.launchWhenCreated {
-            viewModel.addNewMember(friend, groupId)
+        lifecycleScope.launchWhenResumed {
+            viewModel.addNewMember(friend)
             dismiss()
-        }
-    } }
+        }}}
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,8 +36,9 @@ class AddGroupMemberDialog : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        lifecycleScope.launch { viewModel.getFriends() } //todo dac w pozostalych fragmentch tak samo - czyli w on view created
         binding.apply {
-            lifecycleOwner = viewLifecycleOwner //todo dac w pozostalych fragmentch tak samo
+            lifecycleOwner = viewLifecycleOwner //todo dac w pozostalych fragmentch tak samo - czyli w on view created
             adapterXML = adapter
         }
         setupObservers()
@@ -46,11 +46,6 @@ class AddGroupMemberDialog : DialogFragment() {
 
     private fun setupObservers() {
         viewModel.friends.observe(viewLifecycleOwner) { adapter.submitList(it.toMutableList()) }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        lifecycleScope.launchWhenResumed { viewModel.getFriends() }
     }
 
 }

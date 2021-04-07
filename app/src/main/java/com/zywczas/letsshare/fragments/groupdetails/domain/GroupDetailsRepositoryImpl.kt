@@ -1,14 +1,16 @@
 package com.zywczas.letsshare.fragments.groupdetails.domain
 
-import com.google.firebase.crashlytics.internal.model.CrashlyticsReport
-import com.google.firebase.firestore.*
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.firestore.ktx.toObjects
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.activitymain.domain.toDomain
 import com.zywczas.letsshare.model.*
-import com.zywczas.letsshare.model.db.FriendsDao
-import com.zywczas.letsshare.utils.*
+import com.zywczas.letsshare.utils.dateInPoland
+import com.zywczas.letsshare.utils.dayFormat
+import com.zywczas.letsshare.utils.logD
+import com.zywczas.letsshare.utils.monthIdFormat
 import com.zywczas.letsshare.utils.wrappers.CrashlyticsWrapper
 import com.zywczas.letsshare.utils.wrappers.FirestoreReferences
 import com.zywczas.letsshare.utils.wrappers.SharedPrefsWrapper
@@ -21,7 +23,6 @@ class GroupDetailsRepositoryImpl @Inject constructor(
     private val firestoreRefs: FirestoreReferences,
     private val firestore: FirebaseFirestore,
     private val crashlyticsWrapper: CrashlyticsWrapper,
-    private val friendsDao: FriendsDao,
     private val sharedPrefs: SharedPrefsWrapper
 ) : GroupDetailsRepository {
 
@@ -34,43 +35,6 @@ class GroupDetailsRepositoryImpl @Inject constructor(
             crashlyticsWrapper.sendExceptionToFirebase(e)
             logD(e)
             null
-        }
-
-    override suspend fun getFriends(): List<Friend> = friendsDao.getFriends()
-
-    //todo getMembers moze rzucic nullem jak firestore cos nie pyknie, poprawic te funkcje
-    override suspend fun isFriendInTheGroupAlready(memberEmail: String, groupId: String): Boolean =
-        getMembers(groupId)!!.find{ it.email == memberEmail } != null
-
-    override suspend fun isFriendIn10GroupsAlready(memberEmail: String): Boolean? = try {
-        firestoreRefs.userRefs(memberEmail).get().await().toObject<User>()!!.groupsIds.size >= 10
-    } catch (e: Exception){
-        crashlyticsWrapper.sendExceptionToFirebase(e)
-        logD(e)
-        null
-    }
-//todo pamietac zeby przy nowym miesiac resetowac tez wydatki wszystkich czlonkow - teraz chyba nie resetuje
-    override suspend fun addNewMemberIfBelow7InGroup(member: GroupMember, groupId: String): Int? =
-        try  {
-            val userToBeUpdatedRefs = firestoreRefs.userRefs(member.email)
-            val groupRef = firestoreRefs.groupRefs(groupId)
-            val newMemberRef = firestoreRefs.groupMemberRefs(member.email, groupId)
-
-            firestore.runTransaction { transaction ->
-                val group = transaction.get(groupRef).toObject<Group>()!!
-                if (group.members_num < 7){
-                    transaction.set(newMemberRef, member)
-                    transaction.update(groupRef, firestoreRefs.membersNumField, FieldValue.increment(1))
-                    transaction.update(userToBeUpdatedRefs, firestoreRefs.groupsIdsField, FieldValue.arrayUnion(groupId))
-                    return@runTransaction null
-                } else {
-                    return@runTransaction R.string.too_many_members
-                }
-            }.await()
-        } catch (e: Exception) {
-            crashlyticsWrapper.sendExceptionToFirebase(e)
-            logD(e)
-            R.string.cant_add_member
         }
 
     override suspend fun getExpenses(groupId: String): List<ExpenseDomain>? =
@@ -88,6 +52,8 @@ class GroupDetailsRepositoryImpl @Inject constructor(
     private fun Expense.toDomain() = ExpenseDomain(id, name, payee_email, payee_name,
         value.toBigDecimal(), date_created.dayFormat())
 
+    //todo pamietac zeby przy nowym miesiac resetowac tez wydatki wszystkich czlonkow - teraz chyba nie resetuje
+    //todo pomyslec czy ta nazwa jest adekwatna
     override suspend fun updateThisMonthAndAddNewExpense(groupId: String, name: String, amount: BigDecimal): Int? =
         try {
             val monthId = Date().monthIdFormat()

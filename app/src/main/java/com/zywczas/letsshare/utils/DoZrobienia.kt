@@ -72,6 +72,7 @@ package com.zywczas.letsshare.utils
 //todo sprawdzic czy jak usune frame layout to czy speed dial moze byc w samym coordinator layout
 //todo sprobowac jakos zrobic ze jak sie doda nowy wydatek to zeby recycler na gore sie przewinal, moze dac nowa live date, albo pare z booleanem
 //todo dac chowajacy sie fab bo zaslania cene paragonu na dole
+//todo jak sie otwiera klawiature to bottom nav bar tez sie podnosi - poprawic
 
 
 //todo batche sa do update i tworzenia kilku dokumentow na raz

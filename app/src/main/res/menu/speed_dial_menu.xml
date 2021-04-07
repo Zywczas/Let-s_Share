@@ -8,5 +8,10 @@
     <item
         android:id="@+id/addExpense"
         android:title="Dodaj wydatek" />
+
+    <item
+        android:id="@+id/addMember"
+        android:title="Dodaj członka grupy" />
+
 <!--    todo poprawic stringi tutaj-->
 </menu>

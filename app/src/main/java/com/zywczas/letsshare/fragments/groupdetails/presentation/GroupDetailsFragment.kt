@@ -71,7 +71,7 @@ class GroupDetailsFragment @Inject constructor(private val viewModelFactory: Uni
     private fun setupSpeedDialMenu(){ //todo dokonczyc text ze stringow
         binding.speedDial.addActionItem(
             SpeedDialActionItem.Builder(R.id.groupSettings, R.drawable.ic_settings_24)
-                .setFabBackgroundColor(ContextCompat.getColor(requireContext(), R.color.groupSettingsFABColor))
+                .setFabBackgroundColor(ContextCompat.getColor(requireContext(), R.color.secondFABItemColor))
                 .setFabImageTintColor(Color.WHITE) //todo sprobowac wrzucic to w layout, moze w item
                 .setLabel("Ustawienia grupy")
                 .setLabelClickable(true)
@@ -80,7 +80,7 @@ class GroupDetailsFragment @Inject constructor(private val viewModelFactory: Uni
         )
         binding.speedDial.addActionItem(
             SpeedDialActionItem.Builder(R.id.addExpense, R.drawable.ic_add_expense)
-                .setFabBackgroundColor(ContextCompat.getColor(requireContext(), R.color.addExpenseFABColor))
+                .setFabBackgroundColor(ContextCompat.getColor(requireContext(), R.color.firstFABItemColor))
                 .setFabImageTintColor(Color.WHITE)
                 .setLabel("Dodaj wydatek")
                 .setLabelClickable(true)
@@ -137,16 +137,6 @@ class GroupDetailsFragment @Inject constructor(private val viewModelFactory: Uni
 
     private fun goToGroupSettingFragment(){
         findNavController().navigate(GroupDetailsFragmentDirections.toGroupSettingsFragment(args.group.currency))
-    }
-
-    private fun showAddGroupMemberDialog(){
-        //todo tu jescze mozna sprobowac wstrzykiwac daggerem fabryke w konstruktor i
-        //todo dc odpowiedni scope dla tego view modelu :)
-    //todo sprawdzic co sie stanie jak dam fabryke jako singleton, czy bedzie mi wstzykiwac wszedzie te same view modele
-//        findNavController().navigate(GroupDetailsFragmentDirections.actionShowAddFriendToGroupDialog(args.group.id)) //todo sprobowc to zrobic albo usunac z nav graph, albo zauktualizowac nazwy w nav graph
-        val dialog = AddGroupMemberDialog()
-        dialog.arguments = Bundle().apply { putString(GROUP_ID_KEY, args.group.id) }
-        dialog.show(childFragmentManager, "AddGroupMemberDialog")
     }
 
     private fun showAddExpenseDialog(){

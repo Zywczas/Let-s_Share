@@ -21,15 +21,8 @@ class GroupDetailsViewModel @Inject constructor(
     private val repository: GroupDetailsRepository
 ) : BaseViewModel() {
 
-    init {
-        logD("init") //todo usunac jak zaczne wstrzykiwac view model w dialogi
-    }
-
     private val _members = MutableLiveData<List<GroupMemberDomain>>()
     val members: LiveData<List<GroupMemberDomain>> = _members
-
-    private val _friends = MutableLiveData<List<Friend>>()
-    val friends: LiveData<List<Friend>> = _friends
 
     private val _expenses = MutableLiveData<List<ExpenseDomain>>()
     val expenses: LiveData<List<ExpenseDomain>> = _expenses
@@ -43,40 +36,6 @@ class GroupDetailsViewModel @Inject constructor(
             showProgressBar(false)
         }
     }
-
-    suspend fun getFriends(){
-        withContext(dispatchersIO){ _friends.postValue(repository.getFriends()) }
-    }
-
-    suspend fun addNewMember(friend: Friend, groupId: String){
-        withContext(dispatchersIO){
-            showProgressBar(true)
-            if (repository.isFriendInTheGroupAlready(friend.email, groupId)) {
-                postMessage(R.string.member_exists)
-                showProgressBar(false)
-            }  else {
-                when(repository.isFriendIn10GroupsAlready(friend.email)){
-                    null -> {
-                        postMessage(R.string.cant_verify_friend)
-                        showProgressBar(false)
-                    }
-                    true -> {
-                        postMessage(R.string.friend_in_too_many_groups)
-                        showProgressBar(false)
-                    }
-                    else -> {
-                        repository.addNewMemberIfBelow7InGroup(friend.toGroupMember(), groupId)
-                            ?.let { error ->
-                                postMessage(error)
-                                showProgressBar(false)
-                            } ?: kotlin.run { getMembers(groupId) }
-                    }
-                }
-            }
-        }
-    }
-
-    private fun Friend.toGroupMember() = GroupMember(name, email)
 
     suspend fun getExpenses(groupId: String){
         withContext(dispatchersIO){

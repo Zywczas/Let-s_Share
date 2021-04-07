@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="vm"
             type="com.zywczas.letsshare.fragments.groupsettings.presentation.GroupSettingsViewModel" />
@@ -13,48 +14,53 @@
             type="com.zywczas.letsshare.fragments.groupdetails.adapters.GroupMembersAdapter" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".fragments.groupsettings.presentation.GroupSettingsFragment">
+        android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/mainLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
-            android:minHeight="?attr/actionBarSize"
-            android:theme="?attr/actionBarTheme"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="match_parent"
+            tools:context=".fragments.groupsettings.presentation.GroupSettingsFragment">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/membersRecycler"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            app:adapter="@{membersAdapterXML}"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar"
-            tools:itemCount="3"
-            tools:listitem="@layout/list_item_group_members" />
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/colorPrimary"
+                android:minHeight="?attr/actionBarSize"
+                android:theme="?attr/actionBarTheme"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/membersRecycler"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginStart="16dp"
+                app:adapter="@{membersAdapterXML}"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar"
+                tools:itemCount="3"
+                tools:listitem="@layout/list_item_group_members" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.leinardi.android.speeddial.SpeedDialView
             android:id="@+id/speedDial"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
             android:scaleType="centerCrop"
             android:theme="@style/Theme.LetsShare"
             app:fabSize="normal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:sdMainFabAnimationRotateAngle="360"
             app:sdMainFabClosedSrc="@drawable/ic_plus_35_white"
             app:sdMainFabOpenedSrc="@drawable/ic_x_35_white"
             app:sdUseReverseAnimationOnClose="true" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
 </layout>

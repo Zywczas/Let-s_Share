@@ -12,8 +12,8 @@
     <color name="myTextColor">@android:color/black</color>
     <color name="myToolbarTitleTextColor">@color/golden</color>
     <color name="myDrawerArrowColor">@color/golden</color>
-    <color name="groupSettingsFABColor">@color/deepPurple700</color>
-    <color name="addExpenseFABColor">@color/lightBlue500</color>
+    <color name="secondFABItemColor">@color/deepPurple700</color>
+    <color name="firstFABItemColor">@color/lightBlue500</color>
     <!--    font-->
     <color name="listItemHeader">@color/teal700</color>
     <color name="listItemHeaderOnPrimary">@color/silver</color>
