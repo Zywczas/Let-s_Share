@@ -67,10 +67,11 @@ package com.zywczas.letsshare.utils
 //todo dac kto sie ostatnio logowal, zeby maila samo wpisywalo
 //todo dac input edit texty z ramka, tak jak w OTS w R.layout.item_type_key_value
 //todo zmienic kolor paska dolnego, bo na moim telefonie jest bialy i sie wyroznia od zielonego
-//todo zmienic ikonke apki an tak bez cienia i zobaczyc czy bedzie wyrazniejsza
+//todo dac ikonke apki an tak bez cienia i zobaczyc czy bedzie wyrazniejsza
 //todo sortowanie w firestore po stringach jest bez sensu, sprawdzic czy nie ma gdzies sortowania i nie przeniesc na apke
 //todo sprawdzic czy jak usune frame layout to czy speed dial moze byc w samym coordinator layout
-
+//todo sprobowac jakos zrobic ze jak sie doda nowy wydatek to zeby recycler na gore sie przewinal, moze dac nowa live date, albo pare z booleanem
+//todo dac chowajacy sie fab bo zaslania cene paragonu na dole
 
 
 //todo batche sa do update i tworzenia kilku dokumentow na raz

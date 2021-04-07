@@ -5,14 +5,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
 import com.leinardi.android.speeddial.SpeedDialActionItem
 import com.leinardi.android.speeddial.SpeedDialView
@@ -72,10 +70,10 @@ class GroupDetailsFragment @Inject constructor(private val viewModelFactory: Uni
 
     private fun setupSpeedDialMenu(){ //todo dokonczyc text ze stringow
         binding.speedDial.addActionItem(
-            SpeedDialActionItem.Builder(R.id.addFriendToGroup, R.drawable.ic_add_friend)
-                .setFabBackgroundColor(ContextCompat.getColor(requireContext(), R.color.addFriendFABColor))
+            SpeedDialActionItem.Builder(R.id.groupSettings, R.drawable.ic_settings_24)
+                .setFabBackgroundColor(ContextCompat.getColor(requireContext(), R.color.groupSettingsFABColor))
                 .setFabImageTintColor(Color.WHITE) //todo sprobowac wrzucic to w layout, moze w item
-                .setLabel("Dodaj znajomego")
+                .setLabel("Ustawienia grupy")
                 .setLabelClickable(true)
                 .setLabelBackgroundColor(Color.WHITE)
                 .create()
@@ -112,13 +110,9 @@ class GroupDetailsFragment @Inject constructor(private val viewModelFactory: Uni
         if (isDialOpen){
 //            AppCompatResources.getColorStateList(requireContext(), R.color.purple_700) todo inny sposob na pobranie zasobow
             window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.myColorPrimaryVariantAlpha03)
-            binding.appbar.alpha = 0.3F
-            binding.toolbar.alpha = 0.3F
             binding.mainLayout.alpha = 0.3F
         } else {
             window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.myColorPrimaryVariant)
-            binding.appbar.alpha = 1F
-            binding.toolbar.alpha = 1F
             binding.mainLayout.alpha = 1F
         }
     }
@@ -126,9 +120,9 @@ class GroupDetailsFragment @Inject constructor(private val viewModelFactory: Uni
     private fun setupSpeedDialMenuClick(){
         binding.speedDial.setOnActionSelectedListener { item ->
             when(item.id){
-                R.id.addFriendToGroup -> {
+                R.id.groupSettings -> {
                     binding.speedDial.close()
-                    showAddFriendToGroupDialog()
+                    goToGroupSettingFragment()
                     true
                 }
                 R.id.addExpense -> {
@@ -141,8 +135,11 @@ class GroupDetailsFragment @Inject constructor(private val viewModelFactory: Uni
         }
     }
 
-//todo zmienic nazwe na mamber i layoutu tez
-    private fun showAddFriendToGroupDialog(){
+    private fun goToGroupSettingFragment(){
+
+    }
+
+    private fun showAddGroupMemberDialog(){
         //todo tu jescze mozna sprobowac wstrzykiwac daggerem fabryke w konstruktor i
         //todo dc odpowiedni scope dla tego view modelu :)
     //todo sprawdzic co sie stanie jak dam fabryke jako singleton, czy bedzie mi wstzykiwac wszedzie te same view modele
