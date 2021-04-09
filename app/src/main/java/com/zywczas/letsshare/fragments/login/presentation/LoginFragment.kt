@@ -1,7 +1,5 @@
 package com.zywczas.letsshare.fragments.login.presentation
 
-import android.content.res.ColorStateList
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -39,7 +37,6 @@ class LoginFragment @Inject constructor(private val viewModelFactory: UniversalV
         super.onViewCreated(view, savedInstanceState)
         setupOnClickListeners()
         setupObservers()
-        setupPasswordToggleTint()
     }
 
     private fun setupOnClickListeners(){
@@ -63,13 +60,6 @@ class LoginFragment @Inject constructor(private val viewModelFactory: UniversalV
         viewModel.isLoggedIn.observe(viewLifecycleOwner){
             if (it){ findNavController().navigate(LoginFragmentDirections.toFriendsFragment()) }
         }
-    }
-
-    private fun setupPasswordToggleTint(){
-//        binding.password.setOnFocusChangeListener { _, hasFocus ->
-//            val color = if (hasFocus) Color.BLUE else Color.GRAY
-//            binding.passwordFrame.setEndIconTintList(ColorStateList.valueOf(color))
-//        }
     }
 
 }
