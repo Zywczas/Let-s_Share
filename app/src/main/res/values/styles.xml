@@ -17,26 +17,29 @@
         <item name="android:textColor">@color/myTextColor</item>
 <!--        todo zmienia kolor tla :)-->
 <!--        <item name="android:background">@color/myTextColor</item>-->
-        <item name="toolbarStyle">@style/Widget.MyToolbarStyle</item>
-        <item name="drawerArrowStyle">@style/Widget.MyDrawerArrowStyle</item>
+        <item name="toolbarStyle">@style/Widget.App.MyToolbar</item>
+        <item name="drawerArrowStyle">@style/Widget.App.MyDrawerArrow</item>
+        <item name="textInputStyle">@style/Widget.App.MyTextInputLayout</item>
 <!--        <item name="bottomNavigationStyle">@style/MyBottomNavStyle</item> todo nie chce dzialac :(-->
 <!--        <item name="bottom">@style/MyBottomNavStyle</item>-->
     </style>
 
-    <style name="Widget.MyToolbarStyle" parent="Widget.MaterialComponents.Toolbar">
+    <style name="Widget.App.MyToolbar" parent="Widget.MaterialComponents.Toolbar">
         <item name="titleTextColor">@color/myToolbarTitleTextColor</item>
     </style>
 
-    <style name="Widget.MyDrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
+    <style name="Widget.App.MyDrawerArrow" parent="Widget.AppCompat.DrawerArrowToggle">
         <item name="color">@color/myDrawerArrowColor</item>
     </style>
 
-    <style name="MyBottomNavStyle" parent="Widget.Design.BottomNavigationView">
-        <item name="color">@android:color/holo_red_light</item>
-        <item name="colorControlNormal">@android:color/holo_blue_bright</item>
-        <item name="colorAccent">@android:color/white</item>
-        <item name="colorButtonNormal">@android:color/holo_orange_dark</item>
-        <item name="colorControlHighlight">@android:color/black</item>
-    </style>
+    <style name="Widget.App.MyTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox"/>
+
+<!--    <style name="MyBottomNavStyle" parent="Widget.Design.BottomNavigationView">-->
+<!--        <item name="color">@android:color/holo_red_light</item>-->
+<!--        <item name="colorControlNormal">@android:color/holo_blue_bright</item>-->
+<!--        <item name="colorAccent">@android:color/white</item>-->
+<!--        <item name="colorButtonNormal">@android:color/holo_orange_dark</item>-->
+<!--        <item name="colorControlHighlight">@android:color/black</item>-->
+<!--    </style>-->
 
 </resources>

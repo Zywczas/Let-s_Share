@@ -73,6 +73,8 @@ package com.zywczas.letsshare.utils
 //todo sprobowac jakos zrobic ze jak sie doda nowy wydatek to zeby recycler na gore sie przewinal, moze dac nowa live date, albo pare z booleanem
 //todo dac chowajacy sie fab bo zaslania cene paragonu na dole
 //todo jak sie otwiera klawiature to bottom nav bar tez sie podnosi - poprawic
+//todo dac pozniej confirm password z takimi fajnymi ikonkami albo errora albo zielonego ptaszka w edit tekscie
+//todo dac ograniczenie w ilosci liter dla nazw grup do 15? znakow
 
 
 //todo batche sa do update i tworzenia kilku dokumentow na raz

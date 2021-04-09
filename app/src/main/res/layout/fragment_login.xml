@@ -75,17 +75,14 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/passwordFrame"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="230dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="48dp"
-            app:boxBackgroundMode="outline"
             app:endIconMode="password_toggle"
-            app:endIconTint="@color/myColorPrimary"
+            app:setPasswordEndingIconTint="@{true}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/email"
-            app:passwordToggleTint="@color/myColorPrimary">
+            app:layout_constraintTop_toBottomOf="@+id/email">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/password"
