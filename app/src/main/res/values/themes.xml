@@ -1,21 +1,22 @@
 <resources>
     <!-- Primary brand color. -->
-    <color name="myColorPrimary">@color/green700</color>
-    <color name="myColorPrimaryVariant">@color/green700Dark</color>
-    <color name="myColorOnPrimary">@color/golden</color>
+    <color name="primary">@color/green700</color>
+    <color name="primaryVariant">@color/green700Dark</color>
+    <color name="onPrimary">@color/golden</color>
     <!-- Secondary brand color. -->
-    <color name="myColorSecondary">@color/green700</color>
-    <color name="myColorSecondaryVariant">@color/green700Dark</color>
-    <color name="myColorOnSecondary">@color/golden</color>
+    <color name="secondary">@color/green700</color>
+    <color name="secondaryVariant">@color/green700Dark</color>
+    <color name="onSecondary">@color/golden</color>
     <!-- Customize your theme here. -->
-    <color name="myColorPrimaryVariantAlpha03">@color/green700DarkAlpha03</color>
-    <color name="myTextColor">@android:color/black</color>
-    <color name="myToolbarTitleTextColor">@color/golden</color>
-    <color name="myDrawerArrowColor">@color/golden</color>
-    <color name="secondFABItemColor">@color/deepPurple700</color>
-    <color name="firstFABItemColor">@color/lightBlue500</color>
+    <color name="primaryVariantAlpha03">@color/green700DarkAlpha03</color>
+    <color name="text">@android:color/black</color>
+    <color name="toolbarTitleText">@color/golden</color>
+    <color name="drawerArrow">@color/golden</color>
+    <color name="firstFABItem">@color/lightBlue500</color>
+    <color name="secondFABItem">@color/deepPurple700</color>
     <!--    font-->
     <color name="listItemHeader">@color/teal700</color>
     <color name="listItemHeaderOnPrimary">@color/silver</color>
     <color name="textOnPrimary">@color/blueGrey300</color>
+    <color name="hint">@color/primary</color>
 </resources>
