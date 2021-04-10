@@ -3,6 +3,7 @@ package com.zywczas.letsshare.utils
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.view.View
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
@@ -21,7 +22,9 @@ fun bindSetPasswordEndingIconTint(view: View, setTint: Boolean){
         view.editText?.setOnFocusChangeListener { _, hasFocus ->
             val color = if (hasFocus) {
                 ContextCompat.getColor(view.context, R.color.primaryVariant)
-            } else { Color.GRAY }
+            } else {
+                Color.GRAY
+            }
             view.setEndIconTintList(ColorStateList.valueOf(color))
         }
     }

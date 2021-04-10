@@ -7,14 +7,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.zywczas.letsshare.R
 import com.zywczas.letsshare.databinding.DialogAddExpenseBinding
 import com.zywczas.letsshare.utils.GROUP_ID_KEY
 import com.zywczas.letsshare.utils.autoRelease
 
 class AddExpenseDialog : DialogFragment() {
 
-    //todo zamienic pozniej na safe args, jak ogarne view model
     private val viewModel: GroupDetailsViewModel by viewModels({ requireParentFragment() })
     private var binding: DialogAddExpenseBinding by autoRelease()
     private val groupId by lazy { requireArguments().getString(GROUP_ID_KEY)!! } //todo zamienic pozniej na safe args, jak ogarne view model
@@ -34,14 +32,14 @@ class AddExpenseDialog : DialogFragment() {
     }
 
     private fun verifyValuesAndAddExpense() {
-        when { //todo dac tutaj pozniej cofanie na normaly background jak jest wartosc
-            binding.name.text.toString().isBlank() -> binding.name.setBackgroundResource(R.drawable.edittext_red_stroke)
-            binding.amout.text.toString().isBlank() -> binding.amout.setBackgroundResource(R.drawable.edittext_red_stroke)
+        when {
+            binding.name.text.toString().isBlank() -> binding.nameFrame.error = "Podaj nazwę" //todo dac stringi
+            binding.amount.text.toString().isBlank() -> binding.amountFrame.error = "Wpisz kwotę"//todo dac stringi
             else -> lifecycleScope.launchWhenResumed {
                 viewModel.addNewExpenseToThisMonth(
                     groupId,
                     binding.name.text.toString(),
-                    binding.amout.text.toString().toBigDecimal()
+                    binding.amount.text.toString().toBigDecimal()
                 )
                 dismiss()
             }

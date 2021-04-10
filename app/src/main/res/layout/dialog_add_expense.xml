@@ -5,45 +5,55 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <EditText
-        android:id="@+id/name"
-        android:layout_width="wrap_content"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/nameFrame"
+        android:layout_width="@dimen/editTextWidthDialog"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:ems="6"
-        android:hint="nazwa"
-        android:inputType="textPersonName"
+        android:layout_marginStart="@dimen/smallMarginDialog"
+        android:layout_marginTop="@dimen/smallMarginDialog"
+        android:layout_marginEnd="@dimen/smallMarginDialog"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nazwa"
+            android:inputType="text" />
+    </com.google.android.material.textfield.TextInputLayout>
     <!--todo po wcisnieciu entera na klawiaturze dac "save"-->
-    <EditText
-        android:id="@+id/amout"
-        android:layout_width="wrap_content"
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/amountFrame"
+        android:layout_width="@dimen/editTextWidthDialog"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:ems="6"
-        android:hint="kwota"
-        android:inputType="numberDecimal"
+        android:layout_marginStart="@dimen/smallMarginDialog"
+        android:layout_marginTop="@dimen/mediumMarginDialog"
+        android:layout_marginEnd="@dimen/smallMarginDialog"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/name" />
+        app:layout_constraintTop_toBottomOf="@+id/nameFrame">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/amount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Kwota"
+            android:inputType="numberDecimal" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         android:id="@+id/ok"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginTop="@dimen/mediumMarginDialog"
+        android:layout_marginEnd="@dimen/smallMarginDialog"
+        android:layout_marginBottom="@dimen/smallMarginDialog"
         android:text="ok"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/amout" />
+        app:layout_constraintTop_toBottomOf="@+id/amountFrame" />
 </androidx.constraintlayout.widget.ConstraintLayout>

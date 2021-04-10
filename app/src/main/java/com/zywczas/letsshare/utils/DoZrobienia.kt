@@ -75,6 +75,7 @@ package com.zywczas.letsshare.utils
 //todo jak sie otwiera klawiature to bottom nav bar tez sie podnosi - poprawic
 //todo dac pozniej confirm password z takimi fajnymi ikonkami albo errora albo zielonego ptaszka w edit tekscie
 //todo dac ograniczenie w ilosci liter dla nazw grup do 15? znakow
+//todo dodac guziki anuluj do dialogow
 
 
 //todo batche sa do update i tworzenia kilku dokumentow na raz
