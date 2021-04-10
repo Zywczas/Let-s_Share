@@ -20,6 +20,7 @@ import com.zywczas.letsshare.fragments.groupsettings.adapters.GroupMembersSettin
 import com.zywczas.letsshare.utils.autoRelease
 import com.zywczas.letsshare.utils.showToast
 import kotlinx.coroutines.launch
+import java.util.*
 import javax.inject.Inject
 
 class GroupSettingsFragment @Inject constructor(private val viewModelFactory: UniversalViewModelFactory) : Fragment() {
@@ -59,6 +60,8 @@ class GroupSettingsFragment @Inject constructor(private val viewModelFactory: Un
     private fun setupObservers(){
         viewModel.message.observe(viewLifecycleOwner){ showToast(it) }
         viewModel.members.observe(viewLifecycleOwner){ membersAdapter.submitList(it.toMutableList()) }
+        viewModel.groupPercentage.observe(viewLifecycleOwner){
+            binding.splitTotalValue.text = String.format(Locale.getDefault(), "%.2f", it) }
     }
 
     private fun setupSpeedDialMenu(){ //todo dokonczyc text ze stringow

@@ -81,6 +81,7 @@ package com.zywczas.letsshare.utils
 //todo dac ladne chowanie sie i pokazywanie "new split" we fragmencie settings, innych guzikow tez, zeby byly widoczne tylko te potrzebne
 //todo dac zamykanie speed diale przy kliknieciu na glowny layout
 //todo dac kolory aler dialogow jakies ladniejsze w trybie ciemny, bo teraz jest szare
+//todo jak sie otwirra grupe to layout muli, sprobowac cos z tym zrobic, moze spowolnic przejscie
 
 
 //todo batche sa do update i tworzenia kilku dokumentow na raz
