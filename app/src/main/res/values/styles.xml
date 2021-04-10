@@ -3,18 +3,18 @@
     <!-- Base application theme. -->
     <style name="Theme.LetsShare" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/myColorPrimary</item>
-        <item name="colorPrimaryVariant">@color/myColorPrimaryVariant</item>
-        <item name="colorOnPrimary">@color/myColorOnPrimary</item>
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryVariant">@color/primaryVariant</item>
+        <item name="colorOnPrimary">@color/onPrimary</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/myColorSecondary</item>
-        <item name="colorSecondaryVariant">@color/myColorSecondaryVariant</item>
+        <item name="colorSecondary">@color/secondary</item>
+        <item name="colorSecondaryVariant">@color/secondaryVariant</item>
 <!--        //todo moze zmienic secondary np. na ciemniejszy? zobaczyc co to da-->
-        <item name="colorOnSecondary">@color/myColorOnSecondary</item>
+        <item name="colorOnSecondary">@color/onSecondary</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
-        <item name="android:textColor">@color/myTextColor</item>
+        <item name="android:textColor">@color/text</item>
 <!--        todo zmienia kolor tla :)-->
 <!--        <item name="android:background">@color/myTextColor</item>-->
         <item name="toolbarStyle">@style/Widget.App.MyToolbar</item>
@@ -25,14 +25,16 @@
     </style>
 
     <style name="Widget.App.MyToolbar" parent="Widget.MaterialComponents.Toolbar">
-        <item name="titleTextColor">@color/myToolbarTitleTextColor</item>
+        <item name="titleTextColor">@color/toolbarTitleText</item>
     </style>
 
     <style name="Widget.App.MyDrawerArrow" parent="Widget.AppCompat.DrawerArrowToggle">
-        <item name="color">@color/myDrawerArrowColor</item>
+        <item name="color">@color/drawerArrow</item>
     </style>
 
-    <style name="Widget.App.MyTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox"/>
+    <style name="Widget.App.MyTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="hintTextColor">@color/hint</item>
+    </style>
 
 <!--    <style name="MyBottomNavStyle" parent="Widget.Design.BottomNavigationView">-->
 <!--        <item name="color">@android:color/holo_red_light</item>-->

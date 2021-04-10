@@ -73,7 +73,7 @@ class GroupSettingsFragment @Inject constructor(private val viewModelFactory: Un
 //        )
         binding.speedDial.addActionItem(
             SpeedDialActionItem.Builder(R.id.addMember, R.drawable.ic_add_friend)
-                .setFabBackgroundColor(ContextCompat.getColor(requireContext(), R.color.firstFABItemColor))
+                .setFabBackgroundColor(ContextCompat.getColor(requireContext(), R.color.firstFABItem))
                 .setFabImageTintColor(Color.WHITE)
                 .setLabel("Dodaj czlonka grupy")
                 .setLabelClickable(true)
@@ -101,10 +101,10 @@ class GroupSettingsFragment @Inject constructor(private val viewModelFactory: Un
     private fun dimOrRestoreBackground(isDialOpen : Boolean){
         val window = requireActivity().window
         if (isDialOpen){
-            window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.myColorPrimaryVariantAlpha03)
+            window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.primaryVariantAlpha03)
             binding.mainLayout.alpha = 0.3F
         } else {
-            window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.myColorPrimaryVariant)
+            window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.primaryVariant)
             binding.mainLayout.alpha = 1F
         }
     }
