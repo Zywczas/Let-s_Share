@@ -102,9 +102,5 @@
         android:id="@+id/groupSettingsFragment"
         android:name="com.zywczas.letsshare.fragments.groupsettings.presentation.GroupSettingsFragment"
         tools:layout="@layout/fragment_group_settings"
-        android:label="Group Settings" >
-        <argument
-            android:name="currency"
-            app:argType="string" />
-    </fragment>
+        android:label="Group Settings" />
 </navigation>

@@ -4,4 +4,9 @@
     <dimen name="editTextWidthDialog">150dp</dimen>
     <dimen name="smallMarginDialog">8dp</dimen>
     <dimen name="mediumMarginDialog">16dp</dimen>
+    <dimen name="minimumListItem">2dp</dimen>
+    <dimen name="smallLstItem">6dp</dimen>
+    <dimen name="mediumListItem">8dp</dimen>
+    <dimen name="largeListItem">16dp</dimen>
+    <dimen name="headerListItem">20sp</dimen>
 </resources>

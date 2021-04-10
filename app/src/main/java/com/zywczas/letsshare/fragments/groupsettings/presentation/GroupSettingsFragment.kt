@@ -10,14 +10,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.setupWithNavController
 import com.leinardi.android.speeddial.SpeedDialActionItem
 import com.leinardi.android.speeddial.SpeedDialView
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.databinding.FragmentGroupSettingsBinding
 import com.zywczas.letsshare.di.factories.UniversalViewModelFactory
-import com.zywczas.letsshare.fragments.groupdetails.adapters.GroupMembersAdapter
+import com.zywczas.letsshare.fragments.groupsettings.adapters.GroupMembersSettingsAdapter
 import com.zywczas.letsshare.utils.autoRelease
 import com.zywczas.letsshare.utils.showToast
 import kotlinx.coroutines.launch
@@ -27,8 +26,9 @@ class GroupSettingsFragment @Inject constructor(private val viewModelFactory: Un
 
     private val viewModel: GroupSettingsViewModel by viewModels { viewModelFactory }
     private var binding: FragmentGroupSettingsBinding by autoRelease()
-    private val args: GroupSettingsFragmentArgs by navArgs()
-    private val membersAdapter by lazy { GroupMembersAdapter(args.currency) }
+    private val membersAdapter by lazy { GroupMembersSettingsAdapter(lifecycle){
+        email, split -> lifecycleScope.launchWhenResumed { viewModel.updatePercentageSum(email, split) }
+    } }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

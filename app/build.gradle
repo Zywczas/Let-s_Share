@@ -64,6 +64,8 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     //recyclerview 1.2.0 - dla stabilnego concat adapter todo
+//    ext.fast_adapter_version = "5.4.0"
+//    implementation "com.mikepenz:fastadapter:$fast_adapter_version"
 
     //firebase
     implementation platform('com.google.firebase:firebase-bom:26.5.0')

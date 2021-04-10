@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.model.GroupMemberDomain
+import java.util.*
 
 class GroupMembersAdapter(private val currency: String) : ListAdapter<GroupMemberDomain, GroupMembersAdapter.ViewHolder>(object : DiffUtil.ItemCallback<GroupMemberDomain>() {
 
@@ -29,7 +30,7 @@ class GroupMembersAdapter(private val currency: String) : ListAdapter<GroupMembe
         @SuppressLint("SetTextI18n")
         fun bindMember(member: GroupMemberDomain) {
             name.text = member.name
-            expenses.text = "${member.expenses} $currency" //todo dac string format zeby przecinek dobrze pokazywalo
+            expenses.text = String.format(Locale.getDefault(), "%.2f %s", member.expenses, currency)
             share.text = "${member.percentage_share} %"
         }
     }

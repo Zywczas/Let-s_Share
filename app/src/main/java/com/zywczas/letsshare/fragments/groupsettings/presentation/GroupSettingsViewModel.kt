@@ -13,6 +13,7 @@ import com.zywczas.letsshare.model.GroupMemberDomain
 import com.zywczas.letsshare.utils.logD
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
+import java.math.BigDecimal
 import javax.inject.Inject
 
 class GroupSettingsViewModel @Inject constructor(
@@ -33,7 +34,10 @@ class GroupSettingsViewModel @Inject constructor(
     suspend fun getMembers() {
         withContext(dispatchersIO){
             showProgressBar(true)
-            repository.getMembers()?.let{ _members.postValue(it) }
+            repository.getMembers()?.let{
+                _members.postValue(it)
+
+            }
                 ?: kotlin.run { postMessage(R.string.cant_get_group_members) }
             showProgressBar(false)
         }
@@ -79,5 +83,10 @@ class GroupSettingsViewModel @Inject constructor(
     }
 
     private fun Friend.toGroupMember() = GroupMember(name, email)
+
+    suspend fun updatePercentageSum(memberEmail: String, share: BigDecimal){
+        withContext(dispatchersIO){}
+
+    }
 
 }

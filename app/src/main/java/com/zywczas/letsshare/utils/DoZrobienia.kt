@@ -76,6 +76,11 @@ package com.zywczas.letsshare.utils
 //todo dac pozniej confirm password z takimi fajnymi ikonkami albo errora albo zielonego ptaszka w edit tekscie
 //todo dac ograniczenie w ilosci liter dla nazw grup do 15? znakow
 //todo dodac guziki anuluj do dialogow
+//todo sprobowac dac fast adapter jezeli diffutils dobrze tam dziala - ogarnac w best on screen
+//todo dodac info ile kto wisi pod imeniem
+//todo dac ladne chowanie sie i pokazywanie "new split" we fragmencie settings, innych guzikow tez, zeby byly widoczne tylko te potrzebne
+//todo dac zamykanie speed diale przy kliknieciu na glowny layout
+//todo dac kolory aler dialogow jakies ladniejsze w trybie ciemny, bo teraz jest szare
 
 
 //todo batche sa do update i tworzenia kilku dokumentow na raz
