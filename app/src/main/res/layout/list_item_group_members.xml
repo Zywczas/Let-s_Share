@@ -25,14 +25,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/minimumListItem"
+        android:textColor="@color/textOnPrimary"
         android:layout_marginEnd="@dimen/smallLstItem"
         app:layout_constraintBottom_toBottomOf="@+id/total"
-        android:textColor="@color/textOnPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/total"
         app:layout_constraintTop_toTopOf="@+id/total"
         tools:text="203.69 zł" />
+
 
     <TextView
         android:id="@+id/percentageShare"

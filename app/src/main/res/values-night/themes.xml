@@ -4,14 +4,14 @@
     <color name="primaryVariant">@color/green900Dark</color>
     <color name="onPrimary">@color/lime600</color>
     <!-- Secondary brand color. -->
-    <color name="secondary">@color/green900</color>
-    <color name="secondaryVariant">@color/green900Dark</color>
-    <color name="onSecondary">@color/lime600</color>
+    <color name="secondary">@color/primary</color>
+    <color name="secondaryVariant">@color/primaryVariant</color>
+    <color name="onSecondary">@color/onPrimary</color>
     <!-- Customize your theme here. -->
     <color name="primaryVariantAlpha03">@color/green900DarkAlpha03</color>
     <color name="text">@android:color/white</color>
-    <color name="toolbarTitleText">@color/lime600</color>
-    <color name="drawerArrow">@color/lime600</color>
+    <color name="toolbarTitleText">@color/onPrimary</color>
+    <color name="drawerArrow">@color/onPrimary</color>
     <color name="firstFABItem">@color/lightBlue500Dark</color>
     <color name="secondFABItem">@color/deepPurple900</color>
     <!--    font-->
@@ -19,4 +19,6 @@
     <color name="listItemHeaderOnPrimary">@color/lime600Dark</color>
     <color name="textOnPrimary">@color/blueGrey300</color>
     <color name="hint">@color/onPrimary</color>
+    <color name="outlinedButtonStroke">@color/primary</color>
+    <color name="outlinedButtonText">@color/primary</color>
 </resources>

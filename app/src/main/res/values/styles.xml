@@ -20,6 +20,7 @@
         <item name="toolbarStyle">@style/Widget.App.MyToolbar</item>
         <item name="drawerArrowStyle">@style/Widget.App.MyDrawerArrow</item>
         <item name="textInputStyle">@style/Widget.App.MyTextInputLayout</item>
+        <item name="materialButtonOutlinedStyle">@style/Widget.App.MyOutLinedButton</item>
 <!--        <item name="bottomNavigationStyle">@style/MyBottomNavStyle</item> todo nie chce dzialac :(-->
 <!--        <item name="bottom">@style/MyBottomNavStyle</item>-->
     </style>
@@ -34,6 +35,11 @@
 
     <style name="Widget.App.MyTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="hintTextColor">@color/hint</item>
+    </style>
+
+    <style name="Widget.App.MyOutLinedButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="strokeColor">@color/outlinedButtonStroke</item>
+        <item name="android:textColor">@color/outlinedButtonText</item>
     </style>
 
 <!--    <style name="MyBottomNavStyle" parent="Widget.Design.BottomNavigationView">-->
