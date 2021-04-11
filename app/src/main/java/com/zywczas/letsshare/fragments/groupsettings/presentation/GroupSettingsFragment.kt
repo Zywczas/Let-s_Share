@@ -21,7 +21,6 @@ import com.zywczas.letsshare.fragments.groupsettings.adapters.GroupMembersSettin
 import com.zywczas.letsshare.utils.autoRelease
 import com.zywczas.letsshare.utils.showToast
 import kotlinx.coroutines.launch
-import java.util.*
 import javax.inject.Inject
 
 class GroupSettingsFragment @Inject constructor(private val viewModelFactory: UniversalViewModelFactory) : Fragment() {
@@ -29,7 +28,7 @@ class GroupSettingsFragment @Inject constructor(private val viewModelFactory: Un
     private val viewModel: GroupSettingsViewModel by viewModels { viewModelFactory }
     private var binding: FragmentGroupSettingsBinding by autoRelease()
     private val membersAdapter by lazy { GroupMembersSettingsAdapter(lifecycle){
-        email, split -> lifecycleScope.launchWhenResumed { viewModel.updatePercentageSum(email, split) }
+        email, split -> lifecycleScope.launchWhenResumed { viewModel.updatePercentage(email, split) }
     } }
 
     override fun onCreateView(
@@ -63,8 +62,7 @@ class GroupSettingsFragment @Inject constructor(private val viewModelFactory: Un
     private fun setupObservers(){
         viewModel.message.observe(viewLifecycleOwner){ showToast(it) }
         viewModel.members.observe(viewLifecycleOwner){ membersAdapter.submitList(it.toMutableList()) }
-        viewModel.groupPercentage.observe(viewLifecycleOwner){
-            binding.splitTotalValue.text = String.format(Locale.getDefault(), "%.2f%s", it, "%") }
+        viewModel.totalPercentage.observe(viewLifecycleOwner){ binding.splitTotalValue.text = it }
     }
 
     private fun setupSpeedDialMenu(){ //todo dokonczyc text ze stringow
@@ -91,7 +89,7 @@ class GroupSettingsFragment @Inject constructor(private val viewModelFactory: Un
     private fun setupOnClickListeners(){
         setupSpeedDialMainBtnClick()
         setupSpeedDialMenuClick()
-        binding.equalSplit.setOnClickListener { lifecycleScope.launchWhenResumed { viewModel.setEqualSplit() } }
+        binding.equalSplit.setOnClickListener { lifecycleScope.launchWhenResumed { viewModel.setEqualSplits() } }
     }
 
     private fun setupSpeedDialMainBtnClick(){

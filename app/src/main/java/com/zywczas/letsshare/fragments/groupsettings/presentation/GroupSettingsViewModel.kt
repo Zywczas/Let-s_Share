@@ -1,7 +1,6 @@
 package com.zywczas.letsshare.fragments.groupsettings.presentation
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.*
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.activitymain.presentation.BaseViewModel
 import com.zywczas.letsshare.di.modules.DispatchersModule.*
@@ -13,7 +12,9 @@ import com.zywczas.letsshare.utils.logD
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import java.math.BigDecimal
+import java.util.*
 import javax.inject.Inject
+import kotlin.collections.HashMap
 
 class GroupSettingsViewModel @Inject constructor(
     @DispatchersIO private val dispatchersIO: CoroutineDispatcher,
@@ -29,11 +30,18 @@ class GroupSettingsViewModel @Inject constructor(
     private val _members = MutableLiveData<List<GroupMemberDomain>>()
     val members: LiveData<List<GroupMemberDomain>> = _members
 
-    private val _friends = MutableLiveData<List<Friend>>()
-    val friends: LiveData<List<Friend>> = _friends
+    private val _friendsLiveData = MutableLiveData<List<Friend>>()
+    val friends: LiveData<List<Friend>> = _friendsLiveData
 
-    private val _groupPercentage = MutableLiveData<BigDecimal>()
-    val groupPercentage: LiveData<BigDecimal> = _groupPercentage
+    val totalPercentage: LiveData<String> = Transformations.switchMap(_members){ members ->
+        liveData(dispatchersIO){
+            var totalPercentageTemp = BigDecimal("0.00")
+            members.forEach { member ->
+                totalPercentageTemp = totalPercentageTemp.plus(member.percentage_share)
+            }
+            emit(String.format(Locale.getDefault(), "%.2f%s", totalPercentageTemp, "%"))
+        }
+    }
 
     suspend fun getMembers() {
         withContext(dispatchersIO){
@@ -47,21 +55,17 @@ class GroupSettingsViewModel @Inject constructor(
         }
     }
 
-    private suspend fun getPercentage(members: List<GroupMemberDomain>){
-        withContext(dispatchersIO){
-            var totalPercentage = BigDecimal("0.00")
+    private fun getPercentage(members: List<GroupMemberDomain>){ //todo to chyba usunac
             members.forEach {
                 membersPercentage[it.email] = it.percentage_share
-                totalPercentage = totalPercentage.plus(it.percentage_share)
             }
-            _groupPercentage.postValue(totalPercentage)
-        }
     }
 
     suspend fun getFriends(){
-        withContext(dispatchersIO){ _friends.postValue(repository.getFriends()) }
+        withContext(dispatchersIO){ _friendsLiveData.postValue(repository.getFriends()) }
     }
 
+//todo tu trzeba jeszcze dodac ustawianie splitow i zatwierdzenie dopiero jak jest ok
     suspend fun addNewMember(friend: Friend){
         withContext(dispatchersIO){
             showProgressBar(true)
@@ -96,24 +100,23 @@ class GroupSettingsViewModel @Inject constructor(
             }
         }
     }
-
+    //todo dac funkcje private w view modelach bez "suspend"
     private fun Friend.toGroupMember() = GroupMember(name, email)
 
-    suspend fun updatePercentageSum(email: String, share: BigDecimal){
+    suspend fun updatePercentage(email: String, share: BigDecimal){
         withContext(dispatchersIO){
-            val roundedShare = share.setScale(2, BigDecimal.ROUND_HALF_UP)
-            membersPercentage[email] = roundedShare
-            var totalPercentage = BigDecimal("0.00")
-            membersPercentage.forEach { (_, percentage) ->
-                totalPercentage = totalPercentage.plus(percentage)
+            _members.value?.let { members ->
+                members.first { it.email == email }.percentage_share =
+                    share.setScale(2, BigDecimal.ROUND_HALF_UP)
+                _members.postValue(members)
             }
-            _groupPercentage.postValue(totalPercentage)
         }
     }
-//todo trzeba dac wyswietlanie splitow w edit tekscie od razu, zeby nie bylo zamieszania i wtedy jak jest puste to dac jako zero
-    suspend fun setEqualSplit(){
+
+    suspend fun setEqualSplits(){
         withContext(dispatchersIO){
-            val numberOfMembers = members.value?.count() ?: 0
+            val membersTemp = _members.value
+            val numberOfMembers = membersTemp?.count() ?: 0
             if (numberOfMembers != 0){
                 val newSplit = BigDecimal(100).divide(numberOfMembers.toBigDecimal(), 2, BigDecimal.ROUND_HALF_UP)
                 membersPercentage.forEach { (email, _) ->

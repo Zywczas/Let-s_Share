@@ -6,5 +6,5 @@ data class GroupMemberDomain (
     val name: String = "",
     val email: String = "",
     val expenses: BigDecimal = BigDecimal.ZERO,
-    val percentage_share: BigDecimal = BigDecimal("100.00")
+    var percentage_share: BigDecimal = BigDecimal("100.00")
 )

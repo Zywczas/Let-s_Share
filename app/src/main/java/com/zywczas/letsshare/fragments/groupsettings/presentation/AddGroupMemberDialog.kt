@@ -9,8 +9,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.zywczas.letsshare.databinding.DialogAddFriendToGroupBinding
 import com.zywczas.letsshare.fragments.friends.adapter.FriendsAdapter
-import com.zywczas.letsshare.fragments.groupdetails.presentation.GroupDetailsViewModel
-import com.zywczas.letsshare.utils.GROUP_ID_KEY
 import com.zywczas.letsshare.utils.autoRelease
 import kotlinx.coroutines.launch
 
