@@ -43,6 +43,7 @@
             android:layout_height="wrap_content"
             android:hint="Split"
             android:inputType="numberDecimal"
+            android:maxLength="6"
             tools:text="100.00" />
     </com.google.android.material.textfield.TextInputLayout>
 

@@ -14,7 +14,6 @@ import kotlinx.coroutines.withContext
 import java.math.BigDecimal
 import java.util.*
 import javax.inject.Inject
-import kotlin.collections.HashMap
 
 class GroupSettingsViewModel @Inject constructor(
     @DispatchersIO private val dispatchersIO: CoroutineDispatcher,
@@ -24,8 +23,6 @@ class GroupSettingsViewModel @Inject constructor(
     init {
         logD("init") //todo usunac jak zaczne wstrzykiwac view model w dialogi
     }
-
-    private val membersPercentage: MutableMap<String, BigDecimal> = HashMap()
 
     private val _members = MutableLiveData<List<GroupMemberDomain>>()
     val members: LiveData<List<GroupMemberDomain>> = _members
@@ -46,19 +43,10 @@ class GroupSettingsViewModel @Inject constructor(
     suspend fun getMembers() {
         withContext(dispatchersIO){
             showProgressBar(true)
-            repository.getMembers()?.let{
-                _members.postValue(it)
-                getPercentage(it)
-            }
+            repository.getMembers()?.let{ _members.postValue(it) }
                 ?: kotlin.run { postMessage(R.string.cant_get_group_members) }
             showProgressBar(false)
         }
-    }
-
-    private fun getPercentage(members: List<GroupMemberDomain>){ //todo to chyba usunac
-            members.forEach {
-                membersPercentage[it.email] = it.percentage_share
-            }
     }
 
     suspend fun getFriends(){
@@ -100,7 +88,7 @@ class GroupSettingsViewModel @Inject constructor(
             }
         }
     }
-    //todo dac funkcje private w view modelach bez "suspend"
+
     private fun Friend.toGroupMember() = GroupMember(name, email)
 
     suspend fun updatePercentage(email: String, share: BigDecimal){
@@ -119,8 +107,13 @@ class GroupSettingsViewModel @Inject constructor(
             val numberOfMembers = membersTemp?.count() ?: 0
             if (numberOfMembers != 0){
                 val newSplit = BigDecimal(100).divide(numberOfMembers.toBigDecimal(), 2, BigDecimal.ROUND_HALF_UP)
-                membersPercentage.forEach { (email, _) ->
-                    membersPercentage[email] = newSplit
+                membersTemp?.let {
+                    val updatedMembers = mutableListOf<GroupMemberDomain>()
+                    it.forEach { member ->
+                        val newMemberRef = GroupMemberDomain(member.name, member.email, member.expenses, newSplit)
+                        updatedMembers.add(newMemberRef)
+                    }
+                    _members.postValue(updatedMembers)
                 }
             }
         }

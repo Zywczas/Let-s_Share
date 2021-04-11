@@ -17,6 +17,7 @@ import com.zywczas.letsshare.R
 import com.zywczas.letsshare.model.GroupMemberDomain
 import kotlinx.coroutines.*
 import java.math.BigDecimal
+import java.util.*
 
 class GroupMembersSettingsAdapter(
     private val lifecycle: Lifecycle,
@@ -27,7 +28,7 @@ class GroupMembersSettingsAdapter(
         oldItem.email == newItem.email
 
     override fun areContentsTheSame(oldItem: GroupMemberDomain, newItem: GroupMemberDomain): Boolean =
-        oldItem.email == newItem.email && oldItem.percentage_share.toString() == newItem.percentage_share.toString()
+        oldItem.percentage_share.toString() == newItem.percentage_share.toString()
 }) {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), LifecycleObserver {
@@ -48,17 +49,16 @@ class GroupMembersSettingsAdapter(
             newSplitJob?.cancel()
         }
 
-        @SuppressLint("SetTextI18n")
         fun bindMember(member: GroupMemberDomain) {
             name.text = member.name
-            split.setText(member.percentage_share.toString())
+            split.setText(String.format(Locale.getDefault(), "%.2f", member.percentage_share))
             split.doOnTextChanged { text, _, _, _ ->
                 newSplitJob?.cancel()
                 newSplitJob = coroutineScope.launch {
                     delay(500L) //todo dac to pozniej w konstruktorze
                     text?.let {
                         var splitText = it
-                        if (splitText.isEmpty()) { splitText = "0" }
+                        if (splitText.isEmpty()) { splitText = "0.00" }
                         onSplitChangeAction(member.email, splitText.toString().toBigDecimal())
                     }
                 }
