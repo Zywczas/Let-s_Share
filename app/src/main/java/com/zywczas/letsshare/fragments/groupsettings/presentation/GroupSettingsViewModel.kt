@@ -26,35 +26,34 @@ class GroupSettingsViewModel @Inject constructor(
         viewModelScope.launch { getMembers() }
     }
 
-    private val _members = MutableLiveData<List<GroupMemberDomain>>()
-    val members: LiveData<List<GroupMemberDomain>> = _members
+    private val _members = MutableLiveData<MutableList<GroupMemberDomain>>()
+    val members: LiveData<MutableList<GroupMemberDomain>> = _members
 
-    private val _friendsLiveData = MutableLiveData<List<Friend>>()
-    val friends: LiveData<List<Friend>> = _friendsLiveData
+    private val _friendsLiveData = MutableLiveData<MutableList<Friend>>()
+    val friends: LiveData<MutableList<Friend>> = _friendsLiveData
 
     val totalPercentage: LiveData<String> = Transformations.switchMap(_members){ members ->
         liveData(dispatchersIO){
             var totalPercentageTemp = BigDecimal("0.00")
-            members.forEach { member ->
-                totalPercentageTemp = totalPercentageTemp.plus(member.percentage_share)
-            }
+            members.forEach { totalPercentageTemp = totalPercentageTemp.plus(it.percentage_share) }
             emit(String.format(Locale.getDefault(), "%.2f%s", totalPercentageTemp, "%"))
         }
     }
 
     private val _isPercentageChanged = MutableLiveData<Boolean>()
+    val isPercentageChanged: LiveData<Boolean> = _isPercentageChanged
 
     private suspend fun getMembers() {
         withContext(dispatchersIO){
             showProgressBar(true)
-            repository.getMembers()?.let{ _members.postValue(it) }
+            repository.getMembers()?.let{ _members.postValue(it.toMutableList()) }
                 ?: kotlin.run { postMessage(R.string.cant_get_group_members) }
             showProgressBar(false)
         }
     }
 
     suspend fun getFriends(){
-        withContext(dispatchersIO){ _friendsLiveData.postValue(repository.getFriends()) }
+        withContext(dispatchersIO){ _friendsLiveData.postValue(repository.getFriends().toMutableList()) }
     }
 
 //todo tu trzeba jeszcze dodac ustawianie splitow i zatwierdzenie dopiero jak jest ok
@@ -95,12 +94,13 @@ class GroupSettingsViewModel @Inject constructor(
 
     private fun Friend.toGroupMember() = GroupMember(name, email)
 
-    suspend fun updatePercentage(email: String, share: BigDecimal){
+    suspend fun updatePercentage(memberEmail: String, share: BigDecimal){
         withContext(dispatchersIO){
             _members.value?.let { members ->
-                members.first { it.email == email }.percentage_share =
+                members.first { it.email == memberEmail }.percentage_share =
                     share.setScale(2, BigDecimal.ROUND_HALF_UP)
                 _members.postValue(members)
+                _isPercentageChanged.postValue(true)
             }
         }
     }
@@ -111,15 +111,25 @@ class GroupSettingsViewModel @Inject constructor(
             val numberOfMembers = membersTemp?.count() ?: 0
             if (numberOfMembers != 0){
                 val newSplit = BigDecimal(100).divide(numberOfMembers.toBigDecimal(), 2, BigDecimal.ROUND_HALF_UP)
-                membersTemp?.let {
-                    val updatedMembers = mutableListOf<GroupMemberDomain>()
-                    it.forEach { member ->
-                        val newMemberRef = GroupMemberDomain(member.name, member.email, member.expenses, newSplit)
-                        updatedMembers.add(newMemberRef)
-                    }
-                    _members.postValue(updatedMembers)
+                membersTemp?.let { members ->
+                    val newMembersRef = members
+                        .map { GroupMemberDomain(it.name, it.email, it.expenses, newSplit) }
+                        .toMutableList()
+                    _members.postValue(newMembersRef)
+                    _isPercentageChanged.postValue(true)
                 }
             }
+        }
+    }
+
+    suspend fun saveSplits(){
+        withContext(dispatchersIO){
+            if (totalPercentage.value == "100.00") {
+                showProgressBar(true)
+                postMessage(repository.saveSplits(_members.value!!))
+                showProgressBar(false)
+            }
+            else { postMessage(R.string.percentageNot100) }
         }
     }
 

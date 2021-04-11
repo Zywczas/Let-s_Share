@@ -16,4 +16,6 @@ interface GroupSettingsRepository {
 
     suspend fun addNewMemberIfBelow7InGroup(newMember: GroupMember): Int?
 
+    suspend fun saveSplits(members: List<GroupMemberDomain>): Int
+
 }

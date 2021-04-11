@@ -30,6 +30,7 @@
     <string name="cant_get_expenses">Couldn\'t get expenses list.</string>
     <string name="friend_in_too_many_groups">Your friend has reached max number of 10 groups.</string>
     <string name="something_wrong">Something went wrong. Try again.</string>
+    <string name="percentageNot100">Total percentage must be equal 100.00%.</string>
 
     <!--    UI elements - main app-->
     <string name="friends">Friends</string>

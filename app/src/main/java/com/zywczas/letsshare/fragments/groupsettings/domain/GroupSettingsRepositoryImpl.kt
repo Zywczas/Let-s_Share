@@ -74,4 +74,13 @@ class GroupSettingsRepositoryImpl @Inject constructor(
             R.string.cant_add_member
         }
 
+    override suspend fun saveSplits(members: List<GroupMemberDomain>): Int =
+        try {
+
+        } catch (e: Exception){
+            crashlyticsWrapper.sendExceptionToFirebase(e)
+            logD(e)
+            R.string.something_wrong
+        }
+
 }

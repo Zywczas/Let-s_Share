@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -56,8 +57,9 @@ class GroupSettingsFragment @Inject constructor(private val viewModelFactory: Un
 
     private fun setupObservers(){
         viewModel.message.observe(viewLifecycleOwner){ showToast(it) }
-        viewModel.members.observe(viewLifecycleOwner){ membersAdapter.submitList(it.toMutableList()) }
+        viewModel.members.observe(viewLifecycleOwner){ membersAdapter.submitList(it) }
         viewModel.totalPercentage.observe(viewLifecycleOwner){ binding.splitTotalValue.text = it }
+        viewModel.isPercentageChanged.observe(viewLifecycleOwner){ binding.save.isVisible = it }
     }
 
     private fun setupSpeedDialMenu(){ //todo dokonczyc text ze stringow
@@ -85,6 +87,7 @@ class GroupSettingsFragment @Inject constructor(private val viewModelFactory: Un
         setupSpeedDialMainBtnClick()
         setupSpeedDialMenuClick()
         binding.equalSplit.setOnClickListener { lifecycleScope.launchWhenResumed { viewModel.setEqualSplits() } }
+        binding.save.setOnClickListener { lifecycleScope.launchWhenResumed { viewModel.saveSplits() } }
     }
 
     private fun setupSpeedDialMainBtnClick(){

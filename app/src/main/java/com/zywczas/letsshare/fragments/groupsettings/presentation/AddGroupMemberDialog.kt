@@ -43,7 +43,7 @@ class AddGroupMemberDialog : DialogFragment() {
     }
 
     private fun setupObservers() {
-        viewModel.friends.observe(viewLifecycleOwner) { adapter.submitList(it.toMutableList()) }
+        viewModel.friends.observe(viewLifecycleOwner) { adapter.submitList(it) }
     }
 
 }

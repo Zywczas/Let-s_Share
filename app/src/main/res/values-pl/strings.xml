@@ -31,6 +31,7 @@
     <string name="cant_get_expenses">Nie udało się pobrać listy wydatków.</string>
     <string name="friend_in_too_many_groups">Znajomy już jest w maksymalnej ilości dziesięciu grup.</string>
     <string name="something_wrong">Coś poszło nie tak. Spróbuj ponownie.</string>
+    <string name="percentageNot100">Total percentage must be equal 100.00%.</string>
 
     <!--    UI elements - main app-->
     <string name="friends">Znajomi</string>
