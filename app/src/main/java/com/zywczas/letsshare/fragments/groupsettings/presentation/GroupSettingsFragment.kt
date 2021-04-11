@@ -1,6 +1,5 @@
 package com.zywczas.letsshare.fragments.groupsettings.presentation
 
-import android.content.pm.ActivityInfo
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -20,7 +19,6 @@ import com.zywczas.letsshare.di.factories.UniversalViewModelFactory
 import com.zywczas.letsshare.fragments.groupsettings.adapters.GroupMembersSettingsAdapter
 import com.zywczas.letsshare.utils.autoRelease
 import com.zywczas.letsshare.utils.showToast
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class GroupSettingsFragment @Inject constructor(private val viewModelFactory: UniversalViewModelFactory) : Fragment() {
@@ -41,9 +39,6 @@ class GroupSettingsFragment @Inject constructor(private val viewModelFactory: Un
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val currentOrientation = resources.configuration.orientation
-        activity?.requestedOrientation = currentOrientation
-        lifecycleScope.launch { viewModel.getMembers() }
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             vm = viewModel
@@ -133,11 +128,6 @@ class GroupSettingsFragment @Inject constructor(private val viewModelFactory: Un
         //todo sprawdzic co sie stanie jak dam fabryke jako singleton, czy bedzie mi wstzykiwac wszedzie te same view modele
 //        findNavController().navigate(GroupDetailsFragmentDirections.actionShowAddFriendToGroupDialog(args.group.id)) //todo sprobowc to zrobic albo usunac z nav graph, albo zauktualizowac nazwy w nav graph
         AddGroupMemberDialog().show(childFragmentManager, "AddGroupMemberDialog")
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
     }
 
 }

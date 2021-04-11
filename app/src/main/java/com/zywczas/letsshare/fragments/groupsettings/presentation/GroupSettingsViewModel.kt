@@ -10,6 +10,7 @@ import com.zywczas.letsshare.model.GroupMember
 import com.zywczas.letsshare.model.GroupMemberDomain
 import com.zywczas.letsshare.utils.logD
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.math.BigDecimal
 import java.util.*
@@ -22,6 +23,7 @@ class GroupSettingsViewModel @Inject constructor(
 
     init {
         logD("init") //todo usunac jak zaczne wstrzykiwac view model w dialogi
+        viewModelScope.launch { getMembers() }
     }
 
     private val _members = MutableLiveData<List<GroupMemberDomain>>()
@@ -40,7 +42,9 @@ class GroupSettingsViewModel @Inject constructor(
         }
     }
 
-    suspend fun getMembers() {
+    private val _isPercentageChanged = MutableLiveData<Boolean>()
+
+    private suspend fun getMembers() {
         withContext(dispatchersIO){
             showProgressBar(true)
             repository.getMembers()?.let{ _members.postValue(it) }
