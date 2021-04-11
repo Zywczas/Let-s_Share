@@ -1,5 +1,6 @@
 package com.zywczas.letsshare.fragments.groupsettings.presentation
 
+import android.content.pm.ActivityInfo
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -41,6 +42,8 @@ class GroupSettingsFragment @Inject constructor(private val viewModelFactory: Un
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val currentOrientation = resources.configuration.orientation
+        activity?.requestedOrientation = currentOrientation
         lifecycleScope.launch { viewModel.getMembers() }
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
@@ -61,7 +64,7 @@ class GroupSettingsFragment @Inject constructor(private val viewModelFactory: Un
         viewModel.message.observe(viewLifecycleOwner){ showToast(it) }
         viewModel.members.observe(viewLifecycleOwner){ membersAdapter.submitList(it.toMutableList()) }
         viewModel.groupPercentage.observe(viewLifecycleOwner){
-            binding.splitTotalValue.text = String.format(Locale.getDefault(), "%.2f", it) }
+            binding.splitTotalValue.text = String.format(Locale.getDefault(), "%.2f%s", it, "%") }
     }
 
     private fun setupSpeedDialMenu(){ //todo dokonczyc text ze stringow
@@ -88,6 +91,7 @@ class GroupSettingsFragment @Inject constructor(private val viewModelFactory: Un
     private fun setupOnClickListeners(){
         setupSpeedDialMainBtnClick()
         setupSpeedDialMenuClick()
+        binding.equalSplit.setOnClickListener { lifecycleScope.launchWhenResumed { viewModel.setEqualSplit() } }
     }
 
     private fun setupSpeedDialMainBtnClick(){
@@ -131,6 +135,11 @@ class GroupSettingsFragment @Inject constructor(private val viewModelFactory: Un
         //todo sprawdzic co sie stanie jak dam fabryke jako singleton, czy bedzie mi wstzykiwac wszedzie te same view modele
 //        findNavController().navigate(GroupDetailsFragmentDirections.actionShowAddFriendToGroupDialog(args.group.id)) //todo sprobowc to zrobic albo usunac z nav graph, albo zauktualizowac nazwy w nav graph
         AddGroupMemberDialog().show(childFragmentManager, "AddGroupMemberDialog")
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
     }
 
 }

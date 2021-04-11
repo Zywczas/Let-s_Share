@@ -110,5 +110,17 @@ class GroupSettingsViewModel @Inject constructor(
             _groupPercentage.postValue(totalPercentage)
         }
     }
+//todo trzeba dac wyswietlanie splitow w edit tekscie od razu, zeby nie bylo zamieszania i wtedy jak jest puste to dac jako zero
+    suspend fun setEqualSplit(){
+        withContext(dispatchersIO){
+            val numberOfMembers = members.value?.count() ?: 0
+            if (numberOfMembers != 0){
+                val newSplit = BigDecimal(100).divide(numberOfMembers.toBigDecimal(), 2, BigDecimal.ROUND_HALF_UP)
+                membersPercentage.forEach { (email, _) ->
+                    membersPercentage[email] = newSplit
+                }
+            }
+        }
+    }
 
 }
