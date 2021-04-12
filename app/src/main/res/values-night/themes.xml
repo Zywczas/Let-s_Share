@@ -14,7 +14,6 @@
     <color name="drawerArrow">@color/onPrimary</color>
     <color name="firstFABItem">@color/lightBlue500Dark</color>
     <color name="secondFABItem">@color/deepPurple900</color>
-    <!--    font-->
     <color name="listItemHeader">@color/lightBlue500Dark</color>
     <color name="listItemHeaderOnPrimary">@color/lime600Dark</color>
     <color name="textOnPrimary">@color/blueGrey300</color>

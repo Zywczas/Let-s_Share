@@ -29,14 +29,14 @@ class GroupSettingsViewModel @Inject constructor(
     private val _members = MutableLiveData<MutableList<GroupMemberDomain>>()
     val members: LiveData<MutableList<GroupMemberDomain>> = _members
 
-    private val _friendsLiveData = MutableLiveData<MutableList<Friend>>()
-    val friends: LiveData<MutableList<Friend>> = _friendsLiveData
+    private val _friends = MutableLiveData<MutableList<Friend>>()
+    val friends: LiveData<MutableList<Friend>> = _friends
 
-    val totalPercentage: LiveData<String> = Transformations.switchMap(_members){ members ->
+    val totalPercentage: LiveData<String> = Transformations.switchMap(members){ members ->
         liveData(dispatchersIO){
             var totalPercentageTemp = BigDecimal("0.00")
             members.forEach { totalPercentageTemp = totalPercentageTemp.plus(it.percentage_share) }
-            emit(String.format(Locale.getDefault(), "%.2f%s", totalPercentageTemp, "%"))
+            emit(String.format(Locale.UK, "%.2f%s", totalPercentageTemp, "%"))
         }
     }
 
@@ -53,7 +53,7 @@ class GroupSettingsViewModel @Inject constructor(
     }
 
     suspend fun getFriends(){
-        withContext(dispatchersIO){ _friendsLiveData.postValue(repository.getFriends().toMutableList()) }
+        withContext(dispatchersIO){ _friends.postValue(repository.getFriends().toMutableList()) }
     }
 
 //todo tu trzeba jeszcze dodac ustawianie splitow i zatwierdzenie dopiero jak jest ok
@@ -96,7 +96,7 @@ class GroupSettingsViewModel @Inject constructor(
 
     suspend fun updatePercentage(memberEmail: String, share: BigDecimal){
         withContext(dispatchersIO){
-            _members.value?.let { members ->
+            members.value?.let { members ->
                 members.first { it.email == memberEmail }.percentage_share =
                     share.setScale(2, BigDecimal.ROUND_HALF_UP)
                 _members.postValue(members)
@@ -107,7 +107,7 @@ class GroupSettingsViewModel @Inject constructor(
 
     suspend fun setEqualSplits(){
         withContext(dispatchersIO){
-            val membersTemp = _members.value
+            val membersTemp = members.value
             val numberOfMembers = membersTemp?.count() ?: 0
             if (numberOfMembers != 0){
                 val newSplit = BigDecimal(100).divide(numberOfMembers.toBigDecimal(), 2, BigDecimal.ROUND_HALF_UP)
@@ -124,12 +124,12 @@ class GroupSettingsViewModel @Inject constructor(
 
     suspend fun saveSplits(){
         withContext(dispatchersIO){
-            if (totalPercentage.value == "100.00") {
+            if (totalPercentage.value.toString() == "100.00%") {
                 showProgressBar(true)
-                postMessage(repository.saveSplits(_members.value!!))
+                postMessage(repository.saveSplits(members.value!!))
                 showProgressBar(false)
             }
-            else { postMessage(R.string.percentageNot100) }
+            else { postMessage(R.string.percentage_not_100) }
         }
     }
 

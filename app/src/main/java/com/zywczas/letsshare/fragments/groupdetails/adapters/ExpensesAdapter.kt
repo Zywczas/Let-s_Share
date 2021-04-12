@@ -29,7 +29,7 @@ class ExpensesAdapter(private val currency: String) : ListAdapter<ExpenseDomain,
             expenseName.text = expense.name
             date.text = expense.date_created
             payeeName.text = expense.payee_name
-            value.text = String.format(Locale.getDefault(), "%.2f", expense.value)
+            value.text = String.format(Locale.UK, "%.2f", expense.value)
             currencyView.text = currency
         }
     }

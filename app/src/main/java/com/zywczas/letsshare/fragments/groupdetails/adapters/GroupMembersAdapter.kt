@@ -30,7 +30,7 @@ class GroupMembersAdapter(private val currency: String) : ListAdapter<GroupMembe
         @SuppressLint("SetTextI18n")
         fun bindMember(member: GroupMemberDomain) {
             name.text = member.name
-            expenses.text = String.format(Locale.getDefault(), "%.2f %s", member.expenses, currency)
+            expenses.text = String.format(Locale.UK, "%.2f %s", member.expenses, currency)
             share.text = "${member.percentage_share} %"
         }
     }

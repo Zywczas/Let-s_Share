@@ -51,15 +51,15 @@ class GroupMembersSettingsAdapter(
 
         fun bindMember(member: GroupMemberDomain) {
             name.text = member.name
-            split.setText(String.format(Locale.getDefault(), "%.2f", member.percentage_share))
+            split.setText(String.format(Locale.UK, "%.2f", member.percentage_share))
             split.doOnTextChanged { text, _, _, _ ->
                 newSplitJob?.cancel()
                 newSplitJob = coroutineScope.launch {
                     delay(500L) //todo dac to pozniej w konstruktorze
                     text?.let {
-                        var splitText = it
+                        var splitText = it.toString()
                         if (splitText.isEmpty()) { splitText = "0.00" }
-                        onSplitChangeAction(member.email, splitText.toString().toBigDecimal())
+                        onSplitChangeAction(member.email, splitText.toBigDecimal())
                     }
                 }
             }

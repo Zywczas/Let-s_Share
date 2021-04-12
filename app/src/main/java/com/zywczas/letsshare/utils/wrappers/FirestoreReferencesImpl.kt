@@ -18,6 +18,7 @@ class FirestoreReferencesImpl @Inject constructor(private val firestore: Firebas
     override val expensesField = "expenses"
     override val valueField = "value"
     override val groupsIdsField = "groupsIds"
+    override val percentageShareField = "percentage_share"
 
     private val collectionMonths = "months"
     private val collectionExpenses = "expenses"
@@ -34,7 +35,7 @@ class FirestoreReferencesImpl @Inject constructor(private val firestore: Firebas
         firestore.collection(COLLECTION_GROUPS).document(groupId)
             .collection(COLLECTION_MEMBERS)
 
-    override suspend fun groupMemberRefs(memberEmail: String, groupId: String): DocumentReference =
+    override fun groupMemberRefs(memberEmail: String, groupId: String): DocumentReference =
         firestore.collection(COLLECTION_GROUPS).document(groupId)
             .collection(COLLECTION_MEMBERS)
             .document(memberEmail)

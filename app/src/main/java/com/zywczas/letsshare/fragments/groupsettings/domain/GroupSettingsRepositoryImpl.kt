@@ -52,14 +52,14 @@ class GroupSettingsRepositoryImpl @Inject constructor(
         }
 
     override suspend fun addNewMemberIfBelow7InGroup(newMember: GroupMember): Int? =
-        try  {
+        try {
             val userToBeUpdatedRefs = firestoreRefs.userRefs(newMember.email)
             val groupRef = firestoreRefs.groupRefs(groupId)
             val newMemberRef = firestoreRefs.groupMemberRefs(newMember.email, groupId)
 
             firestore.runTransaction { transaction ->
                 val group = transaction.get(groupRef).toObject<Group>()!!
-                if (group.members_num < 7){
+                if (group.members_num < 7) {
                     transaction.set(newMemberRef, newMember)
                     transaction.update(groupRef, firestoreRefs.membersNumField, FieldValue.increment(1))
                     transaction.update(userToBeUpdatedRefs, firestoreRefs.groupsIdsField, FieldValue.arrayUnion(groupId))
@@ -76,11 +76,24 @@ class GroupSettingsRepositoryImpl @Inject constructor(
 
     override suspend fun saveSplits(members: List<GroupMemberDomain>): Int =
         try {
-
-        } catch (e: Exception){
+            val groupMembers = members.map { it.toGroupMember() }
+            firestore.runBatch { batch ->
+                groupMembers.forEach { member ->
+                    batch.update(
+                        firestoreRefs.groupMemberRefs(member.email, groupId),
+                        firestoreRefs.percentageShareField,
+                        member.percentage_share
+                    )
+                }
+            }.await()
+            R.string.save_success
+        } catch (e: Exception) {
             crashlyticsWrapper.sendExceptionToFirebase(e)
             logD(e)
             R.string.something_wrong
         }
+
+    private fun GroupMemberDomain.toGroupMember() =
+        GroupMember(name, email, expenses.toString(), percentage_share.toString())
 
 }
