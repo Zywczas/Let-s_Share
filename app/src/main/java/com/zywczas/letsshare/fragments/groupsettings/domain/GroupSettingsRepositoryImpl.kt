@@ -9,9 +9,9 @@ import com.zywczas.letsshare.activitymain.domain.toDomain
 import com.zywczas.letsshare.model.*
 import com.zywczas.letsshare.model.db.FriendsDao
 import com.zywczas.letsshare.utils.logD
-import com.zywczas.letsshare.utils.wrappers.CrashlyticsWrapper
-import com.zywczas.letsshare.utils.wrappers.FirestoreReferences
-import com.zywczas.letsshare.utils.wrappers.SharedPrefsWrapper
+import com.zywczas.letsshare.activitymain.domain.CrashlyticsWrapper
+import com.zywczas.letsshare.activitymain.domain.FirestoreReferences
+import com.zywczas.letsshare.activitymain.domain.SharedPrefsWrapper
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
@@ -26,15 +26,15 @@ class GroupSettingsRepositoryImpl @Inject constructor(
     private val groupId = sharedPrefs.currentGroupId
 
     override suspend fun getMembers(): List<GroupMemberDomain>? =
-        try {
-            firestoreRefs.collectionMembersRefs(groupId)
-                .get().await()
-                .toObjects<GroupMember>().map { it.toDomain() }
-        } catch (e: Exception) {
-            crashlyticsWrapper.sendExceptionToFirebase(e)
-            logD(e)
+//        try {
+//            firestoreRefs.collectionMembersRefs(groupId)
+//                .get().await()
+//                .toObjects<GroupMember>().map { it.toDomain() }
+//        } catch (e: Exception) {
+//            crashlyticsWrapper.sendExceptionToFirebase(e)
+//            logD(e)
             null
-        }
+//        }
 
     override suspend fun getFriends(): List<Friend> = friendsDao.getFriends()
 
@@ -51,47 +51,50 @@ class GroupSettingsRepositoryImpl @Inject constructor(
             null
         }
 
-    override suspend fun addNewMemberIfBelow7InGroup(newMember: GroupMember): Int? =
-        try {
-            val userToBeUpdatedRefs = firestoreRefs.userRefs(newMember.email)
-            val groupRef = firestoreRefs.groupRefs(groupId)
-            val newMemberRef = firestoreRefs.groupMemberRefs(newMember.email, groupId)
-
-            firestore.runTransaction { transaction ->
-                val group = transaction.get(groupRef).toObject<Group>()!!
-                if (group.members_num < 7) {
-                    transaction.set(newMemberRef, newMember)
-                    transaction.update(groupRef, firestoreRefs.membersNumField, FieldValue.increment(1))
-                    transaction.update(userToBeUpdatedRefs, firestoreRefs.groupsIdsField, FieldValue.arrayUnion(groupId))
-                    return@runTransaction null
-                } else {
-                    return@runTransaction R.string.too_many_members
-                }
-            }.await()
-        } catch (e: Exception) {
-            crashlyticsWrapper.sendExceptionToFirebase(e)
-            logD(e)
+    override suspend fun addMemberIfBelow7InGroup(friend: Friend): Int? =
+//        try {
+//            val newMember = friend.toGroupMember()
+//            val userToBeUpdatedRefs = firestoreRefs.userRefs(newMember.email)
+//            val groupRef = firestoreRefs.groupRefs(groupId)
+//            val newMemberRef = firestoreRefs.groupMemberRefs(groupId, newMember.email)
+//
+//            firestore.runTransaction { transaction ->
+//                val group = transaction.get(groupRef).toObject<Group>()!!
+//                if (group.members_num < 7) {
+//                    transaction.set(newMemberRef, newMember)
+//                    transaction.update(groupRef, firestoreRefs.membersNumField, FieldValue.increment(1))
+//                    transaction.update(userToBeUpdatedRefs, firestoreRefs.groupsIdsField, FieldValue.arrayUnion(groupId))
+//                    return@runTransaction null
+//                } else {
+//                    return@runTransaction R.string.too_many_members
+//                }
+//            }.await()
+//        } catch (e: Exception) {
+//            crashlyticsWrapper.sendExceptionToFirebase(e)
+//            logD(e)
             R.string.cant_add_member
-        }
+//        }
+
+    private fun Friend.toGroupMember() = GroupMember(name, email)
 
     override suspend fun saveSplits(members: List<GroupMemberDomain>): Int =
-        try {
-            val groupMembers = members.map { it.toGroupMember() }
-            firestore.runBatch { batch ->
-                groupMembers.forEach { member ->
-                    batch.update(
-                        firestoreRefs.groupMemberRefs(member.email, groupId),
-                        firestoreRefs.percentageShareField,
-                        member.percentage_share
-                    )
-                }
-            }.await()
-            R.string.save_success
-        } catch (e: Exception) {
-            crashlyticsWrapper.sendExceptionToFirebase(e)
-            logD(e)
+//        try {
+//            val groupMembers = members.map { it.toGroupMember() }
+//            firestore.runBatch { batch ->
+//                groupMembers.forEach { member ->
+//                    batch.update(
+//                        firestoreRefs.groupMemberRefs(groupId, member.email),
+//                        firestoreRefs.percentageShareField,
+//                        member.percentage_share
+//                    )
+//                }
+//            }.await()
+//            R.string.save_success
+//        } catch (e: Exception) {
+//            crashlyticsWrapper.sendExceptionToFirebase(e)
+//            logD(e)
             R.string.something_wrong
-        }
+//        }
 
     private fun GroupMemberDomain.toGroupMember() =
         GroupMember(name, email, expenses.toString(), percentage_share.toString())

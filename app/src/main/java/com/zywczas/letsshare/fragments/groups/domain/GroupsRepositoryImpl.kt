@@ -3,10 +3,12 @@ package com.zywczas.letsshare.fragments.groups.domain
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObject
 import com.zywczas.letsshare.R
-import com.zywczas.letsshare.utils.wrappers.CrashlyticsWrapper
-import com.zywczas.letsshare.utils.wrappers.SharedPrefsWrapper
+import com.zywczas.letsshare.activitymain.domain.CrashlyticsWrapper
+import com.zywczas.letsshare.activitymain.domain.FirestoreReferences
+import com.zywczas.letsshare.activitymain.domain.SharedPrefsWrapper
 import com.zywczas.letsshare.model.Group
 import com.zywczas.letsshare.model.GroupMember
+import com.zywczas.letsshare.model.GroupMonth
 import com.zywczas.letsshare.model.User
 import com.zywczas.letsshare.utils.*
 import kotlinx.coroutines.tasks.await
@@ -15,6 +17,7 @@ import javax.inject.Inject
 
 class GroupsRepositoryImpl @Inject constructor(
     private val firestore: FirebaseFirestore,
+    private val firestoreRefs: FirestoreReferences,
     private val sharedPrefs: SharedPrefsWrapper,
     private val crashlyticsWrapper: CrashlyticsWrapper
 ) : GroupsRepository {
@@ -24,19 +27,19 @@ class GroupsRepositoryImpl @Inject constructor(
     override suspend fun addGroupIfUserIsInLessThan10Groups(name: String, currency: String): Int =
         try {
             val userEmail = sharedPrefs.userEmail
-            val newGroupRef = firestore.collection(COLLECTION_GROUPS).document()
+            val newGroupRef = firestoreRefs.newGroupRefs()
             val newGroup = Group(
                 id = newGroupRef.id,
                 founder_email = userEmail,
                 name = name,
                 currency = currency,
                 members_num = 1)
-            val newGroupMemberRef = firestore
-                .collection(COLLECTION_GROUPS).document(newGroup.id)
-                .collection(COLLECTION_MEMBERS)
-                .document(userEmail)
+            val monthId = Date().monthId()
+            val monthRefs = firestoreRefs.groupMonthRefs(newGroupRef.id, monthId)
+            val newMonth = GroupMonth(id = monthId, group_id = newGroupRef.id)
+            val groupMemberRef = firestoreRefs.groupMemberRefs(newGroupRef.id, monthId, userEmail)
             val newMember = GroupMember(sharedPrefs.userName, userEmail)
-            val userRef = firestore.collection(COLLECTION_USERS).document(userEmail)
+            val userRef = firestoreRefs.userRefs(userEmail)
 
             firestore.runTransaction { transaction ->
                 val user = transaction.get(userRef).toObject<User>()!!
@@ -46,7 +49,8 @@ class GroupsRepositoryImpl @Inject constructor(
                     else -> return@runTransaction R.string.too_many_groups //todo sprawdzi czy to dobrze dziala, np dac ze moze byc tylko 2 grupy na chwile
                 }
                 transaction.set(newGroupRef, newGroup)
-                transaction.set(newGroupMemberRef, newMember)
+                transaction.set(monthRefs, newMonth)
+                transaction.set(groupMemberRef, newMember)
                 transaction.update(userRef, fieldGroupsIds, newGroupsIds)
             }.await()
             R.string.group_added
@@ -58,12 +62,14 @@ class GroupsRepositoryImpl @Inject constructor(
 
     override suspend fun getGroups(): List<Group>? =
         try {
-            val user = firestore.collection(COLLECTION_USERS).document(sharedPrefs.userEmail)
-                .get().await().toObject<User>()!!
+            val user = firestoreRefs.userRefs(sharedPrefs.userEmail)
+                .get().await()
+                .toObject<User>()!!
             val groups = mutableListOf<Group>()
             user.groupsIds.forEach { id ->
-                val group = firestore.collection(COLLECTION_GROUPS).document(id)
-                    .get().await().toObject<Group>()!!
+                val group = firestoreRefs.groupRefs(id)
+                    .get().await()
+                    .toObject<Group>()!!
                 groups.add(group)
             }
             groups.sortedByDescending { it.date_created }

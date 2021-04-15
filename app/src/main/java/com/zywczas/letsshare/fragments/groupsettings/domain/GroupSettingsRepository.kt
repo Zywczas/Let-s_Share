@@ -14,7 +14,7 @@ interface GroupSettingsRepository {
 
     suspend fun isFriendIn10GroupsAlready(newMemberEmail: String): Boolean?
 
-    suspend fun addNewMemberIfBelow7InGroup(newMember: GroupMember): Int?
+    suspend fun addMemberIfBelow7InGroup(friend: Friend): Int?
 
     suspend fun saveSplits(members: List<GroupMemberDomain>): Int
 

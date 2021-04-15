@@ -6,7 +6,6 @@ import com.zywczas.letsshare.activitymain.presentation.BaseViewModel
 import com.zywczas.letsshare.di.modules.DispatchersModule.*
 import com.zywczas.letsshare.fragments.groupsettings.domain.GroupSettingsRepository
 import com.zywczas.letsshare.model.Friend
-import com.zywczas.letsshare.model.GroupMember
 import com.zywczas.letsshare.model.GroupMemberDomain
 import com.zywczas.letsshare.utils.logD
 import kotlinx.coroutines.CoroutineDispatcher
@@ -80,7 +79,7 @@ class GroupSettingsViewModel @Inject constructor(
                             showProgressBar(false)
                         }
                         false -> {
-                            repository.addNewMemberIfBelow7InGroup(friend.toGroupMember())
+                            repository.addMemberIfBelow7InGroup(friend)
                                 ?.let { error ->
                                     postMessage(error)
                                     showProgressBar(false)
@@ -91,8 +90,6 @@ class GroupSettingsViewModel @Inject constructor(
             }
         }
     }
-
-    private fun Friend.toGroupMember() = GroupMember(name, email)
 
     suspend fun updatePercentage(memberEmail: String, share: BigDecimal){
         withContext(dispatchersIO){

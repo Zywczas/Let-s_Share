@@ -1,4 +1,4 @@
-package com.zywczas.letsshare.utils.wrappers
+package com.zywczas.letsshare.activitymain.domain
 
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import javax.inject.Inject

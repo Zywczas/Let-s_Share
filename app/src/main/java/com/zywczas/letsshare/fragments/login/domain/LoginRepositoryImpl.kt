@@ -8,11 +8,11 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.zywczas.letsshare.R
-import com.zywczas.letsshare.utils.wrappers.SharedPrefsWrapper
+import com.zywczas.letsshare.activitymain.domain.SharedPrefsWrapper
 import com.zywczas.letsshare.model.User
 import com.zywczas.letsshare.utils.COLLECTION_USERS
 import com.zywczas.letsshare.utils.logD
-import com.zywczas.letsshare.utils.wrappers.FirestoreReferences
+import com.zywczas.letsshare.activitymain.domain.FirestoreReferences
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 

@@ -5,9 +5,7 @@ import com.google.firebase.auth.UserProfileChangeRequest
 import com.zywczas.letsshare.model.User
 import com.zywczas.letsshare.utils.dateInPoland
 import com.zywczas.letsshare.utils.logD
-import com.zywczas.letsshare.utils.dayFormat
-import com.zywczas.letsshare.utils.wrappers.FirestoreReferences
-import java.util.*
+import com.zywczas.letsshare.activitymain.domain.FirestoreReferences
 import javax.inject.Inject
 
 class RegisterRepositoryImpl @Inject constructor(

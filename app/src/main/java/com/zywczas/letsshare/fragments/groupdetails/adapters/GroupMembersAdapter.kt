@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.zywczas.letsshare.R
+import com.zywczas.letsshare.model.GroupMember
 import com.zywczas.letsshare.model.GroupMemberDomain
 import java.util.*
 
@@ -19,20 +20,26 @@ class GroupMembersAdapter(private val currency: String) : ListAdapter<GroupMembe
     override fun areContentsTheSame(oldItem: GroupMemberDomain, newItem: GroupMemberDomain): Boolean =
         oldItem.email == newItem.email &&
             oldItem.percentage_share == newItem.percentage_share &&
-            oldItem.expenses == newItem.expenses
+            oldItem.expenses == newItem.expenses &&
+            oldItem.owes == newItem.owes &&
+            oldItem.balance == newItem.balance
 }) {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val name: TextView = itemView.findViewById(R.id.memberName)
         private val expenses: TextView = itemView.findViewById(R.id.memberExpenses)
         private val share: TextView = itemView.findViewById(R.id.percentageShare)
+        private val owes: TextView = itemView.findViewById(R.id.owes)
+        private val difference: TextView = itemView.findViewById(R.id.difference)
 
-        @SuppressLint("SetTextI18n")
         fun bindMember(member: GroupMemberDomain) {
             name.text = member.name
             expenses.text = String.format(Locale.UK, "%.2f %s", member.expenses, currency)
-            share.text = "${member.percentage_share} %"
+            share.text = String.format(Locale.UK, "%.2f %s", member.percentage_share, "%")
+            owes.text = member.owes
+            difference.text = String.format(Locale.UK, "%.2f %s", member.balance, "%")
         }
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
