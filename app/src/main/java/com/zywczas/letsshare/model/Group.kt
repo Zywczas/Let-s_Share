@@ -8,7 +8,6 @@ import java.util.*
 @Parcelize
 data class Group(
     val id: String = "",
-    val founder_email: String = "",
     val name: String = "",
     val date_created: Date = dateInPoland(),
     val currency: String = "",

@@ -81,6 +81,6 @@ class FriendsRepositoryImpl @Inject constructor(
             }
     }
 
-    private fun User.toFriend() = Friend(email, name)
+    private fun User.toFriend() = Friend(email = email, name = name)
 
 }

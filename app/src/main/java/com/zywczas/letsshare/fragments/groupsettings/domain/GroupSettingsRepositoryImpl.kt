@@ -72,7 +72,7 @@ class GroupSettingsRepositoryImpl @Inject constructor(
             R.string.cant_add_member
 //        }
 
-    private fun Friend.toGroupMember() = GroupMember(name, email)
+    private fun Friend.toGroupMember() = GroupMember(name = name, email = email)
 
     override suspend fun saveSplits(members: List<GroupMemberDomain>): Int =
 //        try {
@@ -93,7 +93,11 @@ class GroupSettingsRepositoryImpl @Inject constructor(
             R.string.something_wrong
 //        }
 
-    private fun GroupMemberDomain.toGroupMember() =
-        GroupMember(name, email, expenses.toString(), percentageShare.toString())
+    private fun GroupMemberDomain.toGroupMember() = GroupMember(
+        name = name,
+        email = email,
+        expenses = expenses.toString(),
+        percentage_share = percentageShare.toString()
+    )
 
 }

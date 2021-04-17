@@ -30,19 +30,15 @@ class GroupsRepositoryImpl @Inject constructor(
             val newGroupRef = firestoreRefs.newGroupRefs()
             val newGroup = Group(
                 id = newGroupRef.id,
-                founder_email = userEmail,
                 name = name,
                 currency = currency,
                 members_num = 1)
             val date = Date()
-            val monthId = Date().monthId()
+            val monthId = date.monthId()
             val monthRefs = firestoreRefs.groupMonthRefs(newGroupRef.id, monthId)
             val newMonth = GroupMonth(id = monthId, date_created = date)
             val groupMemberRef = firestoreRefs.groupMemberRefs(newGroupRef.id, monthId, userEmail)
-            val newMember = GroupMember(
-                sharedPrefs.userName,
-                userEmail
-            )
+            val newMember = GroupMember(name = sharedPrefs.userName, email = userEmail)
             val userRef = firestoreRefs.userRefs(userEmail)
 
             firestore.runTransaction { transaction ->
@@ -76,7 +72,7 @@ class GroupsRepositoryImpl @Inject constructor(
                     .toObject<Group>()!!
                 groups.add(group)
             }
-            groups.sortedByDescending { it.date_created }
+            groups.sortedBy { it.name }
         } catch (e: Exception) {
             crashlyticsWrapper.sendExceptionToFirebase(e)
             logD(e)

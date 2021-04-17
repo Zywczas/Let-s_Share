@@ -47,7 +47,7 @@ class RegisterRepositoryImpl @Inject constructor(
         val userId = firebaseAuth.currentUser?.uid
         if (userId != null){
             firestoreRefs.userRefs(email)
-                .set(User(userId, name, email, dateInPoland()))
+                .set(User(auth_id = userId, name = name, email = email, date_created = dateInPoland()))
                 .addOnSuccessListener {
                     onSuccessAction(true)
                 }.addOnFailureListener {

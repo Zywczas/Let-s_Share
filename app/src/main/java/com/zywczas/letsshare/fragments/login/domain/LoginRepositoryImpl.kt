@@ -46,50 +46,6 @@ class LoginRepositoryImpl @Inject constructor(
             null
         }
 
-//todo przyklad 2
-    suspend fun saveDataInFireStore(childName : String,
-                                    hashMap: HashMap<String,Any>) : Boolean =
-        try{
-        val data = firestore
-            .collection("users")
-            .document(childName)
-            .set(hashMap)
-            .await()
-        true
-    } catch (e : Exception){
-        false
-    }
-
-//todo przyklad 3
-suspend fun getDataFromFireStore(childName : String)
-        : User?{
-    return try{
-        val data = Firebase.firestore
-            .collection("users")
-            .document(childName)
-            .get()
-            .await().toObject<User>()
-        data
-    }catch (e : Exception){
-        null
-    }
-}
-
-    //todo przyklad 4
-    suspend fun getDataFromFireStore2(childName : String)
-            : DocumentSnapshot?{
-        return try{
-            val data = FirebaseFirestore.getInstance()
-                .collection("users")
-                .document(childName)
-                .get()
-                .await()
-            data
-        }catch (e : Exception){
-            null
-        }
-    }
-
     private fun getUser(email: String, onSuccessAction: (User?, Int?) -> Unit){
         firestore.collection(COLLECTION_USERS).document(email).get().addOnSuccessListener { userDocument ->
 //        firestoreRefs.userRefs(email).get().addOnSuccessListener { userDocument -> //todo tak pozniej dac

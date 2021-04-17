@@ -22,7 +22,7 @@ class WelcomeViewModel @Inject constructor(
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     private fun onResume(){
         viewModelScope.launch(dispatchersIO) {
-            sessionManager.delayCoroutine(1000L) //just to present Welcome Screen to user
+            sessionManager.delayCoroutine(1500L) //just to present Welcome Screen to user todo pozniej trzeba bedzie ta wartosc wstrzykiwac, do testow
             chooseFragmentToGoNext()
         }
     }

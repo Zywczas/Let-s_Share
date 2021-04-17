@@ -2,18 +2,15 @@ package com.zywczas.letsshare.fragments.groupdetails.domain
 
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
-import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.firestore.ktx.toObjects
 import com.zywczas.letsshare.R
-import com.zywczas.letsshare.activitymain.domain.toDomain
-import com.zywczas.letsshare.model.*
-import com.zywczas.letsshare.utils.dateInPoland
-import com.zywczas.letsshare.utils.dayFormat
-import com.zywczas.letsshare.utils.logD
-import com.zywczas.letsshare.utils.monthId
 import com.zywczas.letsshare.activitymain.domain.CrashlyticsWrapper
 import com.zywczas.letsshare.activitymain.domain.FirestoreReferences
 import com.zywczas.letsshare.activitymain.domain.SharedPrefsWrapper
+import com.zywczas.letsshare.model.*
+import com.zywczas.letsshare.utils.dayFormat
+import com.zywczas.letsshare.utils.logD
+import com.zywczas.letsshare.utils.monthId
 import kotlinx.coroutines.tasks.await
 import java.math.BigDecimal
 import java.util.*
@@ -56,6 +53,13 @@ class GroupDetailsRepositoryImpl @Inject constructor(
             logD(e)
             null
         }
+
+    private fun GroupMember.toDomain() = GroupMemberDomain(
+        name = name,
+        email = email,
+        expenses = expenses.toBigDecimal(),
+        percentageShare = percentage_share.toBigDecimal()
+    )
 
     override suspend fun getExpenses(monthId: String): List<ExpenseDomain>? =
         try {

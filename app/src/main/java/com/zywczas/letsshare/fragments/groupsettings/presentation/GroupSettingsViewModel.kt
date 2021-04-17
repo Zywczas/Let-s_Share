@@ -110,7 +110,12 @@ class GroupSettingsViewModel @Inject constructor(
                 val newSplit = BigDecimal(100).divide(numberOfMembers.toBigDecimal(), 2, BigDecimal.ROUND_HALF_UP)
                 membersTemp?.let { members ->
                     val newMembersRef = members
-                        .map { GroupMemberDomain(it.name, it.email, it.expenses, newSplit) }
+                        .map { GroupMemberDomain(
+                            name = it.name,
+                            email = it.email,
+                            expenses = it.expenses,
+                            percentageShare = newSplit
+                        ) }
                         .toMutableList()
                     _members.postValue(newMembersRef)
                     _isPercentageChanged.postValue(true)
