@@ -1,17 +1,19 @@
 package com.zywczas.letsshare.fragments.groupdetails.presentation
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.activitymain.presentation.BaseViewModel
 import com.zywczas.letsshare.di.modules.DispatchersModule.DispatchersIO
 import com.zywczas.letsshare.fragments.groupdetails.domain.GroupDetailsRepository
-import com.zywczas.letsshare.model.*
+import com.zywczas.letsshare.model.ExpenseDomain
+import com.zywczas.letsshare.model.GroupMemberDomain
+import com.zywczas.letsshare.model.GroupMonthDomain
+import com.zywczas.letsshare.utils.monthId
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.math.BigDecimal
+import java.util.*
 import javax.inject.Inject
 
 class GroupDetailsViewModel @Inject constructor(
@@ -20,56 +22,75 @@ class GroupDetailsViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     init {
-        viewModelScope.launch {
-            val cos = repository.getMonths()
-            val s = cos
+        viewModelScope.launch(dispatchersIO) { getMonthDetails() }
+    }
+
+    private val _currentMonth = MutableLiveData<GroupMonthDomain>()
+    val currentMonth: LiveData<GroupMonthDomain> = _currentMonth
+
+    private val _isMembersProgressBarVisible = MutableLiveData<Boolean>()
+    val isMembersProgressBarVisible: LiveData<Boolean> = _isMembersProgressBarVisible
+
+    val expenses: LiveData<List<ExpenseDomain>> = Transformations.switchMap(currentMonth){ month ->
+        liveData(dispatchersIO){
+            showProgressBar(true)
+            repository.getExpenses(month.id)?.let { emit(it) }
+                ?: kotlin.run { postMessage(R.string.cant_get_expenses) }
+            showProgressBar(false)
         }
     }
 
-    private val _members = MutableLiveData<List<GroupMemberDomain>>()
-    val members: LiveData<List<GroupMemberDomain>> = _members
-
-    private val _expenses = MutableLiveData<List<ExpenseDomain>>()
-    val expenses: LiveData<List<ExpenseDomain>> = _expenses
-
-    suspend fun getMembers(groupId: String) {
-//        withContext(dispatchersIO){ //todo da gdzie indziej tak samo :) - czyli ?.let i run
-//            showProgressBar(true)
-//            repository.getMembers(groupId)?.let { members ->
-//                repository.getMonth()?.let { month ->
-//                    _members.postValue(updateExpenseBalance(members, month))
-//                } ?: kotlin.run { postMessage(R.string.open_new_month) }
-//            } ?: kotlin.run { postMessage(R.string.cant_get_group_members) }
-//            showProgressBar(false)
-//        }
+    val members: LiveData<List<GroupMemberDomain>> = Transformations.switchMap(currentMonth){ month ->
+        liveData(dispatchersIO){
+            _isMembersProgressBarVisible.postValue(true)
+            repository.getMembers(month.id)?.let { emit(it.withBalance(month.totalExpenses)) }
+                ?: kotlin.run { postMessage(R.string.cant_get_month) }
+            _isMembersProgressBarVisible.postValue(false)
+        }
     }
 
-    //todo jezeli mamy nowy miesiac to nie da sie policzyc roznic
-    //todo jak nei ma miesiaca o okreslonym id to rzuca exception
-    //todo czyli trzeba pobierac liste wszystkich miesiecy i wtedy wystwietlac ostatni
-
-    //chyba trzeba zrobic tak ze trzymam 6 miesiace max i najpierw pobieram miesiace, patrze ktory jest ostatni (dac date),
-    //wtedy wyswietlam ostatni, a nowy mozna rozpoczac dopiero jak sie zamknie poprzedni
-    //najpierw pobieram miesiac, potem uzytkownikow dla niego i wydatki, wiec chyba uzytkownikow trzeba trzymac w kazdym miesiacu osobno, skoro i tak musze mape tam wstawiac dla historii to bez sensu
-
-    private fun updateExpenseBalance(members: List<GroupMemberDomain>, month: GroupMonthDomain): List<GroupMemberDomain>{
-//        members.forEach { member ->
-//            val balance = month.total_expenses
-//        }
-        return members
+    private fun List<GroupMemberDomain>.withBalance(groupTotalExpense: BigDecimal): List<GroupMemberDomain>{
+        forEach { member ->
+            val whatShouldPay = groupTotalExpense.multiply(member.percentageShare).divide(BigDecimal((100)))
+            val balance = whatShouldPay.minus(member.expenses)
+            if (balance > BigDecimal.ZERO) { member.owesOrOver = R.string.owes}
+            else { member.owesOrOver = R.string.over }
+            member.balance = balance.setScale(2).abs()
+        }
+        return this
     }
 
-    suspend fun getExpenses(groupId: String){
-//        withContext(dispatchersIO){
-//            showProgressBar(true)
-//            repository.getExpenses(groupId)?.let { _expenses.postValue(it) }
-//                ?: kotlin.run { postMessage(R.string.cant_get_expenses) }
-//            showProgressBar(false)
-//        }
+    private suspend fun getMonthDetails(){
+        withContext(dispatchersIO){
+            showProgressBar(true)
+            repository.getLastMonth()?.let { month->
+                if ( month.id != Date().monthId()) { startNewMonth(month.id) }
+                else { _currentMonth.postValue(month) }
+            } ?: kotlin.run {
+                postMessage(R.string.cant_get_month)
+                showProgressBar(false)
+            }
+        }
     }
 
-    //todo jezeli jest nowy miesiac to dac reset przy wysylaniu nowego wydatku, nie wysle nowego zanim nie zamknie miesiaca
+    //1. stworz nowy miesiac,
+    //2. skopiowac czlonkow, ale bez wydatkow
+    //3. zaladowac wszystko od nowa
+    private suspend fun startNewMonth(lastMonthId: String){
+        withContext(dispatchersIO){
+            repository.getMembers(lastMonthId)?.let { members ->
+                repository.createNewMonth(members)?.let { error->
+                    postMessage(error)
+                    showProgressBar(false)
+                } ?: kotlin.run { getMonthDetails() }
+            } ?: kotlin.run {
+                postMessage(R.string.cant_get_month)
+                showProgressBar(false)
+            }
+        }
+    }
 
+    //todo to sie zmienic na po prostu "addExpense" bo aktualny miesiac bedzie juz istniec, no chyba ze live data bedzie null, bo jakis blad
     suspend fun addNewExpenseToThisMonth(groupId: String, name: String, amount: BigDecimal){
 //        withContext(dispatchersIO){
 //            showProgressBar(true)

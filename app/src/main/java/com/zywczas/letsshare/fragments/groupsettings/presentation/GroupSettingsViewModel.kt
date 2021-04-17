@@ -34,7 +34,7 @@ class GroupSettingsViewModel @Inject constructor(
     val totalPercentage: LiveData<String> = Transformations.switchMap(members){ members ->
         liveData(dispatchersIO){
             var totalPercentageTemp = BigDecimal("0.00")
-            members.forEach { totalPercentageTemp = totalPercentageTemp.plus(it.percentage_share) }
+            members.forEach { totalPercentageTemp = totalPercentageTemp.plus(it.percentageShare) }
             emit(String.format(Locale.UK, "%.2f%s", totalPercentageTemp, "%"))
         }
     }
@@ -94,7 +94,7 @@ class GroupSettingsViewModel @Inject constructor(
     suspend fun updatePercentage(memberEmail: String, share: BigDecimal){
         withContext(dispatchersIO){
             members.value?.let { members ->
-                members.first { it.email == memberEmail }.percentage_share =
+                members.first { it.email == memberEmail }.percentageShare =
                     share.setScale(2, BigDecimal.ROUND_HALF_UP)
                 _members.postValue(members)
                 _isPercentageChanged.postValue(true)

@@ -27,8 +27,8 @@ class ExpensesAdapter(private val currency: String) : ListAdapter<ExpenseDomain,
 
         fun bindExpense(expense: ExpenseDomain) {
             expenseName.text = expense.name
-            date.text = expense.date_created
-            payeeName.text = expense.payee_name
+            date.text = expense.dateCreated
+            payeeName.text = expense.payeeName
             value.text = String.format(Locale.UK, "%.2f", expense.value)
             currencyView.text = currency
         }

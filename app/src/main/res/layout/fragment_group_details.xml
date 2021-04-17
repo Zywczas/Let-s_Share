@@ -57,6 +57,20 @@
                         app:layout_collapseParallaxMultiplier="0.7"
                         tools:itemCount="3"
                         tools:listitem="@layout/list_item_group_members" />
+
+                    <ProgressBar
+                        android:id="@+id/progressBarMembers"
+                        style="?android:attr/progressBarStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|center"
+                        android:layout_marginBottom="11dp"
+                        android:background="#B50808"
+                        android:visibility="invisible"
+                        app:isVisible="@{vm.isMembersProgressBarVisible()}"
+                        app:layout_collapseMode="parallax"
+                        app:layout_collapseParallaxMultiplier="0.7"
+                        tools:visibility="visible" />
                 </com.google.android.material.appbar.CollapsingToolbarLayout>
             </com.google.android.material.appbar.AppBarLayout>
 

@@ -23,25 +23,32 @@ class GroupDetailsRepositoryImpl @Inject constructor(
     private val firestoreRefs: FirestoreReferences,
     private val firestore: FirebaseFirestore,
     private val crashlyticsWrapper: CrashlyticsWrapper,
-    private val sharedPrefs: SharedPrefsWrapper
+    sharedPrefs: SharedPrefsWrapper
 ) : GroupDetailsRepository {
 
     private val groupId = sharedPrefs.currentGroupId
 
-    override suspend fun getMonths(): List<GroupMonthDomain>? =
+    override suspend fun getLastMonth(): GroupMonthDomain? =
         try {
             firestoreRefs.collectionGroupMonthsRefs(groupId)
-                .get().await()
-                .toObjects<GroupMonth>().map { it.toDomain() }
+                .orderBy(firestoreRefs.dateCreatedField, Query.Direction.DESCENDING)
+                .get().await().toObjects<GroupMonth>()
+                .takeIf { it.isNotEmpty() }?.first()?.toDomain() ?: GroupMonthDomain()
         } catch (e: Exception) {
             crashlyticsWrapper.sendExceptionToFirebase(e)
             logD(e)
             null
         }
-//todo getMonths dziala, teraz reszta :)
-    override suspend fun getMembers(groupId: String): List<GroupMemberDomain>? =
+
+    private fun GroupMonth.toDomain() = GroupMonthDomain(
+        id = id,
+        totalExpenses = total_expenses.toBigDecimal(),
+        isSettledUp = is_settled_up
+    )
+
+    override suspend fun getMembers(monthId: String): List<GroupMemberDomain>? =
         try {
-            firestoreRefs.collectionMembersRefs(groupId, Date().monthId()) //todo to zamienic na pobierane z view modelu
+            firestoreRefs.collectionMembersRefs(groupId, monthId)
                 .get().await()
                 .toObjects<GroupMember>().map { it.toDomain() }.sortedByDescending { it.expenses }
         } catch (e: Exception) {
@@ -50,38 +57,56 @@ class GroupDetailsRepositoryImpl @Inject constructor(
             null
         }
 
-    override suspend fun getMonth(): GroupMonthDomain? =
+    override suspend fun getExpenses(monthId: String): List<ExpenseDomain>? =
         try {
-            firestoreRefs.groupMonthRefs("D2LepxGvWGTDC9hW8LQe", Date().monthId())
-                .get().await()
-                .toObject<GroupMonth>()?.toDomain() ?: GroupMonthDomain("-1")
-        } catch (e: Exception){
-            crashlyticsWrapper.sendExceptionToFirebase(e)
-            logD(e)
-            null
-        }
-
-    private fun GroupMonth.toDomain() =
-        GroupMonthDomain(id, groupId, total_expenses.toBigDecimal(), is_settled_up)
-
-    override suspend fun getExpenses(groupId: String): List<ExpenseDomain>? =
-        try {
-            firestoreRefs.collectionExpensesRefs(Date().monthId(), groupId)
+            firestoreRefs.collectionExpensesRefs(groupId, monthId)
                 .orderBy(firestoreRefs.dateCreatedField, Query.Direction.DESCENDING)
                 .get().await()
                 .toObjects<Expense>().map { it.toDomain() }
-        } catch (e: Exception){
+        } catch (e: Exception) {
             crashlyticsWrapper.sendExceptionToFirebase(e)
             logD(e)
             null
         }
 
-    private fun Expense.toDomain() = ExpenseDomain(id, name, payee_email, payee_name,
-        value.toBigDecimal(), date_created.dayFormat())
+    private fun Expense.toDomain() = ExpenseDomain(
+        id = id,
+        name = name,
+        payeeEmail = payee_email,
+        payeeName = payee_name,
+        value = value.toBigDecimal(),
+        dateCreated = date_created.dayFormat()
+    )
 
-    //todo pamietac zeby przy nowym miesiac resetowac tez wydatki wszystkich czlonkow - teraz chyba nie resetuje
+    override suspend fun createNewMonth(members: List<GroupMemberDomain>): Int? =
+        try {
+            val date = Date()
+            val monthId = date.monthId()
+            val newMonthRefs = firestoreRefs.groupMonthRefs(groupId, monthId)
+            val newMonth = GroupMonth(id = monthId, date_created = date)
+            val newMonthMembers = members.map { it.toGroupMember() }
+            firestore.runBatch { batch ->
+                batch.set(newMonthRefs, newMonth)
+                newMonthMembers.forEach { member ->
+                    val memberRefs = firestoreRefs.groupMemberRefs(groupId, monthId, member.email)
+                    batch.set(memberRefs, member)
+                }
+            }
+            null
+        } catch (e: Exception) {
+            crashlyticsWrapper.sendExceptionToFirebase(e)
+            logD(e)
+            R.string.cant_get_month
+        }
+
+    private fun GroupMemberDomain.toGroupMember() = GroupMember(
+        name = name,
+        email = email,
+        percentage_share = percentageShare.toString()
+    )
+
     //todo pomyslec czy ta nazwa jest adekwatna
-    override suspend fun updateThisMonthAndAddNewExpense(groupId: String, name: String, amount: BigDecimal): Int? =
+    override suspend fun updateThisMonthAndAddNewExpense(groupId: String,name: String,amount: BigDecimal): Int? =
 //        try {
 //            val monthId = Date().monthId()
 //            val monthRefs = firestoreRefs.groupMonthRefs(groupId, monthId)
@@ -98,11 +123,15 @@ class GroupDetailsRepositoryImpl @Inject constructor(
 //            firestore.runTransaction { transaction ->
 //                val month = transaction.get(monthRefs).toObject<GroupMonth>()
 //                val member = transaction.get(memberRef).toObject<GroupMember>()!!
-//                if (month != null){
+//                if (month != null) {
 //                    val increasedMonthlyExpenses = (month.total_expenses.toBigDecimal() + amount).toString()
-//                    transaction.update(monthRefs, firestoreRefs.totalExpensesField, increasedMonthlyExpenses) //todo nie moze byc increament bo to bedzie string
+//                    transaction.update(
+//                        monthRefs,
+//                        firestoreRefs.totalExpensesField,
+//                        increasedMonthlyExpenses
+//                    ) //todo nie moze byc increament bo to bedzie string
 //                } else {
-//                    val newMonth = GroupMonth(monthId, groupId, amount.toString())
+//                    val newMonth = GroupMonth(monthId, amount.toString())
 //                    transaction.set(monthRefs, newMonth)
 //                }
 //                transaction.set(newExpenseRefs, newExpense)
@@ -110,11 +139,11 @@ class GroupDetailsRepositoryImpl @Inject constructor(
 //                transaction.update(memberRef, firestoreRefs.expensesField, increasedMemberExpenses)
 //            }.await()
 //            null
-//        } catch (e: Exception){
+//        } catch (e: Exception) {
 //            crashlyticsWrapper.sendExceptionToFirebase(e)
 //            e.printStackTrace()
 //            logD(e)
-        R.string.cant_add_expense
-//    }
+            R.string.cant_add_expense
+//        }
 
 }

@@ -1,11 +1,8 @@
 package com.zywczas.letsshare.fragments.groupsettings.domain
 
-import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObject
-import com.google.firebase.firestore.ktx.toObjects
 import com.zywczas.letsshare.R
-import com.zywczas.letsshare.activitymain.domain.toDomain
 import com.zywczas.letsshare.model.*
 import com.zywczas.letsshare.model.db.FriendsDao
 import com.zywczas.letsshare.utils.logD
@@ -97,6 +94,6 @@ class GroupSettingsRepositoryImpl @Inject constructor(
 //        }
 
     private fun GroupMemberDomain.toGroupMember() =
-        GroupMember(name, email, expenses.toString(), percentage_share.toString())
+        GroupMember(name, email, expenses.toString(), percentageShare.toString())
 
 }

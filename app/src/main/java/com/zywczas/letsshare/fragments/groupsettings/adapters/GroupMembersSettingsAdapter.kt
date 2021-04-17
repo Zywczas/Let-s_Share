@@ -1,6 +1,5 @@
 package com.zywczas.letsshare.fragments.groupsettings.adapters
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,7 +27,7 @@ class GroupMembersSettingsAdapter(
         oldItem.email == newItem.email
 
     override fun areContentsTheSame(oldItem: GroupMemberDomain, newItem: GroupMemberDomain): Boolean =
-        oldItem.percentage_share.toString() == newItem.percentage_share.toString()
+        oldItem.percentageShare.toString() == newItem.percentageShare.toString()
 }) {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), LifecycleObserver {
@@ -51,7 +50,7 @@ class GroupMembersSettingsAdapter(
 
         fun bindMember(member: GroupMemberDomain) {
             name.text = member.name
-            split.setText(String.format(Locale.UK, "%.2f", member.percentage_share))
+            split.setText(String.format(Locale.UK, "%.2f", member.percentageShare))
             split.doOnTextChanged { text, _, _, _ ->
                 newSplitJob?.cancel()
                 newSplitJob = coroutineScope.launch {

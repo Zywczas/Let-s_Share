@@ -6,8 +6,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Transaction
 import javax.inject.Inject
 
-class FirestoreReferencesImpl @Inject constructor(private val firestore: FirebaseFirestore) :
-    FirestoreReferences {
+class FirestoreReferencesImpl @Inject constructor(private val firestore: FirebaseFirestore) : FirestoreReferences {
 //todo moze przeniesc pozniej wszystkie const tutaj
 
     override val dateCreatedField = "date_created"
@@ -55,7 +54,7 @@ class FirestoreReferencesImpl @Inject constructor(private val firestore: Firebas
         firestore.collection(collectionGroups).document(groupId)
             .collection(collectionMonths)
 
-    override fun collectionExpensesRefs(monthId: String, groupId: String): CollectionReference =
+    override fun collectionExpensesRefs(groupId: String, monthId: String): CollectionReference =
         firestore.collection(collectionGroups).document(groupId)
             .collection(collectionMonths).document(monthId)
             .collection(collectionExpenses)

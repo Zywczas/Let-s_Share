@@ -5,13 +5,13 @@ import java.math.BigDecimal
 
 interface GroupDetailsRepository {
 
-    suspend fun getMonths(): List<GroupMonthDomain>?
+    suspend fun getLastMonth(): GroupMonthDomain?
 
-    suspend fun getMembers(groupId: String): List<GroupMemberDomain>?
+    suspend fun getMembers(monthId: String): List<GroupMemberDomain>?
 
-    suspend fun getMonth(): GroupMonthDomain?
+    suspend fun getExpenses(monthId: String): List<ExpenseDomain>?
 
-    suspend fun getExpenses(groupId: String): List<ExpenseDomain>?
+    suspend fun createNewMonth(members: List<GroupMemberDomain>): Int?
 
     suspend fun updateThisMonthAndAddNewExpense(groupId: String, name: String, amount: BigDecimal): Int?
 

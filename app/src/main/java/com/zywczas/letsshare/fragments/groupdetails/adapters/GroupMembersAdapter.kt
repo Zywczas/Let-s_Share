@@ -1,6 +1,5 @@
 package com.zywczas.letsshare.fragments.groupdetails.adapters
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +8,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.zywczas.letsshare.R
-import com.zywczas.letsshare.model.GroupMember
 import com.zywczas.letsshare.model.GroupMemberDomain
 import java.util.*
 
@@ -19,9 +17,9 @@ class GroupMembersAdapter(private val currency: String) : ListAdapter<GroupMembe
 
     override fun areContentsTheSame(oldItem: GroupMemberDomain, newItem: GroupMemberDomain): Boolean =
         oldItem.email == newItem.email &&
-            oldItem.percentage_share == newItem.percentage_share &&
+            oldItem.percentageShare == newItem.percentageShare &&
             oldItem.expenses == newItem.expenses &&
-            oldItem.owes == newItem.owes &&
+            oldItem.owesOrOver == newItem.owesOrOver &&
             oldItem.balance == newItem.balance
 }) {
 
@@ -35,8 +33,8 @@ class GroupMembersAdapter(private val currency: String) : ListAdapter<GroupMembe
         fun bindMember(member: GroupMemberDomain) {
             name.text = member.name
             expenses.text = String.format(Locale.UK, "%.2f %s", member.expenses, currency)
-            share.text = String.format(Locale.UK, "%.2f %s", member.percentage_share, "%")
-            owes.text = member.owes
+            share.text = String.format(Locale.UK, "%.2f %s", member.percentageShare, "%")
+            owes.text = member.owesOrOver
             difference.text = String.format(Locale.UK, "%.2f %s", member.balance, "%")
         }
 
