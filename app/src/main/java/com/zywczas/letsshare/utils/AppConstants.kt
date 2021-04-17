@@ -1,7 +1,6 @@
 package com.zywczas.letsshare.utils
 
-import com.zywczas.letsshare.R
-import java.util.Locale
+import java.util.*
 
 val LOCALE_POLAND: Locale = Locale("pl", "PL")
 

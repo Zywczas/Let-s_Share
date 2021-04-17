@@ -37,7 +37,7 @@
     <!--    UI elements - main app-->
     <string name="friends">Friends</string>
     <string name="groups">Groups</string>
-    <string name="owes">Owes</string>
-    <string name="over">Over</string>
+    <string name="owes">Owes:</string>
+    <string name="over">Over:</string>
 
 </resources>

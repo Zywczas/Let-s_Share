@@ -10,9 +10,9 @@ interface GroupSettingsRepository {
 
     suspend fun getFriends(): List<Friend>
 
-    suspend fun isFriendInTheGroupAlready(newMemberEmail: String): Boolean?
+    suspend fun isFriendInTheGroupAlready(newMemberId: String): Boolean?
 
-    suspend fun isFriendIn10GroupsAlready(newMemberEmail: String): Boolean?
+    suspend fun isFriendIn10GroupsAlready(newMemberId: String): Boolean?
 
     suspend fun addMemberIfBelow7InGroup(friend: Friend): Int?
 

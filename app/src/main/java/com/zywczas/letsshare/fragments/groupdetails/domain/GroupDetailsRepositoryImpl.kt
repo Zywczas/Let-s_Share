@@ -39,8 +39,8 @@ class GroupDetailsRepositoryImpl @Inject constructor(
 
     private fun GroupMonth.toDomain() = GroupMonthDomain(
         id = id,
-        totalExpenses = total_expenses.toBigDecimal(),
-        isSettledUp = is_settled_up
+        totalExpenses = totalExpenses.toBigDecimal(),
+        isSettledUp = isSettledUp
     )
 
     override suspend fun getMembers(monthId: String): List<GroupMemberDomain>? =
@@ -55,10 +55,11 @@ class GroupDetailsRepositoryImpl @Inject constructor(
         }
 
     private fun GroupMember.toDomain() = GroupMemberDomain(
+        id = id,
         name = name,
         email = email,
         expenses = expenses.toBigDecimal(),
-        percentageShare = percentage_share.toBigDecimal()
+        share = share.toBigDecimal()
     )
 
     override suspend fun getExpenses(monthId: String): List<ExpenseDomain>? =
@@ -76,10 +77,10 @@ class GroupDetailsRepositoryImpl @Inject constructor(
     private fun Expense.toDomain() = ExpenseDomain(
         id = id,
         name = name,
-        payeeEmail = payee_email,
-        payeeName = payee_name,
+        payeeEmail = payeeEmail,
+        payeeName = payeeName,
         value = value.toBigDecimal(),
-        dateCreated = date_created.dayFormat()
+        dateCreated = dateCreated.dayFormat()
     )
 
     override suspend fun createNewMonth(members: List<GroupMemberDomain>): Int? =
@@ -87,12 +88,12 @@ class GroupDetailsRepositoryImpl @Inject constructor(
             val date = Date()
             val monthId = date.monthId()
             val newMonthRefs = firestoreRefs.groupMonthRefs(groupId, monthId)
-            val newMonth = GroupMonth(id = monthId, date_created = date)
+            val newMonth = GroupMonth(id = monthId, dateCreated = date)
             val newMonthMembers = members.map { it.toGroupMember() }
             firestore.runBatch { batch ->
                 batch.set(newMonthRefs, newMonth)
                 newMonthMembers.forEach { member ->
-                    val memberRefs = firestoreRefs.groupMemberRefs(groupId, monthId, member.email)
+                    val memberRefs = firestoreRefs.groupMemberRefs(groupId, monthId, member.id)
                     batch.set(memberRefs, member)
                 }
             }.await()
@@ -104,9 +105,10 @@ class GroupDetailsRepositoryImpl @Inject constructor(
         }
 
     private fun GroupMemberDomain.toGroupMember() = GroupMember(
+        id = id,
         name = name,
         email = email,
-        percentage_share = percentageShare.toString()
+        share = share.toString()
     )
 
     //todo pomyslec czy ta nazwa jest adekwatna

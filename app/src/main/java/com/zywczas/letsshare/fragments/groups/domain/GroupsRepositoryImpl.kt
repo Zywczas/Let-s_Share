@@ -22,24 +22,23 @@ class GroupsRepositoryImpl @Inject constructor(
     private val crashlyticsWrapper: CrashlyticsWrapper
 ) : GroupsRepository {
 
-    private val fieldGroupsIds = "groupsIds"
-
     override suspend fun addGroupIfUserIsInLessThan10Groups(name: String, currency: String): Int =
         try {
+            val userId = sharedPrefs.userId
             val userEmail = sharedPrefs.userEmail
             val newGroupRef = firestoreRefs.newGroupRefs()
             val newGroup = Group(
                 id = newGroupRef.id,
                 name = name,
                 currency = currency,
-                members_num = 1)
+                membersNum = 1)
             val date = Date()
-            val monthId = date.monthId()
-            val monthRefs = firestoreRefs.groupMonthRefs(newGroupRef.id, monthId)
-            val newMonth = GroupMonth(id = monthId, date_created = date)
-            val groupMemberRef = firestoreRefs.groupMemberRefs(newGroupRef.id, monthId, userEmail)
-            val newMember = GroupMember(name = sharedPrefs.userName, email = userEmail)
-            val userRef = firestoreRefs.userRefs(userEmail)
+            val newMonthId = date.monthId()
+            val newMonthRefs = firestoreRefs.groupMonthRefs(newGroupRef.id, newMonthId)
+            val newMonth = GroupMonth(id = newMonthId, dateCreated = date)
+            val newGroupMemberRef = firestoreRefs.groupMemberRefs(newGroupRef.id, newMonthId, userId)
+            val newMember = GroupMember(id = userId, name = sharedPrefs.userName, email = userEmail)
+            val userRef = firestoreRefs.userRefs(userId)
 
             firestore.runTransaction { transaction ->
                 val user = transaction.get(userRef).toObject<User>()!!
@@ -49,9 +48,9 @@ class GroupsRepositoryImpl @Inject constructor(
                     else -> return@runTransaction R.string.too_many_groups //todo sprawdzi czy to dobrze dziala, np dac ze moze byc tylko 2 grupy na chwile
                 }
                 transaction.set(newGroupRef, newGroup)
-                transaction.set(monthRefs, newMonth)
-                transaction.set(groupMemberRef, newMember)
-                transaction.update(userRef, fieldGroupsIds, newGroupsIds)
+                transaction.set(newMonthRefs, newMonth)
+                transaction.set(newGroupMemberRef, newMember)
+                transaction.update(userRef, firestoreRefs.groupsIdsField, newGroupsIds)
             }.await()
             R.string.group_added
         } catch (e: Exception) {
@@ -62,7 +61,7 @@ class GroupsRepositoryImpl @Inject constructor(
 
     override suspend fun getGroups(): List<Group>? =
         try {
-            val user = firestoreRefs.userRefs(sharedPrefs.userEmail)
+            val user = firestoreRefs.userRefs(sharedPrefs.userId)
                 .get().await()
                 .toObject<User>()!!
             val groups = mutableListOf<Group>()

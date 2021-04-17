@@ -5,7 +5,8 @@ import java.util.*
 
 data class GroupMonth (
     val id: String = "",
-    val total_expenses: String = "0.00",
-    val is_settled_up: Boolean = false,
-    val date_created: Date = dateInPoland()
+    val totalExpenses: String = "0.00",
+    @field:JvmField
+    val isSettledUp: Boolean = false,
+    val dateCreated: Date = dateInPoland()
 )

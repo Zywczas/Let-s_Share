@@ -14,7 +14,7 @@ interface FirestoreReferences {
     val groupsIdsField: String
     val percentageShareField: String
 
-    fun userRefs(email: String): DocumentReference
+    fun userRefs(id: String): DocumentReference
 
     fun newGroupRefs(): DocumentReference
 
@@ -22,7 +22,7 @@ interface FirestoreReferences {
 
     fun collectionMembersRefs(groupId: String, monthId: String): CollectionReference
 
-    fun groupMemberRefs(groupId: String, monthId: String, memberEmail: String): DocumentReference
+    fun groupMemberRefs(groupId: String, monthId: String, memberId: String): DocumentReference
 
     fun groupMonthRefs(groupId: String, monthId: String): DocumentReference
 

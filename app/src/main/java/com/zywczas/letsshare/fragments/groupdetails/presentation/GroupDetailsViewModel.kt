@@ -51,11 +51,11 @@ class GroupDetailsViewModel @Inject constructor(
 
     private fun List<GroupMemberDomain>.withBalance(groupTotalExpense: BigDecimal): List<GroupMemberDomain>{
         forEach { member ->
-            val whatShouldPay = groupTotalExpense.multiply(member.percentageShare).divide(BigDecimal((100)))
+            val whatShouldPay = groupTotalExpense.multiply(member.share).divide(BigDecimal((100)))
             val balance = whatShouldPay.minus(member.expenses)
             if (balance > BigDecimal.ZERO) { member.owesOrOver = R.string.owes}
             else { member.owesOrOver = R.string.over }
-            member.balance = balance.setScale(2).abs()
+            member.difference = balance.setScale(2).abs()
         }
         return this
     }

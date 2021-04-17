@@ -3,19 +3,18 @@ package com.zywczas.letsshare.activitymain.domain
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Transaction
 import javax.inject.Inject
 
 class FirestoreReferencesImpl @Inject constructor(private val firestore: FirebaseFirestore) : FirestoreReferences {
-//todo moze przeniesc pozniej wszystkie const tutaj
+//todo przeniesc pozniej wszystkie const tutaj
 
-    override val dateCreatedField = "date_created"
-    override val membersNumField = "members_num"
-    override val totalExpensesField = "total_expenses"
+    override val dateCreatedField = "dateCreated"
+    override val membersNumField = "membersNum"
+    override val totalExpensesField = "totalExpenses"
     override val expensesField = "expenses"
     override val valueField = "value"
     override val groupsIdsField = "groupsIds"
-    override val percentageShareField = "percentage_share"
+    override val percentageShareField = "share"
 
     private val collectionUsers = "users"
     private val collectionGroups = "groups"
@@ -23,9 +22,9 @@ class FirestoreReferencesImpl @Inject constructor(private val firestore: Firebas
     private val collectionMembers = "members"
     private val collectionExpenses = "expenses"
 
-    override fun userRefs(email: String): DocumentReference =
+    override fun userRefs(id: String): DocumentReference =
         firestore.collection(collectionUsers)
-            .document(email)
+            .document(id)
     
     override fun newGroupRefs(): DocumentReference =
         firestore.collection(collectionGroups).document()
@@ -39,11 +38,11 @@ class FirestoreReferencesImpl @Inject constructor(private val firestore: Firebas
             .collection(collectionMonths).document(monthId)
             .collection(collectionMembers)
 
-    override fun groupMemberRefs(groupId: String, monthId: String, memberEmail: String): DocumentReference =
+    override fun groupMemberRefs(groupId: String, monthId: String, memberId: String): DocumentReference =
         firestore.collection(collectionGroups).document(groupId)
             .collection(collectionMonths).document(monthId)
             .collection(collectionMembers)
-            .document(memberEmail)
+            .document(memberId)
 
     override fun groupMonthRefs(groupId: String, monthId: String): DocumentReference =
         firestore.collection(collectionGroups).document(groupId)

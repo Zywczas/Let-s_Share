@@ -6,8 +6,8 @@ import java.util.*
 data class Expense (
     val id: String = "",
     val name: String = "",
-    val payee_email: String = "",
-    val payee_name: String = "",
+    val payeeEmail: String = "",
+    val payeeName: String = "",
     val value: String = "0.00",
-    val date_created: Date = dateInPoland(),
+    val dateCreated: Date = dateInPoland(),
 )

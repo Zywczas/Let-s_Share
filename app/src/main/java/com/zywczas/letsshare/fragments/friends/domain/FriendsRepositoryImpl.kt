@@ -71,7 +71,7 @@ class FriendsRepositoryImpl @Inject constructor(
         firestore.collection(COLLECTION_USERS)
             .document(sharedPrefs.userEmail)
             .collection(COLLECTION_FRIENDS)
-            .document(friend.email)
+            .document(friend.id)
             .set(friend)
             .addOnSuccessListener {
                 onFinishAction(R.string.friend_added)
@@ -81,6 +81,6 @@ class FriendsRepositoryImpl @Inject constructor(
             }
     }
 
-    private fun User.toFriend() = Friend(email = email, name = name)
+    private fun User.toFriend() = Friend(id = id, email = email, name = name)
 
 }

@@ -24,10 +24,11 @@ class GroupMembersSettingsAdapter(
 ) : ListAdapter<GroupMemberDomain, GroupMembersSettingsAdapter.ViewHolder>(object : DiffUtil.ItemCallback<GroupMemberDomain>() {
 
     override fun areItemsTheSame(oldItem: GroupMemberDomain, newItem: GroupMemberDomain): Boolean =
-        oldItem.email == newItem.email
+        oldItem.id == newItem.id
 
     override fun areContentsTheSame(oldItem: GroupMemberDomain, newItem: GroupMemberDomain): Boolean =
-        oldItem.percentageShare.toString() == newItem.percentageShare.toString()
+        oldItem.id == newItem.id &&
+            oldItem.share.toString() == newItem.share.toString()
 }) {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), LifecycleObserver {
@@ -50,7 +51,7 @@ class GroupMembersSettingsAdapter(
 
         fun bindMember(member: GroupMemberDomain) {
             name.text = member.name
-            split.setText(String.format(Locale.UK, "%.2f", member.percentageShare))
+            split.setText(String.format(Locale.UK, "%.2f", member.share))
             split.doOnTextChanged { text, _, _, _ ->
                 newSplitJob?.cancel()
                 newSplitJob = coroutineScope.launch {
@@ -58,7 +59,7 @@ class GroupMembersSettingsAdapter(
                     text?.let {
                         var splitText = it.toString()
                         if (splitText.isEmpty()) { splitText = "0.00" }
-                        onSplitChangeAction(member.email, splitText.toBigDecimal())
+                        onSplitChangeAction(member.id, splitText.toBigDecimal())
                     }
                 }
             }

@@ -3,7 +3,6 @@ package com.zywczas.letsshare.activitymain.domain
 import android.content.Context
 import android.content.SharedPreferences
 import com.zywczas.letsshare.model.User
-import com.zywczas.letsshare.activitymain.domain.SharedPrefsWrapper
 import javax.inject.Inject
 
 class SharedPrefsWrapperImpl @Inject constructor (context: Context): SharedPrefsWrapper {
@@ -21,7 +20,7 @@ class SharedPrefsWrapperImpl @Inject constructor (context: Context): SharedPrefs
 //        get() = prefs.getBoolean(isLoggedInKey, false) //todo
 //        set(value) = prefs.edit().putBoolean(isLoggedInKey, value).apply()
 
-//    override val userAuthId: String = prefs.getString(userIdKey, "")!!
+    override val userId: String = prefs.getString(userIdKey, "")!!
     override val userName: String = prefs.getString(userNameKey, "")!!
     override val userEmail: String = prefs.getString(userEmailKey, "")!!
     override var currentGroupId: String
@@ -29,7 +28,7 @@ class SharedPrefsWrapperImpl @Inject constructor (context: Context): SharedPrefs
         set(value) = prefs.edit().putString(currentGroupIdKey, value).apply()
 
     override suspend fun saveUserLocally(user: User) {
-        prefs.edit().putString(userIdKey, user.auth_id).apply()
+        prefs.edit().putString(userIdKey, user.id).apply()
         prefs.edit().putString(userNameKey, user.name).apply()
         prefs.edit().putString(userEmailKey, user.email).apply()
     }

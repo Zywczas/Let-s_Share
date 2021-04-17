@@ -78,13 +78,13 @@
         app:layout_constraintTop_toBottomOf="@+id/total" />
 
     <TextView
-        android:id="@+id/owes"
+        android:id="@+id/owesOrOver"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/smallLstItem"
         android:layout_marginTop="@dimen/smallLstItem"
         android:layout_marginBottom="@dimen/smallLstItem"
-        android:text="owes:"
+        tools:text="@string/owes"
         android:textColor="@color/textOnPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/difference"
@@ -100,11 +100,11 @@
         android:layout_marginStart="@dimen/minimumListItem"
         android:layout_marginEnd="@dimen/smallLstItem"
         android:textColor="@color/textOnPrimary"
-        app:layout_constraintBottom_toBottomOf="@+id/owes"
+        app:layout_constraintBottom_toBottomOf="@+id/owesOrOver"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/owes"
-        app:layout_constraintTop_toTopOf="@+id/owes"
+        app:layout_constraintStart_toEndOf="@+id/owesOrOver"
+        app:layout_constraintTop_toTopOf="@+id/owesOrOver"
         tools:text="34.15 zł" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

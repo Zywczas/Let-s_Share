@@ -44,10 +44,10 @@ class RegisterRepositoryImpl @Inject constructor(
 
 //todo to powinno dziac sie od razy przy rejestracji do firebase, a nie dopiero inicjowane w view modelu
     override suspend fun addNewUserToFirestore(name: String, email: String, onSuccessAction: (Boolean) -> Unit){
-        val userId = firebaseAuth.currentUser?.uid
-        if (userId != null){
-            firestoreRefs.userRefs(email)
-                .set(User(auth_id = userId, name = name, email = email, date_created = dateInPoland()))
+        val authId = firebaseAuth.currentUser?.uid //todo to moze wrzucic w shared prefs skoro i tak tam sprawdzam
+        if (authId != null){
+            firestoreRefs.userRefs(authId)
+                .set(User(id = authId, name = name, email = email, dateCreated = dateInPoland()))
                 .addOnSuccessListener {
                     onSuccessAction(true)
                 }.addOnFailureListener {

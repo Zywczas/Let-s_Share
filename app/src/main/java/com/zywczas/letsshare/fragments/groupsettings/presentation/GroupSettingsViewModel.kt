@@ -34,7 +34,7 @@ class GroupSettingsViewModel @Inject constructor(
     val totalPercentage: LiveData<String> = Transformations.switchMap(members){ members ->
         liveData(dispatchersIO){
             var totalPercentageTemp = BigDecimal("0.00")
-            members.forEach { totalPercentageTemp = totalPercentageTemp.plus(it.percentageShare) }
+            members.forEach { totalPercentageTemp = totalPercentageTemp.plus(it.share) }
             emit(String.format(Locale.UK, "%.2f%s", totalPercentageTemp, "%"))
         }
     }
@@ -59,7 +59,7 @@ class GroupSettingsViewModel @Inject constructor(
     suspend fun addNewMember(friend: Friend){
         withContext(dispatchersIO){
             showProgressBar(true)
-            when(repository.isFriendInTheGroupAlready(friend.email)){
+            when(repository.isFriendInTheGroupAlready(friend.id)){
                 null -> {
                     postMessage(R.string.something_wrong)
                     showProgressBar(false)
@@ -69,7 +69,7 @@ class GroupSettingsViewModel @Inject constructor(
                     showProgressBar(false)
                 }
                 false -> {
-                    when(repository.isFriendIn10GroupsAlready(friend.email)){
+                    when(repository.isFriendIn10GroupsAlready(friend.id)){
                         null -> {
                             postMessage(R.string.something_wrong)
                             showProgressBar(false)
@@ -91,10 +91,10 @@ class GroupSettingsViewModel @Inject constructor(
         }
     }
 
-    suspend fun updatePercentage(memberEmail: String, share: BigDecimal){
+    suspend fun updatePercentage(memberId: String, share: BigDecimal){
         withContext(dispatchersIO){
             members.value?.let { members ->
-                members.first { it.email == memberEmail }.percentageShare =
+                members.first { it.id == memberId }.share =
                     share.setScale(2, BigDecimal.ROUND_HALF_UP)
                 _members.postValue(members)
                 _isPercentageChanged.postValue(true)
@@ -111,10 +111,11 @@ class GroupSettingsViewModel @Inject constructor(
                 membersTemp?.let { members ->
                     val newMembersRef = members
                         .map { GroupMemberDomain(
+                            id = it.id,
                             name = it.name,
                             email = it.email,
                             expenses = it.expenses,
-                            percentageShare = newSplit
+                            share = newSplit
                         ) }
                         .toMutableList()
                     _members.postValue(newMembersRef)

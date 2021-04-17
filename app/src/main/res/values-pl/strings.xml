@@ -38,7 +38,7 @@
     <!--    UI elements - main app-->
     <string name="friends">Znajomi</string>
     <string name="groups">Grupy</string>
-    <string name="owes">Dłużny</string>
-    <string name="over">Ponad</string>
+    <string name="owes">Dłużny:</string>
+    <string name="over">Ponad:</string>
 
 </resources>

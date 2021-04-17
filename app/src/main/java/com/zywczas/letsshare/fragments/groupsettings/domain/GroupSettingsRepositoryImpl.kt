@@ -35,12 +35,12 @@ class GroupSettingsRepositoryImpl @Inject constructor(
 
     override suspend fun getFriends(): List<Friend> = friendsDao.getFriends()
 
-    override suspend fun isFriendInTheGroupAlready(newMemberEmail: String): Boolean? =
-        getMembers()?.any { it.email == newMemberEmail }
+    override suspend fun isFriendInTheGroupAlready(newMemberId: String): Boolean? =
+        getMembers()?.any { it.id == newMemberId }
 
-    override suspend fun isFriendIn10GroupsAlready(newMemberEmail: String): Boolean? =
+    override suspend fun isFriendIn10GroupsAlready(newMemberId: String): Boolean? =
         try {
-            firestoreRefs.userRefs(newMemberEmail).get().await()
+            firestoreRefs.userRefs(newMemberId).get().await()
                 .toObject<User>()!!.groupsIds.size >= 10
         } catch (e: Exception) {
             crashlyticsWrapper.sendExceptionToFirebase(e)
@@ -72,7 +72,7 @@ class GroupSettingsRepositoryImpl @Inject constructor(
             R.string.cant_add_member
 //        }
 
-    private fun Friend.toGroupMember() = GroupMember(name = name, email = email)
+    private fun Friend.toGroupMember() = GroupMember(id = id, name = name, email = email)
 
     override suspend fun saveSplits(members: List<GroupMemberDomain>): Int =
 //        try {
@@ -94,10 +94,11 @@ class GroupSettingsRepositoryImpl @Inject constructor(
 //        }
 
     private fun GroupMemberDomain.toGroupMember() = GroupMember(
+        id = id,
         name = name,
         email = email,
         expenses = expenses.toString(),
-        percentage_share = percentageShare.toString()
+        share = share.toString()
     )
 
 }

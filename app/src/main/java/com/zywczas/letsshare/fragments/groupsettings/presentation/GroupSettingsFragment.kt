@@ -27,7 +27,7 @@ class GroupSettingsFragment @Inject constructor(private val viewModelFactory: Un
     private val viewModel: GroupSettingsViewModel by viewModels { viewModelFactory }
     private var binding: FragmentGroupSettingsBinding by autoRelease()
     private val membersAdapter by lazy { GroupMembersSettingsAdapter(lifecycle){
-        email, split -> lifecycleScope.launchWhenResumed { viewModel.updatePercentage(email, split) }
+        memberId, split -> lifecycleScope.launchWhenResumed { viewModel.updatePercentage(memberId, split) }
     } }
 
     override fun onCreateView(
