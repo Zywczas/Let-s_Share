@@ -91,7 +91,7 @@ class GroupDetailsRepositoryImpl @Inject constructor(
                     val memberRefs = firestoreRefs.groupMemberRefs(groupId, monthId, member.email)
                     batch.set(memberRefs, member)
                 }
-            }
+            }.await()
             null
         } catch (e: Exception) {
             crashlyticsWrapper.sendExceptionToFirebase(e)
