@@ -16,35 +16,33 @@ class FriendsViewModel @Inject constructor(
     @DispatchersIO private val dispatchersIO: CoroutineDispatcher,
     private val sessionManager: SessionManager,
     private val repository: FriendsRepository
-): BaseViewModel(), LifecycleObserver{
+): BaseViewModel(){
 
     private val _friends = MutableLiveData<List<Friend>>()
     val friends: LiveData<List<Friend>> = _friends
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
-    private fun onResume(){
-        viewModelScope.launch(dispatchersIO) { getFriends() }
-    }
-
-    private suspend fun getFriends() {
-        if (sessionManager.isNetworkAvailable()){
-            val friendsList = repository.getFriends()
-            if (friendsList != null ) { _friends.postValue(friendsList!!) }
-            else { postMessage(R.string.cant_get_friends) } //todo jak dodaje nowego znajomego to ta wiadomosc za szybko sie pojawia i pokrywa sie z ta ze znajomy dodany
-        } else { postMessage(R.string.connection_problem) }
+    suspend fun getFriends() {
+        withContext(dispatchersIO){
+            if (sessionManager.isNetworkAvailable()){
+                showProgressBar(true)
+                repository.getFriends()?.let { _friends.postValue(it) }
+                    ?: kotlin.run { postMessage(R.string.cant_get_friends) }
+                showProgressBar(false)
+            } else { postMessage(R.string.connection_problem) }
+        }
     }
 
     suspend fun logout() {
         withContext(dispatchersIO){ repository.logout() }
     }
 
-    suspend fun addFriendByEmail(email: String){
+    suspend fun addFriend(email: String){
         withContext(dispatchersIO){
             if (sessionManager.isNetworkAvailable()) {
                 repository.addFriendByEmail(email){ message ->
                     viewModelScope.launch(dispatchersIO){
                         postMessage(message)
-                        getFriends() //todo pozniej po zamianie, dawac to wywolanie jak jest sukces, bo teraz jest wywolywana nawet jak failure
+                        getFriends() //todo pozniej po zamianie, dawac to wywolanie jak jest sukces, bo teraz jest wywolywana nawet jak failure, ale jak bedzie nasluchiwanie bazy to tego nie trzeba dawac
                     }
                 }
             }

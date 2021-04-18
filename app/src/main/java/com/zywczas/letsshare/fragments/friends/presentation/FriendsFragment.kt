@@ -17,6 +17,7 @@ import com.zywczas.letsshare.di.factories.UniversalViewModelFactory
 import com.zywczas.letsshare.fragments.friends.adapter.FriendsAdapter
 import com.zywczas.letsshare.utils.autoRelease
 import com.zywczas.letsshare.utils.showToast
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class FriendsFragment @Inject constructor(private val viewModelFactory: UniversalViewModelFactory) : Fragment() {
@@ -35,7 +36,11 @@ class FriendsFragment @Inject constructor(private val viewModelFactory: Universa
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        lifecycle.addObserver(viewModel)
+        lifecycleScope.launch { viewModel.getFriends() }
+        binding.apply {
+            lifecycleOwner = viewLifecycleOwner
+            vm = viewModel
+        }
         binding.toolbar.setTitle(R.string.friends)
         setupRecycler()
         setupObservers()
@@ -62,7 +67,7 @@ class FriendsFragment @Inject constructor(private val viewModelFactory: Universa
     private fun addFriendOnClickListener(){
         binding.addFriendLayout.isVisible = true
         binding.addFriendByEmail.setOnClickListener {
-            lifecycleScope.launchWhenResumed { viewModel.addFriendByEmail(binding.friendEmail.text.toString()) }
+            lifecycleScope.launchWhenResumed { viewModel.addFriend(binding.friendEmail.text.toString()) }
         }
     }
 

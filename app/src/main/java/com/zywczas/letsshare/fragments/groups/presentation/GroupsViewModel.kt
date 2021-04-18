@@ -19,11 +19,6 @@ class GroupsViewModel @Inject constructor(
 
     private val _groups = MutableLiveData<List<Group>>()
     val groups: LiveData<List<Group>> = _groups
-//todo
-//    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
-//    private fun onResume() {
-//        viewModelScope.launch(dispatchersIO) { getGroups() }
-//    }
 
     suspend fun getGroups() {
         withContext(dispatchersIO){

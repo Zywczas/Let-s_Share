@@ -7,6 +7,7 @@ import com.google.firebase.firestore.Transaction
 interface FirestoreReferences {
 
     val dateCreatedField: String
+    val nameField: String
     val membersNumField: String
     val totalExpensesField: String
     val expensesField: String
@@ -15,6 +16,8 @@ interface FirestoreReferences {
     val percentageShareField: String
 
     fun userRefs(id: String): DocumentReference
+
+    fun collectionFriends(userId: String): CollectionReference
 
     fun newGroupRefs(): DocumentReference
 

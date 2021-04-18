@@ -31,12 +31,12 @@ class FriendsRepositoryImpl @Inject constructor(
     //todo wrzucic w session manager
     override suspend fun logout() = firebaseAuth.signOut()
 
+    private val userId = sharedPrefs.userId
+
     override suspend fun getFriends(): List<Friend>? =
         try {
-            val friends = firestore.collection(COLLECTION_USERS)
-                .document(sharedPrefs.userEmail)
-                .collection(COLLECTION_FRIENDS)
-                .orderBy(FIELD_NAME, Query.Direction.ASCENDING)
+            val friends = firestoreRefs.collectionFriends(userId)
+                .orderBy(firestoreRefs.nameField, Query.Direction.ASCENDING)
                 .get().await()
                 .toObjects<Friend>()        //todo pozniej to poprawic, dac najpierw pobieranie z bazy, potem z firestore, i wtedy update, albo dac swipe to refresh albo nasluchiwanie zmian, moze lepiej nasluchiwanie zmian dla treningu
             friendsDao.insert(friends) //todo wyniesc to do view modelu, zeby tam byla rozpisana logika
@@ -66,7 +66,7 @@ class FriendsRepositoryImpl @Inject constructor(
             }
         }
     }
-
+//todo jak ja dodam kogos do friends to mojemu znajomemu tez sie powinienem pokazac jako friend, a teraz tego nie ma
     private fun addFriendToFirestoreCollection(friend: Friend, onFinishAction: (Int) -> Unit) {
         firestore.collection(COLLECTION_USERS)
             .document(sharedPrefs.userEmail)

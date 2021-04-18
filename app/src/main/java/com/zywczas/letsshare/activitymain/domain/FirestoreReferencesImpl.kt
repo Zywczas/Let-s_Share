@@ -3,12 +3,15 @@ package com.zywczas.letsshare.activitymain.domain
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
+import com.zywczas.letsshare.utils.COLLECTION_FRIENDS
+import com.zywczas.letsshare.utils.COLLECTION_USERS
 import javax.inject.Inject
 
 class FirestoreReferencesImpl @Inject constructor(private val firestore: FirebaseFirestore) : FirestoreReferences {
 //todo przeniesc pozniej wszystkie const tutaj
 
     override val dateCreatedField = "dateCreated"
+    override val nameField = "name"
     override val membersNumField = "membersNum"
     override val totalExpensesField = "totalExpenses"
     override val expensesField = "expenses"
@@ -17,6 +20,7 @@ class FirestoreReferencesImpl @Inject constructor(private val firestore: Firebas
     override val percentageShareField = "share"
 
     private val collectionUsers = "users"
+    private val collectionFriends = "friends"
     private val collectionGroups = "groups"
     private val collectionMonths = "months"
     private val collectionMembers = "members"
@@ -25,7 +29,12 @@ class FirestoreReferencesImpl @Inject constructor(private val firestore: Firebas
     override fun userRefs(id: String): DocumentReference =
         firestore.collection(collectionUsers)
             .document(id)
-    
+
+    override fun collectionFriends(userId: String): CollectionReference =
+        firestore.collection(collectionUsers)
+            .document(userId)
+            .collection(collectionFriends)
+
     override fun newGroupRefs(): DocumentReference =
         firestore.collection(collectionGroups).document()
 
