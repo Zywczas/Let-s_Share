@@ -19,18 +19,16 @@ class LoginViewModel @Inject constructor(
     private val sessionManager: SessionManager
 ): BaseViewModel() {
 
-    init {
-        viewModelScope.launch(dispatchersIO) { getLastUsedEmail() }
-    }
-
     private val _lastUsedEmail = MutableLiveData<String>()
     val lastUsedEmail: LiveData<String> = _lastUsedEmail
 
     private val _isLoggedIn = MutableLiveData<Boolean>()
     val isLoggedIn: LiveData<Boolean> = _isLoggedIn
 
-    private suspend fun getLastUsedEmail(){
-        _lastUsedEmail.postValue(repository.getLastUsedEmail())
+    suspend fun getLastUsedEmail(){
+        withContext(dispatchersIO){
+            _lastUsedEmail.postValue(repository.getLastUsedEmail())
+        }
     }
 
     suspend fun login(email: String, password: String){

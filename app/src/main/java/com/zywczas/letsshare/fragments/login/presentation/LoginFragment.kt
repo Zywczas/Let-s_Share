@@ -13,6 +13,7 @@ import com.zywczas.letsshare.di.factories.UniversalViewModelFactory
 import com.zywczas.letsshare.utils.autoRelease
 import com.zywczas.letsshare.utils.hideSoftKeyboard
 import com.zywczas.letsshare.utils.showToast
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class LoginFragment @Inject constructor(private val viewModelFactory: UniversalViewModelFactory) : Fragment(){
@@ -26,15 +27,16 @@ class LoginFragment @Inject constructor(private val viewModelFactory: UniversalV
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentLoginBinding.inflate(inflater, container, false)
-        binding.apply {
-            lifecycleOwner = viewLifecycleOwner
-            vm = viewModel
-        }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        lifecycleScope.launch{ viewModel.getLastUsedEmail() }
+        binding.apply {
+            lifecycleOwner = viewLifecycleOwner
+            vm = viewModel
+        }
         setupOnClickListeners()
         setupObservers()
     }
