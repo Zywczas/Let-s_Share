@@ -16,4 +16,6 @@ interface SharedPrefsWrapper {
 
     suspend fun saveUserLocally(user: User)
 
+    suspend fun getLocalUser(): User
+
 }

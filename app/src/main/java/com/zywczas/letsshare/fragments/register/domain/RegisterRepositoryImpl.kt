@@ -53,7 +53,7 @@ class RegisterRepositoryImpl @Inject constructor(
         val authId = firebaseAuth.currentUser?.uid //todo to moze wrzucic w shared prefs skoro i tak tam sprawdzam
         if (authId != null){
             firestoreRefs.userRefs(authId)
-                .set(User(id = authId, name = name, email = email, dateCreated = dateInPoland()))
+                .set(User(id = authId, name = name, email = email))
                 .addOnSuccessListener {
                     onSuccessAction(true)
                 }.addOnFailureListener {

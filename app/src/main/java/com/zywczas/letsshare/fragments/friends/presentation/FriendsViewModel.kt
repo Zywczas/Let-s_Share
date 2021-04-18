@@ -25,8 +25,10 @@ class FriendsViewModel @Inject constructor(
         withContext(dispatchersIO){
             if (sessionManager.isNetworkAvailable()){
                 showProgressBar(true)
-                repository.getFriends()?.let { _friends.postValue(it) }
-                    ?: kotlin.run { postMessage(R.string.cant_get_friends) }
+                repository.getFriends()?.let {
+                    _friends.postValue(it)
+                    repository.saveFriendsLocally(it)
+                } ?: kotlin.run { postMessage(R.string.cant_get_friends) }
                 showProgressBar(false)
             } else { postMessage(R.string.connection_problem) }
         }
@@ -37,17 +39,20 @@ class FriendsViewModel @Inject constructor(
     }
 
     suspend fun addFriend(email: String){
-        withContext(dispatchersIO){
-            if (sessionManager.isNetworkAvailable()) {
-                repository.addFriendByEmail(email){ message ->
-                    viewModelScope.launch(dispatchersIO){
-                        postMessage(message)
-                        getFriends() //todo pozniej po zamianie, dawac to wywolanie jak jest sukces, bo teraz jest wywolywana nawet jak failure, ale jak bedzie nasluchiwanie bazy to tego nie trzeba dawac
-                    }
-                }
+        withContext(dispatchersIO) {
+            showProgressBar(true)
+            when {
+                sessionManager.isNetworkAvailable() -> postMessage(R.string.connection_problem)
+                repository.userEmail() == email -> postMessage(R.string.its_your_email)
+                isFriendAlreadyAdded(email) -> postMessage(R.string.you_have_this_friend)
+                else -> repository.addFriend(email)?.let { error -> postMessage(error) }
+                    ?: getFriends() //todo jak bede nasluchiwac bazy to to bede mogl usunac
             }
-            else { postMessage(R.string.connection_problem) }
+            showProgressBar(false)
         }
     }
+
+    private fun isFriendAlreadyAdded(email: String): Boolean =
+        friends.value?.any { it.email == email } == true
 
 }

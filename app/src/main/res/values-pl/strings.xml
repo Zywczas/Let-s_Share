@@ -15,8 +15,9 @@
     <!--    other messages-->
     <string name="connection_problem">Brak połączenie z internetem.</string>
     <string name="user_with_email_not_in_database">Nie ma użytkownika z tym mailem. Sprawdź maila i spróbuj ponownie.</string>
+    <string name="its_your_email">To Twój email.</string>
+    <string name="you_have_this_friend">Ta osoba już jest Twoim znajomym.</string>
     <string name="cant_add_friend">Nie można dodać znajomego. Spróbuj ponownie.</string>
-    <string name="friend_added">Znajomy dodany.</string>
     <string name="cant_get_friends">Nie udało się pobrać listy znajomych.</string>
     <string name="cant_add_group">Nie udało się dodać grupy. Spróbuj ponownie.</string>
     <string name="group_added">Grupa dodana.</string>

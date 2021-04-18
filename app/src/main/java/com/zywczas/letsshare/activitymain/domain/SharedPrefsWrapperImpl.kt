@@ -38,4 +38,10 @@ class SharedPrefsWrapperImpl @Inject constructor (context: Context): SharedPrefs
         prefs.edit().putString(userEmailKey, user.email).apply()
     }
 
+    override suspend fun getLocalUser(): User = User(
+        id = userId,
+        name = userName,
+        email = userEmail
+    )
+
 }

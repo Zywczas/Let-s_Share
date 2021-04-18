@@ -2,6 +2,7 @@ package com.zywczas.letsshare.activitymain.domain
 
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.Transaction
 
 interface FirestoreReferences {
@@ -18,6 +19,10 @@ interface FirestoreReferences {
     fun userRefs(id: String): DocumentReference
 
     fun collectionFriends(userId: String): CollectionReference
+
+    fun userQueryRefs(email: String): Query
+
+    fun friendRefs(userId: String, friendId: String): DocumentReference
 
     fun newGroupRefs(): DocumentReference
 

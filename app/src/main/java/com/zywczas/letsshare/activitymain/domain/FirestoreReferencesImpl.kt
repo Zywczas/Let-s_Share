@@ -3,8 +3,7 @@ package com.zywczas.letsshare.activitymain.domain
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
-import com.zywczas.letsshare.utils.COLLECTION_FRIENDS
-import com.zywczas.letsshare.utils.COLLECTION_USERS
+import com.google.firebase.firestore.Query
 import javax.inject.Inject
 
 class FirestoreReferencesImpl @Inject constructor(private val firestore: FirebaseFirestore) : FirestoreReferences {
@@ -18,6 +17,8 @@ class FirestoreReferencesImpl @Inject constructor(private val firestore: Firebas
     override val valueField = "value"
     override val groupsIdsField = "groupsIds"
     override val percentageShareField = "share"
+
+    private val emailField = "email"
 
     private val collectionUsers = "users"
     private val collectionFriends = "friends"
@@ -34,6 +35,16 @@ class FirestoreReferencesImpl @Inject constructor(private val firestore: Firebas
         firestore.collection(collectionUsers)
             .document(userId)
             .collection(collectionFriends)
+
+    override fun userQueryRefs(email: String): Query =
+        firestore.collection(collectionUsers)
+            .whereEqualTo(emailField, email)
+            .limit(1)
+
+    override fun friendRefs(userId: String, friendId: String): DocumentReference =
+        firestore.collection(collectionUsers).document(userId)
+            .collection(collectionFriends)
+            .document(friendId)
 
     override fun newGroupRefs(): DocumentReference =
         firestore.collection(collectionGroups).document()

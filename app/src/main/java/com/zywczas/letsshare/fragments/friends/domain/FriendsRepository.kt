@@ -8,6 +8,10 @@ interface FriendsRepository {
     
     suspend fun getFriends(): List<Friend>?
 
-    suspend fun addFriendByEmail(email: String, onFinishAction: (Int) -> Unit )
+    suspend fun saveFriendsLocally(friends: List<Friend>)
+
+    suspend fun userEmail(): String
+
+    suspend fun addFriend(email: String): Int?
 
 }
