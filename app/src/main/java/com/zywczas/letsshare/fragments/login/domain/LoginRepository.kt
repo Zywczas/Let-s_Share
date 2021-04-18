@@ -4,8 +4,12 @@ import com.zywczas.letsshare.model.User
 
 interface LoginRepository {
 
-    suspend fun loginToFirebase(email: String, password: String, onSuccessAction: (User?, Int?) -> Unit)
+    suspend fun getLastUsedEmail(): String
 
-    suspend fun saveUserLocally(user: User)
+    suspend fun saveLastUsedEmail(email: String)
+
+    suspend fun loginToFirebase(email: String, password: String): Int?
+
+    suspend fun saveUserLocally(): Int?
 
 }

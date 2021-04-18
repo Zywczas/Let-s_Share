@@ -2,6 +2,8 @@ package com.zywczas.letsshare.fragments.register.domain
 
 interface RegisterRepository {
 
+    suspend fun saveLastUsedEmail(email: String)
+
     suspend fun isEmailFreeToUse(email: String, onIsEmailFreeToUseAction: (Boolean) -> Unit)
 
     suspend fun registerToFirebase(name: String, email: String, password: String, onSuccessAction: (Boolean) -> Unit)

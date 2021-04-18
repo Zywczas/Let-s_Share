@@ -6,12 +6,18 @@ import com.zywczas.letsshare.model.User
 import com.zywczas.letsshare.utils.dateInPoland
 import com.zywczas.letsshare.utils.logD
 import com.zywczas.letsshare.activitymain.domain.FirestoreReferences
+import com.zywczas.letsshare.activitymain.domain.SharedPrefsWrapper
 import javax.inject.Inject
 
 class RegisterRepositoryImpl @Inject constructor(
     private val firebaseAuth: FirebaseAuth,
-    private val firestoreRefs: FirestoreReferences
+    private val firestoreRefs: FirestoreReferences,
+    private val sharedPrefs: SharedPrefsWrapper
 ) : RegisterRepository {
+
+    override suspend fun saveLastUsedEmail(email: String) {
+        sharedPrefs.lastUsedEmail = email
+    }
 
     //todo to mi rzuca exception jak zly format maila, trzeba to poprawic na succeess i failure pewnie
     override suspend fun isEmailFreeToUse(email: String, onIsEmailFreeToUseAction: (Boolean) -> Unit) {

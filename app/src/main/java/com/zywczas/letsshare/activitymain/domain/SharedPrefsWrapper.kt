@@ -6,9 +6,12 @@ interface SharedPrefsWrapper {
 
 //    var isLoggedInLocally: Boolean //todo na razie nie uzywane
 
+    var lastUsedEmail: String
+
     val userId: String
     val userName: String
     val userEmail: String
+
     var currentGroupId: String
 
     suspend fun saveUserLocally(user: User)

@@ -8,7 +8,6 @@ import com.zywczas.letsshare.SessionManager
 import com.zywczas.letsshare.activitymain.presentation.BaseViewModel
 import com.zywczas.letsshare.di.modules.DispatchersModule.DispatchersIO
 import com.zywczas.letsshare.fragments.login.domain.LoginRepository
-import com.zywczas.letsshare.model.User
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -20,11 +19,23 @@ class LoginViewModel @Inject constructor(
     private val sessionManager: SessionManager
 ): BaseViewModel() {
 
+    init {
+        viewModelScope.launch(dispatchersIO) { getLastUsedEmail() }
+    }
+
+    private val _lastUsedEmail = MutableLiveData<String>()
+    val lastUsedEmail: LiveData<String> = _lastUsedEmail
+
     private val _isLoggedIn = MutableLiveData<Boolean>()
     val isLoggedIn: LiveData<Boolean> = _isLoggedIn
 
+    private suspend fun getLastUsedEmail(){
+        _lastUsedEmail.postValue(repository.getLastUsedEmail())
+    }
+
     suspend fun login(email: String, password: String){
         withContext(dispatchersIO){
+            repository.saveLastUsedEmail(email)
             if (sessionManager.isNetworkAvailable()){
                 loginToFirebase(email, password)
             } else { postMessage(R.string.connection_problem) }
@@ -33,19 +44,15 @@ class LoginViewModel @Inject constructor(
 
     private suspend fun loginToFirebase(email: String, password: String){
         showProgressBar(true)
-        repository.loginToFirebase(email, password){ user, message ->
-            viewModelScope.launch(dispatchersIO) {
+        repository.loginToFirebase(email, password)?.let { error ->
+            postMessage(error)
+            showProgressBar(false)
+        } ?: kotlin.run {
+            repository.saveUserLocally()?.let { error ->
+                postMessage(error)
                 showProgressBar(false)
-                if (user != null) {
-                    saveUserLocally(user)
-                    _isLoggedIn.postValue(true)
-                } else {
-                    message?.let { postMessage(message) }
-                }
-            }
+            } ?: kotlin.run { _isLoggedIn.postValue(true) }
         }
     }
-
-    private suspend fun saveUserLocally(user: User) = repository.saveUserLocally(user)
 
 }

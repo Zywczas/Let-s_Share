@@ -10,7 +10,8 @@ class SharedPrefsWrapperImpl @Inject constructor (context: Context): SharedPrefs
     private val prefsFileName = "com.zywczas.letsshare.prefs"
     private val prefs: SharedPreferences = context.getSharedPreferences(prefsFileName, 0)
 
-    private val isLoggedInKey = "isLoggedInKey"
+//    private val isLoggedInKey = "isLoggedInKey"
+    private val lastUsedEmailKey = "lastUsedEmailKey"
     private val userIdKey = "userIdKey"
     private val userNameKey = "userNameKey"
     private val userEmailKey = "userEmailKey"
@@ -19,6 +20,10 @@ class SharedPrefsWrapperImpl @Inject constructor (context: Context): SharedPrefs
 //    override var isLoggedInLocally: Boolean
 //        get() = prefs.getBoolean(isLoggedInKey, false) //todo
 //        set(value) = prefs.edit().putBoolean(isLoggedInKey, value).apply()
+
+    override var lastUsedEmail: String
+        set(value) = prefs.edit().putString(lastUsedEmailKey, value).apply()
+        get() =  prefs.getString(lastUsedEmailKey, "")!!
 
     override val userId: String = prefs.getString(userIdKey, "")!!
     override val userName: String = prefs.getString(userNameKey, "")!!

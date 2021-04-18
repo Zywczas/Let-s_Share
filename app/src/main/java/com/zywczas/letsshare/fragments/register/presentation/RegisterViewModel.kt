@@ -25,7 +25,8 @@ class RegisterViewModel @Inject constructor(
     suspend fun registerUser(name: String, email: String, password: String) {
         withContext(dispatchersIO) {
             showProgressBar(true)
-            when { //todo sprawdzic czy to dobrze jest zamiast if'ow
+            repository.saveLastUsedEmail(email)
+            when {
                 areCredentialsValid(name, email, password).not() -> {
                     showProgressBar(false)
                     return@withContext

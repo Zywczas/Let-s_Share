@@ -57,6 +57,7 @@ class LoginFragment @Inject constructor(private val viewModelFactory: UniversalV
 
     private fun setupObservers(){
         viewModel.message.observe(viewLifecycleOwner){ showToast(it) }
+        viewModel.lastUsedEmail.observe(viewLifecycleOwner){ binding.email.setText(it) }
         viewModel.isLoggedIn.observe(viewLifecycleOwner){
             if (it){ findNavController().navigate(LoginFragmentDirections.toFriendsFragment()) }
         }
