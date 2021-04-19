@@ -9,7 +9,6 @@ import com.zywczas.letsshare.model.Friend
 import com.zywczas.letsshare.model.GroupMemberDomain
 import com.zywczas.letsshare.utils.logD
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.math.BigDecimal
 import java.util.*
@@ -22,7 +21,6 @@ class GroupSettingsViewModel @Inject constructor(
 
     init {
         logD("init") //todo usunac jak zaczne wstrzykiwac view model w dialogi
-        viewModelScope.launch { getMembers() }
     }
 
     private val _members = MutableLiveData<MutableList<GroupMemberDomain>>()
@@ -42,11 +40,11 @@ class GroupSettingsViewModel @Inject constructor(
     private val _isPercentageChanged = MutableLiveData<Boolean>()
     val isPercentageChanged: LiveData<Boolean> = _isPercentageChanged
 
-    private suspend fun getMembers() {
+    suspend fun getMembers(monthId: String) {
         withContext(dispatchersIO){
             showProgressBar(true)
-            repository.getMembers()?.let{ _members.postValue(it.toMutableList()) }
-                ?: kotlin.run { postMessage(R.string.cant_get_group_members) }
+            repository.getMembers(monthId)?.let{ _members.postValue(it.toMutableList()) }
+                ?: postMessage(R.string.cant_get_group_members)
             showProgressBar(false)
         }
     }
@@ -55,39 +53,23 @@ class GroupSettingsViewModel @Inject constructor(
         withContext(dispatchersIO){ _friends.postValue(repository.getFriends().toMutableList()) }
     }
 
-//todo tu trzeba jeszcze dodac ustawianie splitow i zatwierdzenie dopiero jak jest ok
     suspend fun addNewMember(friend: Friend){
         withContext(dispatchersIO){
             showProgressBar(true)
             when(repository.isFriendInTheGroupAlready(friend.id)){
-                null -> {
-                    postMessage(R.string.something_wrong)
-                    showProgressBar(false)
-                }
-                true -> {
-                    postMessage(R.string.member_exists)
-                    showProgressBar(false)
-                }
+                null -> postMessage(R.string.something_wrong)
+                true -> postMessage(R.string.member_exists)
                 false -> {
-                    when(repository.isFriendIn10GroupsAlready(friend.id)){
-                        null -> {
-                            postMessage(R.string.something_wrong)
-                            showProgressBar(false)
-                        }
-                        true -> {
-                            postMessage(R.string.friend_in_too_many_groups)
-                            showProgressBar(false)
-                        }
-                        false -> {
-                            repository.addMemberIfBelow7InGroup(friend)
-                                ?.let { error ->
+                    when(repository.isFriendIn5GroupsAlready(friend.id)){
+                        null -> postMessage(R.string.something_wrong)
+                        true -> postMessage(R.string.friend_in_too_many_groups)
+                        false -> repository.addMemberIfBelow7PeopleInGroup(friend)?.let { error ->
                                     postMessage(error)
-                                    showProgressBar(false)
-                                } ?: kotlin.run { getMembers() }
-                        }
+                                } ?: getMembers()
                     }
                 }
             }
+            showProgressBar(false)
         }
     }
 
@@ -110,14 +92,9 @@ class GroupSettingsViewModel @Inject constructor(
                 val newSplit = BigDecimal(100).divide(numberOfMembers.toBigDecimal(), 2, BigDecimal.ROUND_HALF_UP)
                 membersTemp?.let { members ->
                     val newMembersRef = members
-                        .map { GroupMemberDomain(
-                            id = it.id,
-                            name = it.name,
-                            email = it.email,
-                            expenses = it.expenses,
-                            share = newSplit
-                        ) }
-                        .toMutableList()
+                        .map { GroupMemberDomain(id = it.id,name = it.name,email = it.email,
+                            expenses = it.expenses,share = newSplit)
+                        }.toMutableList()
                     _members.postValue(newMembersRef)
                     _isPercentageChanged.postValue(true)
                 }

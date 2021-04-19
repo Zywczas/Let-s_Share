@@ -38,17 +38,17 @@ class GroupSettingsRepositoryImpl @Inject constructor(
     override suspend fun isFriendInTheGroupAlready(newMemberId: String): Boolean? =
         getMembers()?.any { it.id == newMemberId }
 
-    override suspend fun isFriendIn10GroupsAlready(newMemberId: String): Boolean? =
+    override suspend fun isFriendIn5GroupsAlready(newMemberId: String): Boolean? =
         try {
             firestoreRefs.userRefs(newMemberId).get().await()
-                .toObject<User>()!!.groupsIds.size >= 10
+                .toObject<User>()!!.groupsIds.size >= 5
         } catch (e: Exception) {
             crashlyticsWrapper.sendExceptionToFirebase(e)
             logD(e)
             null
         }
 
-    override suspend fun addMemberIfBelow7InGroup(friend: Friend): Int? =
+    override suspend fun addMemberIfBelow7PeopleInGroup(friend: Friend): Int? =
 //        try {
 //            val newMember = friend.toGroupMember()
 //            val userToBeUpdatedRefs = firestoreRefs.userRefs(newMember.email)

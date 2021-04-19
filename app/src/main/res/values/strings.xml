@@ -31,7 +31,7 @@
     <string name="member_exists">This person is already in the group.</string>
     <string name="cant_add_expense">Couldn\'t add the expense. Try again.</string>
     <string name="cant_get_expenses">Couldn\'t get expenses list.</string>
-    <string name="friend_in_too_many_groups">Your friend has reached max number of 10 groups.</string>
+    <string name="friend_in_too_many_groups">Your friend has reached max number of 5 groups.</string>
     <string name="something_wrong">Something went wrong. Try again.</string>
     <string name="percentage_not_100">Total percentage must be equal 100.00%.</string>
     <string name="save_success">Changes are saved.</string>

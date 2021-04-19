@@ -21,10 +21,6 @@ class GroupDetailsViewModel @Inject constructor(
     private val repository: GroupDetailsRepository
 ) : BaseViewModel() {
 
-    init {
-        viewModelScope.launch(dispatchersIO) { getMonthDetails() }
-    }
-
     private val _currentMonth = MutableLiveData<GroupMonthDomain>()
     val currentMonth: LiveData<GroupMonthDomain> = _currentMonth
 
@@ -60,7 +56,7 @@ class GroupDetailsViewModel @Inject constructor(
         return this
     }
 
-    private suspend fun getMonthDetails(){
+    suspend fun getMonthDetails(){
         withContext(dispatchersIO){
             showProgressBar(true)
             repository.getLastMonth()?.let { month->

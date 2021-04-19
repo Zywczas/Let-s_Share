@@ -21,8 +21,10 @@ import com.zywczas.letsshare.fragments.groupdetails.adapters.ExpensesAdapter
 import com.zywczas.letsshare.fragments.groupdetails.adapters.GroupMembersAdapter
 import com.zywczas.letsshare.utils.GROUP_ID_KEY
 import com.zywczas.letsshare.utils.autoRelease
+import com.zywczas.letsshare.utils.monthId
 import com.zywczas.letsshare.utils.showToast
 import kotlinx.coroutines.launch
+import java.util.*
 import javax.inject.Inject
 
 class GroupDetailsFragment @Inject constructor(private val viewModelFactory: UniversalViewModelFactory): Fragment() {
@@ -43,6 +45,7 @@ class GroupDetailsFragment @Inject constructor(private val viewModelFactory: Uni
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        lifecycleScope.launch { viewModel.getMonthDetails() }
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             vm = viewModel
@@ -106,7 +109,6 @@ class GroupDetailsFragment @Inject constructor(private val viewModelFactory: Uni
     private fun dimOrRestoreBackground(isDialOpen : Boolean){
         val window = requireActivity().window
         if (isDialOpen){
-//            AppCompatResources.getColorStateList(requireContext(), R.color.purple_700) todo inny sposob na pobranie zasobow
             window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.primaryVariantAlpha03)
             binding.mainLayout.alpha = 0.3F
         } else {
@@ -134,7 +136,7 @@ class GroupDetailsFragment @Inject constructor(private val viewModelFactory: Uni
     }
 
     private fun goToGroupSettingFragment(){
-        findNavController().navigate(GroupDetailsFragmentDirections.toGroupSettingsFragment())
+        findNavController().navigate(GroupDetailsFragmentDirections.toGroupSettingsFragment(Date().monthId()))
     }
 
     private fun showAddExpenseDialog(){

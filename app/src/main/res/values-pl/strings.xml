@@ -31,7 +31,7 @@
     <string name="member_exists">Ta osoba już jest w tej grupie.</string>
     <string name="cant_add_expense">Nie udało się dodać wydatku. Spróbuj ponownie.</string>
     <string name="cant_get_expenses">Nie udało się pobrać listy wydatków.</string>
-    <string name="friend_in_too_many_groups">Znajomy już jest w maksymalnej ilości dziesięciu grup.</string>
+    <string name="friend_in_too_many_groups">Znajomy już jest w maksymalnej ilości pięciu grup.</string>
     <string name="something_wrong">Coś poszło nie tak. Spróbuj ponownie.</string>
     <string name="percentage_not_100">Łączny podział musi wynosić 100,00%.</string>
     <string name="save_success">Zmiany zostały zapisane.</string>

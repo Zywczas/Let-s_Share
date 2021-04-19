@@ -102,5 +102,9 @@
         android:id="@+id/groupSettingsFragment"
         android:name="com.zywczas.letsshare.fragments.groupsettings.presentation.GroupSettingsFragment"
         tools:layout="@layout/fragment_group_settings"
-        android:label="Group Settings" />
+        android:label="Group Settings" >
+        <argument
+            android:name="monthId"
+            app:argType="string" />
+    </fragment>
 </navigation>

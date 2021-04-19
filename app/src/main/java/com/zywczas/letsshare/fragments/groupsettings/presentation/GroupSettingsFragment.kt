@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.setupWithNavController
 import com.leinardi.android.speeddial.SpeedDialActionItem
 import com.leinardi.android.speeddial.SpeedDialView
@@ -20,12 +21,14 @@ import com.zywczas.letsshare.di.factories.UniversalViewModelFactory
 import com.zywczas.letsshare.fragments.groupsettings.adapters.GroupMembersSettingsAdapter
 import com.zywczas.letsshare.utils.autoRelease
 import com.zywczas.letsshare.utils.showToast
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class GroupSettingsFragment @Inject constructor(private val viewModelFactory: UniversalViewModelFactory) : Fragment() {
 
     private val viewModel: GroupSettingsViewModel by viewModels { viewModelFactory }
     private var binding: FragmentGroupSettingsBinding by autoRelease()
+    private val args: GroupSettingsFragmentArgs by navArgs()
     private val membersAdapter by lazy { GroupMembersSettingsAdapter(lifecycle){
         memberId, split -> lifecycleScope.launchWhenResumed { viewModel.updatePercentage(memberId, split) }
     } }
@@ -40,6 +43,7 @@ class GroupSettingsFragment @Inject constructor(private val viewModelFactory: Un
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        lifecycleScope.launch { viewModel.getMembers(args.monthId) }
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             vm = viewModel
