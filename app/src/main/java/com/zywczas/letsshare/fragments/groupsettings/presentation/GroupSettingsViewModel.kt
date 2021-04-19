@@ -29,6 +29,8 @@ class GroupSettingsViewModel @Inject constructor(
     private val _friends = MutableLiveData<MutableList<Friend>>()
     val friends: LiveData<MutableList<Friend>> = _friends
 
+    private var monthId: String = ""
+
     val totalPercentage: LiveData<String> = Transformations.switchMap(members){ members ->
         liveData(dispatchersIO){
             var totalPercentageTemp = BigDecimal("0.00")
@@ -42,6 +44,7 @@ class GroupSettingsViewModel @Inject constructor(
 
     suspend fun getMembers(monthId: String) {
         withContext(dispatchersIO){
+            this@GroupSettingsViewModel.monthId = monthId
             showProgressBar(true)
             repository.getMembers(monthId)?.let{ _members.postValue(it.toMutableList()) }
                 ?: postMessage(R.string.cant_get_group_members)
@@ -56,16 +59,16 @@ class GroupSettingsViewModel @Inject constructor(
     suspend fun addNewMember(friend: Friend){
         withContext(dispatchersIO){
             showProgressBar(true)
-            when(repository.isFriendInTheGroupAlready(friend.id)){
+            when(isFriendInTheGroupAlready(friend.id)){
                 null -> postMessage(R.string.something_wrong)
                 true -> postMessage(R.string.member_exists)
                 false -> {
                     when(repository.isFriendIn5GroupsAlready(friend.id)){
                         null -> postMessage(R.string.something_wrong)
                         true -> postMessage(R.string.friend_in_too_many_groups)
-                        false -> repository.addMemberIfBelow7PeopleInGroup(friend)?.let { error ->
+                        false -> repository.addMemberIfBelow7PeopleInGroup(monthId, friend)?.let { error ->
                                     postMessage(error)
-                                } ?: getMembers()
+                                } ?: getMembers(monthId)
                     }
                 }
             }
@@ -73,11 +76,13 @@ class GroupSettingsViewModel @Inject constructor(
         }
     }
 
+    private fun isFriendInTheGroupAlready(newMemberId: String): Boolean? =
+        members.value?.any{ it.id == newMemberId }
+
     suspend fun updatePercentage(memberId: String, share: BigDecimal){
         withContext(dispatchersIO){
             members.value?.let { members ->
-                members.first { it.id == memberId }.share =
-                    share.setScale(2, BigDecimal.ROUND_HALF_UP)
+                members.first { it.id == memberId }.share = share.setScale(2, BigDecimal.ROUND_HALF_UP)
                 _members.postValue(members)
                 _isPercentageChanged.postValue(true)
             }
@@ -106,7 +111,7 @@ class GroupSettingsViewModel @Inject constructor(
         withContext(dispatchersIO){
             if (totalPercentage.value.toString() == "100.00%") {
                 showProgressBar(true)
-                postMessage(repository.saveSplits(members.value!!))
+                postMessage(repository.saveSplits(monthId, members.value!!))
                 showProgressBar(false)
             }
             else { postMessage(R.string.percentage_not_100) }
