@@ -42,7 +42,7 @@ class FriendsViewModel @Inject constructor(
         withContext(dispatchersIO) {
             showProgressBar(true)
             when {
-                sessionManager.isNetworkAvailable() -> postMessage(R.string.connection_problem)
+                sessionManager.isNetworkAvailable().not() -> postMessage(R.string.connection_problem)
                 repository.userEmail() == email -> postMessage(R.string.its_your_email)
                 isFriendAlreadyAdded(email) -> postMessage(R.string.you_have_this_friend)
                 else -> repository.addFriend(email)?.let { error -> postMessage(error) }

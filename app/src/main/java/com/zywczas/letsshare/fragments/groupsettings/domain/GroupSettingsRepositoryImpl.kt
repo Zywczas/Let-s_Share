@@ -22,7 +22,7 @@ class GroupSettingsRepositoryImpl @Inject constructor(
 
     private val groupId = sharedPrefs.currentGroupId
 
-    override suspend fun getMembers(): List<GroupMemberDomain>? =
+    override suspend fun getMembers(): List<GroupMemberDomain>? = //todo tmonth id musi byc przekazywane za pomoca args zeby czasem w ustawieniach nagle ine wyswietlilo nowego miesiaca, jak jest przelom
 //        try {
 //            firestoreRefs.collectionMembersRefs(groupId)
 //                .get().await()

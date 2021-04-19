@@ -21,17 +21,11 @@ class GroupsViewModel @Inject constructor(
     val groups: LiveData<List<Group>> = _groups
 
     suspend fun getGroups() {
-        withContext(dispatchersIO){
+        withContext(dispatchersIO) {
             if (sessionManager.isNetworkAvailable()) {
                 showProgressBar(true)
-                val groupsList = repository.getGroups()
-                if (groupsList != null) {
-                    _groups.postValue(groupsList!!)
-                    showProgressBar(false)
-                } else {
-                    postMessage(R.string.cant_get_groups)
-                    showProgressBar(false)
-                }
+                repository.getGroups()?.let { _groups.postValue(it) } ?: postMessage(R.string.cant_get_groups)
+                showProgressBar(false)
             } else {
                 postMessage(R.string.connection_problem)
             }
@@ -39,20 +33,21 @@ class GroupsViewModel @Inject constructor(
     }
 
     suspend fun addGroup(name: String, currency: String) {
-        withContext(dispatchersIO){
-            if (name.isNotEmpty()){
-                if (sessionManager.isNetworkAvailable()) {
-                    showProgressBar(true)
-                    postMessage(repository.addGroupIfUserIsInLessThan10Groups(name, currency))
-                    showProgressBar(false)
-                    getGroups()         //todo nie wiem czy tu nie za szybko bedzie pobierac grupy, czy zdaz sie zapisac w bazie, zanim zacznie je pobierac, jak dam pozniej nasluchiwanie bazy to nie bedzie
-                    //trzeba tej funkcji tutaj wywolywac
-                } else { postMessage(R.string.connection_problem) }
-            } else { postMessage(R.string.no_group_name) }
+        withContext(dispatchersIO) {
+            showProgressBar(true)
+            when {
+                name.isBlank() -> postMessage(R.string.no_group_name)
+                sessionManager.isNetworkAvailable().not() -> postMessage(R.string.connection_problem)
+                else -> {
+                    postMessage(repository.addGroupIfUserIsInLessThan10Groups(name, currency)) //todo jak dam pozniej nasluchiwanie bazy to bez wiadomosci
+                    getGroups() //todo jak dam pozniej nasluchiwanie bazy to nie bedzie tego
+                }
+            }
+//            showProgressBar(false) //todo jak dam pozniej nasluchiwanie bazy to moze to bedzie potrzebne
         }
     }
 
-    suspend fun saveCurrentlyOpenGroupId(groupId: String){
+    suspend fun saveCurrentlyOpenGroupId(groupId: String) {
         withContext(dispatchersIO) { repository.saveCurrentlyOpenGroupId(groupId) }
     }
 

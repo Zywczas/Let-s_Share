@@ -15,7 +15,7 @@
     <!--    other messages-->
     <string name="connection_problem">No internet connection.</string>
     <string name="user_with_email_not_in_database">User with this email doesn\'t exist. Check email and try again.</string>
-    <string name="its_your_email">This is your email.</string>
+    <string name="its_your_email">You cannot add yourself.</string>
     <string name="you_have_this_friend">This person is already your friend.</string>
     <string name="cant_add_friend">Couldn\'t add the friend. Try again.</string>
     <string name="cant_get_friends">Couldn\'t get friends list.</string>
