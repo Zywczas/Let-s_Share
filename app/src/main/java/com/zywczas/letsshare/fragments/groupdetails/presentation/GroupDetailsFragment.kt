@@ -68,12 +68,12 @@ class GroupDetailsFragment @Inject constructor(private val viewModelFactory: Uni
         viewModel.expenses.observe(viewLifecycleOwner){ expensesAdapter.submitList(it.toMutableList()) }
     }
 
-    private fun setupSpeedDialMenu(){ //todo dokonczyc text ze stringow
+    private fun setupSpeedDialMenu(){
         binding.speedDial.addActionItem(
             SpeedDialActionItem.Builder(R.id.groupSettings, R.drawable.ic_settings_24)
                 .setFabBackgroundColor(ContextCompat.getColor(requireContext(), R.color.secondFABItem))
-                .setFabImageTintColor(Color.WHITE) //todo sprobowac wrzucic to w layout, moze w item
-                .setLabel("Ustawienia grupy")
+                .setFabImageTintColor(Color.WHITE)
+                .setLabel(getString(R.string.group_settings))
                 .setLabelClickable(true)
                 .setLabelBackgroundColor(Color.WHITE)
                 .create()
@@ -82,7 +82,7 @@ class GroupDetailsFragment @Inject constructor(private val viewModelFactory: Uni
             SpeedDialActionItem.Builder(R.id.addExpense, R.drawable.ic_add_expense)
                 .setFabBackgroundColor(ContextCompat.getColor(requireContext(), R.color.firstFABItem))
                 .setFabImageTintColor(Color.WHITE)
-                .setLabel("Dodaj wydatek")
+                .setLabel(getString(R.string.add_expense))
                 .setLabelClickable(true)
                 .setLabelBackgroundColor(Color.WHITE)
                 .create()

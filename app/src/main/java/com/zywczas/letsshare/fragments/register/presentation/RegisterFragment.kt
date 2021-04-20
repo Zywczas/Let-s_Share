@@ -26,15 +26,15 @@ class RegisterFragment @Inject constructor(private val viewModelFactory: Univers
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentRegisterBinding.inflate(inflater, container, false)
-        binding.apply {
-            lifecycleOwner = viewLifecycleOwner
-            vm = viewModel
-        }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.apply {
+            lifecycleOwner = viewLifecycleOwner
+            vm = viewModel
+        }
         setupObservers()
         setupOnClickListeners()
     }

@@ -15,7 +15,7 @@ class LoginViewModel @Inject constructor(
     @DispatchersIO private val dispatchersIO: CoroutineDispatcher,
     private val repository: LoginRepository,
     private val sessionManager: SessionManager
-): BaseViewModel() {
+) : BaseViewModel() {
 
     private val _lastUsedEmail = MutableLiveData<String>()
     val lastUsedEmail: LiveData<String> = _lastUsedEmail
@@ -23,32 +23,28 @@ class LoginViewModel @Inject constructor(
     private val _isLoggedIn = MutableLiveData<Boolean>()
     val isLoggedIn: LiveData<Boolean> = _isLoggedIn
 
-    suspend fun getLastUsedEmail(){
-        withContext(dispatchersIO){
+    suspend fun getLastUsedEmail() {
+        withContext(dispatchersIO) {
             _lastUsedEmail.postValue(repository.getLastUsedEmail())
         }
     }
 
-    suspend fun login(email: String, password: String){
-        withContext(dispatchersIO){
+    suspend fun login(email: String, password: String) {
+        withContext(dispatchersIO) {
             repository.saveLastUsedEmail(email)
-            if (sessionManager.isNetworkAvailable()){
-                loginToFirebase(email, password)
-            } else { postMessage(R.string.connection_problem) }
+            if (sessionManager.isNetworkAvailable()) { loginToFirebase(email, password) }
+            else { postMessage(R.string.connection_problem) }
         }
     }
 
-    private suspend fun loginToFirebase(email: String, password: String){
+    private suspend fun loginToFirebase(email: String, password: String) {
         showProgressBar(true)
-        repository.loginToFirebase(email, password)?.let { error ->
-            postMessage(error)
-            showProgressBar(false)
-        } ?: kotlin.run {
-            repository.saveUserLocally()?.let { error ->
-                postMessage(error)
-                showProgressBar(false)
-            } ?: kotlin.run { _isLoggedIn.postValue(true) }
-        }
+        repository.loginToFirebase(email, password)?.let { error -> postMessage(error) }
+            ?: kotlin.run {
+                repository.saveUserLocally()?.let { error -> postMessage(error) }
+                    ?: kotlin.run { _isLoggedIn.postValue(true) }
+            }
+        showProgressBar(false)
     }
 
 }

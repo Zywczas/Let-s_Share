@@ -24,7 +24,7 @@ class FriendsFragment @Inject constructor(private val viewModelFactory: Universa
 
     private val viewModel: FriendsViewModel by viewModels { viewModelFactory }
     private var binding: FragmentFriendsBinding by autoRelease()
-    private val friendsAdapter by lazy { FriendsAdapter() }
+    private val adapter by lazy { FriendsAdapter() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,23 +40,17 @@ class FriendsFragment @Inject constructor(private val viewModelFactory: Universa
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             vm = viewModel
+            adapterXML = adapter
         }
         binding.toolbar.setTitle(R.string.friends)
-        setupRecycler()
         setupObservers()
         setupOnClickListeners()
         setupBottomNavBar()
     }
 
-    private fun setupRecycler(){
-        binding.recycler.adapter = friendsAdapter //todo wrzucic to pozniej w live data
-//        binding.recycler.layoutManager = LinearLayoutManager(requireContext())
-//        binding.recycler.setHasFixedSize(true)
-    }
-
     private fun setupObservers(){
         viewModel.message.observe(viewLifecycleOwner){ showToast(it) }
-        viewModel.friends.observe(viewLifecycleOwner){ friendsAdapter.submitList(it.toMutableList()) }
+        viewModel.friends.observe(viewLifecycleOwner){ adapter.submitList(it.toMutableList()) }
     }
 
     private fun setupOnClickListeners(){

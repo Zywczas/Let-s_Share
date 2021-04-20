@@ -23,9 +23,10 @@ class GroupsFragment @Inject constructor(private val viewModelFactory: Universal
 
     private val viewModel: GroupsViewModel by viewModels { viewModelFactory }
     private var binding: FragmentGroupsBinding by autoRelease()
-    private val groupsAdapter by lazy { GroupsAdapter{ lifecycleScope.launchWhenResumed {
-        viewModel.saveCurrentlyOpenGroupId(it.id)
-        findNavController().navigate(GroupsFragmentDirections.toGroupDetailsFragment(it)) //todo pozniej tutaj dac samo currency
+    private val groupsAdapter by lazy { GroupsAdapter{ group ->
+        lifecycleScope.launchWhenResumed {
+            viewModel.saveCurrentlyOpenGroupId(group.id)
+            findNavController().navigate(GroupsFragmentDirections.toGroupDetailsFragment(group))
     }}}
 
     override fun onCreateView(

@@ -36,10 +36,15 @@
     <string name="percentage_not_100">Łączny podział musi wynosić 100,00%.</string>
     <string name="save_success">Zmiany zostały zapisane.</string>
 
-    <!--    UI elements - main app-->
+    <!--    UI elements -->
     <string name="friends">Znajomi</string>
     <string name="groups">Grupy</string>
     <string name="owes">Niedopłata:</string>
     <string name="over">Nadpłata:</string>
+    <string name="provide_name">Podaj nazwę</string>
+    <string name="provide_value">Podaj wartość</string>
+    <string name="group_settings">Ustawienia grupy</string>
+    <string name="add_expense">Dodaj wydatek</string>
+    <string name="add_new_member">Dodaj nowego członka</string>
 
 </resources>

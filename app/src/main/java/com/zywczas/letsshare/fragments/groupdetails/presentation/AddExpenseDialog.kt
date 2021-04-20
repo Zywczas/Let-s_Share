@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.zywczas.letsshare.R
 import com.zywczas.letsshare.databinding.DialogAddExpenseBinding
 import com.zywczas.letsshare.utils.autoRelease
 
@@ -31,8 +32,8 @@ class AddExpenseDialog : DialogFragment() {
 
     private fun verifyValuesAndAddExpense() {
         when {
-            binding.name.text.toString().isBlank() -> binding.nameFrame.error = "Podaj nazwę" //todo dac stringi
-            binding.amount.text.toString().isBlank() -> binding.amountFrame.error = "Wpisz kwotę"//todo dac stringi
+            binding.name.text.toString().isBlank() -> binding.nameFrame.error =  getString(R.string.provide_name)
+            binding.amount.text.toString().isBlank() -> binding.amountFrame.error = getString(R.string.provide_value)
             else -> lifecycleScope.launchWhenResumed {
                 viewModel.addExpense(binding.name.text.toString(), binding.amount.text.toString().toBigDecimal())
                 dismiss()

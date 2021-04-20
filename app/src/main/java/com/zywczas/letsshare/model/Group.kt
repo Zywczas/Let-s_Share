@@ -5,7 +5,7 @@ import com.zywczas.letsshare.utils.dateInPoland
 import kotlinx.parcelize.Parcelize
 import java.util.*
 
-@Parcelize //todo usunac to jak usune groupid z fragmentow
+@Parcelize
 data class Group(
     val id: String = "",
     val name: String = "",

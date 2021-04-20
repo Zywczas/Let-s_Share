@@ -66,21 +66,12 @@ class GroupSettingsFragment @Inject constructor(private val viewModelFactory: Un
         viewModel.isPercentageChanged.observe(viewLifecycleOwner){ binding.save.isVisible = it }
     }
 
-    private fun setupSpeedDialMenu(){ //todo dokonczyc text ze stringow
-//        binding.speedDial.addActionItem(
-//            SpeedDialActionItem.Builder(R.id.groupSettings, R.drawable.ic_settings_24)
-//                .setFabBackgroundColor(ContextCompat.getColor(requireContext(), R.color.groupSettingsFABColor))
-//                .setFabImageTintColor(Color.WHITE) //todo sprobowac wrzucic to w layout, moze w item
-//                .setLabel("Ustawienia grupy")
-//                .setLabelClickable(true)
-//                .setLabelBackgroundColor(Color.WHITE)
-//                .create()
-//        )
+    private fun setupSpeedDialMenu(){
         binding.speedDial.addActionItem(
             SpeedDialActionItem.Builder(R.id.addMember, R.drawable.ic_add_friend)
                 .setFabBackgroundColor(ContextCompat.getColor(requireContext(), R.color.firstFABItem))
                 .setFabImageTintColor(Color.WHITE)
-                .setLabel("Dodaj czlonka grupy")
+                .setLabel(getString(R.string.add_new_member))
                 .setLabelClickable(true)
                 .setLabelBackgroundColor(Color.WHITE)
                 .create()

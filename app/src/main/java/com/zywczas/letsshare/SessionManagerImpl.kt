@@ -41,7 +41,6 @@ class SessionManagerImpl @Inject constructor(
 
     override suspend fun isUserLoggedIn(): Boolean =
         if (isLoggedIn) { true }
-        //todo pytanie czy tu trzeba tez zapisywac za kazdym razem przy wlczaniu aplikacji, dane do shared prefs czy nie trzeba, stad mozna wziac email, display name i id
         else {
             isLoggedIn = firebaseAuth.currentUser != null && firebaseAuth.currentUser!!.isEmailVerified
             isLoggedIn
