@@ -8,4 +8,6 @@ interface SessionManager {
 
     suspend fun delayCoroutine(millis: Long)
 
+    suspend fun logout()
+
 }

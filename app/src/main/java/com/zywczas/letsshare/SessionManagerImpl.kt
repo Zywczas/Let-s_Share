@@ -40,16 +40,15 @@ class SessionManagerImpl @Inject constructor(
     override suspend fun isNetworkAvailable(): Boolean = isConnected
 
     override suspend fun isUserLoggedIn(): Boolean =
-        if (isLoggedIn) {
-            true
-        } //todo chwilowo to wylaczam zeby zawse sprawdzalo z neta, pozniej pobierac info z shared prefs i neta
+        if (isLoggedIn) { true }
         //todo pytanie czy tu trzeba tez zapisywac za kazdym razem przy wlczaniu aplikacji, dane do shared prefs czy nie trzeba, stad mozna wziac email, display name i id
         else {
-//            isLoggedIn =
-                firebaseAuth.currentUser != null && firebaseAuth.currentUser!!.isEmailVerified
-//            isLoggedIn
+            isLoggedIn = firebaseAuth.currentUser != null && firebaseAuth.currentUser!!.isEmailVerified
+            isLoggedIn
         }
-//todo przeniesc logout tutaj i dodac shared prefs
+
     override suspend fun delayCoroutine(millis: Long) = delay(millis)
+
+    override suspend fun logout() = firebaseAuth.signOut()
 
 }

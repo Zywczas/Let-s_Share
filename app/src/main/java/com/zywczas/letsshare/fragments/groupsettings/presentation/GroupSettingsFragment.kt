@@ -61,7 +61,7 @@ class GroupSettingsFragment @Inject constructor(private val viewModelFactory: Un
 
     private fun setupObservers(){
         viewModel.message.observe(viewLifecycleOwner){ showToast(it) }
-        viewModel.members.observe(viewLifecycleOwner){ membersAdapter.submitList(it) }
+        viewModel.members.observe(viewLifecycleOwner){ membersAdapter.submitList(it.toMutableList()) }
         viewModel.totalPercentage.observe(viewLifecycleOwner){ binding.splitTotalValue.text = it }
         viewModel.isPercentageChanged.observe(viewLifecycleOwner){ binding.save.isVisible = it }
     }

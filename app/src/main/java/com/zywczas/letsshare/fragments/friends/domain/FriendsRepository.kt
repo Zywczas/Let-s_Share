@@ -4,8 +4,6 @@ import com.zywczas.letsshare.model.Friend
 
 interface FriendsRepository {
 
-    suspend fun logout()
-    
     suspend fun getFriends(): List<Friend>?
 
     suspend fun saveFriendsLocally(friends: List<Friend>)

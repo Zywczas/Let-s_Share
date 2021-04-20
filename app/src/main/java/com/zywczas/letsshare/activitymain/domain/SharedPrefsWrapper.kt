@@ -4,8 +4,6 @@ import com.zywczas.letsshare.model.User
 
 interface SharedPrefsWrapper {
 
-//    var isLoggedInLocally: Boolean //todo na razie nie uzywane
-
     var lastUsedEmail: String
 
     val userId: String

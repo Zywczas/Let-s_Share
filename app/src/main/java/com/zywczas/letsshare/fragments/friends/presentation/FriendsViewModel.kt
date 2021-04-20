@@ -35,7 +35,7 @@ class FriendsViewModel @Inject constructor(
     }
 
     suspend fun logout() {
-        withContext(dispatchersIO){ repository.logout() }
+        withContext(dispatchersIO){ sessionManager.logout() }
     }
 
     suspend fun addFriend(email: String){

@@ -24,9 +24,6 @@ class FriendsRepositoryImpl @Inject constructor(
     private val friendsDao: FriendsDao
 ) : FriendsRepository {
 
-    //todo wrzucic w session manager
-    override suspend fun logout() = firebaseAuth.signOut()
-
     private val userId = sharedPrefs.userId
 
     override suspend fun getFriends(): List<Friend>? =
@@ -34,7 +31,7 @@ class FriendsRepositoryImpl @Inject constructor(
             firestoreRefs.collectionFriends(userId)
                 .orderBy(firestoreRefs.nameField, Query.Direction.ASCENDING)
                 .get().await()
-                .toObjects()        //todo pozniej to poprawic, dac najpierw pobieranie z bazy, potem z firestore, i wtedy update, albo dac swipe to refresh albo nasluchiwanie zmian, moze lepiej nasluchiwanie zmian dla treningu
+                .toObjects()        //todo dac nasluchiwanie zmian dla treningu
         } catch (e: Exception) {
             crashlyticsWrapper.sendExceptionToFirebase(e)
             logD(e)

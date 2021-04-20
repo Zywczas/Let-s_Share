@@ -23,11 +23,11 @@ class GroupSettingsViewModel @Inject constructor(
         logD("init") //todo usunac jak zaczne wstrzykiwac view model w dialogi
     }
 
-    private val _members = MutableLiveData<MutableList<GroupMemberDomain>>()
-    val members: LiveData<MutableList<GroupMemberDomain>> = _members
+    private val _members = MutableLiveData<List<GroupMemberDomain>>()
+    val members: LiveData<List<GroupMemberDomain>> = _members
 
-    private val _friends = MutableLiveData<MutableList<Friend>>()
-    val friends: LiveData<MutableList<Friend>> = _friends
+    private val _friends = MutableLiveData<List<Friend>>()
+    val friends: LiveData<List<Friend>> = _friends
 
     private var monthId: String = ""
 
