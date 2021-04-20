@@ -81,23 +81,10 @@
             android:name="group"
             app:argType="com.zywczas.letsshare.model.Group" />
         <action
-            android:id="@+id/actionShowAddFriendToGroupDialog"
-            app:destination="@id/addFriendToGroupDialog" />
-        <action
             android:id="@+id/toGroupSettingsFragment"
             app:destination="@id/groupSettingsFragment" />
     </fragment>
-<!--    todo jezeli bede tego uzywac to zmienic id na members - poki co to nie jest uzywane-->
-    <dialog
-        android:id="@+id/addFriendToGroupDialog"
-        android:name="com.zywczas.letsshare.fragments.groupsettings.presentation.AddGroupMemberDialog"
-        tools:layout="@layout/dialog_add_friend_to_group"
-        android:label="AddFriendToGroupDialog" >
-        <argument
-            android:name="groupId"
-            app:argType="string" />
-    </dialog>
-<!--    todo labels powrzucac w stringi tam gdzie uzywane-->
+    <!--    todo labels powrzucac w stringi tam gdzie uzywane-->
     <fragment
         android:id="@+id/groupSettingsFragment"
         android:name="com.zywczas.letsshare.fragments.groupsettings.presentation.GroupSettingsFragment"

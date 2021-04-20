@@ -3,15 +3,14 @@
 
     <item
         android:id="@+id/groupSettings"
-        android:title="Ustawienia grupy" />
+        android:title="@string/group_settings" />
 
     <item
         android:id="@+id/addExpense"
-        android:title="Dodaj wydatek" />
+        android:title="@string/add_expense" />
 
     <item
         android:id="@+id/addMember"
-        android:title="Dodaj członka grupy" />
+        android:title="@string/add_new_member" />
 
-<!--    todo poprawic stringi tutaj-->
 </menu>

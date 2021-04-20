@@ -121,10 +121,6 @@ class GroupSettingsFragment @Inject constructor(private val viewModelFactory: Un
     }
 
     private fun showAddGroupMemberDialog(){
-        //todo tu jescze mozna sprobowac wstrzykiwac daggerem fabryke w konstruktor i
-        //todo dc odpowiedni scope dla tego view modelu :)
-        //todo sprawdzic co sie stanie jak dam fabryke jako singleton, czy bedzie mi wstzykiwac wszedzie te same view modele
-//        findNavController().navigate(GroupDetailsFragmentDirections.actionShowAddFriendToGroupDialog(args.group.id)) //todo sprobowc to zrobic albo usunac z nav graph, albo zauktualizowac nazwy w nav graph
         AddGroupMemberDialog().show(childFragmentManager, "AddGroupMemberDialog")
     }
 
