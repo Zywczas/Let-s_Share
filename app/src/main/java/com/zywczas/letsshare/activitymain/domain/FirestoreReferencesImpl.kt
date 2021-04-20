@@ -7,7 +7,6 @@ import com.google.firebase.firestore.Query
 import javax.inject.Inject
 
 class FirestoreReferencesImpl @Inject constructor(private val firestore: FirebaseFirestore) : FirestoreReferences {
-//todo przeniesc pozniej wszystkie const tutaj
 
     override val dateCreatedField = "dateCreated"
     override val nameField = "name"

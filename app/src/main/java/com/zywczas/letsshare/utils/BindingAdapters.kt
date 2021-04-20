@@ -3,7 +3,6 @@ package com.zywczas.letsshare.utils
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.view.View
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter

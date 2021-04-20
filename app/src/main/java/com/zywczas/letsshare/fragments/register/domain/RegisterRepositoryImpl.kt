@@ -2,11 +2,10 @@ package com.zywczas.letsshare.fragments.register.domain
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
-import com.zywczas.letsshare.model.User
-import com.zywczas.letsshare.utils.dateInPoland
-import com.zywczas.letsshare.utils.logD
 import com.zywczas.letsshare.activitymain.domain.FirestoreReferences
 import com.zywczas.letsshare.activitymain.domain.SharedPrefsWrapper
+import com.zywczas.letsshare.model.User
+import com.zywczas.letsshare.utils.logD
 import javax.inject.Inject
 
 class RegisterRepositoryImpl @Inject constructor(

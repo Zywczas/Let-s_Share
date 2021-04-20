@@ -1,6 +1,9 @@
 package com.zywczas.letsshare.fragments.groupdetails.presentation
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
+import androidx.lifecycle.liveData
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.activitymain.presentation.BaseViewModel
 import com.zywczas.letsshare.di.modules.DispatchersModule.DispatchersIO
@@ -21,7 +24,7 @@ class GroupDetailsViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     private val _currentMonth = MutableLiveData<GroupMonthDomain>()
-    val currentMonth: LiveData<GroupMonthDomain> = _currentMonth
+    private val currentMonth: LiveData<GroupMonthDomain> = _currentMonth
 
     private val _isMembersProgressBarVisible = MutableLiveData<Boolean>()
     val isMembersProgressBarVisible: LiveData<Boolean> = _isMembersProgressBarVisible

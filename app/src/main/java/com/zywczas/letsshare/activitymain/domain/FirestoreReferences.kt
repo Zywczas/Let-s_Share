@@ -3,7 +3,6 @@ package com.zywczas.letsshare.activitymain.domain
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.Query
-import com.google.firebase.firestore.Transaction
 
 interface FirestoreReferences {
 

@@ -1,6 +1,8 @@
 package com.zywczas.letsshare.fragments.groupdetails.domain
 
-import com.zywczas.letsshare.model.*
+import com.zywczas.letsshare.model.ExpenseDomain
+import com.zywczas.letsshare.model.GroupMemberDomain
+import com.zywczas.letsshare.model.GroupMonthDomain
 import java.math.BigDecimal
 
 interface GroupDetailsRepository {
