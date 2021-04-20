@@ -52,7 +52,7 @@ class GroupDetailsViewModel @Inject constructor(
             val balance = whatShouldPay.minus(member.expenses)
             if (balance > BigDecimal.ZERO) { member.owesOrOver = R.string.owes}
             else { member.owesOrOver = R.string.over }
-            member.difference = balance.setScale(2).abs()
+            member.difference = balance.setScale(2, BigDecimal.ROUND_HALF_UP).abs()
         }
         return this
     }

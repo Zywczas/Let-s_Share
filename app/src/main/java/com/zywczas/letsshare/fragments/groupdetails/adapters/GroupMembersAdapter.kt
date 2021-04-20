@@ -34,9 +34,9 @@ class GroupMembersAdapter(private val currency: String) : ListAdapter<GroupMembe
         fun bindMember(member: GroupMemberDomain) {
             name.text = member.name
             expenses.text = String.format(Locale.UK, "%.2f %s", member.expenses, currency)
-            share.text = String.format(Locale.UK, "%.2f %s", member.share, "%")
+            share.text = String.format(Locale.UK, "%.2f%s", member.share, "%")
             owesOrOver.text = itemView.context.getString(member.owesOrOver)
-            difference.text = String.format(Locale.UK, "%.2f %s", member.difference, "%")
+            difference.text = String.format(Locale.UK, "%.2f", member.difference)
         }
 
     }

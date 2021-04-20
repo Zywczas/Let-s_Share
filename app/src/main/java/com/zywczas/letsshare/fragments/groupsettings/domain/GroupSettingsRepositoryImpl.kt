@@ -86,7 +86,7 @@ class GroupSettingsRepositoryImpl @Inject constructor(
             firestore.runBatch { batch ->
                 groupMembers.forEach { member ->
                     batch.update(
-                        firestoreRefs.groupMemberRefs(groupId, monthId, member.email),
+                        firestoreRefs.groupMemberRefs(groupId, monthId, member.id),
                         firestoreRefs.percentageShareField,
                         member.share
                     )
