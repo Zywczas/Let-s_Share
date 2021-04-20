@@ -10,7 +10,6 @@ import com.zywczas.letsshare.model.GroupMemberDomain
 import com.zywczas.letsshare.model.GroupMonthDomain
 import com.zywczas.letsshare.utils.monthId
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.math.BigDecimal
 import java.util.*
@@ -30,8 +29,7 @@ class GroupDetailsViewModel @Inject constructor(
     val expenses: LiveData<List<ExpenseDomain>> = Transformations.switchMap(currentMonth){ month ->
         liveData(dispatchersIO){
             showProgressBar(true)
-            repository.getExpenses(month.id)?.let { emit(it) }
-                ?: kotlin.run { postMessage(R.string.cant_get_expenses) }
+            repository.getExpenses(month.id)?.let { emit(it) } ?: postMessage(R.string.cant_get_expenses)
             showProgressBar(false)
         }
     }
@@ -40,7 +38,7 @@ class GroupDetailsViewModel @Inject constructor(
         liveData(dispatchersIO){
             _isMembersProgressBarVisible.postValue(true)
             repository.getMembers(month.id)?.let { emit(it.withBalance(month.totalExpenses)) }
-                ?: kotlin.run { postMessage(R.string.cant_get_month) }
+                ?: postMessage(R.string.cant_get_month)
             _isMembersProgressBarVisible.postValue(false)
         }
     }
@@ -62,43 +60,33 @@ class GroupDetailsViewModel @Inject constructor(
             repository.getLastMonth()?.let { month->
                 if ( month.id != Date().monthId()) { startNewMonth(month.id) }
                 else { _currentMonth.postValue(month) }
-            } ?: kotlin.run {
-                postMessage(R.string.cant_get_month)
-                showProgressBar(false)
-            }
+            } ?: postMessage(R.string.cant_get_month)
+            showProgressBar(false)
         }
     }
 
-    //1. stworz nowy miesiac,
-    //2. skopiowac czlonkow, ale bez wydatkow
-    //3. zaladowac wszystko od nowa
     private suspend fun startNewMonth(lastMonthId: String){
         withContext(dispatchersIO){
+            showProgressBar(true)
             repository.getMembers(lastMonthId)?.let { members ->
-                repository.createNewMonth(members)?.let { error->
-                    postMessage(error)
-                    showProgressBar(false)
-                } ?: kotlin.run { getMonthDetails() }
-            } ?: kotlin.run {
-                postMessage(R.string.cant_get_month)
-                showProgressBar(false)
-            }
+                repository.createNewMonth(members)?.let { error-> postMessage(error) }
+                    ?: getMonthDetails()
+            } ?: postMessage(R.string.cant_get_month)
+            showProgressBar(false)
         }
     }
 
-    //todo to sie zmienic na po prostu "addExpense" bo aktualny miesiac bedzie juz istniec, no chyba ze live data bedzie null, bo jakis blad
-    suspend fun addNewExpenseToThisMonth(groupId: String, name: String, amount: BigDecimal){
-//        withContext(dispatchersIO){
-//            showProgressBar(true)
-//            val roundedAmount = amount.setScale(2, BigDecimal.ROUND_HALF_UP)
-//            repository.updateThisMonthAndAddNewExpense(groupId, name, roundedAmount)?.let { error ->
-//                postMessage(error)
-//                showProgressBar(false)
-//            } ?: kotlin.run {
-//                getExpenses(groupId)
-//                getMembers(groupId)
-//            }
-//        }
+    suspend fun addExpense(name: String, amount: BigDecimal){
+        withContext(dispatchersIO){
+            currentMonth.value?.id?.let { monthId ->
+                showProgressBar(true)
+                val roundedAmount = amount.setScale(2, BigDecimal.ROUND_HALF_UP)
+                repository.addExpense(monthId, name, roundedAmount)?.let { error ->
+                    postMessage(error)
+                    showProgressBar(false)
+                } ?: getMonthDetails() //todo jak dam nasluchiwanie to to usunac
+            } ?: postMessage(R.string.cant_get_month)
+        }
     }
 
 }

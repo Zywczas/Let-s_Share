@@ -38,6 +38,6 @@ interface FirestoreReferences {
 
     fun collectionExpensesRefs(groupId: String, monthId: String): CollectionReference
 
-    fun newExpenseRefs(monthId: String, groupId: String): DocumentReference
+    fun newExpenseRefs(groupId: String, monthId: String): DocumentReference
 
 }

@@ -78,7 +78,7 @@ class FirestoreReferencesImpl @Inject constructor(private val firestore: Firebas
             .collection(collectionMonths).document(monthId)
             .collection(collectionExpenses)
 
-    override fun newExpenseRefs(monthId: String, groupId: String): DocumentReference =
+    override fun newExpenseRefs(groupId: String, monthId: String): DocumentReference =
         firestore.collection(collectionGroups).document(groupId)
             .collection(collectionMonths).document(monthId)
             .collection(collectionExpenses)

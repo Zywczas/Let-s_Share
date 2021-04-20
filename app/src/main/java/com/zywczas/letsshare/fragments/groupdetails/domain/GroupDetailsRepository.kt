@@ -13,6 +13,6 @@ interface GroupDetailsRepository {
 
     suspend fun createNewMonth(members: List<GroupMemberDomain>): Int?
 
-    suspend fun updateThisMonthAndAddNewExpense(groupId: String, name: String, amount: BigDecimal): Int?
+    suspend fun addExpense(monthId: String, name: String, amount: BigDecimal): Int?
 
 }

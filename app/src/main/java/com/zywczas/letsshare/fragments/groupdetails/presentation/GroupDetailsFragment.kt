@@ -140,10 +140,7 @@ class GroupDetailsFragment @Inject constructor(private val viewModelFactory: Uni
     }
 
     private fun showAddExpenseDialog(){
-        //todo tu jescze mozna sprobowac wstrzykiwac daggerem fabryke w konstruktor i
-        val dialog = AddExpenseDialog()
-        dialog.arguments = Bundle().apply { putString(GROUP_ID_KEY, args.group.id) }
-        dialog.show(childFragmentManager, "AddExpenseDialog")
+        AddExpenseDialog().show(childFragmentManager, "AddExpenseDialog")
     }
 
 }

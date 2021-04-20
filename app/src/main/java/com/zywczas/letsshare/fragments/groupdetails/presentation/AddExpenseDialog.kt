@@ -15,7 +15,6 @@ class AddExpenseDialog : DialogFragment() {
 
     private val viewModel: GroupDetailsViewModel by viewModels({ requireParentFragment() })
     private var binding: DialogAddExpenseBinding by autoRelease()
-    private val groupId by lazy { requireArguments().getString(GROUP_ID_KEY)!! } //todo zamienic pozniej na safe args, jak ogarne view model
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,11 +35,7 @@ class AddExpenseDialog : DialogFragment() {
             binding.name.text.toString().isBlank() -> binding.nameFrame.error = "Podaj nazwę" //todo dac stringi
             binding.amount.text.toString().isBlank() -> binding.amountFrame.error = "Wpisz kwotę"//todo dac stringi
             else -> lifecycleScope.launchWhenResumed {
-                viewModel.addNewExpenseToThisMonth(
-                    groupId,
-                    binding.name.text.toString(),
-                    binding.amount.text.toString().toBigDecimal()
-                )
+                viewModel.addExpense(binding.name.text.toString(), binding.amount.text.toString().toBigDecimal())
                 dismiss()
             }
         }
