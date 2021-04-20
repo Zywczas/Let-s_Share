@@ -117,7 +117,7 @@ class GroupDetailsRepositoryImpl @Inject constructor(
     override suspend fun addExpense(monthId: String, name: String, amount: BigDecimal): Int? =
         try {
             val monthRefs = firestoreRefs.groupMonthRefs(groupId, monthId)
-            val newExpenseRefs = firestoreRefs.newExpenseRefs(monthId, groupId)
+            val newExpenseRefs = firestoreRefs.newExpenseRefs(groupId, monthId)
             val newExpense = Expense(
                 id = newExpenseRefs.id,
                 name = name,

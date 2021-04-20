@@ -80,7 +80,28 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 tools:context=".fragments.groupdetails.presentation.GroupDetailsFragment">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/expensesRecycler"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:adapter="@{expensesAdapterXML}"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_anchor="@+id/constraintLayout"
+                    app:layout_anchorGravity="center"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:itemCount="2"
+                    tools:listitem="@layout/list_item_expenses" />
 
                 <ProgressBar
                     android:id="@+id/progressBar"
@@ -94,6 +115,7 @@
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.2"
                     tools:visibility="visible" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -108,17 +130,6 @@
                 app:layout_anchor="@+id/appbar"
                 app:layout_anchorGravity="top"
                 app:layout_collapseMode="pin" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/expensesRecycler"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:adapter="@{expensesAdapterXML}"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_anchor="@+id/constraintLayout"
-                app:layout_anchorGravity="center"
-                tools:itemCount="2"
-                tools:listitem="@layout/list_item_expenses" />
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
         <com.leinardi.android.speeddial.SpeedDialView
