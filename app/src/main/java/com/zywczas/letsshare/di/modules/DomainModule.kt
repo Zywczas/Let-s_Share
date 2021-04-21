@@ -17,6 +17,8 @@ import com.zywczas.letsshare.fragments.login.domain.LoginRepository
 import com.zywczas.letsshare.fragments.login.domain.LoginRepositoryImpl
 import com.zywczas.letsshare.fragments.register.domain.RegisterRepository
 import com.zywczas.letsshare.fragments.register.domain.RegisterRepositoryImpl
+import com.zywczas.letsshare.fragments.settings.domain.SettingsRepository
+import com.zywczas.letsshare.fragments.settings.domain.SettingsRepositoryImpl
 import dagger.Binds
 import dagger.Module
 
@@ -55,5 +57,8 @@ abstract class DomainModule {
 
     @Binds
     abstract fun bindHistoryRepository(repo: HistoryRepositoryImpl): HistoryRepository
+
+    @Binds
+    abstract fun bindSettingsRepository(repo: SettingsRepositoryImpl): SettingsRepository
 
 }

@@ -36,7 +36,6 @@
     <fragment
         android:id="@+id/welcomeFragment"
         android:name="com.zywczas.letsshare.fragments.welcome.presentation.WelcomeFragment"
-        android:label="@string/app_name"
         tools:layout="@layout/fragment_welcome">
         <action
             android:id="@+id/toLoginFragment"
@@ -65,7 +64,8 @@
     <fragment
         android:id="@+id/groupsFragment"
         android:name="com.zywczas.letsshare.fragments.groups.presentation.GroupsFragment"
-        tools:layout="@layout/fragment_groups" >
+        android:label="@string/groups"
+        tools:layout="@layout/fragment_groups">
         <action
             android:id="@+id/toGroupDetailsFragment"
             app:destination="@id/groupDetailsFragment"
@@ -84,15 +84,27 @@
         <action
             android:id="@+id/toGroupSettingsFragment"
             app:destination="@id/groupSettingsFragment" />
+        <action
+            android:id="@+id/toHistoryFragment"
+            app:destination="@id/historyFragment" />
     </fragment>
     <!--    todo labels powrzucac w stringi tam gdzie uzywane-->
     <fragment
         android:id="@+id/groupSettingsFragment"
         android:name="com.zywczas.letsshare.fragments.groupsettings.presentation.GroupSettingsFragment"
-        tools:layout="@layout/fragment_group_settings"
-        android:label="Group Settings" >
+        android:label="@string/group_settings"
+        tools:layout="@layout/fragment_group_settings">
         <argument
             android:name="monthId"
             app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/historyFragment"
+        android:name="com.zywczas.letsshare.fragments.history.presentation.HistoryFragment"
+        android:label="fragment_history"
+        tools:layout="@layout/fragment_history" >
+        <action
+            android:id="@+id/toGroupSettingsFragment"
+            app:destination="@id/groupSettingsFragment" />
     </fragment>
 </navigation>

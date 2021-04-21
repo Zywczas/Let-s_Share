@@ -9,6 +9,7 @@ import com.zywczas.letsshare.fragments.groupsettings.presentation.GroupSettingsV
 import com.zywczas.letsshare.fragments.history.presentation.HistoryViewModel
 import com.zywczas.letsshare.fragments.login.presentation.LoginViewModel
 import com.zywczas.letsshare.fragments.register.presentation.RegisterViewModel
+import com.zywczas.letsshare.fragments.settings.presentation.SettingsViewModel
 import com.zywczas.letsshare.fragments.welcome.presentation.WelcomeViewModel
 import dagger.Binds
 import dagger.Module
@@ -56,5 +57,10 @@ abstract class ViewModelFactoryModule {
     @IntoMap
     @ViewModelKey(HistoryViewModel::class)
     abstract fun bindHistoryViewModel(vm: HistoryViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SettingsViewModel::class)
+    abstract fun bindSettingsViewModel(vm: SettingsViewModel): ViewModel
 
 }

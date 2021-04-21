@@ -4,9 +4,9 @@
     <item
         android:id="@+id/friendsFragment"
         android:icon="@drawable/ic_friends"
-        android:title="Friends" />
+        android:title="@string/friends" />
     <item
         android:id="@+id/groupsFragment"
         android:icon="@drawable/ic_groups"
-        android:title="Groups" />
+        android:title="@string/groups" />
 </menu>
