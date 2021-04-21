@@ -7,8 +7,8 @@
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.zywczas.letsshare.fragments.login.presentation.LoginFragment"
-        android:label="fragment_login"
-        tools:layout="@layout/fragment_login" >
+        android:label="@string/login_title"
+        tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/toFriendsFragment"
             app:destination="@id/friendsFragment"
@@ -30,7 +30,7 @@
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.zywczas.letsshare.fragments.register.presentation.RegisterFragment"
-        android:label="fragment_register"
+        android:label="@string/registration"
         tools:layout="@layout/fragment_register" />
 
     <fragment
@@ -60,6 +60,7 @@
     <fragment
         android:id="@+id/friendsFragment"
         android:name="com.zywczas.letsshare.fragments.friends.presentation.FriendsFragment"
+        android:label="@string/friends"
         tools:layout="@layout/fragment_friends" />
     <fragment
         android:id="@+id/groupsFragment"
