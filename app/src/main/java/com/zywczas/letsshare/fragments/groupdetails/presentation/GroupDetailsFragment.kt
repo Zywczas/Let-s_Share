@@ -22,6 +22,7 @@ import com.zywczas.letsshare.fragments.groupdetails.adapters.GroupMembersAdapter
 import com.zywczas.letsshare.utils.autoRelease
 import com.zywczas.letsshare.utils.monthId
 import com.zywczas.letsshare.utils.showToast
+import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
@@ -51,19 +52,15 @@ class GroupDetailsFragment @Inject constructor(private val viewModelFactory: Uni
             membersAdapterXML = membersAdapter
             expensesAdapterXML = expensesAdapter
         }
-        setupToolbar()
+        binding.toolbar.setupWithNavController(findNavController())
         setupObservers()
         setupSpeedDialMenu()
         setupOnClickListeners()
     }
 
-    private fun setupToolbar(){
-        binding.toolbar.title = args.group.name
-        binding.toolbar.setupWithNavController(findNavController())
-    }
-
     private fun setupObservers(){
         viewModel.message.observe(viewLifecycleOwner){ showToast(it) }
+        viewModel.monthlySum.observe(viewLifecycleOwner){ binding.toolbar.title = "${args.group.name} - $it ${args.group.currency}" }
         viewModel.members.observe(viewLifecycleOwner){ membersAdapter.submitList(it.toMutableList()) }
         viewModel.expenses.observe(viewLifecycleOwner){ expensesAdapter.submitList(it.toMutableList()) }
     }

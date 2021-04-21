@@ -26,6 +26,12 @@ class GroupDetailsViewModel @Inject constructor(
     private val _currentMonth = MutableLiveData<GroupMonthDomain>()
     private val currentMonth: LiveData<GroupMonthDomain> = _currentMonth
 
+    val monthlySum: LiveData<String> = Transformations.switchMap(currentMonth){ month ->
+        liveData(dispatchersIO){
+            emit(month.totalExpenses.toString())
+        }
+    }
+
     private val _isMembersProgressBarVisible = MutableLiveData<Boolean>()
     val isMembersProgressBarVisible: LiveData<Boolean> = _isMembersProgressBarVisible
 
