@@ -5,106 +5,118 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/memberName"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/smallLstItem"
-        android:layout_marginTop="@dimen/smallLstItem"
-        android:layout_marginEnd="@dimen/smallLstItem"
-        android:textAlignment="textStart"
-        android:textColor="@color/listItemHeaderOnPrimary"
-        android:textSize="@dimen/headerListItem"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Piotr" />
-
-    <TextView
-        android:id="@+id/memberExpenses"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/minimumListItem"
-        android:textColor="@color/textOnPrimary"
-        android:layout_marginEnd="@dimen/smallLstItem"
-        app:layout_constraintBottom_toBottomOf="@+id/total"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/total"
-        app:layout_constraintTop_toTopOf="@+id/total"
-        tools:text="203.69 zł" />
-
-
-    <TextView
-        android:id="@+id/percentageShare"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/minimumListItem"
-        android:layout_marginEnd="@dimen/smallLstItem"
-        app:layout_constraintBottom_toBottomOf="@+id/split"
-        android:textColor="@color/textOnPrimary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/split"
-        app:layout_constraintTop_toTopOf="@+id/split"
-        tools:text="33.33%" />
-
-    <TextView
-        android:id="@+id/total"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/smallLstItem"
-        android:layout_marginTop="@dimen/smallLstItem"
-        android:text="@string/total_expense"
-        android:textColor="@color/textOnPrimary"
-        app:layout_constraintEnd_toStartOf="@+id/memberExpenses"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/memberName" />
-
-    <TextView
-        android:id="@+id/split"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/smallLstItem"
-        android:layout_marginTop="@dimen/smallLstItem"
-        android:text="@string/split"
-        android:textColor="@color/textOnPrimary"
-        app:layout_constraintEnd_toStartOf="@+id/percentageShare"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/total" />
-
-    <TextView
-        android:id="@+id/owesOrOver"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/smallLstItem"
-        android:layout_marginTop="@dimen/smallLstItem"
-        android:layout_marginBottom="@dimen/smallLstItem"
-        tools:text="@string/owes"
-        android:textColor="@color/textOnPrimary"
+        android:layout_marginEnd="5dp"
+        android:background="@drawable/stroke_background"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/difference"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/split" />
-
-    <TextView
-        android:id="@+id/difference"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/minimumListItem"
-        android:layout_marginEnd="@dimen/smallLstItem"
-        android:textColor="@color/textOnPrimary"
-        app:layout_constraintBottom_toBottomOf="@+id/owesOrOver"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/owesOrOver"
-        app:layout_constraintTop_toTopOf="@+id/owesOrOver"
-        tools:text="34.15 zł" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
+        <TextView
+            android:id="@+id/memberName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/smallLstItem"
+            android:layout_marginTop="@dimen/smallLstItem"
+            android:layout_marginEnd="@dimen/smallLstItem"
+            android:textAlignment="textStart"
+            android:textColor="@color/listItemHeaderOnPrimary"
+            android:textSize="@dimen/headerListItem"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Piotr" />
+
+        <TextView
+            android:id="@+id/memberExpenses"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/minimumListItem"
+            android:layout_marginEnd="@dimen/smallLstItem"
+            android:textColor="@color/textOnPrimary"
+            app:layout_constraintBottom_toBottomOf="@+id/total"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/total"
+            app:layout_constraintTop_toTopOf="@+id/total"
+            tools:text="203.69 zł" />
+
+
+        <TextView
+            android:id="@+id/percentageShare"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/minimumListItem"
+            android:layout_marginEnd="@dimen/smallLstItem"
+            android:textColor="@color/textOnPrimary"
+            app:layout_constraintBottom_toBottomOf="@+id/split"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/split"
+            app:layout_constraintTop_toTopOf="@+id/split"
+            tools:text="33.33%" />
+
+        <TextView
+            android:id="@+id/total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/smallLstItem"
+            android:layout_marginTop="@dimen/smallLstItem"
+            android:text="@string/total_expense"
+            android:textColor="@color/textOnPrimary"
+            app:layout_constraintEnd_toStartOf="@+id/memberExpenses"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/memberName" />
+
+        <TextView
+            android:id="@+id/split"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/smallLstItem"
+            android:layout_marginTop="@dimen/smallLstItem"
+            android:text="@string/split"
+            android:textColor="@color/textOnPrimary"
+            app:layout_constraintEnd_toStartOf="@+id/percentageShare"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/total" />
+
+        <TextView
+            android:id="@+id/owesOrOver"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/smallLstItem"
+            android:layout_marginTop="@dimen/smallLstItem"
+            android:layout_marginBottom="@dimen/smallLstItem"
+            android:textColor="@color/textOnPrimary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/difference"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/split"
+            tools:text="@string/owes" />
+
+        <TextView
+            android:id="@+id/difference"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/minimumListItem"
+            android:layout_marginEnd="@dimen/smallLstItem"
+            android:textColor="@color/textOnPrimary"
+            app:layout_constraintBottom_toBottomOf="@+id/owesOrOver"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/owesOrOver"
+            app:layout_constraintTop_toTopOf="@+id/owesOrOver"
+            tools:text="34.15 zł" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
