@@ -3,19 +3,23 @@ package com.zywczas.letsshare.fragments.friends.presentation
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.get
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.databinding.FragmentFriendsBinding
 import com.zywczas.letsshare.di.factories.UniversalViewModelFactory
 import com.zywczas.letsshare.fragments.friends.adapter.FriendsAdapter
 import com.zywczas.letsshare.utils.autoRelease
+import com.zywczas.letsshare.utils.logD
 import com.zywczas.letsshare.utils.showToast
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -65,11 +69,13 @@ class FriendsFragment @Inject constructor(private val viewModelFactory: Universa
         }
     }
 
+    //todo zrobic tak zeby back stacka nie bylo
+
     private fun setupBottomNavBar(){
-        binding.bottomNavBar.setupWithNavController(findNavController())
         binding.bottomNavBar.setOnNavigationItemReselectedListener {
             //do nothing, don't refresh the fragment
         }
+        binding.bottomNavBar.setupWithNavController(findNavController()) //todo sprawdzic czy to potrzebne zeby samo podswietlalo odpowiedni guzik przy odpowiednim fragmencie
     }
 
 }

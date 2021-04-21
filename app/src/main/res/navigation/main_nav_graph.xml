@@ -107,4 +107,9 @@
             android:id="@+id/toGroupSettingsFragment"
             app:destination="@id/groupSettingsFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.zywczas.letsshare.fragments.settings.presentation.SettingsFragment"
+        android:label="@string/settings"
+        tools:layout="@layout/fragment_settings" />
 </navigation>

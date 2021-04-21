@@ -50,5 +50,6 @@
     <string name="registration">Rejestracja</string>
     <string name="split">Udział:</string>
     <string name="total_expense">Łącznie:</string>
+    <string name="settings">Ustawienia</string>
 
 </resources>

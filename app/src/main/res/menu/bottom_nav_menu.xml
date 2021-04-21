@@ -9,4 +9,10 @@
         android:id="@+id/groupsFragment"
         android:icon="@drawable/ic_groups"
         android:title="@string/groups" />
+
+    <item
+        android:id="@+id/settingsFragment"
+        android:icon="@drawable/ic_settings_24"
+        android:title="@string/settings" />
+
 </menu>
