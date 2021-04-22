@@ -1,5 +1,6 @@
 package com.zywczas.letsshare.fragments.groups.domain
 
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObject
 import com.zywczas.letsshare.R
@@ -22,9 +23,20 @@ class GroupsRepositoryImpl @Inject constructor(
     private val crashlyticsWrapper: CrashlyticsWrapper
 ) : GroupsRepository {
 
-    override suspend fun addGroupIfUserIsInLessThan5Groups(name: String, currency: String): Int =
+    private val userId = sharedPrefs.userId
+
+    override suspend fun isUserIn5GroupsAlready(): Boolean? =
         try {
-            val userId = sharedPrefs.userId
+            firestoreRefs.userRefs(userId).get().await()
+                .toObject<User>()!!.groupsIds.size >= 5
+        } catch (e: Exception) {
+            crashlyticsWrapper.sendExceptionToFirebase(e)
+            logD(e)
+            null
+        }
+
+    override suspend fun addGroup(name: String, currency: String): Int =
+        try {
             val userEmail = sharedPrefs.userEmail
             val newGroupRef = firestoreRefs.newGroupRefs()
             val newGroup = Group(
@@ -41,16 +53,10 @@ class GroupsRepositoryImpl @Inject constructor(
             val userRef = firestoreRefs.userRefs(userId)
 
             firestore.runTransaction { transaction ->
-                val user = transaction.get(userRef).toObject<User>()!!
-                val newGroupsIds: List<String> = when {
-                    user.groupsIds.isEmpty() -> listOf(newGroup.id)
-                    user.groupsIds.size < 5 -> user.groupsIds.plus(newGroup.id)
-                    else -> return@runTransaction R.string.too_many_groups //todo sprawdzi czy to dobrze dziala, np dac ze moze byc tylko 2 grupy na chwile
-                }
                 transaction.set(newGroupRef, newGroup)
                 transaction.set(newMonthRefs, newMonth)
                 transaction.set(newGroupMemberRef, newMember)
-                transaction.update(userRef, firestoreRefs.groupsIdsField, newGroupsIds)
+                transaction.update(userRef, firestoreRefs.groupsIdsField, FieldValue.arrayUnion(newGroup.id))
             }.await()
             R.string.group_added
         } catch (e: Exception) {
@@ -61,7 +67,7 @@ class GroupsRepositoryImpl @Inject constructor(
 
     override suspend fun getGroups(): List<Group>? =
         try {
-            val user = firestoreRefs.userRefs(sharedPrefs.userId)
+            val user = firestoreRefs.userRefs(userId)
                 .get().await()
                 .toObject<User>()!!
             val groups = mutableListOf<Group>()

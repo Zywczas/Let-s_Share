@@ -40,8 +40,14 @@ class GroupsViewModel @Inject constructor(
                 name.isBlank() -> postMessage(R.string.no_group_name)
                 sessionManager.isNetworkAvailable().not() -> postMessage(R.string.connection_problem)
                 else -> {
-                    postMessage(repository.addGroupIfUserIsInLessThan5Groups(name, currency)) //todo jak dam pozniej nasluchiwanie bazy to bez wiadomosci
-                    getGroups() //todo jak dam pozniej nasluchiwanie bazy to nie bedzie tego
+                    when(repository.isUserIn5GroupsAlready()){
+                        null -> postMessage(R.string.something_wrong)
+                        true -> R.string.too_many_groups
+                        false -> {
+                            postMessage(repository.addGroup(name, currency)) //todo jak dam pozniej nasluchiwanie bazy to bez wiadomosci
+                            getGroups() //todo jak dam pozniej nasluchiwanie bazy to nie bedzie tego
+                        }
+                    }
                 }
             }
 //            showProgressBar(false) //todo jak dam pozniej nasluchiwanie bazy to moze to bedzie potrzebne
