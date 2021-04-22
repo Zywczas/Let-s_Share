@@ -52,5 +52,10 @@
     <string name="total_expense">Łącznie:</string>
     <string name="settings">Ustawienia</string>
     <string name="logout">Wyloguj</string>
+    <string name="login">Zaloguj</string>
+    <string name="register">Zarejestruj</string>
+    <string name="password">Hasło</string>
+    <string name="email">Email</string>
+    <string name="first_time_here">Pierwszy raz tutaj? Zarejestruj nowego użytkownika:</string>
 
 </resources>
