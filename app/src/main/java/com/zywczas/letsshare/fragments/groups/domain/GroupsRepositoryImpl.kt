@@ -22,7 +22,7 @@ class GroupsRepositoryImpl @Inject constructor(
     private val crashlyticsWrapper: CrashlyticsWrapper
 ) : GroupsRepository {
 
-    override suspend fun addGroupIfUserIsInLessThan10Groups(name: String, currency: String): Int =
+    override suspend fun addGroupIfUserIsInLessThan5Groups(name: String, currency: String): Int =
         try {
             val userId = sharedPrefs.userId
             val userEmail = sharedPrefs.userEmail
@@ -44,7 +44,7 @@ class GroupsRepositoryImpl @Inject constructor(
                 val user = transaction.get(userRef).toObject<User>()!!
                 val newGroupsIds: List<String> = when {
                     user.groupsIds.isEmpty() -> listOf(newGroup.id)
-                    user.groupsIds.size < 10 -> user.groupsIds.plus(newGroup.id)
+                    user.groupsIds.size < 5 -> user.groupsIds.plus(newGroup.id)
                     else -> return@runTransaction R.string.too_many_groups //todo sprawdzi czy to dobrze dziala, np dac ze moze byc tylko 2 grupy na chwile
                 }
                 transaction.set(newGroupRef, newGroup)
