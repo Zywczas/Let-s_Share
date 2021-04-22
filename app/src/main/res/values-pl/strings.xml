@@ -21,7 +21,7 @@
     <string name="cant_get_friends">Nie udało się pobrać listy znajomych.</string>
     <string name="cant_add_group">Nie udało się dodać grupy. Spróbuj ponownie.</string>
     <string name="group_added">Grupa dodana.</string>
-    <string name="too_many_groups">Jeden użytkownik może być maksymalnie w 10 grupach.</string>
+    <string name="too_many_groups">Jeden użytkownik może być maksymalnie w 5 grupach.</string>
     <string name="cant_get_groups">Nie udało się pobrać listy grup.</string>
     <string name="no_group_name">Podaj nazwę dla swojej grupy.</string>
     <string name="cant_get_group_members">Nie udało się pobrać listy członków grupy.</string>
