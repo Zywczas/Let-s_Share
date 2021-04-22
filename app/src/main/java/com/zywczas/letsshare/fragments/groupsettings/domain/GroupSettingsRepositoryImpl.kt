@@ -80,7 +80,7 @@ class GroupSettingsRepositoryImpl @Inject constructor(
 
     private fun Friend.toGroupMember() = GroupMember(id = id, name = name, email = email)
 
-    override suspend fun saveSplits(monthId: String, members: List<GroupMemberDomain>): Int =
+    override suspend fun saveSplits(monthId: String, members: List<GroupMemberDomain>): Int? =
         try {
             val groupMembers = members.map { it.toGroupMember() }
             firestore.runBatch { batch ->
@@ -92,7 +92,7 @@ class GroupSettingsRepositoryImpl @Inject constructor(
                     )
                 }
             }.await()
-            R.string.save_success
+            null
         } catch (e: Exception) {
             crashlyticsWrapper.sendExceptionToFirebase(e)
             logD(e)

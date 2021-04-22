@@ -20,12 +20,6 @@ android {
         versionName "0.06"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-//todo to bedzie dobre do wstrzykiwania api key facebooka do manifestu
-//        Properties properties = new Properties()
-//        if(rootProject.file("local.properties").exists()) {
-//            properties.load(rootProject.file("local.properties").newDataInputStream())
-//        }
-//        manifestPlaceholders = [ mapsApiKey : properties.getProperty("MAPS_API_KEY", "") ]
     }
 
     buildTypes {

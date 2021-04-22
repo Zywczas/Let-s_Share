@@ -111,7 +111,8 @@ class GroupSettingsViewModel @Inject constructor(
         withContext(dispatchersIO){
             if (totalPercentage.value.toString() == "100.00%") {
                 showProgressBar(true)
-                postMessage(repository.saveSplits(monthId, members.value!!))
+                repository.saveSplits(monthId, members.value!!)?.let { error -> postMessage(error) }
+                    ?: _isPercentageChanged.postValue(false)
                 showProgressBar(false)
             }
             else { postMessage(R.string.percentage_not_100) }

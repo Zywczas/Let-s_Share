@@ -34,7 +34,6 @@
     <string name="friend_in_too_many_groups">Your friend has reached max number of 5 groups.</string>
     <string name="something_wrong">Something went wrong. Try again.</string>
     <string name="percentage_not_100">Total percentage must be equal 100.00%.</string>
-    <string name="save_success">Changes are saved.</string>
 
     <!--    UI elements -->
     <string name="friends">Friends</string>
