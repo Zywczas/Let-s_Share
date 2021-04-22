@@ -9,9 +9,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.databinding.FragmentGroupsBinding
 import com.zywczas.letsshare.di.factories.UniversalViewModelFactory
+import com.zywczas.letsshare.fragments.friends.presentation.FriendsFragmentDirections
 import com.zywczas.letsshare.fragments.groups.adapter.GroupsAdapter
 import com.zywczas.letsshare.utils.autoRelease
 import com.zywczas.letsshare.utils.hideSoftKeyboard
@@ -64,9 +66,25 @@ class GroupsFragment @Inject constructor(private val viewModelFactory: Universal
     }
 
     private fun setupBottomNavBar(){
-        binding.bottomNavBar.setupWithNavController(findNavController())
-        binding.bottomNavBar.setOnNavigationItemReselectedListener {
-            //do nothing, don't refresh the fragment
+//        binding.bottomNavBar.setupWithNavController(findNavController())
+//        binding.bottomNavBar.setOnNavigationItemReselectedListener {
+//            //do nothing, don't refresh the fragment
+//        }
+        binding.bottomNavBar.selectedItemId = R.id.groupsFragment
+        binding.bottomNavBar.setOnNavigationItemSelectedListener(bottomNavClick)
+    }
+
+    private val bottomNavClick = BottomNavigationView.OnNavigationItemSelectedListener { item ->
+        when (item.itemId){
+            R.id.friendsFragment -> {
+                findNavController().navigate(GroupsFragmentDirections.toFriendsFragment())
+                true
+            }
+//            R.id.settingsFragment -> {
+//                findNavController().navigate(GroupsFragmentDirections.toSettingsFragment())
+//                true
+//            }
+            else -> false
         }
     }
 

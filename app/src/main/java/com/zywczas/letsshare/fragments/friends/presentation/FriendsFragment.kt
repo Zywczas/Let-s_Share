@@ -50,6 +50,7 @@ class FriendsFragment @Inject constructor(private val viewModelFactory: Universa
         setupObservers()
         setupOnClickListeners()
         setupBottomNavBar()
+        logD("frieeends")
     }
 
     private fun setupObservers(){
@@ -72,10 +73,27 @@ class FriendsFragment @Inject constructor(private val viewModelFactory: Universa
     //todo zrobic tak zeby back stacka nie bylo
 
     private fun setupBottomNavBar(){
-        binding.bottomNavBar.setOnNavigationItemReselectedListener {
-            //do nothing, don't refresh the fragment
+//        binding.bottomNavBar.setupWithNavController(findNavController()) //todo sprawdzic czy to potrzebne zeby samo podswietlalo odpowiedni guzik przy odpowiednim fragmencie
+//        binding.bottomNavBar.setOnNavigationItemReselectedListener {
+//            //do nothing, don't refresh the fragment
+//        }
+//        binding.bottomNavBar.
+        binding.bottomNavBar.selectedItemId = R.id.friendsFragment
+        binding.bottomNavBar.setOnNavigationItemSelectedListener(bottomNavClick)
+    }
+
+    private val bottomNavClick = BottomNavigationView.OnNavigationItemSelectedListener { item ->
+        when (item.itemId){
+            R.id.groupsFragment -> {
+                findNavController().navigate(FriendsFragmentDirections.toGroupsFragment())
+                true
+            }
+            R.id.settingsFragment -> {
+                findNavController().navigate(FriendsFragmentDirections.toSettingsFragment())
+                true
+            }
+            else -> false
         }
-        binding.bottomNavBar.setupWithNavController(findNavController()) //todo sprawdzic czy to potrzebne zeby samo podswietlalo odpowiedni guzik przy odpowiednim fragmencie
     }
 
 }
