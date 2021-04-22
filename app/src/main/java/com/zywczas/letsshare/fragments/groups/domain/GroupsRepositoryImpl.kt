@@ -28,7 +28,7 @@ class GroupsRepositoryImpl @Inject constructor(
     override suspend fun isUserIn5GroupsAlready(): Boolean? =
         try {
             firestoreRefs.userRefs(userId).get().await()
-                .toObject<User>()!!.groupsIds.size >= 5
+                .toObject<User>()!!.groupsIds.size > 4
         } catch (e: Exception) {
             crashlyticsWrapper.sendExceptionToFirebase(e)
             logD(e)
@@ -52,11 +52,11 @@ class GroupsRepositoryImpl @Inject constructor(
             val newMember = GroupMember(id = userId, name = sharedPrefs.userName, email = userEmail)
             val userRef = firestoreRefs.userRefs(userId)
 
-            firestore.runTransaction { transaction ->
-                transaction.set(newGroupRef, newGroup)
-                transaction.set(newMonthRefs, newMonth)
-                transaction.set(newGroupMemberRef, newMember)
-                transaction.update(userRef, firestoreRefs.groupsIdsField, FieldValue.arrayUnion(newGroup.id))
+            firestore.runBatch { batch ->
+                batch.set(newGroupRef, newGroup)
+                batch.set(newMonthRefs, newMonth)
+                batch.set(newGroupMemberRef, newMember)
+                batch.update(userRef, firestoreRefs.groupsIdsField, FieldValue.arrayUnion(newGroup.id))
             }.await()
             R.string.group_added
         } catch (e: Exception) {

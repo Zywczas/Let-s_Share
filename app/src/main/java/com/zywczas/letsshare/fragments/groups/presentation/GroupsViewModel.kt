@@ -42,7 +42,7 @@ class GroupsViewModel @Inject constructor(
                 else -> {
                     when(repository.isUserIn5GroupsAlready()){
                         null -> postMessage(R.string.something_wrong)
-                        true -> R.string.too_many_groups
+                        true -> postMessage(R.string.too_many_groups)
                         false -> {
                             postMessage(repository.addGroup(name, currency)) //todo jak dam pozniej nasluchiwanie bazy to bez wiadomosci
                             getGroups() //todo jak dam pozniej nasluchiwanie bazy to nie bedzie tego
@@ -50,7 +50,7 @@ class GroupsViewModel @Inject constructor(
                     }
                 }
             }
-//            showProgressBar(false) //todo jak dam pozniej nasluchiwanie bazy to moze to bedzie potrzebne
+            showProgressBar(false)
         }
     }
 

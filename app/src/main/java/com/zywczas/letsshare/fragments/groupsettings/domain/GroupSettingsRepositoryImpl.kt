@@ -47,7 +47,7 @@ class GroupSettingsRepositoryImpl @Inject constructor(
     override suspend fun isFriendIn5GroupsAlready(newMemberId: String): Boolean? =
         try {
             firestoreRefs.userRefs(newMemberId).get().await()
-                .toObject<User>()!!.groupsIds.size >= 5
+                .toObject<User>()!!.groupsIds.size > 4
         } catch (e: Exception) {
             crashlyticsWrapper.sendExceptionToFirebase(e)
             logD(e)
