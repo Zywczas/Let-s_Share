@@ -3,23 +3,20 @@ package com.zywczas.letsshare.fragments.friends.presentation
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.get
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.databinding.FragmentFriendsBinding
 import com.zywczas.letsshare.di.factories.UniversalViewModelFactory
 import com.zywczas.letsshare.fragments.friends.adapter.FriendsAdapter
 import com.zywczas.letsshare.utils.autoRelease
-import com.zywczas.letsshare.utils.logD
+import com.zywczas.letsshare.utils.hideSoftKeyboard
 import com.zywczas.letsshare.utils.showToast
 import com.zywczas.letsshare.utils.turnOffOnBackPressed
 import kotlinx.coroutines.launch
@@ -67,6 +64,7 @@ class FriendsFragment @Inject constructor(private val viewModelFactory: Universa
     private fun addFriendOnClickListener(){
         binding.addFriendLayout.isVisible = true
         binding.addFriendByEmail.setOnClickListener {
+            hideSoftKeyboard()
             lifecycleScope.launchWhenResumed { viewModel.addFriend(binding.friendEmail.text.toString()) }
         }
     }
