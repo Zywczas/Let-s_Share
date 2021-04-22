@@ -15,6 +15,7 @@ class SettingsFragment @Inject constructor() : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         turnOffOnBackPressed()
+        //todo sprawdzic czy jak ustaeie toolba z nav controller to bedzie pokazywac strzalke, nawet jesli back stack wyczyszczony
     }
 
 }

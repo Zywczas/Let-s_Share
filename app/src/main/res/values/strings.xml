@@ -51,5 +51,6 @@
     <string name="split">Split:</string>
     <string name="total_expense">Total:</string>
     <string name="settings">Settings</string>
+    <string name="logout">Logout</string>
 
 </resources>

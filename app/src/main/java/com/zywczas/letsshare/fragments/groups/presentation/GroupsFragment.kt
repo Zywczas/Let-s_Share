@@ -54,7 +54,6 @@ class GroupsFragment @Inject constructor(private val viewModelFactory: Universal
         binding.bottomNavBar.selectedItemId = R.id.groupsFragment
         setupObservers()
         setupOnClickListeners()
-        setupBottomNavBar()
     }
 
     private fun setupObservers(){
@@ -70,21 +69,16 @@ class GroupsFragment @Inject constructor(private val viewModelFactory: Universal
         binding.bottomNavBar.setOnNavigationItemSelectedListener(bottomNavClick)
     }
 
-    private fun setupBottomNavBar(){
-
-
-    }
-
     private val bottomNavClick = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId){
             R.id.friendsFragment -> {
                 findNavController().navigate(GroupsFragmentDirections.toFriendsFragment())
                 true
             }
-//            R.id.settingsFragment -> {
-//                findNavController().navigate(GroupsFragmentDirections.toSettingsFragment())
-//                true
-//            }
+            R.id.settingsFragment -> {
+                findNavController().navigate(GroupsFragmentDirections.toSettingsFragment())
+                true
+            }
             else -> false
         }
     }

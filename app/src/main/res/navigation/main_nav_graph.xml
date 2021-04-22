@@ -59,8 +59,7 @@
     <fragment
         android:id="@+id/friendsFragment"
         android:name="com.zywczas.letsshare.fragments.friends.presentation.FriendsFragment"
-        android:label="@string/friends"
-        tools:layout="@layout/fragment_friends" >
+        tools:layout="@layout/fragment_friends">
         <action
             android:id="@+id/toGroupsFragment"
             app:destination="@id/groupsFragment"
@@ -84,7 +83,6 @@
     <fragment
         android:id="@+id/groupsFragment"
         android:name="com.zywczas.letsshare.fragments.groups.presentation.GroupsFragment"
-        android:label="@string/groups"
         tools:layout="@layout/fragment_groups">
         <action
             android:id="@+id/toGroupDetailsFragment"
