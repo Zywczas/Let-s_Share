@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import java.text.SimpleDateFormat
@@ -27,6 +28,8 @@ fun Fragment.hideSoftKeyboard(){
         inputManager.hideSoftInputFromWindow(requireActivity().currentFocus?.windowToken, 0)
     }
 }
+
+fun Fragment.turnOffOnBackPressed() = requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner){}
 
 fun dateInPoland(): Date = Calendar.getInstance(LOCALE_POLAND).time
 

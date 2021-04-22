@@ -80,6 +80,7 @@
             app:popUpTo="@id/friendsFragment"
             app:popUpToInclusive="true" />
     </fragment>
+
     <fragment
         android:id="@+id/groupsFragment"
         android:name="com.zywczas.letsshare.fragments.groups.presentation.GroupsFragment"
@@ -101,11 +102,17 @@
             app:popExitAnim="@anim/slide_out_left"
             app:popUpTo="@id/groupsFragment"
             app:popUpToInclusive="true" />
-<!--        app:enterAnim="@anim/slide_in_right"-->
-<!--        app:exitAnim="@anim/slide_out_left"-->
-<!--        app:popEnterAnim="@anim/slide_in_left"-->
-<!--        app:popExitAnim="@anim/slide_out_right"-->
+        <action
+            android:id="@+id/toSettingsFragment"
+            app:destination="@id/settingsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/groupsFragment"
+            app:popUpToInclusive="true" />
     </fragment>
+
     <fragment
         android:id="@+id/groupDetailsFragment"
         android:name="com.zywczas.letsshare.fragments.groupdetails.presentation.GroupDetailsFragment"
@@ -143,5 +150,24 @@
         android:id="@+id/settingsFragment"
         android:name="com.zywczas.letsshare.fragments.settings.presentation.SettingsFragment"
         android:label="@string/settings"
-        tools:layout="@layout/fragment_settings" />
+        tools:layout="@layout/fragment_settings" >
+        <action
+            android:id="@+id/toFriendsFragment"
+            app:destination="@id/friendsFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:popUpTo="@id/settingsFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/toGroupsFragment"
+            app:destination="@id/groupsFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:popUpTo="@id/settingsFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

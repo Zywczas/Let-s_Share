@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -18,6 +19,7 @@ import com.zywczas.letsshare.fragments.groups.adapter.GroupsAdapter
 import com.zywczas.letsshare.utils.autoRelease
 import com.zywczas.letsshare.utils.hideSoftKeyboard
 import com.zywczas.letsshare.utils.showToast
+import com.zywczas.letsshare.utils.turnOffOnBackPressed
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -41,6 +43,7 @@ class GroupsFragment @Inject constructor(private val viewModelFactory: Universal
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        turnOffOnBackPressed()
         lifecycleScope.launch { viewModel.getGroups() }
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
@@ -48,6 +51,7 @@ class GroupsFragment @Inject constructor(private val viewModelFactory: Universal
             adapter = groupsAdapter
         }
         binding.toolbar.setTitle(R.string.groups)
+        binding.bottomNavBar.selectedItemId = R.id.groupsFragment
         setupObservers()
         setupOnClickListeners()
         setupBottomNavBar()
@@ -63,15 +67,12 @@ class GroupsFragment @Inject constructor(private val viewModelFactory: Universal
             hideSoftKeyboard()
             viewModel.addGroup(binding.groupName.text.toString(), "zł") //todo pozniej dac rozne waluty
         }}
+        binding.bottomNavBar.setOnNavigationItemSelectedListener(bottomNavClick)
     }
 
     private fun setupBottomNavBar(){
-//        binding.bottomNavBar.setupWithNavController(findNavController())
-//        binding.bottomNavBar.setOnNavigationItemReselectedListener {
-//            //do nothing, don't refresh the fragment
-//        }
-        binding.bottomNavBar.selectedItemId = R.id.groupsFragment
-        binding.bottomNavBar.setOnNavigationItemSelectedListener(bottomNavClick)
+
+
     }
 
     private val bottomNavClick = BottomNavigationView.OnNavigationItemSelectedListener { item ->

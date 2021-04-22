@@ -21,6 +21,7 @@ import com.zywczas.letsshare.fragments.friends.adapter.FriendsAdapter
 import com.zywczas.letsshare.utils.autoRelease
 import com.zywczas.letsshare.utils.logD
 import com.zywczas.letsshare.utils.showToast
+import com.zywczas.letsshare.utils.turnOffOnBackPressed
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -40,6 +41,7 @@ class FriendsFragment @Inject constructor(private val viewModelFactory: Universa
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        turnOffOnBackPressed()
         lifecycleScope.launch { viewModel.getFriends() }
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
@@ -47,10 +49,9 @@ class FriendsFragment @Inject constructor(private val viewModelFactory: Universa
             adapterXML = adapter
         }
         binding.toolbar.setTitle(R.string.friends)
+        binding.bottomNavBar.selectedItemId = R.id.friendsFragment
         setupObservers()
         setupOnClickListeners()
-        setupBottomNavBar()
-        logD("frieeends")
     }
 
     private fun setupObservers(){
@@ -61,6 +62,7 @@ class FriendsFragment @Inject constructor(private val viewModelFactory: Universa
     private fun setupOnClickListeners(){
         binding.logout.setOnClickListener { lifecycleScope.launchWhenResumed { viewModel.logout() } }
         binding.addFriendBtn.setOnClickListener { addFriendOnClickListener() }
+        binding.bottomNavBar.setOnNavigationItemSelectedListener(bottomNavClick)
     }
 
     private fun addFriendOnClickListener(){
@@ -68,18 +70,6 @@ class FriendsFragment @Inject constructor(private val viewModelFactory: Universa
         binding.addFriendByEmail.setOnClickListener {
             lifecycleScope.launchWhenResumed { viewModel.addFriend(binding.friendEmail.text.toString()) }
         }
-    }
-
-    //todo zrobic tak zeby back stacka nie bylo
-
-    private fun setupBottomNavBar(){
-//        binding.bottomNavBar.setupWithNavController(findNavController()) //todo sprawdzic czy to potrzebne zeby samo podswietlalo odpowiedni guzik przy odpowiednim fragmencie
-//        binding.bottomNavBar.setOnNavigationItemReselectedListener {
-//            //do nothing, don't refresh the fragment
-//        }
-//        binding.bottomNavBar.
-        binding.bottomNavBar.selectedItemId = R.id.friendsFragment
-        binding.bottomNavBar.setOnNavigationItemSelectedListener(bottomNavClick)
     }
 
     private val bottomNavClick = BottomNavigationView.OnNavigationItemSelectedListener { item ->
