@@ -48,6 +48,9 @@ class SessionManagerImpl @Inject constructor(
 
     override suspend fun delayCoroutine(millis: Long) = delay(millis)
 
-    override suspend fun logout() = firebaseAuth.signOut()
+    override suspend fun logout() {
+        firebaseAuth.signOut()
+        isLoggedIn = false
+    }
 
 }

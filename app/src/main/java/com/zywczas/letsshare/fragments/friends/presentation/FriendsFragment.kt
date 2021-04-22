@@ -60,7 +60,6 @@ class FriendsFragment @Inject constructor(private val viewModelFactory: Universa
     }
 
     private fun setupOnClickListeners(){
-        binding.logout.setOnClickListener { lifecycleScope.launchWhenResumed { viewModel.logout() } }
         binding.addFriendBtn.setOnClickListener { addFriendOnClickListener() }
         binding.bottomNavBar.setOnNavigationItemSelectedListener(bottomNavClick)
     }

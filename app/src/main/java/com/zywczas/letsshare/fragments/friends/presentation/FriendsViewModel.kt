@@ -28,14 +28,10 @@ class FriendsViewModel @Inject constructor(
                 repository.getFriends()?.let {
                     _friends.postValue(it)
                     repository.saveFriendsLocally(it)
-                } ?: kotlin.run { postMessage(R.string.cant_get_friends) }
+                } ?: postMessage(R.string.cant_get_friends)
                 showProgressBar(false)
             } else { postMessage(R.string.connection_problem) }
         }
-    }
-
-    suspend fun logout() {
-        withContext(dispatchersIO){ sessionManager.logout() }
     }
 
     suspend fun addFriend(email: String){
