@@ -24,7 +24,7 @@ class AddFriendDialog : DialogFragment(){
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState) //todo sprawdzic czy jak jest wlaczony to dziala guzik back
+        super.onViewCreated(view, savedInstanceState)
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             vm = viewModel
@@ -33,6 +33,7 @@ class AddFriendDialog : DialogFragment(){
     }
 
     private fun setupOnClickListeners(){
+        binding.cancel.setOnClickListener { dialog?.dismiss() }
         binding.confirm.setOnClickListener {
             lifecycleScope.launchWhenResumed { viewModel.addFriend(binding.email.text.toString()) }
             dialog?.dismiss()
