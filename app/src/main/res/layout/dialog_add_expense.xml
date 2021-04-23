@@ -19,7 +19,7 @@
             android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Nazwa"
+            android:hint="@string/expense_name"
             android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
     <!--todo po wcisnieciu entera na klawiaturze dac "save"-->
@@ -39,7 +39,7 @@
             android:id="@+id/amount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Kwota"
+            android:hint="@string/expense_value"
             android:inputType="numberDecimal" />
     </com.google.android.material.textfield.TextInputLayout>
 

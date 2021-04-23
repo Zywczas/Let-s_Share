@@ -22,4 +22,6 @@
     <color name="outlinedButtonText">@color/primaryVariant</color>
     <color name="check">@color/primary</color>
     <color name="cancel">@color/red500Dark</color>
+    <color name="snackBarBackground">@color/onPrimary</color>
+    <color name="snackBarText">@color/primaryVariant</color>
 </resources>

@@ -58,6 +58,8 @@
     <string name="first_time_here">First time here? Register new user:</string>
     <string name="add_friend">Add friend</string>
     <string name="last_3_months">Last 3 months</string>
+    <string name="expense_name">Name</string>
+    <string name="expense_value">Value</string>
 
 <!--    content description-->
     <string name="check">Check</string>

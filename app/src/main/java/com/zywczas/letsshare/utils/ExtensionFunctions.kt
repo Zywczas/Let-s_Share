@@ -23,15 +23,7 @@ fun Any.logD(msg: String?) = Log.d("LetsShareTag in ${this.javaClass.simpleName}
 
 fun Fragment.showSnackbar(@StringRes msg: Int) = showSnackbar(getString(msg))
 
-fun Fragment.showSnackbar(msg: String) {
-    val snackbar = Snackbar.make(requireView(), msg, Snackbar.LENGTH_LONG)
-        .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.onPrimary))
-    val view = snackbar.view
-    val textView = view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)
-    textView.textAlignment = View.TEXT_ALIGNMENT_CENTER
-    textView.setTextColor(ContextCompat.getColor(requireContext(), R.color.primaryVariant))
-    snackbar.show()
-}
+fun Fragment.showSnackbar(msg: String) = Snackbar.make(requireView(), msg, Snackbar.LENGTH_LONG).show()
 
 //fun Fragment.showToast(@StringRes msg: Int) = showToast(getString(msg))
 //

@@ -62,6 +62,7 @@
             android:layout_marginTop="50dp"
             android:layout_marginEnd="16dp"
             android:text="@string/first_time_here"
+            android:textAlignment="center"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"

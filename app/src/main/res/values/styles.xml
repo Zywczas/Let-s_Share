@@ -15,8 +15,8 @@
         <item name="drawerArrowStyle">@style/Widget.App.MyDrawerArrow</item>
         <item name="textInputStyle">@style/Widget.App.MyTextInputLayout</item>
         <item name="materialButtonOutlinedStyle">@style/Widget.App.MyOutLinedButton</item>
-<!--        <item name="bottomNavigationStyle">@style/MyBottomNavStyle</item> todo nie chce dzialac :(-->
-<!--        <item name="bottom">@style/MyBottomNavStyle</item>-->
+        <item name="snackbarStyle">@style/Widget.App.MySnackBar</item>
+        <item name="snackbarTextViewStyle">@style/Widget.App.MySnackBarTextView</item>
     </style>
 
     <style name="Widget.App.MyToolbar" parent="Widget.MaterialComponents.Toolbar">
@@ -36,12 +36,13 @@
         <item name="android:textColor">@color/outlinedButtonText</item>
     </style>
 
-<!--    <style name="MyBottomNavStyle" parent="Widget.Design.BottomNavigationView">-->
-<!--        <item name="color">@android:color/holo_red_light</item>-->
-<!--        <item name="colorControlNormal">@android:color/holo_blue_bright</item>-->
-<!--        <item name="colorAccent">@android:color/white</item>-->
-<!--        <item name="colorButtonNormal">@android:color/holo_orange_dark</item>-->
-<!--        <item name="colorControlHighlight">@android:color/black</item>-->
-<!--    </style>-->
+    <style name="Widget.App.MySnackBar" parent="Widget.MaterialComponents.Snackbar">
+        <item name="backgroundTint">@color/snackBarBackground</item>
+    </style>
+
+    <style name="Widget.App.MySnackBarTextView" parent="Widget.MaterialComponents.Snackbar.TextView">
+        <item name="android:textColor">@color/snackBarText</item>
+        <item name="android:textAlignment">center</item>
+    </style>
 
 </resources>
