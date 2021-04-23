@@ -8,11 +8,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.zywczas.letsshare.R
 import com.zywczas.letsshare.databinding.FragmentLoginBinding
 import com.zywczas.letsshare.di.factories.UniversalViewModelFactory
 import com.zywczas.letsshare.utils.autoRelease
 import com.zywczas.letsshare.utils.hideSoftKeyboard
-import com.zywczas.letsshare.utils.showToast
+import com.zywczas.letsshare.utils.showSnackbar
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -58,7 +59,7 @@ class LoginFragment @Inject constructor(private val viewModelFactory: UniversalV
     }
 
     private fun setupObservers(){
-        viewModel.message.observe(viewLifecycleOwner){ showToast(it) }
+        viewModel.message.observe(viewLifecycleOwner){ showSnackbar(it) }
         viewModel.lastUsedEmail.observe(viewLifecycleOwner){ binding.email.setText(it) }
         viewModel.isLoggedIn.observe(viewLifecycleOwner){
             if (it){ findNavController().navigate(LoginFragmentDirections.toFriendsFragment()) }

@@ -8,15 +8,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.zywczas.letsshare.R
-import com.zywczas.letsshare.databinding.FragmentFriendsBinding
 import com.zywczas.letsshare.databinding.FragmentSettingsBinding
 import com.zywczas.letsshare.di.factories.UniversalViewModelFactory
-import com.zywczas.letsshare.fragments.friends.presentation.FriendsFragmentDirections
 import com.zywczas.letsshare.utils.autoRelease
-import com.zywczas.letsshare.utils.showToast
+import com.zywczas.letsshare.utils.showSnackbar
 import com.zywczas.letsshare.utils.turnOffOnBackPressed
 import javax.inject.Inject
 
@@ -40,14 +37,13 @@ class SettingsFragment @Inject constructor(private val viewModelFactory: Univers
             lifecycleOwner = viewLifecycleOwner
             vm = viewModel
         }
-        binding.toolbar.setTitle(R.string.settings)
         binding.bottomNavBar.selectedItemId = R.id.settingsFragment
         setupObservers()
         setupOnClickListeners()
     }
 
     private fun setupObservers(){
-        viewModel.message.observe(viewLifecycleOwner){ showToast(it) }
+        viewModel.message.observe(viewLifecycleOwner){ showSnackbar(it) }
         viewModel.isLoggedOut.observe(viewLifecycleOwner){
             if (it) SettingsFragmentDirections.toWelcomeFragment()
         }

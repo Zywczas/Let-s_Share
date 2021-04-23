@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -20,8 +19,7 @@ import com.zywczas.letsshare.databinding.FragmentFriendsBinding
 import com.zywczas.letsshare.di.factories.UniversalViewModelFactory
 import com.zywczas.letsshare.fragments.friends.adapter.FriendsAdapter
 import com.zywczas.letsshare.utils.autoRelease
-import com.zywczas.letsshare.utils.hideSoftKeyboard
-import com.zywczas.letsshare.utils.showToast
+import com.zywczas.letsshare.utils.showSnackbar
 import com.zywczas.letsshare.utils.turnOffOnBackPressed
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -49,7 +47,6 @@ class FriendsFragment @Inject constructor(private val viewModelFactory: Universa
             vm = viewModel
             adapterXML = adapter
         }
-        binding.toolbar.setTitle(R.string.friends)
         binding.bottomNavBar.selectedItemId = R.id.friendsFragment
         setupObservers()
         setupSpeedDialMenu()
@@ -57,7 +54,7 @@ class FriendsFragment @Inject constructor(private val viewModelFactory: Universa
     }
 
     private fun setupObservers(){
-        viewModel.message.observe(viewLifecycleOwner){ showToast(it) }
+        viewModel.message.observe(viewLifecycleOwner){ showSnackbar(it) }
         viewModel.friends.observe(viewLifecycleOwner){ adapter.submitList(it.toMutableList()) }
     }
 

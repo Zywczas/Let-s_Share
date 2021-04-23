@@ -20,7 +20,7 @@ import com.zywczas.letsshare.databinding.FragmentGroupSettingsBinding
 import com.zywczas.letsshare.di.factories.UniversalViewModelFactory
 import com.zywczas.letsshare.fragments.groupsettings.adapters.GroupMembersSettingsAdapter
 import com.zywczas.letsshare.utils.autoRelease
-import com.zywczas.letsshare.utils.showToast
+import com.zywczas.letsshare.utils.showSnackbar
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -60,7 +60,7 @@ class GroupSettingsFragment @Inject constructor(private val viewModelFactory: Un
     }
 
     private fun setupObservers(){
-        viewModel.message.observe(viewLifecycleOwner){ showToast(it) }
+        viewModel.message.observe(viewLifecycleOwner){ showSnackbar(it) }
         viewModel.members.observe(viewLifecycleOwner){ membersAdapter.submitList(it.toMutableList()) }
         viewModel.totalPercentage.observe(viewLifecycleOwner){ binding.splitTotalValue.text = it }
         viewModel.isPercentageChanged.observe(viewLifecycleOwner){ binding.save.isVisible = it }

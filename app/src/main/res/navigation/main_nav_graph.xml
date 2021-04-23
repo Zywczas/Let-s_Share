@@ -120,12 +120,20 @@
             app:argType="com.zywczas.letsshare.model.Group" />
         <action
             android:id="@+id/toGroupSettingsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
             app:destination="@id/groupSettingsFragment" />
         <action
             android:id="@+id/toHistoryFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
             app:destination="@id/historyFragment" />
     </fragment>
-    <!--    todo labels powrzucac w stringi tam gdzie uzywane-->
+
     <fragment
         android:id="@+id/groupSettingsFragment"
         android:name="com.zywczas.letsshare.fragments.groupsettings.presentation.GroupSettingsFragment"
@@ -138,8 +146,8 @@
     <fragment
         android:id="@+id/historyFragment"
         android:name="com.zywczas.letsshare.fragments.history.presentation.HistoryFragment"
-        android:label="fragment_history"
-        tools:layout="@layout/fragment_history" >
+        android:label="@string/last_3_months"
+        tools:layout="@layout/fragment_history">
         <action
             android:id="@+id/toGroupSettingsFragment"
             app:destination="@id/groupSettingsFragment" />

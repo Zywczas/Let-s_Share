@@ -4,21 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.databinding.FragmentGroupsBinding
 import com.zywczas.letsshare.di.factories.UniversalViewModelFactory
-import com.zywczas.letsshare.fragments.friends.presentation.FriendsFragmentDirections
 import com.zywczas.letsshare.fragments.groups.adapter.GroupsAdapter
 import com.zywczas.letsshare.utils.autoRelease
 import com.zywczas.letsshare.utils.hideSoftKeyboard
-import com.zywczas.letsshare.utils.showToast
+import com.zywczas.letsshare.utils.showSnackbar
 import com.zywczas.letsshare.utils.turnOffOnBackPressed
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -50,14 +47,13 @@ class GroupsFragment @Inject constructor(private val viewModelFactory: Universal
             vm = viewModel
             adapter = groupsAdapter
         }
-        binding.toolbar.setTitle(R.string.groups)
         binding.bottomNavBar.selectedItemId = R.id.groupsFragment
         setupObservers()
         setupOnClickListeners()
     }
 
     private fun setupObservers(){
-        viewModel.message.observe(viewLifecycleOwner){ showToast(it)}
+        viewModel.message.observe(viewLifecycleOwner){ showSnackbar(it)}
         viewModel.groups.observe(viewLifecycleOwner){ groupsAdapter.submitList(it.toMutableList()) }
     }
 

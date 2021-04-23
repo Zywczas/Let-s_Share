@@ -57,6 +57,7 @@
     <string name="email">Email</string>
     <string name="first_time_here">Pierwszy raz tutaj? Zarejestruj nowego użytkownika:</string>
     <string name="add_friend">Dodaj znajomego</string>
+    <string name="last_3_months">Ostatnie 3 miesiace</string>
 
     <!--    content description-->
     <string name="check">Potwierdź</string>

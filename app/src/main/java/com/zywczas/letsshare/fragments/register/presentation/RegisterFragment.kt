@@ -7,12 +7,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.setupWithNavController
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.databinding.FragmentRegisterBinding
 import com.zywczas.letsshare.di.factories.UniversalViewModelFactory
 import com.zywczas.letsshare.utils.autoRelease
 import com.zywczas.letsshare.utils.hideSoftKeyboard
-import com.zywczas.letsshare.utils.showToast
+import com.zywczas.letsshare.utils.showSnackbar
 import javax.inject.Inject
 
 class RegisterFragment @Inject constructor(private val viewModelFactory: UniversalViewModelFactory) : Fragment(){
@@ -35,17 +37,18 @@ class RegisterFragment @Inject constructor(private val viewModelFactory: Univers
             lifecycleOwner = viewLifecycleOwner
             vm = viewModel
         }
+        binding.toolbar.setupWithNavController(findNavController())
         setupObservers()
         setupOnClickListeners()
     }
 
 //todo dodac hide/show password
     private fun setupObservers(){
-        viewModel.message.observe(viewLifecycleOwner){ showToast(it) }
+        viewModel.message.observe(viewLifecycleOwner){ showSnackbar(it) }
         viewModel.isRegisteredAndUserName.observe(viewLifecycleOwner) { isRegisteredAndName ->
             if (isRegisteredAndName.first){
                 val message = getString(R.string.user_registered, isRegisteredAndName.second)
-                showToast(message) //todo tu powinien byc alert dialog informujacy o wyslaniu maila i sprawdzic czy moze byc dialog i jednoczesnie zmienic fragment
+                showSnackbar(message) //todo tu powinien byc alert dialog informujacy o wyslaniu maila i sprawdzic czy moze byc dialog i jednoczesnie zmienic fragment
                 goBackToLoginFragment()
             }
         }
