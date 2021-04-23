@@ -1,12 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="editTextWidth">230dp</dimen>
-    <dimen name="editTextWidthDialog">150dp</dimen>
-    <dimen name="smallMarginDialog">8dp</dimen>
-    <dimen name="mediumMarginDialog">16dp</dimen>
+    <dimen name="fabBottomMargin">55dp</dimen>
+
+<!--    recycler view items-->
     <dimen name="minimumListItem">2dp</dimen>
     <dimen name="smallLstItem">6dp</dimen>
     <dimen name="mediumListItem">8dp</dimen>
     <dimen name="largeListItem">16dp</dimen>
+
+<!--    text sizes-->
     <dimen name="headerListItem">20sp</dimen>
+
+<!--    dialog-->
+    <dimen name="editTextSmallWidthDialog">150dp</dimen>
+    <dimen name="editTextLargeWidthDialog">230dp</dimen>
+    <dimen name="smallMarginDialog">8dp</dimen>
+    <dimen name="mediumMarginDialog">16dp</dimen>
+    <dimen name="smallButtonDialog">40dp</dimen>
 </resources>

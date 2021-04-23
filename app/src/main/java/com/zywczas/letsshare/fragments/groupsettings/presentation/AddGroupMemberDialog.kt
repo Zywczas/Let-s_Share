@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.zywczas.letsshare.databinding.DialogAddFriendToGroupBinding
+import com.zywczas.letsshare.databinding.DialogAddGroupMemberBinding
 import com.zywczas.letsshare.fragments.friends.adapter.FriendsAdapter
 import com.zywczas.letsshare.utils.autoRelease
 import kotlinx.coroutines.launch
@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 class AddGroupMemberDialog : DialogFragment() {
 
     private val viewModel: GroupSettingsViewModel by viewModels({ requireParentFragment() })
-    private var binding: DialogAddFriendToGroupBinding by autoRelease()
+    private var binding: DialogAddGroupMemberBinding by autoRelease()
 
     private val adapter by lazy { FriendsAdapter{ friend ->
         lifecycleScope.launchWhenResumed {
@@ -28,7 +28,7 @@ class AddGroupMemberDialog : DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DialogAddFriendToGroupBinding.inflate(inflater, container, false)
+        binding = DialogAddGroupMemberBinding.inflate(inflater, container, false)
         return binding.root
     }
 

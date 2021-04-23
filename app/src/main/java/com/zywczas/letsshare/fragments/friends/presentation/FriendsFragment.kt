@@ -1,16 +1,20 @@
 
 package com.zywczas.letsshare.fragments.friends.presentation
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.leinardi.android.speeddial.SpeedDialActionItem
+import com.leinardi.android.speeddial.SpeedDialView
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.databinding.FragmentFriendsBinding
 import com.zywczas.letsshare.di.factories.UniversalViewModelFactory
@@ -48,6 +52,7 @@ class FriendsFragment @Inject constructor(private val viewModelFactory: Universa
         binding.toolbar.setTitle(R.string.friends)
         binding.bottomNavBar.selectedItemId = R.id.friendsFragment
         setupObservers()
+        setupSpeedDialMenu()
         setupOnClickListeners()
     }
 
@@ -56,17 +61,22 @@ class FriendsFragment @Inject constructor(private val viewModelFactory: Universa
         viewModel.friends.observe(viewLifecycleOwner){ adapter.submitList(it.toMutableList()) }
     }
 
-    private fun setupOnClickListeners(){
-        binding.addFriendBtn.setOnClickListener { addFriendOnClickListener() }
-        binding.bottomNavBar.setOnNavigationItemSelectedListener(bottomNavClick)
+    private fun setupSpeedDialMenu(){
+        binding.speedDial.addActionItem(
+            SpeedDialActionItem.Builder(R.id.addFriend, R.drawable.ic_add_friend)
+                .setFabBackgroundColor(ContextCompat.getColor(requireContext(), R.color.firstFABItem))
+                .setFabImageTintColor(Color.WHITE)
+                .setLabel(getString(R.string.add_friend))
+                .setLabelClickable(true)
+                .setLabelBackgroundColor(Color.WHITE)
+                .create()
+        )
     }
 
-    private fun addFriendOnClickListener(){
-        binding.addFriendLayout.isVisible = true
-        binding.addFriendByEmail.setOnClickListener {
-            hideSoftKeyboard()
-            lifecycleScope.launchWhenResumed { viewModel.addFriend(binding.friendEmail.text.toString()) }
-        }
+    private fun setupOnClickListeners(){
+        binding.bottomNavBar.setOnNavigationItemSelectedListener(bottomNavClick)
+        setupSpeedDialMainBtnClick()
+        setupSpeedDialMenuClick()
     }
 
     private val bottomNavClick = BottomNavigationView.OnNavigationItemSelectedListener { item ->
@@ -81,6 +91,45 @@ class FriendsFragment @Inject constructor(private val viewModelFactory: Universa
             }
             else -> false
         }
+    }
+
+    private fun setupSpeedDialMainBtnClick(){
+        binding.speedDial.setOnChangeListener(object : SpeedDialView.OnChangeListener{
+            override fun onMainActionSelected(): Boolean {
+                return false
+            }
+            override fun onToggleChanged(isOpen: Boolean) {
+                dimOrRestoreBackground(isOpen)
+            }
+        })
+    }
+
+    private fun dimOrRestoreBackground(isDialOpen : Boolean){
+        val window = requireActivity().window
+        if (isDialOpen){
+            window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.primaryVariantAlpha03)
+            binding.mainLayout.alpha = 0.3F
+        } else {
+            window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.primaryVariant)
+            binding.mainLayout.alpha = 1F
+        }
+    }
+
+    private fun setupSpeedDialMenuClick(){
+        binding.speedDial.setOnActionSelectedListener { item ->
+            when(item.id){
+                R.id.addFriend -> {
+                    binding.speedDial.close()
+                    showAddFriendDialog()
+                    true
+                }
+                else -> false
+            }
+        }
+    }
+
+    private fun showAddFriendDialog(){
+        AddFriendDialog().show(childFragmentManager,"AddFriendDialog")
     }
 
 }

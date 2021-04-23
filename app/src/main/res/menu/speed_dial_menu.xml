@@ -13,4 +13,8 @@
         android:id="@+id/addMember"
         android:title="@string/add_new_member" />
 
+    <item
+        android:id="@+id/addFriend"
+        android:title="@string/add_friend" />
+
 </menu>

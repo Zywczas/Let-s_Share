@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.zywczas.letsshare.fragments.friends.presentation.FriendsViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/emailFrame"
+            android:layout_width="@dimen/editTextLargeWidthDialog"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/smallMarginDialog"
+            android:layout_marginTop="@dimen/smallMarginDialog"
+            android:layout_marginEnd="@dimen/smallMarginDialog"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/email"
+                android:inputType="textEmailAddress" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <ImageView
+            android:id="@+id/confirm"
+            android:layout_width="@dimen/smallButtonDialog"
+            android:layout_height="@dimen/smallButtonDialog"
+            android:layout_marginEnd="@dimen/smallMarginDialog"
+            android:layout_marginBottom="@dimen/smallMarginDialog"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/ic_check_24"
+            app:tint="@color/check"
+            android:contentDescription="@string/check" />
+
+        <ImageView
+            android:id="@+id/cancel"
+            android:layout_width="@dimen/smallButtonDialog"
+            android:layout_height="@dimen/smallButtonDialog"
+            android:layout_marginStart="@dimen/smallMarginDialog"
+            android:layout_marginTop="@dimen/mediumMarginDialog"
+            android:layout_marginBottom="@dimen/smallMarginDialog"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/emailFrame"
+            app:srcCompat="@drawable/ic_x_35_white"
+            app:tint="@color/cancel"
+            android:contentDescription="@string/cancel" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

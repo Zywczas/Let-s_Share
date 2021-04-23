@@ -56,5 +56,9 @@
     <string name="password">Hasło</string>
     <string name="email">Email</string>
     <string name="first_time_here">Pierwszy raz tutaj? Zarejestruj nowego użytkownika:</string>
+    <string name="add_friend">Dodaj znajomego</string>
 
+    <!--    content description-->
+    <string name="check">Potwierdź</string>
+    <string name="cancel">Anuluj</string>
 </resources>

@@ -21,4 +21,6 @@
     <color name="blueGrey500">#546E7A</color>
     <color name="blueGrey300">#90A4AE</color>
     <color name="lime600Dark">#8C9900</color>
+    <color name="red500Dark">#ba000d</color>
+    <color name="myRed">#D30606</color>
 </resources>
