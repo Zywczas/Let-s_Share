@@ -20,6 +20,7 @@ import java.util.*
 
 class GroupMembersSettingsAdapter(
     private val lifecycle: Lifecycle,
+    private val textDebounce: Long,
     private val onSplitChangeAction: (String, BigDecimal) -> Unit
 ) : ListAdapter<GroupMemberDomain, GroupMembersSettingsAdapter.ViewHolder>(object : DiffUtil.ItemCallback<GroupMemberDomain>() {
 
@@ -32,8 +33,7 @@ class GroupMembersSettingsAdapter(
 }) {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), LifecycleObserver {
-//todo sprawdzic co sie stanie jak bede miec 10 czlonkow i niektorzy beda wystawac za ekran i wtedy zamkne fragment, czy nie bedzie crasha, jak lifecycle sprobuje wywolac onDestroy na elemencie ktory jest destroyed
-        //moze dac usuwanie obserwatora w onDetachedFromRecyclerView
+
         init {
             lifecycle.addObserver(this)
         }
@@ -42,7 +42,7 @@ class GroupMembersSettingsAdapter(
         private val split: TextInputEditText = itemView.findViewById(R.id.split)
 
         private var newSplitJob: Job? = null
-        private val coroutineScope = CoroutineScope(Dispatchers.Main) //todo sprawdzic czy tu ma byc main czy IO i dac pozniej w konstruktorze jak
+        private val coroutineScope = CoroutineScope(Dispatchers.Main)
 
         @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
         fun onDestroy() {
@@ -55,7 +55,7 @@ class GroupMembersSettingsAdapter(
             split.doOnTextChanged { text, _, _, _ ->
                 newSplitJob?.cancel()
                 newSplitJob = coroutineScope.launch {
-                    delay(500L) //todo dac to pozniej w konstruktorze
+                    delay(textDebounce)
                     text?.let {
                         var splitText = it.toString()
                         if (splitText.isEmpty()) { splitText = "0.00" }
