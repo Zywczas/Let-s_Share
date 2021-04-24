@@ -47,8 +47,8 @@ class FriendsViewModel @Inject constructor(
             showProgressBar(true)
             when {
                 sessionManager.isNetworkAvailable().not() -> postMessage(R.string.connection_problem)
-                friends.value == null -> postMessage(R.string.cant_get_friends)
                 repository.userEmail() == email -> postMessage(R.string.its_your_email)
+                friends.value == null -> postMessage(R.string.cant_get_friends)
                 isFriendAlreadyAdded(email) -> postMessage(R.string.you_have_this_friend)
                 else -> repository.addFriend(email)?.let { error -> postMessage(error) }
             }
@@ -56,7 +56,6 @@ class FriendsViewModel @Inject constructor(
         }
     }
 
-    private fun isFriendAlreadyAdded(email: String): Boolean =
-        friends.value?.any { it.email == email } == true
+    private fun isFriendAlreadyAdded(email: String): Boolean = friends.value!!.any { it.email == email }
 
 }
