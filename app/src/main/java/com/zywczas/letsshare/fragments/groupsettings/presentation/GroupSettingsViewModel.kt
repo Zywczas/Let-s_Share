@@ -19,10 +19,6 @@ class GroupSettingsViewModel @Inject constructor(
     private val repository: GroupSettingsRepository
 ) : BaseViewModel() {
 
-    init {
-        logD("init") //todo usunac jak zaczne wstrzykiwac view model w dialogi
-    }
-
     private val _members = MutableLiveData<List<GroupMemberDomain>>()
     val members: LiveData<List<GroupMemberDomain>> = _members
 
