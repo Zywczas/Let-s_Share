@@ -143,6 +143,7 @@ class GroupDetailsRepositoryImpl @Inject constructor(
             R.string.cant_get_month
         }
 
+
     private fun GroupMemberDomain.toGroupMember() = GroupMember(
         id = id,
         name = name,

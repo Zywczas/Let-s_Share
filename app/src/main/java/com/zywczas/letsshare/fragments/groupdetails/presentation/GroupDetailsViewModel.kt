@@ -70,14 +70,14 @@ class GroupDetailsViewModel @Inject constructor(
     suspend fun getMonthDetails(){
         withContext(dispatchersIO){
             showProgressBar(true)
-            repository.getLastMonth()?.let { month->
-                val isNewCalendarMonthStarted = month.id != Date().monthId()
-                if (isNewCalendarMonthStarted) {
-                    startNewMonth(month.id)
+            repository.getLastMonth()?.let { lastMonth->
+                val hasNewCalendarMonthStarted = lastMonth.id != Date().monthId()
+                if (hasNewCalendarMonthStarted) {
+                    startNewMonth(lastMonth.id)
                 } else {
-                    _currentMonth.postValue(month)
-                    listenToMonth(month.id)
+                    _currentMonth.postValue(lastMonth)
                 }
+                listenToMonth(Date().monthId())
             } ?: postMonthError()
             showProgressBar(false)
         }
@@ -87,8 +87,7 @@ class GroupDetailsViewModel @Inject constructor(
         withContext(dispatchersIO){
             showProgressBar(true)
             repository.getMembers(lastMonthId)?.let { members ->
-                repository.createNewMonth(members)?.let { error-> postMessage(error) }
-                    ?: listenToMonth(Date().monthId())
+                repository.createNewMonth(members)?.let { error -> postMessage(error) }
             } ?: postMonthError()
             showProgressBar(false)
         }
