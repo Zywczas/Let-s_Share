@@ -1,6 +1,8 @@
 package com.zywczas.letsshare.fragments.groupdetails.domain
 
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.firestore.ktx.toObjects
@@ -13,6 +15,11 @@ import com.zywczas.letsshare.utils.dateInPoland
 import com.zywczas.letsshare.utils.dayFormat
 import com.zywczas.letsshare.utils.logD
 import com.zywczas.letsshare.utils.monthId
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.channels.SendChannel
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
 import java.math.BigDecimal
 import java.util.*
@@ -44,6 +51,35 @@ class GroupDetailsRepositoryImpl @Inject constructor(
         totalExpenses = totalExpenses.toBigDecimal(),
         isSettledUp = isSettledUp
     )
+
+    @ExperimentalCoroutinesApi
+    override suspend fun listenToMonth(monthId: String): Flow<GroupMonthDomain?> = callbackFlow {
+        val listener = firestoreRefs.groupMonthRefs(groupId, monthId)
+            .addSnapshotListener { snapshot, error ->
+                if (error != null) {
+                    channel.closeFlowAndThrow(error)
+                }
+                if (snapshot != null && snapshot.exists()){
+                    offer(getMonthDomain(snapshot))
+                }
+            }
+        awaitClose { listener.remove() }
+    }
+
+    private fun <E> SendChannel<E>.closeFlowAndThrow(e: Exception){
+        crashlyticsWrapper.sendExceptionToFirebase(e)
+        logD(e)
+        close(e)
+    }
+
+    private fun getMonthDomain(snapshot: DocumentSnapshot): GroupMonthDomain? =
+        try {
+            snapshot.toObject<GroupMonth>()!!.toDomain()
+        } catch (e: Exception){
+            crashlyticsWrapper.sendExceptionToFirebase(e)
+            logD(e)
+            null
+        }
 
     override suspend fun getMembers(monthId: String): List<GroupMemberDomain>? =
         try {
@@ -131,9 +167,14 @@ class GroupDetailsRepositoryImpl @Inject constructor(
             firestore.runTransaction { transaction ->
                 val month = transaction.get(monthRefs).toObject<GroupMonth>()!!
                 val member = transaction.get(memberRef).toObject<GroupMember>()!!
-                val increasedMonthlyExpenses = (month.totalExpenses.toBigDecimal() + amount).toString()
+                val increasedMonthlyExpenses =
+                    (month.totalExpenses.toBigDecimal() + amount).toString()
                 val increasedMemberExpenses = (member.expenses.toBigDecimal() + amount).toString()
-                transaction.update(monthRefs, firestoreRefs.totalExpensesField, increasedMonthlyExpenses)
+                transaction.update(
+                    monthRefs,
+                    firestoreRefs.totalExpensesField,
+                    increasedMonthlyExpenses
+                )
                 transaction.set(newExpenseRefs, newExpense)
                 transaction.update(memberRef, firestoreRefs.expensesField, increasedMemberExpenses)
             }.await()

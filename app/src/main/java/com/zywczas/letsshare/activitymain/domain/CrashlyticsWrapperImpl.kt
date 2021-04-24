@@ -8,7 +8,7 @@ class CrashlyticsWrapperImpl @Inject constructor(
     private val sharedPrefs: SharedPrefsWrapper
 ) : CrashlyticsWrapper {
 
-    override suspend fun sendExceptionToFirebase(e: Exception, key: Pair<String, String>?, log: String?){
+    override fun sendExceptionToFirebase(e: Exception, key: Pair<String, String>?, log: String?){
         crashlytics.setUserId(sharedPrefs.userEmail)
         key?.let { crashlytics.setCustomKey(it.first, it.second) }
         log?.let { crashlytics.log(it) }

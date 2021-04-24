@@ -13,6 +13,9 @@ import com.zywczas.letsshare.model.GroupMemberDomain
 import com.zywczas.letsshare.model.GroupMonthDomain
 import com.zywczas.letsshare.utils.monthId
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withContext
 import java.math.BigDecimal
 import java.util.*
@@ -67,7 +70,9 @@ class GroupDetailsViewModel @Inject constructor(
         withContext(dispatchersIO){
             showProgressBar(true)
             repository.getLastMonth()?.let { month->
-                if ( month.id != Date().monthId()) { startNewMonth(month.id) }
+                if ( month.id != Date().monthId()) {
+                    startNewMonth(month.id)
+                }
                 else { _currentMonth.postValue(month) }
             } ?: postMessage(R.string.cant_get_month)
             showProgressBar(false)
@@ -82,6 +87,17 @@ class GroupDetailsViewModel @Inject constructor(
                     ?: getMonthDetails()
             } ?: postMessage(R.string.cant_get_month)
             showProgressBar(false)
+        }
+    }
+
+    private suspend fun listenToMonth(monthId: String){
+        withContext(dispatchersIO){
+            repository.listenToMonth(monthId)
+                .buffer(Channel.CONFLATED)
+                .catch { postMessage(R.string.cant_get_month) }
+                .collect { month ->
+                    month?.let { _currentMonth.postValue(it) } ?: postMessage(R.string.cant_get_month)
+                }
         }
     }
 
