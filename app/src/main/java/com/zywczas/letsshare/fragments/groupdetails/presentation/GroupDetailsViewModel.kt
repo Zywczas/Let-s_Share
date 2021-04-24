@@ -14,7 +14,6 @@ import com.zywczas.letsshare.model.GroupMonthDomain
 import com.zywczas.letsshare.utils.monthId
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withContext
 import java.math.BigDecimal
@@ -50,7 +49,7 @@ class GroupDetailsViewModel @Inject constructor(
         liveData(dispatchersIO){
             _isMembersProgressBarVisible.postValue(true)
             repository.getMembers(month.id)?.let { emit(it.withBalance(month.totalExpenses)) }
-                ?: postMessage(R.string.cant_get_month)
+                ?: postMonthError()
             _isMembersProgressBarVisible.postValue(false)
         }
     }
@@ -66,15 +65,20 @@ class GroupDetailsViewModel @Inject constructor(
         return this
     }
 
+    private fun postMonthError() = postMessage(R.string.cant_get_month)
+
     suspend fun getMonthDetails(){
         withContext(dispatchersIO){
             showProgressBar(true)
             repository.getLastMonth()?.let { month->
-                if ( month.id != Date().monthId()) {
+                val isNewCalendarMonthStarted = month.id != Date().monthId()
+                if (isNewCalendarMonthStarted) {
                     startNewMonth(month.id)
+                } else {
+                    _currentMonth.postValue(month)
+                    listenToMonth(month.id)
                 }
-                else { _currentMonth.postValue(month) }
-            } ?: postMessage(R.string.cant_get_month)
+            } ?: postMonthError()
             showProgressBar(false)
         }
     }
@@ -84,8 +88,8 @@ class GroupDetailsViewModel @Inject constructor(
             showProgressBar(true)
             repository.getMembers(lastMonthId)?.let { members ->
                 repository.createNewMonth(members)?.let { error-> postMessage(error) }
-                    ?: getMonthDetails()
-            } ?: postMessage(R.string.cant_get_month)
+                    ?: listenToMonth(Date().monthId())
+            } ?: postMonthError()
             showProgressBar(false)
         }
     }
@@ -94,9 +98,9 @@ class GroupDetailsViewModel @Inject constructor(
         withContext(dispatchersIO){
             repository.listenToMonth(monthId)
                 .buffer(Channel.CONFLATED)
-                .catch { postMessage(R.string.cant_get_month) }
+                .catch { postMonthError() }
                 .collect { month ->
-                    month?.let { _currentMonth.postValue(it) } ?: postMessage(R.string.cant_get_month)
+                    month?.let { _currentMonth.postValue(it) } ?: postMonthError()
                 }
         }
     }
@@ -109,8 +113,8 @@ class GroupDetailsViewModel @Inject constructor(
                 repository.addExpense(monthId, name, roundedAmount)?.let { error ->
                     postMessage(error)
                     showProgressBar(false)
-                } ?: getMonthDetails() //todo jak dam nasluchiwanie to to usunac
-            } ?: postMessage(R.string.cant_get_month)
+                }
+            }
         }
     }
 
