@@ -8,7 +8,12 @@ import com.zywczas.letsshare.activitymain.presentation.BaseViewModel
 import com.zywczas.letsshare.di.modules.DispatchersModule.DispatchersIO
 import com.zywczas.letsshare.fragments.friends.domain.FriendsRepository
 import com.zywczas.letsshare.model.Friend
+import com.zywczas.letsshare.utils.logD
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.buffer
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -24,12 +29,15 @@ class FriendsViewModel @Inject constructor(
     suspend fun getFriends() {
         withContext(dispatchersIO){
             if (sessionManager.isNetworkAvailable()){
-                showProgressBar(true)
-                repository.getFriends()?.let {
-                    _friends.postValue(it)
-                    repository.saveFriendsLocally(it)
-                } ?: postMessage(R.string.cant_get_friends)
-                showProgressBar(false)
+                repository.getFriends()
+                    .buffer(Channel.CONFLATED)
+                    .catch { postMessage(R.string.cant_get_friends) }
+                    .collect { friends ->
+                        friends?.let {
+                            _friends.postValue(it)
+                            repository.saveFriendsLocally(it)
+                        } ?: postMessage(R.string.cant_get_friends)
+                    }
             } else { postMessage(R.string.connection_problem) }
         }
     }
@@ -39,10 +47,10 @@ class FriendsViewModel @Inject constructor(
             showProgressBar(true)
             when {
                 sessionManager.isNetworkAvailable().not() -> postMessage(R.string.connection_problem)
+                friends.value == null -> postMessage(R.string.cant_get_friends)
                 repository.userEmail() == email -> postMessage(R.string.its_your_email)
                 isFriendAlreadyAdded(email) -> postMessage(R.string.you_have_this_friend)
                 else -> repository.addFriend(email)?.let { error -> postMessage(error) }
-                    ?: getFriends() //todo jak bede nasluchiwac bazy to to bede mogl usunac
             }
             showProgressBar(false)
         }

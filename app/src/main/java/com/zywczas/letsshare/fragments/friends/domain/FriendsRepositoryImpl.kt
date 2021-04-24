@@ -3,6 +3,7 @@ package com.zywczas.letsshare.fragments.friends.domain
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.toObjects
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.activitymain.domain.CrashlyticsWrapper
@@ -12,6 +13,11 @@ import com.zywczas.letsshare.model.Friend
 import com.zywczas.letsshare.model.User
 import com.zywczas.letsshare.model.db.FriendsDao
 import com.zywczas.letsshare.utils.logD
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.channels.SendChannel
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
@@ -26,12 +32,30 @@ class FriendsRepositoryImpl @Inject constructor(
 
     private val userId = sharedPrefs.userId
 
-    override suspend fun getFriends(): List<Friend>? =
+    @ExperimentalCoroutinesApi
+    override suspend fun getFriends(): Flow<List<Friend>?> = callbackFlow {
+        val listener = firestoreRefs.collectionFriends(userId)
+            .orderBy(firestoreRefs.nameField, Query.Direction.ASCENDING)
+            .addSnapshotListener { snapshot, error ->
+                if (error != null) {
+                    channel.closeFlowAndThrow(error)
+                }
+                if (snapshot != null) {
+                    offer(getFriendsList(snapshot))
+                }
+            }
+        awaitClose { listener.remove() }
+    }
+
+    private fun <E> SendChannel<E>.closeFlowAndThrow(e: Exception){
+        crashlyticsWrapper.sendExceptionToFirebase(e)
+        logD(e)
+        close(e)
+    }
+
+    private fun getFriendsList(snapshot: QuerySnapshot): List<Friend>? =
         try {
-            firestoreRefs.collectionFriends(userId)
-                .orderBy(firestoreRefs.nameField, Query.Direction.ASCENDING)
-                .get().await()
-                .toObjects()        //todo dac nasluchiwanie zmian dla treningu
+            snapshot.toObjects()
         } catch (e: Exception) {
             crashlyticsWrapper.sendExceptionToFirebase(e)
             logD(e)
