@@ -1,96 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools" >
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="vm"
             type="com.zywczas.letsshare.fragments.groups.presentation.GroupsViewModel" />
+
         <variable
             name="adapter"
             type="com.zywczas.letsshare.fragments.groups.adapter.GroupsAdapter" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/mainLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
-            android:minHeight="?attr/actionBarSize"
-            android:theme="?attr/actionBarTheme"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:title="@string/groups" />
+            android:layout_height="match_parent">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:adapter="@{adapter}"
-            app:layout_constraintBottom_toTopOf="@+id/bottomNavBar"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar">
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/colorPrimary"
+                android:minHeight="?attr/actionBarSize"
+                android:theme="?attr/actionBarTheme"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:title="@string/groups" />
 
-        </androidx.recyclerview.widget.RecyclerView>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:adapter="@{adapter}"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toTopOf="@+id/bottomNavBar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
-        <EditText
-            android:id="@+id/groupName"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginBottom="24dp"
-            android:ems="10"
-            android:hint="stworz grupe"
-            android:inputType="textEmailAddress"
-            app:layout_constraintBottom_toTopOf="@+id/addGroup"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent" />
+            </androidx.recyclerview.widget.RecyclerView>
 
-        <Button
-            android:id="@+id/addGroup"
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/bottomNavBar"
+                style="@style/Widget.MaterialComponents.BottomNavigationView.Colored"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:menu="@menu/bottom_nav_menu" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                app:isVisible="@{vm.isProgressBarVisible()}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="visible" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.leinardi.android.speeddial.SpeedDialView
+            android:id="@+id/speedDial"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="24dp"
-            android:layout_marginBottom="24dp"
-            android:text="Dodaj grupe"
-            app:layout_constraintBottom_toBottomOf="@+id/recycler"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottomNavBar"
-            style="@style/Widget.MaterialComponents.BottomNavigationView.Colored"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:menu="@menu/bottom_nav_menu" />
-
-        <ProgressBar
-            android:id="@+id/progressBar"
-            style="?android:attr/progressBarStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:isVisible="@{vm.isProgressBarVisible()}"
-            tools:visibility="visible" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_gravity="bottom|end"
+            android:layout_marginBottom="@dimen/fabBottomMargin"
+            android:scaleType="centerCrop"
+            android:theme="@style/Theme.LetsShare"
+            app:fabSize="normal"
+            app:sdMainFabAnimationRotateAngle="360"
+            app:sdMainFabClosedSrc="@drawable/ic_plus_35_white"
+            app:sdMainFabOpenedSrc="@drawable/ic_x_35_white"
+            app:sdUseReverseAnimationOnClose="true" />
+    </FrameLayout>
 </layout>

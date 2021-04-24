@@ -60,6 +60,8 @@
     <string name="last_3_months">Ostatnie 3 miesiace</string>
     <string name="expense_name">Nazwa</string>
     <string name="expense_value">Kwota</string>
+    <string name="group_name">Nazwa</string>
+    <string name="add_group">Dodaj grupę</string>
 
     <!--    content description-->
     <string name="check">Potwierdź</string>

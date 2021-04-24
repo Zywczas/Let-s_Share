@@ -43,16 +43,30 @@
             android:inputType="numberDecimal" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <TextView
-        android:id="@+id/ok"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/mediumMarginDialog"
+    <ImageView
+        android:id="@+id/confirm"
+        android:layout_width="@dimen/smallButtonDialog"
+        android:layout_height="@dimen/smallButtonDialog"
         android:layout_marginEnd="@dimen/smallMarginDialog"
         android:layout_marginBottom="@dimen/smallMarginDialog"
-        android:text="ok"
-        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/amountFrame" />
+        app:srcCompat="@drawable/ic_check_24"
+        app:tint="@color/check"
+        android:contentDescription="@string/check" />
+
+    <ImageView
+        android:id="@+id/cancel"
+        android:layout_width="@dimen/smallButtonDialog"
+        android:layout_height="@dimen/smallButtonDialog"
+        android:layout_marginStart="@dimen/smallMarginDialog"
+        android:layout_marginTop="@dimen/mediumMarginDialog"
+        android:layout_marginBottom="@dimen/smallMarginDialog"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/amountFrame"
+        app:srcCompat="@drawable/ic_x_35_white"
+        app:tint="@color/cancel"
+        android:contentDescription="@string/cancel" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

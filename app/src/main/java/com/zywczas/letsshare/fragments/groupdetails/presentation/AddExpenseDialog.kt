@@ -27,10 +27,11 @@ class AddExpenseDialog : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.ok.setOnClickListener { verifyValuesAndAddExpense() }
+        binding.cancel.setOnClickListener { dialog?.dismiss() }
+        binding.confirm.setOnClickListener { addExpense() }
     }
 
-    private fun verifyValuesAndAddExpense() {
+    private fun addExpense() {
         when {
             binding.name.text.toString().isBlank() -> binding.nameFrame.error =  getString(R.string.provide_name)
             binding.amount.text.toString().isBlank() -> binding.amountFrame.error = getString(R.string.provide_value)

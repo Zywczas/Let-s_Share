@@ -17,4 +17,8 @@
         android:id="@+id/addFriend"
         android:title="@string/add_friend" />
 
+    <item
+        android:id="@+id/addGroup"
+        android:title="@string/add_group" />
+
 </menu>

@@ -25,10 +25,6 @@ class AddFriendDialog : DialogFragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.apply {
-            lifecycleOwner = viewLifecycleOwner
-            vm = viewModel
-        }
         setupOnClickListeners()
     }
 

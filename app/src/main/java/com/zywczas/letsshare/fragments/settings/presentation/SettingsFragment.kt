@@ -45,7 +45,7 @@ class SettingsFragment @Inject constructor(private val viewModelFactory: Univers
     private fun setupObservers(){
         viewModel.message.observe(viewLifecycleOwner){ showSnackbar(it) }
         viewModel.isLoggedOut.observe(viewLifecycleOwner){
-            if (it) SettingsFragmentDirections.toWelcomeFragment()
+            if (it) findNavController().navigate(SettingsFragmentDirections.toWelcomeFragment())
         }
     }
 
