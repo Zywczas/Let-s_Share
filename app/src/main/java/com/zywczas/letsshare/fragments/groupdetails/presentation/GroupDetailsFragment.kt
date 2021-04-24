@@ -61,7 +61,11 @@ class GroupDetailsFragment @Inject constructor(private val viewModelFactory: Uni
         viewModel.message.observe(viewLifecycleOwner){ showSnackbar(it) }
         viewModel.monthlySum.observe(viewLifecycleOwner){ binding.toolbar.title = "${args.group.name} - $it ${args.group.currency}" }
         viewModel.members.observe(viewLifecycleOwner){ membersAdapter.submitList(it.toMutableList()) }
-        viewModel.expenses.observe(viewLifecycleOwner){ expensesAdapter.submitList(it.toMutableList()) }
+        viewModel.expenses.observe(viewLifecycleOwner){
+            expensesAdapter.submitList(it.toMutableList()){
+                binding.expensesRecycler.smoothScrollToPosition(0)
+            }
+        }
     }
 
     private fun setupSpeedDialMenu(){

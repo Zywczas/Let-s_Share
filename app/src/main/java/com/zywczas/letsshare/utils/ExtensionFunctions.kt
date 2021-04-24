@@ -25,10 +25,6 @@ fun Fragment.showSnackbar(@StringRes msg: Int) = showSnackbar(getString(msg))
 
 fun Fragment.showSnackbar(msg: String) = Snackbar.make(requireView(), msg, Snackbar.LENGTH_LONG).show()
 
-//fun Fragment.showToast(@StringRes msg: Int) = showToast(getString(msg))
-//
-//fun Fragment.showToast(msg: String) = Toast.makeText(requireContext(), msg, Toast.LENGTH_LONG).show()
-
 fun Fragment.hideSoftKeyboard(){
     val inputManager = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     if (inputManager.isAcceptingText) {
