@@ -27,7 +27,7 @@ class AddExpenseDialog : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.cancel.setOnClickListener { dialog?.dismiss() }
+        binding.cancel.setOnClickListener { dismiss() }
         binding.confirm.setOnClickListener { addExpense() }
     }
 

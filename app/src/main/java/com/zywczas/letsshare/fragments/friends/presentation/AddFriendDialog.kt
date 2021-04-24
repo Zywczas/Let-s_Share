@@ -29,10 +29,10 @@ class AddFriendDialog : DialogFragment(){
     }
 
     private fun setupOnClickListeners(){
-        binding.cancel.setOnClickListener { dialog?.dismiss() }
+        binding.cancel.setOnClickListener { dismiss() }
         binding.confirm.setOnClickListener {
             lifecycleScope.launchWhenResumed { viewModel.addFriend(binding.email.text.toString()) }
-            dialog?.dismiss()
+            dismiss()
         }
     }
 

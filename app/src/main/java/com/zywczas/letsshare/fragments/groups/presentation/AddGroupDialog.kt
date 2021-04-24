@@ -26,12 +26,13 @@ class AddGroupDialog : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.cancel.setOnClickListener { dialog?.dismiss() }
+        binding.cancel.setOnClickListener { dismiss() }
         binding.confirm.setOnClickListener { addGroup() }
     }
 
     private fun addGroup(){ //todo pozniej dac rozne waluty
         lifecycleScope.launchWhenResumed { viewModel.addGroup(binding.name.text.toString(), "zł") }
+        dismiss()
     }
 
 }
