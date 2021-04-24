@@ -41,7 +41,7 @@ class FriendsFragment @Inject constructor(private val viewModelFactory: Universa
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         turnOffOnBackPressed()
-        lifecycleScope.launch { viewModel.getFriends() }
+        viewModel.getFriends()
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             vm = viewModel

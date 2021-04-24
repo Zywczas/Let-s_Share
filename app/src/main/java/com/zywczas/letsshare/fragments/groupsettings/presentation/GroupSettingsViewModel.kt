@@ -9,6 +9,7 @@ import com.zywczas.letsshare.model.Friend
 import com.zywczas.letsshare.model.GroupMemberDomain
 import com.zywczas.letsshare.utils.logD
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.math.BigDecimal
 import java.util.*
@@ -52,8 +53,8 @@ class GroupSettingsViewModel @Inject constructor(
         withContext(dispatchersIO){ _friends.postValue(repository.getFriends().toMutableList()) }
     }
 
-    suspend fun addNewMember(friend: Friend){
-        withContext(dispatchersIO){
+    fun addNewMember(friend: Friend){
+        viewModelScope.launch(dispatchersIO){
             showProgressBar(true)
             when(isFriendInTheGroupAlready(friend.id)){
                 null -> postMessage(R.string.something_wrong)

@@ -2,6 +2,7 @@ package com.zywczas.letsshare.fragments.friends.presentation
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.SessionManager
 import com.zywczas.letsshare.activitymain.presentation.BaseViewModel
@@ -14,6 +15,7 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.buffer
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -26,8 +28,8 @@ class FriendsViewModel @Inject constructor(
     private val _friends = MutableLiveData<List<Friend>>()
     val friends: LiveData<List<Friend>> = _friends
 
-    suspend fun getFriends() {
-        withContext(dispatchersIO){
+    fun getFriends() {
+        viewModelScope.launch(dispatchersIO){
             if (sessionManager.isNetworkAvailable()){
                 repository.getFriends()
                     .buffer(Channel.CONFLATED)
@@ -42,8 +44,8 @@ class FriendsViewModel @Inject constructor(
         }
     }
 
-    suspend fun addFriend(email: String){
-        withContext(dispatchersIO) {
+    fun addFriend(email: String){
+        viewModelScope.launch(dispatchersIO) {
             showProgressBar(true)
             when {
                 sessionManager.isNetworkAvailable().not() -> postMessage(R.string.connection_problem)

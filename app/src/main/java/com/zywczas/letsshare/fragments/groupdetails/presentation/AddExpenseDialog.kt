@@ -35,7 +35,7 @@ class AddExpenseDialog : DialogFragment() {
         when {
             binding.name.text.toString().isBlank() -> binding.nameFrame.error =  getString(R.string.provide_name)
             binding.amount.text.toString().isBlank() -> binding.amountFrame.error = getString(R.string.provide_value)
-            else -> lifecycleScope.launchWhenResumed {
+            else -> {
                 viewModel.addExpense(binding.name.text.toString(), binding.amount.text.toString().toBigDecimal())
                 dismiss()
             }

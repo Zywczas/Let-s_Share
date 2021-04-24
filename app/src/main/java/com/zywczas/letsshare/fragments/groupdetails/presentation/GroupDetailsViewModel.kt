@@ -1,9 +1,6 @@
 package com.zywczas.letsshare.fragments.groupdetails.presentation
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.liveData
+import androidx.lifecycle.*
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.activitymain.presentation.BaseViewModel
 import com.zywczas.letsshare.di.modules.DispatchersModule.DispatchersIO
@@ -15,6 +12,7 @@ import com.zywczas.letsshare.utils.monthId
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.math.BigDecimal
 import java.util.*
@@ -104,8 +102,8 @@ class GroupDetailsViewModel @Inject constructor(
         }
     }
 
-    suspend fun addExpense(name: String, amount: BigDecimal){
-        withContext(dispatchersIO){
+    fun addExpense(name: String, amount: BigDecimal){
+        viewModelScope.launch(dispatchersIO){
             currentMonth.value?.id?.let { monthId ->
                 showProgressBar(true)
                 val roundedAmount = amount.setScale(2, BigDecimal.ROUND_HALF_UP)

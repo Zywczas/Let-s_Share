@@ -18,10 +18,9 @@ class AddGroupMemberDialog : DialogFragment() {
     private var binding: DialogAddGroupMemberBinding by autoRelease()
 
     private val adapter by lazy { FriendsAdapter{ friend ->
-        lifecycleScope.launchWhenResumed {
             viewModel.addNewMember(friend)
             dismiss()
-        }}}
+        }}
 
     override fun onCreateView(
         inflater: LayoutInflater,

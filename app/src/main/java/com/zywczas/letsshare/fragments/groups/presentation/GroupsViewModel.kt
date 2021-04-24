@@ -2,6 +2,7 @@ package com.zywczas.letsshare.fragments.groups.presentation
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.SessionManager
 import com.zywczas.letsshare.activitymain.presentation.BaseViewModel
@@ -9,6 +10,7 @@ import com.zywczas.letsshare.di.modules.DispatchersModule.DispatchersIO
 import com.zywczas.letsshare.fragments.groups.domain.GroupsRepository
 import com.zywczas.letsshare.model.Group
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -33,8 +35,8 @@ class GroupsViewModel @Inject constructor(
         }
     }
 
-    suspend fun addGroup(name: String, currency: String) {
-        withContext(dispatchersIO) {
+    fun addGroup(name: String, currency: String) {
+        viewModelScope.launch(dispatchersIO) {
             showProgressBar(true)
             when {
                 name.isBlank() -> postMessage(R.string.no_group_name)
