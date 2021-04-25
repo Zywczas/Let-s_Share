@@ -11,7 +11,13 @@ import com.zywczas.letsshare.model.Group
 import com.zywczas.letsshare.model.GroupMember
 import com.zywczas.letsshare.model.GroupMonth
 import com.zywczas.letsshare.model.User
-import com.zywczas.letsshare.utils.*
+import com.zywczas.letsshare.utils.logD
+import com.zywczas.letsshare.utils.monthId
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.channels.SendChannel
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
 import java.util.*
 import javax.inject.Inject
@@ -35,7 +41,7 @@ class GroupsRepositoryImpl @Inject constructor(
             null
         }
 
-    override suspend fun addGroup(name: String, currency: String): Int =
+    override suspend fun addGroup(name: String, currency: String): Int? =
         try {
             val userEmail = sharedPrefs.userEmail
             val newGroupRef = firestoreRefs.newGroupRefs()
@@ -58,20 +64,37 @@ class GroupsRepositoryImpl @Inject constructor(
                 batch.set(newGroupMemberRef, newMember)
                 batch.update(userRef, firestoreRefs.groupsIdsField, FieldValue.arrayUnion(newGroup.id))
             }.await()
-            R.string.group_added
+            null
         } catch (e: Exception) {
             crashlyticsWrapper.sendExceptionToFirebase(e)
             logD(e)
             R.string.cant_add_group
         }
 
-    override suspend fun getGroups(): List<Group>? =
+    @ExperimentalCoroutinesApi
+    override suspend fun getUser(): Flow<User> = callbackFlow {
+        val listener = firestoreRefs.userRefs(userId)
+            .addSnapshotListener { snapshot, error ->
+            if (error != null) {
+                channel.closeFlowAndThrow(error)
+            }
+            if (snapshot != null && snapshot.exists()) {
+                offer(snapshot.toObject()!!)
+            }
+        }
+        awaitClose { listener.remove() }
+    }
+
+    private fun <E> SendChannel<E>.closeFlowAndThrow(e: Exception){
+        crashlyticsWrapper.sendExceptionToFirebase(e)
+        logD(e)
+        close(e)
+    }
+
+    override suspend fun getGroups(groupsIds: List<String>): List<Group>? =
         try {
-            val user = firestoreRefs.userRefs(userId)
-                .get().await()
-                .toObject<User>()!!
             val groups = mutableListOf<Group>()
-            user.groupsIds.forEach { id ->
+            groupsIds.forEach { id ->
                 val group = firestoreRefs.groupRefs(id)
                     .get().await()
                     .toObject<Group>()!!

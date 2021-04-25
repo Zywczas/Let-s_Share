@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.leinardi.android.speeddial.SpeedDialActionItem
@@ -18,10 +17,8 @@ import com.zywczas.letsshare.databinding.FragmentGroupsBinding
 import com.zywczas.letsshare.di.factories.UniversalViewModelFactory
 import com.zywczas.letsshare.fragments.groups.adapter.GroupsAdapter
 import com.zywczas.letsshare.utils.autoRelease
-import com.zywczas.letsshare.utils.hideSoftKeyboard
 import com.zywczas.letsshare.utils.showSnackbar
 import com.zywczas.letsshare.utils.turnOffOnBackPressed
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class GroupsFragment @Inject constructor(private val viewModelFactory: UniversalViewModelFactory) : Fragment() {
@@ -29,10 +26,9 @@ class GroupsFragment @Inject constructor(private val viewModelFactory: Universal
     private val viewModel: GroupsViewModel by viewModels { viewModelFactory }
     private var binding: FragmentGroupsBinding by autoRelease()
     private val groupsAdapter by lazy { GroupsAdapter{ group ->
-        lifecycleScope.launchWhenResumed {
             viewModel.saveCurrentlyOpenGroupId(group.id)
             findNavController().navigate(GroupsFragmentDirections.toGroupDetailsFragment(group))
-    }}}
+    }}
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,7 +41,7 @@ class GroupsFragment @Inject constructor(private val viewModelFactory: Universal
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         turnOffOnBackPressed()
-        lifecycleScope.launch { viewModel.getGroups() }
+        viewModel.getUserGroups()
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             vm = viewModel

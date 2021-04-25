@@ -32,7 +32,7 @@ class FriendsRepositoryImpl @Inject constructor(
 
     private val userId = sharedPrefs.userId
 
-    @ExperimentalCoroutinesApi
+    @ExperimentalCoroutinesApi //todo tu nie musi byc nulla, poprawic tez gdzie indziej
     override suspend fun getFriends(): Flow<List<Friend>?> = callbackFlow {
         val listener = firestoreRefs.collectionFriends(userId)
             .orderBy(firestoreRefs.nameField, Query.Direction.ASCENDING)
@@ -41,7 +41,7 @@ class FriendsRepositoryImpl @Inject constructor(
                     channel.closeFlowAndThrow(error)
                 }
                 if (snapshot != null) {
-                    offer(getFriendsList(snapshot))
+                    offer(snapshot.toObjects())
                 }
             }
         awaitClose { listener.remove() }
@@ -52,15 +52,6 @@ class FriendsRepositoryImpl @Inject constructor(
         logD(e)
         close(e)
     }
-
-    private fun getFriendsList(snapshot: QuerySnapshot): List<Friend>? =
-        try {
-            snapshot.toObjects()
-        } catch (e: Exception) {
-            crashlyticsWrapper.sendExceptionToFirebase(e)
-            logD(e)
-            null
-        }
 
     override suspend fun saveFriendsLocally(friends: List<Friend>) = friendsDao.insert(friends)
 
