@@ -35,7 +35,6 @@
             android:id="@+id/recycler"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:adapter="@{adapterXML}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -44,6 +43,8 @@
             app:layout_constraintTop_toBottomOf="@+id/toolbar"
             tools:itemCount="2"
             tools:listitem="@layout/list_item_group_month">
+            <!--    todo        app:adapter="@{adapterXML}"-->
+
 
         </androidx.recyclerview.widget.RecyclerView>
 
