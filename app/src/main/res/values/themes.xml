@@ -24,7 +24,7 @@
     <color name="outlinedButtonStroke">@color/primaryVariant</color>
     <color name="outlinedButtonText">@color/primaryVariant</color>
     <color name="check">@color/primary</color>
-    <color name="uncheck">@color/blueGrey500</color>
+    <color name="uncheck">@color/blueGrey300</color>
     <color name="cancel">@color/red500Dark</color>
     <color name="snackBarBackground">@color/onPrimary</color>
     <color name="snackBarText">@color/primaryVariant</color>

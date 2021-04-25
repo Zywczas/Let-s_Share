@@ -24,8 +24,10 @@ class HistoryViewModel @Inject constructor(
 
     fun getMonths(){
         viewModelScope.launch(dispatchersIO){
+            showProgressBar(true)
             repository.getPreviousMonths()?.let { _months.postValue(it) }
                 ?: postMessage(R.string.cant_get_months_list)
+            showProgressBar(false)
         }
     }
 
