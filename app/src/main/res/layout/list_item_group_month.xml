@@ -19,7 +19,7 @@
         tools:text="July 2021" />
 
     <TextView
-        android:id="@+id/expense"
+        android:id="@+id/expenses"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -37,10 +37,11 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginEnd="16dp"
-        android:tint="@color/uncheck"
-        app:layout_constraintBottom_toBottomOf="@+id/expense"
+        app:tint="@color/uncheck"
+        app:layout_constraintBottom_toBottomOf="@+id/expenses"
         app:layout_constraintDimensionRatio="h,1:1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/expense"
-        app:srcCompat="@drawable/ic_check_circle_24" />
+        app:layout_constraintTop_toTopOf="@+id/expenses"
+        app:srcCompat="@drawable/ic_check_circle_24"
+        android:contentDescription="@string/is_settled_up" />
 </androidx.constraintlayout.widget.ConstraintLayout>

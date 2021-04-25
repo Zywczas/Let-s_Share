@@ -10,11 +10,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.model.Friend
 
-class FriendsAdapter(private val onClick: (Friend) -> Unit = {}) : ListAdapter<Friend, FriendsAdapter.ViewHolder>(object : DiffUtil.ItemCallback<Friend>() {
+class FriendsAdapter(private val onClick: (Friend) -> Unit = {}) :
+    ListAdapter<Friend, FriendsAdapter.ViewHolder>(object : DiffUtil.ItemCallback<Friend>() {
 
-    override fun areItemsTheSame(oldItem: Friend, newItem: Friend): Boolean = oldItem.id == newItem.id
+    override fun areItemsTheSame(oldItem: Friend, newItem: Friend): Boolean =
+        oldItem.id == newItem.id
 
-    override fun areContentsTheSame(oldItem: Friend, newItem: Friend): Boolean = oldItem.id == newItem.id
+    override fun areContentsTheSame(oldItem: Friend, newItem: Friend): Boolean =
+        oldItem.id == newItem.id
 }) {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -26,6 +29,7 @@ class FriendsAdapter(private val onClick: (Friend) -> Unit = {}) : ListAdapter<F
             email.text = friend.email
             itemView.setOnClickListener { onClick(friend) }
         }
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

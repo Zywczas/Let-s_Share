@@ -69,4 +69,5 @@
     <!--    content description-->
     <string name="check">Potwierdź</string>
     <string name="cancel">Anuluj</string>
+    <string name="is_settled_up">Rozliczony</string>
 </resources>
