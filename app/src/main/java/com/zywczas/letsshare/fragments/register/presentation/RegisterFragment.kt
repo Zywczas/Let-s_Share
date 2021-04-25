@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.zywczas.letsshare.R
@@ -48,12 +47,12 @@ class RegisterFragment @Inject constructor(private val viewModelFactory: Univers
             if (isRegisteredAndName.first){
                 val message = getString(R.string.user_registered, isRegisteredAndName.second)
                 showSnackbar(message)
-                goBackToLoginFragment()
+                goToLoginFragment()
             }
         }
     }
 
-    private fun goBackToLoginFragment() = requireActivity().onBackPressed()
+    private fun goToLoginFragment() = requireActivity().onBackPressed()
 
     private fun setupOnClickListeners(){
         binding.register.setOnClickListener{

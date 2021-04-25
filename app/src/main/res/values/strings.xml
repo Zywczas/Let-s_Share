@@ -62,6 +62,8 @@
     <string name="expense_value">Value</string>
     <string name="group_name">Name</string>
     <string name="add_group">Add group</string>
+    <string name="your_name">Your name:</string>
+    <string name="your_email">Your email:</string>
 
 <!--    content description-->
     <string name="check">Check</string>

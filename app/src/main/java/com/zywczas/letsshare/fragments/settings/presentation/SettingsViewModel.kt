@@ -8,6 +8,7 @@ import com.zywczas.letsshare.activitymain.presentation.BaseViewModel
 import com.zywczas.letsshare.di.modules.DispatchersModule
 import com.zywczas.letsshare.di.modules.DispatchersModule.*
 import com.zywczas.letsshare.fragments.settings.domain.SettingsRepository
+import com.zywczas.letsshare.model.User
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -16,11 +17,20 @@ import javax.inject.Inject
 class SettingsViewModel @Inject constructor(
     @DispatchersIO private val dispatchersIO: CoroutineDispatcher,
     private val sessionManager: SessionManager,
-//    private val repository: SettingsRepository
+    private val repository: SettingsRepository
 ) : BaseViewModel() {
+
+    private val _user = MutableLiveData<User>()
+    val user: LiveData<User> = _user
 
     private val _isLoggedOut = MutableLiveData<Boolean>()
     val isLoggedOut: LiveData<Boolean> = _isLoggedOut
+
+    fun getUser() {
+        viewModelScope.launch(dispatchersIO) {
+            _user.postValue(repository.getUser())
+        }
+    }
 
     fun logout() {
         viewModelScope.launch(dispatchersIO){

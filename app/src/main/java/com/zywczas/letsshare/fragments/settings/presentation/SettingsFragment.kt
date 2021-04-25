@@ -33,6 +33,7 @@ class SettingsFragment @Inject constructor(private val viewModelFactory: Univers
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         turnOffOnBackPressed()
+        viewModel.getUser()
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             vm = viewModel
