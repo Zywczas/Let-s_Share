@@ -26,8 +26,8 @@ class GroupDetailsViewModel @Inject constructor(
     private val _currentMonth = MutableLiveData<GroupMonthDomain>()
     private val currentMonth: LiveData<GroupMonthDomain> = _currentMonth
 
-    val monthlySum: LiveData<String> = Transformations.switchMap(currentMonth){ month ->
-        liveData(dispatchersIO){
+    val monthlySum: LiveData<String> = Transformations.switchMap(currentMonth) { month ->
+        liveData(dispatchersIO) {
             emit(month.totalExpenses.toString())
         }
     }
@@ -35,29 +35,34 @@ class GroupDetailsViewModel @Inject constructor(
     private val _isMembersProgressBarVisible = MutableLiveData<Boolean>()
     val isMembersProgressBarVisible: LiveData<Boolean> = _isMembersProgressBarVisible
 
-    val expenses: LiveData<List<ExpenseDomain>> = Transformations.switchMap(currentMonth){ month ->
-        liveData(dispatchersIO){
+    val expenses: LiveData<List<ExpenseDomain>> = Transformations.switchMap(currentMonth) { month ->
+        liveData(dispatchersIO) {
             showProgressBar(true)
-            repository.getExpenses(month.id)?.let { emit(it) } ?: postMessage(R.string.cant_get_expenses)
+            repository.getExpenses(month.id)?.let { emit(it) }
+                ?: postMessage(R.string.cant_get_expenses)
             showProgressBar(false)
         }
     }
 
-    val members: LiveData<List<GroupMemberDomain>> = Transformations.switchMap(currentMonth){ month ->
-        liveData(dispatchersIO){
-            _isMembersProgressBarVisible.postValue(true)
-            repository.getMembers(month.id)?.let { emit(it.withBalance(month.totalExpenses)) }
-                ?: postMonthError()
-            _isMembersProgressBarVisible.postValue(false)
+    val members: LiveData<List<GroupMemberDomain>> =
+        Transformations.switchMap(currentMonth) { month ->
+            liveData(dispatchersIO) {
+                _isMembersProgressBarVisible.postValue(true)
+                repository.getMembers(month.id)?.let { emit(it.withBalance(month.totalExpenses)) }
+                    ?: postMonthError()
+                _isMembersProgressBarVisible.postValue(false)
+            }
         }
-    }
 
-    private fun List<GroupMemberDomain>.withBalance(groupTotalExpense: BigDecimal): List<GroupMemberDomain>{
+    private fun List<GroupMemberDomain>.withBalance(groupTotalExpense: BigDecimal): List<GroupMemberDomain> {
         forEach { member ->
             val whatShouldPay = groupTotalExpense.multiply(member.share).divide(BigDecimal((100)))
             val balance = whatShouldPay.minus(member.expenses)
-            if (balance > BigDecimal.ZERO) { member.owesOrOver = R.string.owes}
-            else { member.owesOrOver = R.string.over }
+            if (balance > BigDecimal.ZERO) {
+                member.owesOrOver = R.string.owes
+            } else {
+                member.owesOrOver = R.string.over
+            }
             member.difference = balance.setScale(2, BigDecimal.ROUND_HALF_UP).abs()
         }
         return this
@@ -65,45 +70,40 @@ class GroupDetailsViewModel @Inject constructor(
 
     private fun postMonthError() = postMessage(R.string.cant_get_month)
 
-    suspend fun getMonthDetails(){
-        withContext(dispatchersIO){
+    fun getMonthDetails() {
+        viewModelScope.launch(dispatchersIO) {
             showProgressBar(true)
-            repository.getLastMonth()?.let { lastMonth->
+            repository.getLastMonth()?.let { lastMonth ->
                 val hasNewCalendarMonthStarted = lastMonth.id != Date().monthId()
                 if (hasNewCalendarMonthStarted) {
                     startNewMonth(lastMonth.id)
                 } else {
                     _currentMonth.postValue(lastMonth)
+                    listenToMonth(lastMonth.id)
                 }
-                listenToMonth(Date().monthId())
             } ?: postMonthError()
             showProgressBar(false)
         }
     }
 
-    private suspend fun startNewMonth(lastMonthId: String){
-        withContext(dispatchersIO){
-            showProgressBar(true)
-            repository.getMembers(lastMonthId)?.let { members ->
-                repository.createNewMonth(members)?.let { error -> postMessage(error) }
-            } ?: postMonthError()
-            showProgressBar(false)
-        }
+    private suspend fun startNewMonth(lastMonthId: String) {
+        showProgressBar(true)
+        repository.getMembers(lastMonthId)?.let { members ->
+            repository.createNewMonth(members)?.let { error -> postMessage(error) }
+                ?: listenToMonth(Date().monthId())
+        } ?: postMonthError()
+        showProgressBar(false)
     }
 
-    private suspend fun listenToMonth(monthId: String){
-        withContext(dispatchersIO){
-            repository.listenToMonth(monthId)
-                .buffer(Channel.CONFLATED)
-                .catch { postMonthError() }
-                .collect { month ->
-                    month?.let { _currentMonth.postValue(it) } ?: postMonthError()
-                }
-        }
+    private suspend fun listenToMonth(monthId: String) {
+        repository.listenToMonth(monthId)
+            .buffer(Channel.CONFLATED)
+            .catch { postMonthError() }
+            .collect { _currentMonth.postValue(it) }
     }
 
-    fun addExpense(name: String, amount: BigDecimal){
-        viewModelScope.launch(dispatchersIO){
+    fun addExpense(name: String, amount: BigDecimal) {
+        viewModelScope.launch(dispatchersIO) {
             currentMonth.value?.id?.let { monthId ->
                 showProgressBar(true)
                 val roundedAmount = amount.setScale(2, BigDecimal.ROUND_HALF_UP)

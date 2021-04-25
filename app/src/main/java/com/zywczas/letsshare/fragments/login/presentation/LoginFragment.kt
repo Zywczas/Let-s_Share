@@ -33,7 +33,7 @@ class LoginFragment @Inject constructor(private val viewModelFactory: UniversalV
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        lifecycleScope.launch{ viewModel.getLastUsedEmail() }
+        viewModel.getLastUsedEmail()
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             vm = viewModel
@@ -53,9 +53,7 @@ class LoginFragment @Inject constructor(private val viewModelFactory: UniversalV
     }
 
     private fun login(){
-        lifecycleScope.launchWhenResumed {
-            viewModel.login(binding.email.text.toString(), binding.password.text.toString())
-        }
+        viewModel.login(binding.email.text.toString(), binding.password.text.toString())
     }
 
     private fun setupObservers(){

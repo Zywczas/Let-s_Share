@@ -47,7 +47,7 @@ class GroupSettingsFragment @Inject constructor(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        lifecycleScope.launch { viewModel.getMembers(args.monthId) }
+        viewModel.getMembers(args.monthId)
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             vm = viewModel

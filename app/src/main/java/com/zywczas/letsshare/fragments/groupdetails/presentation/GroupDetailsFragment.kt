@@ -44,7 +44,7 @@ class GroupDetailsFragment @Inject constructor(private val viewModelFactory: Uni
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        lifecycleScope.launch { viewModel.getMonthDetails() }
+        viewModel.getMonthDetails()
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             vm = viewModel

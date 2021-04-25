@@ -11,7 +11,14 @@ class UtilsModule {
     @TextDebounce
     fun provideTextDebounce(): Long = 500L
 
+    @Provides
+    @WelcomeScreenDelay
+    fun provideWelcomeScreenDelay() = 1500L
+
     @Qualifier
     annotation class TextDebounce
+
+    @Qualifier
+    annotation class WelcomeScreenDelay
 
 }

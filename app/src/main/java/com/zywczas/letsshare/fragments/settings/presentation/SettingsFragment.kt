@@ -50,7 +50,7 @@ class SettingsFragment @Inject constructor(private val viewModelFactory: Univers
     }
 
     private fun setupOnClickListeners(){
-        binding.logout.setOnClickListener { lifecycleScope.launchWhenResumed { viewModel.logout() } }
+        binding.logout.setOnClickListener { viewModel.logout() }
         binding.bottomNavBar.setOnNavigationItemSelectedListener(bottomNavClick)
     }
 

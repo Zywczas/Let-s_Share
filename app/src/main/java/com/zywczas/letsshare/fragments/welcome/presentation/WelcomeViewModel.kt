@@ -3,6 +3,8 @@ package com.zywczas.letsshare.fragments.welcome.presentation
 import androidx.lifecycle.*
 import com.zywczas.letsshare.SessionManager
 import com.zywczas.letsshare.di.modules.DispatchersModule.DispatchersIO
+import com.zywczas.letsshare.di.modules.UtilsModule
+import com.zywczas.letsshare.di.modules.UtilsModule.*
 import com.zywczas.letsshare.utils.SingleLiveData
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
@@ -10,7 +12,8 @@ import javax.inject.Inject
 
 class WelcomeViewModel @Inject constructor(
     @DispatchersIO private val dispatchersIO: CoroutineDispatcher,
-    private val sessionManager: SessionManager
+    private val sessionManager: SessionManager,
+    @WelcomeScreenDelay private val period: Long
 ): ViewModel(), LifecycleObserver {
 
     private val _goToLoginFragment = SingleLiveData<Boolean>()
@@ -22,14 +25,19 @@ class WelcomeViewModel @Inject constructor(
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     private fun onResume(){
         viewModelScope.launch(dispatchersIO) {
-            sessionManager.delayCoroutine(1500L) //just to present Welcome Screen to user todo pozniej trzeba bedzie ta wartosc wstrzykiwac, do testow
+            presentLogoToUser()
             chooseFragmentToGoNext()
         }
     }
 
+    private suspend fun presentLogoToUser() = sessionManager.delayCoroutine(period)
+
     private suspend fun chooseFragmentToGoNext(){
-        if (sessionManager.isUserLoggedIn()){ _goToFriendsFragment.postValue(true) }
-        else { _goToLoginFragment.postValue(true) }
+        if (sessionManager.isUserLoggedIn()){
+            _goToFriendsFragment.postValue(true)
+        } else {
+            _goToLoginFragment.postValue(true)
+        }
     }
 
 }

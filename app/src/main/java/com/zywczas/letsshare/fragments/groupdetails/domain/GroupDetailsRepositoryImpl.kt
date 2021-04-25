@@ -1,8 +1,6 @@
 package com.zywczas.letsshare.fragments.groupdetails.domain
 
-import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.firestore.ktx.toObjects
@@ -53,14 +51,14 @@ class GroupDetailsRepositoryImpl @Inject constructor(
     )
 
     @ExperimentalCoroutinesApi
-    override suspend fun listenToMonth(monthId: String): Flow<GroupMonthDomain?> = callbackFlow {
+    override suspend fun listenToMonth(monthId: String): Flow<GroupMonthDomain> = callbackFlow {
         val listener = firestoreRefs.groupMonthRefs(groupId, monthId)
             .addSnapshotListener { snapshot, error ->
                 if (error != null) {
                     channel.closeFlowAndThrow(error)
                 }
                 if (snapshot != null && snapshot.exists()){
-                    offer(getMonthDomain(snapshot))
+                    offer(snapshot.toObject<GroupMonth>()!!.toDomain())
                 }
             }
         awaitClose { listener.remove() }
@@ -71,15 +69,6 @@ class GroupDetailsRepositoryImpl @Inject constructor(
         logD(e)
         close(e)
     }
-
-    private fun getMonthDomain(snapshot: DocumentSnapshot): GroupMonthDomain? =
-        try {
-            snapshot.toObject<GroupMonth>()!!.toDomain()
-        } catch (e: Exception){
-            crashlyticsWrapper.sendExceptionToFirebase(e)
-            logD(e)
-            null
-        }
 
     override suspend fun getMembers(monthId: String): List<GroupMemberDomain>? =
         try {

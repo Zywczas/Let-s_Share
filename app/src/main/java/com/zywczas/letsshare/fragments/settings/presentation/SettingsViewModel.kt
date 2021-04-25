@@ -2,12 +2,14 @@ package com.zywczas.letsshare.fragments.settings.presentation
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.zywczas.letsshare.SessionManager
 import com.zywczas.letsshare.activitymain.presentation.BaseViewModel
 import com.zywczas.letsshare.di.modules.DispatchersModule
 import com.zywczas.letsshare.di.modules.DispatchersModule.*
 import com.zywczas.letsshare.fragments.settings.domain.SettingsRepository
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -20,8 +22,8 @@ class SettingsViewModel @Inject constructor(
     private val _isLoggedOut = MutableLiveData<Boolean>()
     val isLoggedOut: LiveData<Boolean> = _isLoggedOut
 
-    suspend fun logout() {
-        withContext(dispatchersIO){
+    fun logout() {
+        viewModelScope.launch(dispatchersIO){
             sessionManager.logout()
             _isLoggedOut.postValue(true)
         }

@@ -34,11 +34,9 @@ class FriendsViewModel @Inject constructor(
                 repository.getFriends()
                     .buffer(Channel.CONFLATED)
                     .catch { postMessage(R.string.cant_get_friends) }
-                    .collect { friends ->
-                        friends?.let {
-                            _friends.postValue(it)
-                            repository.saveFriendsLocally(it)
-                        } ?: postMessage(R.string.cant_get_friends)
+                    .collect {
+                        _friends.postValue(it)
+                        repository.saveFriendsLocally(it)
                     }
             } else { postMessage(R.string.connection_problem) }
         }

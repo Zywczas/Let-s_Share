@@ -32,8 +32,8 @@ class FriendsRepositoryImpl @Inject constructor(
 
     private val userId = sharedPrefs.userId
 
-    @ExperimentalCoroutinesApi //todo tu nie musi byc nulla, poprawic tez gdzie indziej
-    override suspend fun getFriends(): Flow<List<Friend>?> = callbackFlow {
+    @ExperimentalCoroutinesApi
+    override suspend fun getFriends(): Flow<List<Friend>> = callbackFlow {
         val listener = firestoreRefs.collectionFriends(userId)
             .orderBy(firestoreRefs.nameField, Query.Direction.ASCENDING)
             .addSnapshotListener { snapshot, error ->

@@ -19,17 +19,18 @@ class RegisterViewModel @Inject constructor(
     private val repository: RegisterRepository
 ) : BaseViewModel() {
 
+//todo poprawic calosc
+
     private val _isRegisteredAndUserName = MutableLiveData<Pair<Boolean, String>>()
     val isRegisteredAndUserName: LiveData<Pair<Boolean, String>> = _isRegisteredAndUserName
 
-    suspend fun registerUser(name: String, email: String, password: String) {
-        withContext(dispatchersIO) {
+    fun registerUser(name: String, email: String, password: String) {
+        viewModelScope.launch(dispatchersIO) {
             showProgressBar(true)
             repository.saveLastUsedEmail(email)
             when {
                 areCredentialsValid(name, email, password).not() -> {
-                    showProgressBar(false)
-                    return@withContext
+                    showProgressBar(false) //todo poprawic tutaj te progress bary
                 }
                 sessionManager.isNetworkAvailable().not() -> {
                     postMessage(R.string.connection_problem)

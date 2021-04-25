@@ -1,7 +1,7 @@
 package com.zywczas.letsshare.fragments.register.domain
 
 interface RegisterRepository {
-
+//todo poprawic tutaj wszystkie funkcje
     suspend fun saveLastUsedEmail(email: String)
 
     suspend fun isEmailFreeToUse(email: String, onIsEmailFreeToUseAction: (Boolean) -> Unit)

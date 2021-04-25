@@ -64,13 +64,11 @@ class RegisterFragment @Inject constructor(private val viewModelFactory: Univers
     }
 
     private fun registerUser(){
-        lifecycleScope.launchWhenResumed {
-            viewModel.registerUser(
-                binding.name.text.toString(),
-                binding.email.text.toString(),
-                binding.password.text.toString()
-            )
-        }
+        viewModel.registerUser(
+            binding.name.text.toString(),
+            binding.email.text.toString(),
+            binding.password.text.toString()
+        )
     }
 
 }

@@ -39,18 +39,18 @@ class GroupSettingsViewModel @Inject constructor(
     private val _isPercentageChanged = MutableLiveData<Boolean>()
     val isPercentageChanged: LiveData<Boolean> = _isPercentageChanged
 
-    suspend fun getMembers(monthId: String) {
-        withContext(dispatchersIO){
+    fun getMembers(monthId: String) {
+        viewModelScope.launch(dispatchersIO){
             this@GroupSettingsViewModel.monthId = monthId
             showProgressBar(true)
-            repository.getMembers(monthId)?.let{ _members.postValue(it.toMutableList()) }
+            repository.getMembers(monthId)?.let{ _members.postValue(it) }
                 ?: postMessage(R.string.cant_get_group_members)
             showProgressBar(false)
         }
     }
 
     suspend fun getFriends(){
-        withContext(dispatchersIO){ _friends.postValue(repository.getFriends().toMutableList()) }
+        withContext(dispatchersIO){ _friends.postValue(repository.getFriends()) }
     }
 
     fun addNewMember(friend: Friend){
@@ -96,7 +96,7 @@ class GroupSettingsViewModel @Inject constructor(
                     val newMembersRef = members
                         .map { GroupMemberDomain(id = it.id,name = it.name,email = it.email,
                             expenses = it.expenses,share = newSplit)
-                        }.toMutableList()
+                        }
                     _members.postValue(newMembersRef)
                     _isPercentageChanged.postValue(true)
                 }
