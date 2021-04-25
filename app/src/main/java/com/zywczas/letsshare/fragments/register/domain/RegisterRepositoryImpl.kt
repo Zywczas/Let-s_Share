@@ -2,74 +2,74 @@ package com.zywczas.letsshare.fragments.register.domain
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
+import com.zywczas.letsshare.R
+import com.zywczas.letsshare.activitymain.domain.CrashlyticsWrapper
 import com.zywczas.letsshare.activitymain.domain.FirestoreReferences
 import com.zywczas.letsshare.activitymain.domain.SharedPrefsWrapper
 import com.zywczas.letsshare.model.User
 import com.zywczas.letsshare.utils.logD
+import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class RegisterRepositoryImpl @Inject constructor(
     private val firebaseAuth: FirebaseAuth,
     private val firestoreRefs: FirestoreReferences,
-    private val sharedPrefs: SharedPrefsWrapper
+    private val sharedPrefs: SharedPrefsWrapper,
+    private val crashlyticsWrapper: CrashlyticsWrapper
 ) : RegisterRepository {
 
     override suspend fun saveLastUsedEmail(email: String) {
         sharedPrefs.lastUsedEmail = email
     }
 
-    //todo to mi rzuca exception jak zly format maila, trzeba to poprawic na succeess i failure pewnie
-    override suspend fun isEmailFreeToUse(email: String, onIsEmailFreeToUseAction: (Boolean) -> Unit) {
-        firebaseAuth.fetchSignInMethodsForEmail(email).addOnCompleteListener {
-            val isEmailAlreadyTaken = it.result?.signInMethods?.size != null && it.result!!.signInMethods!!.size > 0
-            if (isEmailAlreadyTaken.not()) {
-                logD("email '$email' jeszcze nie istnieje w bazie")
-                onIsEmailFreeToUseAction(true)
+    override suspend fun isEmailFreeToUse(email: String): Boolean? =
+        try {
+            val singInMethods = firebaseAuth.fetchSignInMethodsForEmail(email).await().signInMethods
+            val isEmailAlreadyTaken = singInMethods?.size != null && singInMethods.size > 0
+            isEmailAlreadyTaken.not()
+        } catch (e: Exception){
+            crashlyticsWrapper.sendExceptionToFirebase(e)
+            logD(e)
+            null
+        }
+
+    override suspend fun registerToFirebase(name: String, email: String, password: String): Int? =
+        try {
+            val registration = firebaseAuth.createUserWithEmailAndPassword(email, password).await()
+            if (registration.user != null){
+                val profileUpdate = UserProfileChangeRequest.Builder().setDisplayName(name).build()
+                firebaseAuth.currentUser!!.updateProfile(profileUpdate).await()
+                null
             } else {
-                logD("email '$email' juz zostal uzyty")
-                onIsEmailFreeToUseAction(false)
+                R.string.problem_registration
             }
+        } catch (e: Exception){
+            crashlyticsWrapper.sendExceptionToFirebase(e)
+            logD(e)
+            R.string.problem_registration
         }
-    }
 
-     override suspend fun registerToFirebase(name: String, email: String, password: String, onSuccessAction: (Boolean) -> Unit) {
-        firebaseAuth.createUserWithEmailAndPassword(email, password).addOnSuccessListener {
-            val profileUpdate = UserProfileChangeRequest.Builder().setDisplayName(name).build()
-            firebaseAuth.currentUser?.updateProfile(profileUpdate)?.addOnCompleteListener {
-                onSuccessAction(true)
-            }?.addOnFailureListener {
-                logD(it)
-                onSuccessAction(false)
-            }
-        }.addOnFailureListener {
-            logD(it)
-            onSuccessAction(false)
+    override suspend fun addUserToFirestore(name: String, email: String): Int? =
+        try {
+            val authId = firebaseAuth.currentUser!!.uid
+            val user = User(id = authId, name = name, email = email)
+            firestoreRefs.userRefs(authId).set(user).await()
+            null
+        } catch (e: Exception){
+            crashlyticsWrapper.sendExceptionToFirebase(e)
+            logD(e)
+            R.string.problem_registration
         }
-    }
 
-//todo to powinno dziac sie od razy przy rejestracji do firebase, a nie dopiero inicjowane w view modelu
-    override suspend fun addNewUserToFirestore(name: String, email: String, onSuccessAction: (Boolean) -> Unit){
-        val authId = firebaseAuth.currentUser?.uid //todo to moze wrzucic w shared prefs skoro i tak tam sprawdzam
-        if (authId != null){
-            firestoreRefs.userRefs(authId)
-                .set(User(id = authId, name = name, email = email))
-                .addOnSuccessListener {
-                    onSuccessAction(true)
-                }.addOnFailureListener {
-                    logD(it)
-                    onSuccessAction(false)
-                }
-        } else { onSuccessAction(false) }
-    }
-
-    override suspend fun sendEmailVerification(onSuccessAction: (Boolean) -> Unit) {
-        firebaseAuth.currentUser?.sendEmailVerification()?.addOnSuccessListener {
-            onSuccessAction(true)
-        }?.addOnFailureListener {
-            logD(it)
-            onSuccessAction(false)
+    override suspend fun sendVerificationEmail(): Int? =
+        try {
+            firebaseAuth.currentUser!!.sendEmailVerification().await()
+            null
+        } catch (e: Exception){
+            crashlyticsWrapper.sendExceptionToFirebase(e)
+            logD(e)
+            R.string.problem_registration
         }
-    }
 
     override suspend fun logoutFromFirebase() = firebaseAuth.signOut()
 

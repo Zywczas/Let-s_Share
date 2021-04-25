@@ -10,7 +10,6 @@ import com.zywczas.letsshare.di.modules.DispatchersModule.DispatchersIO
 import com.zywczas.letsshare.fragments.register.domain.RegisterRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class RegisterViewModel @Inject constructor(
@@ -18,8 +17,6 @@ class RegisterViewModel @Inject constructor(
     private val sessionManager: SessionManager,
     private val repository: RegisterRepository
 ) : BaseViewModel() {
-
-//todo poprawic calosc
 
     private val _isRegisteredAndUserName = MutableLiveData<Pair<Boolean, String>>()
     val isRegisteredAndUserName: LiveData<Pair<Boolean, String>> = _isRegisteredAndUserName
@@ -29,20 +26,14 @@ class RegisterViewModel @Inject constructor(
             showProgressBar(true)
             repository.saveLastUsedEmail(email)
             when {
-                areCredentialsValid(name, email, password).not() -> {
-                    showProgressBar(false) //todo poprawic tutaj te progress bary
-                }
-                sessionManager.isNetworkAvailable().not() -> {
-                    postMessage(R.string.connection_problem)
-                    showProgressBar(false)
-                }
-                else -> checkIfEmailIsFreeToUseAndRegisterToFirebase(name, email, password)
+                sessionManager.isNetworkAvailable().not() -> postMessage(R.string.connection_problem)
+                areCredentialsValid(name, email, password) -> registerToFirebase(name, email, password)
             }
+            showProgressBar(false)
         }
     }
 
-    //todo trzeba tez sprawdzic czy email ma poprawna forme
-    private fun areCredentialsValid(name: String, email: String, password: String): Boolean =
+    private suspend fun areCredentialsValid(name: String, email: String, password: String): Boolean =
         if (name.isBlank() || email.isBlank() || password.isBlank()) {
             postMessage(R.string.name_email_password_not_blank)
             false
@@ -50,53 +41,27 @@ class RegisterViewModel @Inject constructor(
             postMessage(R.string.password_needs_6letters)
             false
         } else {
-            true
-        }
-
-    private suspend fun checkIfEmailIsFreeToUseAndRegisterToFirebase(name: String, email: String, password: String){
-        repository.isEmailFreeToUse(email){ isEmailFreeToUse ->
-            if (isEmailFreeToUse) { viewModelScope.launch(dispatchersIO) { registerToFirebase(name, email, password) } }
-            else {
-                postMessage(R.string.email_already_exists)
-                showProgressBar(false)
-            }
-        }
-    }
-
-    private suspend fun registerToFirebase(name: String, email: String, password: String){
-        repository.registerToFirebase(name, email, password) { isRegistered ->
-            if (isRegistered) { viewModelScope.launch(dispatchersIO) { addUserToFirestore(name, email) } }
-            else {
-                postMessage(R.string.problem_registration)
-                showProgressBar(false)
-            }
-        }
-    }
-
-    private suspend fun addUserToFirestore(name: String, email: String){
-        repository.addNewUserToFirestore(name, email){ isUserAdded ->
-            if (isUserAdded) { viewModelScope.launch(dispatchersIO) { sendVerificationEmailAndLogout(name) } }
-            else {
-                postMessage(R.string.problem_registration)
-                showProgressBar(false)
-            }
-        }
-    }
-
-    private suspend fun sendVerificationEmailAndLogout(name: String){
-        repository.sendEmailVerification { isEmailSent ->
-            if (isEmailSent){
-                viewModelScope.launch(dispatchersIO){
-                    repository.logoutFromFirebase()
-                    showProgressBar(false)
-                    _isRegisteredAndUserName.postValue(true to name)
+            when(repository.isEmailFreeToUse(email)){
+                null -> {
+                    postMessage(R.string.something_wrong)
+                    false
                 }
-            }
-            else {
-                postMessage(R.string.problem_registration)
-                showProgressBar(false)
+                false -> {
+                    postMessage(R.string.email_already_exists)
+                    false
+                }
+                true -> true
             }
         }
+
+    private suspend fun registerToFirebase(name: String, email: String, password: String) {
+        repository.registerToFirebase(name, email, password)?.let { error -> postMessage(error) }
+            ?: kotlin.run {
+                repository.addUserToFirestore(name, email)?.let { error -> postMessage(error) }
+                repository.sendVerificationEmail()?.let { error -> postMessage(error) }
+                repository.logoutFromFirebase()
+                _isRegisteredAndUserName.postValue(true to name)
+            }
     }
 
 }
