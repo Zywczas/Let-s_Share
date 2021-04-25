@@ -45,4 +45,9 @@
         <item name="android:textAlignment">center</item>
     </style>
 
+    <style name="Widget.App.LargeListItemHeader" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textSize">@dimen/headerLargeTextSizeListItem</item>
+        <item name="android:textColor">@color/headerListItem</item>
+    </style>
+
 </resources>

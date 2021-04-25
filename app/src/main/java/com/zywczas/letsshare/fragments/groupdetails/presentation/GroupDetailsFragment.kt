@@ -70,6 +70,15 @@ class GroupDetailsFragment @Inject constructor(private val viewModelFactory: Uni
 
     private fun setupSpeedDialMenu(){
         binding.speedDial.addActionItem(
+            SpeedDialActionItem.Builder(R.id.history, R.drawable.ic_history_24)
+                .setFabBackgroundColor(ContextCompat.getColor(requireContext(), R.color.thirdFABItem))
+                .setFabImageTintColor(Color.WHITE)
+                .setLabel(getString(R.string.history))
+                .setLabelClickable(true)
+                .setLabelBackgroundColor(Color.WHITE)
+                .create()
+        )
+        binding.speedDial.addActionItem(
             SpeedDialActionItem.Builder(R.id.groupSettings, R.drawable.ic_settings_24)
                 .setFabBackgroundColor(ContextCompat.getColor(requireContext(), R.color.secondFABItem))
                 .setFabImageTintColor(Color.WHITE)
@@ -129,6 +138,11 @@ class GroupDetailsFragment @Inject constructor(private val viewModelFactory: Uni
                     showAddExpenseDialog()
                     true
                 }
+                R.id.history -> {
+                    binding.speedDial.close()
+                    goToHistoryFragment()
+                    true
+                }
                 else -> false
             }
         }
@@ -140,6 +154,10 @@ class GroupDetailsFragment @Inject constructor(private val viewModelFactory: Uni
 
     private fun showAddExpenseDialog(){
         AddExpenseDialog().show(childFragmentManager, "AddExpenseDialog")
+    }
+
+    private fun goToHistoryFragment(){
+        findNavController().navigate(GroupDetailsFragmentDirections.toHistoryFragment())
     }
 
 }

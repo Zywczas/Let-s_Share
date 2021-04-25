@@ -12,10 +12,9 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:textAlignment="textStart"
-        android:textColor="@color/listItemHeader"
-        android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:theme="@style/Widget.App.LargeListItemHeader"
         tools:text="Ola" />
 
     <TextView

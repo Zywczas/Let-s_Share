@@ -7,6 +7,7 @@
     <color name="secondary">@color/primary</color>
     <color name="secondaryVariant">@color/primaryVariant</color>
     <color name="onSecondary">@color/onPrimary</color>
+
     <!-- Customize your theme here. -->
     <color name="primaryVariantAlpha03">@color/green900DarkAlpha03</color>
     <color name="text">@android:color/white</color>
@@ -14,13 +15,16 @@
     <color name="drawerArrow">@color/onPrimary</color>
     <color name="firstFABItem">@color/lightBlue500Dark</color>
     <color name="secondFABItem">@color/deepPurple900</color>
-    <color name="listItemHeader">@color/lightBlue500Dark</color>
-    <color name="listItemHeaderOnPrimary">@color/lime600Dark</color>
+    <color name="thirdFABItem">@color/pink500Dark</color>
+    <color name="headerListItem">@color/lightBlue500Dark</color>
+    <color name="headerListItemDark">@color/lightBlue700Dark</color>
+    <color name="headerOnPrimaryListItem">@color/lime600Dark</color>
     <color name="textOnPrimary">@color/blueGrey300</color>
     <color name="hint">@color/onPrimary</color>
     <color name="outlinedButtonStroke">@color/primary</color>
     <color name="outlinedButtonText">@color/primary</color>
     <color name="check">@color/primary</color>
+    <color name="uncheck">@color/blueGrey500</color>
     <color name="cancel">@color/red500Dark</color>
     <color name="snackBarBackground">@color/onPrimary</color>
     <color name="snackBarText">@color/primaryVariant</color>

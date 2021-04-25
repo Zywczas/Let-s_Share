@@ -21,4 +21,8 @@
         android:id="@+id/addGroup"
         android:title="@string/add_group" />
 
+    <item
+        android:id="@+id/history"
+        android:title="@string/history" />
+
 </menu>
