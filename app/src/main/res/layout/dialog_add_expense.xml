@@ -22,7 +22,6 @@
             android:hint="@string/expense_name"
             android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
-    <!--todo po wcisnieciu entera na klawiaturze dac "save"-->
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/amountFrame"

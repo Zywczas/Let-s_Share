@@ -24,7 +24,8 @@ class AutoReleasedProperty<T : Any>(lifecycleOwner: LifecycleOwner) :
                 internalValue = null
             }
         })
-    } //todo przeanalizowac te funckje pozniej
+    }
+
     override fun getValue(thisRef: Any, property: KProperty<*>): T {
         return internalValue ?: run {
             @Suppress("ReplaceGuardClauseWithFunctionCall")

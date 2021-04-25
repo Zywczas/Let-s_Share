@@ -30,7 +30,7 @@ class AddGroupDialog : DialogFragment() {
         binding.confirm.setOnClickListener { addGroup() }
     }
 
-    private fun addGroup(){ //todo pozniej dac rozne waluty
+    private fun addGroup(){
         viewModel.addGroup(binding.name.text.toString(), "zł")
         dismiss()
     }
