@@ -157,7 +157,7 @@ class GroupDetailsFragment @Inject constructor(private val viewModelFactory: Uni
     }
 
     private fun goToHistoryFragment(){
-        findNavController().navigate(GroupDetailsFragmentDirections.toHistoryFragment())
+        findNavController().navigate(GroupDetailsFragmentDirections.toHistoryFragment(args.group))
     }
 
 }

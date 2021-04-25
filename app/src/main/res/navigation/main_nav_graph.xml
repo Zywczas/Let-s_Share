@@ -151,6 +151,9 @@
         <action
             android:id="@+id/toGroupSettingsFragment"
             app:destination="@id/groupSettingsFragment" />
+        <argument
+            android:name="group"
+            app:argType="com.zywczas.letsshare.model.Group" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"

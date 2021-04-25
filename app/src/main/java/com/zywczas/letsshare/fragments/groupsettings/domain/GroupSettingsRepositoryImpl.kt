@@ -8,6 +8,7 @@ import com.zywczas.letsshare.R
 import com.zywczas.letsshare.activitymain.domain.CrashlyticsWrapper
 import com.zywczas.letsshare.activitymain.domain.FirestoreReferences
 import com.zywczas.letsshare.activitymain.domain.SharedPrefsWrapper
+import com.zywczas.letsshare.activitymain.domain.toDomain
 import com.zywczas.letsshare.model.*
 import com.zywczas.letsshare.model.db.FriendsDao
 import com.zywczas.letsshare.utils.logD
@@ -33,14 +34,6 @@ class GroupSettingsRepositoryImpl @Inject constructor(
             logD(e)
             null
         }
-
-    private fun GroupMember.toDomain() = GroupMemberDomain(
-        id = id,
-        name = name,
-        email = email,
-        expenses = expenses.toBigDecimal(),
-        share = share.toBigDecimal()
-    )
 
     override suspend fun getFriends(): List<Friend> = friendsDao.getFriends()
 

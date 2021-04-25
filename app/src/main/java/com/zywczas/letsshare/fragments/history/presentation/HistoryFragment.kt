@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.setupWithNavController
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.databinding.FragmentGroupsBinding
@@ -22,7 +23,10 @@ class HistoryFragment @Inject constructor(private val viewModelFactory: Universa
 
     private val viewModel: HistoryViewModel by viewModels { viewModelFactory }
     private var binding: FragmentHistoryBinding by autoRelease()
-    private val adapter by lazy { GroupMonthAdapter() }
+    private val args: HistoryFragmentArgs by navArgs()
+    private val adapter by lazy { GroupMonthAdapter(args.group.currency){
+        showSnackbar("dziala")
+    } }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,7 +50,7 @@ class HistoryFragment @Inject constructor(private val viewModelFactory: Universa
 
     private fun setupObservers(){
         viewModel.message.observe(viewLifecycleOwner){ showSnackbar(it)}
-//        viewModel.months.observe(viewLifecycleOwner){ adapter.submitList(it.toMutableList()) }
+        viewModel.months.observe(viewLifecycleOwner){ adapter.submitList(it.toMutableList()) }
     }
 
 }

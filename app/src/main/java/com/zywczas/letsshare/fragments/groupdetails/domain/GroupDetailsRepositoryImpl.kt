@@ -8,6 +8,7 @@ import com.zywczas.letsshare.R
 import com.zywczas.letsshare.activitymain.domain.CrashlyticsWrapper
 import com.zywczas.letsshare.activitymain.domain.FirestoreReferences
 import com.zywczas.letsshare.activitymain.domain.SharedPrefsWrapper
+import com.zywczas.letsshare.activitymain.domain.toDomain
 import com.zywczas.letsshare.model.*
 import com.zywczas.letsshare.utils.dateInPoland
 import com.zywczas.letsshare.utils.dayFormat
@@ -44,12 +45,6 @@ class GroupDetailsRepositoryImpl @Inject constructor(
             null
         }
 
-    private fun GroupMonth.toDomain() = GroupMonthDomain(
-        id = id,
-        totalExpenses = totalExpenses.toBigDecimal(),
-        isSettledUp = isSettledUp
-    )
-
     @ExperimentalCoroutinesApi
     override suspend fun listenToMonth(monthId: String): Flow<GroupMonthDomain> = callbackFlow {
         val listener = firestoreRefs.groupMonthRefs(groupId, monthId)
@@ -81,14 +76,6 @@ class GroupDetailsRepositoryImpl @Inject constructor(
             null
         }
 
-    private fun GroupMember.toDomain() = GroupMemberDomain(
-        id = id,
-        name = name,
-        email = email,
-        expenses = expenses.toBigDecimal(),
-        share = share.toBigDecimal()
-    )
-
     override suspend fun getExpenses(monthId: String): List<ExpenseDomain>? =
         try {
             firestoreRefs.collectionExpensesRefs(groupId, monthId)
@@ -101,22 +88,13 @@ class GroupDetailsRepositoryImpl @Inject constructor(
             null
         }
 
-    private fun Expense.toDomain() = ExpenseDomain(
-        id = id,
-        name = name,
-        payeeEmail = payeeEmail,
-        payeeName = payeeName,
-        value = value.toBigDecimal(),
-        dateCreated = dateCreated.dayFormat()
-    )
-
     override suspend fun createNewMonth(members: List<GroupMemberDomain>): Int? =
         try {
             val date = Date()
             val monthId = date.monthId()
             val newMonthRefs = firestoreRefs.groupMonthRefs(groupId, monthId)
             val newMonth = GroupMonth(id = monthId, dateCreated = date)
-            val newMonthMembers = members.map { it.toGroupMember() }
+            val newMonthMembers = members.map { it.toNewMonthGroupMember() }
 
             firestore.runBatch { batch ->
                 batch.set(newMonthRefs, newMonth)
@@ -132,8 +110,7 @@ class GroupDetailsRepositoryImpl @Inject constructor(
             R.string.cant_get_month
         }
 
-
-    private fun GroupMemberDomain.toGroupMember() = GroupMember(
+    private fun GroupMemberDomain.toNewMonthGroupMember() = GroupMember(
         id = id,
         name = name,
         email = email,
