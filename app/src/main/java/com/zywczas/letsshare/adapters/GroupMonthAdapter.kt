@@ -29,14 +29,14 @@ class GroupMonthAdapter(
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val name: TextView = itemView.findViewById(R.id.name)
         private val expenses: TextView = itemView.findViewById(R.id.expenses)
-        private val isSettledUp: TextView = itemView.findViewById(R.id.isSettledUp)
+        private val isSettledUp: ImageView = itemView.findViewById(R.id.isSettledUp)
 
         fun bindMonth(month: GroupMonthDomain) {
             name.text = month.id
             expenses.text = String.format(Locale.UK, "%.2f $currency", month.totalExpenses)
-            isSettledUp.text = if (month.isSettledUp) { itemView.context.getString(R.string.yes) }
-                else { itemView.context.getString(R.string.no) }
-
+            if (month.isSettledUp){
+                isSettledUp.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(itemView.context, R.color.check))
+            }
             itemView.setOnClickListener { onClick(month) }
         }
 
