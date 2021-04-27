@@ -19,12 +19,13 @@ import com.zywczas.letsshare.di.factories.UniversalViewModelFactory
 import com.zywczas.letsshare.adapters.ExpensesAdapter
 import com.zywczas.letsshare.adapters.GroupMembersAdapter
 import com.zywczas.letsshare.utils.autoRelease
+import com.zywczas.letsshare.utils.dimBackgroundOnMainButtonClick
 import com.zywczas.letsshare.utils.monthId
 import com.zywczas.letsshare.utils.showSnackbar
 import java.util.*
 import javax.inject.Inject
 
-class GroupDetailsFragment @Inject constructor(private val viewModelFactory: UniversalViewModelFactory): Fragment() {
+class GroupDetailsFragment @Inject constructor(viewModelFactory: UniversalViewModelFactory): Fragment() {
 
     private val viewModel: GroupDetailsViewModel by viewModels { viewModelFactory }
     private var binding: FragmentGroupDetailsBinding by autoRelease()
@@ -51,8 +52,7 @@ class GroupDetailsFragment @Inject constructor(private val viewModelFactory: Uni
         }
         binding.toolbar.setupWithNavController(findNavController())
         setupObservers()
-        setupSpeedDialMenu()
-        setupOnClickListeners()
+        setupSpeedDial()
     }
 
     private fun setupObservers(){
@@ -64,6 +64,12 @@ class GroupDetailsFragment @Inject constructor(private val viewModelFactory: Uni
                 binding.expensesRecycler.smoothScrollToPosition(0)
             }
         }
+    }
+
+    private fun setupSpeedDial(){
+        setupSpeedDialMenu()
+        setupSpeedDialMenuClick()
+        binding.speedDial.dimBackgroundOnMainButtonClick(requireActivity(), binding.mainLayout)
     }
 
     private fun setupSpeedDialMenu(){
@@ -94,33 +100,6 @@ class GroupDetailsFragment @Inject constructor(private val viewModelFactory: Uni
                 .setLabelBackgroundColor(Color.WHITE)
                 .create()
         )
-    }
-
-    private fun setupOnClickListeners(){
-        setupSpeedDialMainBtnClick()
-        setupSpeedDialMenuClick()
-    }
-
-    private fun setupSpeedDialMainBtnClick(){
-        binding.speedDial.setOnChangeListener(object : SpeedDialView.OnChangeListener{
-            override fun onMainActionSelected(): Boolean {
-                return false
-            }
-            override fun onToggleChanged(isOpen: Boolean) {
-                dimOrRestoreBackground(isOpen)
-            }
-        })
-    }
-
-    private fun dimOrRestoreBackground(isDialOpen : Boolean){
-        val window = requireActivity().window
-        if (isDialOpen){
-            window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.primaryVariantAlpha03)
-            binding.mainLayout.alpha = 0.3F
-        } else {
-            window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.primaryVariant)
-            binding.mainLayout.alpha = 1F
-        }
     }
 
     private fun setupSpeedDialMenuClick(){

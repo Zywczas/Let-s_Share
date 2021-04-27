@@ -1,5 +1,6 @@
 package com.zywczas.letsshare.utils
 
+import android.app.Activity
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
@@ -10,9 +11,11 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.annotation.StringRes
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
+import com.leinardi.android.speeddial.SpeedDialView
 import com.zywczas.letsshare.R
 import kotlinx.coroutines.channels.SendChannel
 import java.text.SimpleDateFormat
@@ -40,3 +43,21 @@ fun dateInPoland(): Date = Calendar.getInstance(LOCALE_POLAND).time
 fun Date.monthId(): String = SimpleDateFormat("yyyy-MM", LOCALE_POLAND).format(this)
 
 fun Date.dayFormat(): String = SimpleDateFormat("d.MM", LOCALE_POLAND).format(this)
+
+fun SpeedDialView.dimBackgroundOnMainButtonClick(activity: Activity, mainLayout: View){
+    val window = activity.window
+
+    setOnChangeListener(object : SpeedDialView.OnChangeListener{
+        override fun onMainActionSelected(): Boolean = false
+
+        override fun onToggleChanged(isOpen: Boolean) {
+            if (isOpen){
+                window.statusBarColor = ContextCompat.getColor(mainLayout.context, R.color.primaryVariantAlpha03)
+                mainLayout.alpha = 0.3F
+            } else {
+                window.statusBarColor = ContextCompat.getColor(mainLayout.context, R.color.primaryVariant)
+                mainLayout.alpha = 1F
+            }
+        }
+    })
+}

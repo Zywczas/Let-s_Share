@@ -25,7 +25,7 @@ import com.zywczas.letsshare.utils.showSnackbar
 import javax.inject.Inject
 
 class GroupSettingsFragment @Inject constructor(
-    private val viewModelFactory: UniversalViewModelFactory,
+    viewModelFactory: UniversalViewModelFactory,
     @TextListenerDebounce private val textDebounce: Long
 ) : Fragment() {
 

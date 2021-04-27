@@ -16,7 +16,7 @@ import com.zywczas.letsshare.utils.hideSoftKeyboard
 import com.zywczas.letsshare.utils.showSnackbar
 import javax.inject.Inject
 
-class RegisterFragment @Inject constructor(private val viewModelFactory: UniversalViewModelFactory) : Fragment(){
+class RegisterFragment @Inject constructor(viewModelFactory: UniversalViewModelFactory) : Fragment(){
 
     private val viewModel: RegisterViewModel by viewModels { viewModelFactory }
     private var binding: FragmentRegisterBinding by autoRelease()

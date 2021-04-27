@@ -17,7 +17,7 @@ import com.zywczas.letsshare.utils.showSnackbar
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class LoginFragment @Inject constructor(private val viewModelFactory: UniversalViewModelFactory) : Fragment(){
+class LoginFragment @Inject constructor(viewModelFactory: UniversalViewModelFactory) : Fragment(){
 
     private val viewModel: LoginViewModel by viewModels { viewModelFactory }
     private var binding: FragmentLoginBinding by autoRelease()

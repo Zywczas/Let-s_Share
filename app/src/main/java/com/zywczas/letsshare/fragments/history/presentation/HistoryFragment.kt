@@ -16,7 +16,7 @@ import com.zywczas.letsshare.utils.autoRelease
 import com.zywczas.letsshare.utils.showSnackbar
 import javax.inject.Inject
 
-class HistoryFragment @Inject constructor(private val viewModelFactory: UniversalViewModelFactory) : Fragment() {
+class HistoryFragment @Inject constructor(viewModelFactory: UniversalViewModelFactory) : Fragment() {
 
     private val viewModel: HistoryViewModel by viewModels { viewModelFactory }
     private var binding: FragmentHistoryBinding by autoRelease()

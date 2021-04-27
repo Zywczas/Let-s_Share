@@ -12,7 +12,7 @@ import com.zywczas.letsshare.di.factories.UniversalViewModelFactory
 import com.zywczas.letsshare.utils.autoRelease
 import javax.inject.Inject
 
-class WelcomeFragment @Inject constructor(private val viewModelFactory: UniversalViewModelFactory) : Fragment() {
+class WelcomeFragment @Inject constructor(viewModelFactory: UniversalViewModelFactory) : Fragment() {
 
     private val viewModel: WelcomeViewModel by viewModels { viewModelFactory }
     private var binding: FragmentWelcomeBinding by autoRelease()

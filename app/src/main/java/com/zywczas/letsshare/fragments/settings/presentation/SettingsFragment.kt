@@ -17,7 +17,7 @@ import com.zywczas.letsshare.utils.showSnackbar
 import com.zywczas.letsshare.utils.turnOffOnBackPressed
 import javax.inject.Inject
 
-class SettingsFragment @Inject constructor(private val viewModelFactory: UniversalViewModelFactory) : Fragment() {
+class SettingsFragment @Inject constructor(viewModelFactory: UniversalViewModelFactory) : Fragment() {
 
     private val viewModel: SettingsViewModel by viewModels { viewModelFactory }
     private var binding: FragmentSettingsBinding by autoRelease()

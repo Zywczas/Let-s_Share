@@ -22,7 +22,7 @@ import com.zywczas.letsshare.utils.showSnackbar
 import com.zywczas.letsshare.utils.turnOffOnBackPressed
 import javax.inject.Inject
 
-class FriendsFragment @Inject constructor(private val viewModelFactory: UniversalViewModelFactory) : Fragment() {
+class FriendsFragment @Inject constructor(viewModelFactory: UniversalViewModelFactory) : Fragment() {
 
     private val viewModel: FriendsViewModel by viewModels { viewModelFactory }
     private var binding: FragmentFriendsBinding by autoRelease()
