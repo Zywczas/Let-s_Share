@@ -24,7 +24,7 @@ class HistoryFragment @Inject constructor(private val viewModelFactory: Universa
     private val viewModel: HistoryViewModel by viewModels { viewModelFactory }
     private var binding: FragmentHistoryBinding by autoRelease()
     private val args: HistoryFragmentArgs by navArgs()
-    private val adapter by lazy { GroupMonthAdapter(args.group.currency){
+    private val adapter by lazy { GroupMonthAdapter(args.group.currency){ month ->
         showSnackbar("dziala")
     } }
 
