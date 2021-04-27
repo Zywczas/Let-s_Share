@@ -1,4 +1,4 @@
-package com.zywczas.letsshare.fragments.groupsettings.adapters
+package com.zywczas.letsshare.adapters
 
 import android.view.LayoutInflater
 import android.view.View

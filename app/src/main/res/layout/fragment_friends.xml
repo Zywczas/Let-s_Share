@@ -11,7 +11,7 @@
 
         <variable
             name="adapterXML"
-            type="com.zywczas.letsshare.fragments.friends.adapter.FriendsAdapter" />
+            type="com.zywczas.letsshare.adapters.FriendsAdapter" />
     </data>
 
     <FrameLayout

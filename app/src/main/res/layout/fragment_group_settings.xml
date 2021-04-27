@@ -11,7 +11,7 @@
 
         <variable
             name="membersAdapterXML"
-            type="com.zywczas.letsshare.fragments.groupsettings.adapters.GroupMembersSettingsAdapter" />
+            type="com.zywczas.letsshare.adapters.GroupMembersSettingsAdapter" />
     </data>
 
     <FrameLayout

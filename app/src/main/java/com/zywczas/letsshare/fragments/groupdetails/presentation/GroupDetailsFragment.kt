@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.setupWithNavController
@@ -17,12 +16,11 @@ import com.leinardi.android.speeddial.SpeedDialView
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.databinding.FragmentGroupDetailsBinding
 import com.zywczas.letsshare.di.factories.UniversalViewModelFactory
-import com.zywczas.letsshare.fragments.groupdetails.adapters.ExpensesAdapter
-import com.zywczas.letsshare.fragments.groupdetails.adapters.GroupMembersAdapter
+import com.zywczas.letsshare.adapters.ExpensesAdapter
+import com.zywczas.letsshare.adapters.GroupMembersAdapter
 import com.zywczas.letsshare.utils.autoRelease
 import com.zywczas.letsshare.utils.monthId
 import com.zywczas.letsshare.utils.showSnackbar
-import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
 

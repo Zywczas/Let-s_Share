@@ -15,7 +15,7 @@ import com.leinardi.android.speeddial.SpeedDialView
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.databinding.FragmentGroupsBinding
 import com.zywczas.letsshare.di.factories.UniversalViewModelFactory
-import com.zywczas.letsshare.fragments.groups.adapter.GroupsAdapter
+import com.zywczas.letsshare.adapters.GroupsAdapter
 import com.zywczas.letsshare.utils.autoRelease
 import com.zywczas.letsshare.utils.showSnackbar
 import com.zywczas.letsshare.utils.turnOffOnBackPressed
@@ -28,7 +28,8 @@ class GroupsFragment @Inject constructor(private val viewModelFactory: Universal
     private val groupsAdapter by lazy { GroupsAdapter{ group ->
             viewModel.saveCurrentlyOpenGroupId(group.id)
             findNavController().navigate(GroupsFragmentDirections.toGroupDetailsFragment(group))
-    }}
+    }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

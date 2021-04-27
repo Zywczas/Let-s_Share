@@ -8,7 +8,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.zywczas.letsshare.databinding.DialogAddGroupMemberBinding
-import com.zywczas.letsshare.fragments.friends.adapter.FriendsAdapter
+import com.zywczas.letsshare.adapters.FriendsAdapter
 import com.zywczas.letsshare.utils.autoRelease
 import kotlinx.coroutines.launch
 
@@ -20,7 +20,8 @@ class AddGroupMemberDialog : DialogFragment() {
     private val adapter by lazy { FriendsAdapter{ friend ->
             viewModel.addNewMember(friend)
             dismiss()
-        }}
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

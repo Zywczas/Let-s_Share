@@ -1,4 +1,4 @@
-package com.zywczas.letsshare.fragments.history.adapter
+package com.zywczas.letsshare.adapters
 
 import android.content.res.ColorStateList
 import android.view.LayoutInflater
@@ -29,14 +29,14 @@ class GroupMonthAdapter(
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val name: TextView = itemView.findViewById(R.id.name)
         private val expenses: TextView = itemView.findViewById(R.id.expenses)
-        private val isSettledUp: ImageView = itemView.findViewById(R.id.isSettledUp)
+        private val isSettledUp: TextView = itemView.findViewById(R.id.isSettledUp)
 
         fun bindMonth(month: GroupMonthDomain) {
-            name.text = month.id //todo zamienic na nazwe miesiaca
+            name.text = month.id
             expenses.text = String.format(Locale.UK, "%.2f $currency", month.totalExpenses)
-            if (month.isSettledUp){
-                isSettledUp.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(itemView.context, R.color.check))
-            }
+            isSettledUp.text = if (month.isSettledUp) { itemView.context.getString(R.string.yes) }
+                else { itemView.context.getString(R.string.no) }
+
             itemView.setOnClickListener { onClick(month) }
         }
 

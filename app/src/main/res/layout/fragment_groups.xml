@@ -11,7 +11,7 @@
 
         <variable
             name="adapter"
-            type="com.zywczas.letsshare.fragments.groups.adapter.GroupsAdapter" />
+            type="com.zywczas.letsshare.adapters.GroupsAdapter" />
     </data>
 
     <FrameLayout

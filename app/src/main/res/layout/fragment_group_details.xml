@@ -11,11 +11,11 @@
 
         <variable
             name="membersAdapterXML"
-            type="com.zywczas.letsshare.fragments.groupdetails.adapters.GroupMembersAdapter" />
+            type="com.zywczas.letsshare.adapters.GroupMembersAdapter" />
 
         <variable
             name="expensesAdapterXML"
-            type="com.zywczas.letsshare.fragments.groupdetails.adapters.ExpensesAdapter" />
+            type="com.zywczas.letsshare.adapters.ExpensesAdapter" />
     </data>
 
     <FrameLayout
