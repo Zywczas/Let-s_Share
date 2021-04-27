@@ -18,16 +18,15 @@ import com.leinardi.android.speeddial.SpeedDialView
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.databinding.FragmentGroupSettingsBinding
 import com.zywczas.letsshare.di.factories.UniversalViewModelFactory
-import com.zywczas.letsshare.di.modules.UtilsModule.TextDebounce
+import com.zywczas.letsshare.di.modules.UtilsModule.TextListenerDebounce
 import com.zywczas.letsshare.fragments.groupsettings.adapters.GroupMembersSettingsAdapter
 import com.zywczas.letsshare.utils.autoRelease
 import com.zywczas.letsshare.utils.showSnackbar
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class GroupSettingsFragment @Inject constructor(
     private val viewModelFactory: UniversalViewModelFactory,
-    @TextDebounce private val textDebounce: Long
+    @TextListenerDebounce private val textDebounce: Long
 ) : Fragment() {
 
     private val viewModel: GroupSettingsViewModel by viewModels { viewModelFactory }

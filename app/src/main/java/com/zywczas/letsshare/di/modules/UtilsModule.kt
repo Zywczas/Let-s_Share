@@ -8,15 +8,15 @@ import javax.inject.Qualifier
 class UtilsModule {
 
     @Provides
-    @TextDebounce
-    fun provideTextDebounce(): Long = 500L
+    @TextListenerDebounce
+    fun provideTextListenerDebounce(): Long = 500L
 
     @Provides
     @WelcomeScreenDelay
     fun provideWelcomeScreenDelay() = 1500L
 
     @Qualifier
-    annotation class TextDebounce
+    annotation class TextListenerDebounce
 
     @Qualifier
     annotation class WelcomeScreenDelay

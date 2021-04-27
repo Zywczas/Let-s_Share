@@ -7,6 +7,7 @@ import com.zywczas.letsshare.fragments.groupdetails.presentation.GroupDetailsVie
 import com.zywczas.letsshare.fragments.groups.presentation.GroupsViewModel
 import com.zywczas.letsshare.fragments.groupsettings.presentation.GroupSettingsViewModel
 import com.zywczas.letsshare.fragments.history.presentation.HistoryViewModel
+import com.zywczas.letsshare.fragments.historydetails.presentation.HistoryDetailsViewModel
 import com.zywczas.letsshare.fragments.login.presentation.LoginViewModel
 import com.zywczas.letsshare.fragments.register.presentation.RegisterViewModel
 import com.zywczas.letsshare.fragments.settings.presentation.SettingsViewModel
@@ -62,5 +63,10 @@ abstract class ViewModelFactoryModule {
     @IntoMap
     @ViewModelKey(SettingsViewModel::class)
     abstract fun bindSettingsViewModel(vm: SettingsViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(HistoryDetailsViewModel::class)
+    abstract fun bindHistoryDetailsViewModel(vm: HistoryDetailsViewModel): ViewModel
 
 }

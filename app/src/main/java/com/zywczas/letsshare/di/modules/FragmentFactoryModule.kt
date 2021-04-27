@@ -7,6 +7,7 @@ import com.zywczas.letsshare.fragments.groupdetails.presentation.GroupDetailsFra
 import com.zywczas.letsshare.fragments.groups.presentation.GroupsFragment
 import com.zywczas.letsshare.fragments.groupsettings.presentation.GroupSettingsFragment
 import com.zywczas.letsshare.fragments.history.presentation.HistoryFragment
+import com.zywczas.letsshare.fragments.historydetails.presentation.HistoryDetailsFragment
 import com.zywczas.letsshare.fragments.login.presentation.LoginFragment
 import com.zywczas.letsshare.fragments.register.presentation.RegisterFragment
 import com.zywczas.letsshare.fragments.settings.presentation.SettingsFragment
@@ -62,5 +63,10 @@ abstract class FragmentFactoryModule {
     @IntoMap
     @FragmentKey(SettingsFragment::class)
     abstract fun bindSettingsFragment(fragment: SettingsFragment): Fragment
+
+    @Binds
+    @IntoMap
+    @FragmentKey(HistoryDetailsFragment::class)
+    abstract fun bindHistoryDetailsFragment(fragment: HistoryDetailsFragment): Fragment
 
 }
