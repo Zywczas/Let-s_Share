@@ -67,6 +67,8 @@
     <string name="your_email">Twój email:</string>
     <string name="history">Historia</string>
     <string name="settle_up">Rozlicz</string>
+    <string name="settled_up_message">Ten mesiąc został już rozliczony.</string>
+    <string name="not_settled_up_message">Ten mesiąc nie jest jeszcze rozliczony.</string>
 
     <!--    content description-->
     <string name="check">Potwierdź</string>

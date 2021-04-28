@@ -1,10 +1,10 @@
 package com.zywczas.letsshare.fragments.historydetails.presentation
 
+import androidx.annotation.StringRes
 import androidx.lifecycle.*
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.activitymain.domain.withBalance
 import com.zywczas.letsshare.activitymain.presentation.BaseViewModel
-import com.zywczas.letsshare.di.modules.DispatchersModule
 import com.zywczas.letsshare.di.modules.DispatchersModule.*
 import com.zywczas.letsshare.fragments.historydetails.domain.HistoryDetailsRepository
 import com.zywczas.letsshare.model.ExpenseDomain
@@ -19,20 +19,27 @@ class HistoryDetailsViewModel @Inject constructor(
     private val repository: HistoryDetailsRepository
 ) : BaseViewModel() {
 
-    private val _currentMonth = MutableLiveData<GroupMonthDomain>()
-    private val currentMonth: LiveData<GroupMonthDomain> = _currentMonth
+    private val _month = MutableLiveData<GroupMonthDomain>()
+    private val month: LiveData<GroupMonthDomain> = _month
 
     private val _isMembersProgressBarVisible = MutableLiveData<Boolean>()
     val isMembersProgressBarVisible: LiveData<Boolean> = _isMembersProgressBarVisible
 
-    val monthlySum: LiveData<String> = Transformations.switchMap(currentMonth) { month ->
+    val settledUpMessage: LiveData<Int> = Transformations.switchMap(month) { month ->
+        liveData(dispatchersIO) {
+            if (month.isSettledUp) { emit(R.string.settled_up_message) }
+            else { emit(R.string.not_settled_up_message) }
+        }
+    }
+
+    val monthlySum: LiveData<String> = Transformations.switchMap(month) { month ->
         liveData(dispatchersIO) {
             emit(month.totalExpenses.toString())
         }
     }
 
     val members: LiveData<List<GroupMemberDomain>> =
-        Transformations.switchMap(currentMonth) { month ->
+        Transformations.switchMap(month) { month ->
             liveData(dispatchersIO) {
                 _isMembersProgressBarVisible.postValue(true)
                 repository.getMembers(month.id)?.let { emit(it.withBalance(month.totalExpenses)) }
@@ -43,7 +50,7 @@ class HistoryDetailsViewModel @Inject constructor(
 
     private fun postMonthError() = postMessage(R.string.cant_get_month)
 
-    val expenses: LiveData<List<ExpenseDomain>> = Transformations.switchMap(currentMonth) { month ->
+    val expenses: LiveData<List<ExpenseDomain>> = Transformations.switchMap(month) { month ->
         liveData(dispatchersIO) {
             showProgressBar(true)
             repository.getExpenses(month.id)?.let { emit(it) }
@@ -54,7 +61,7 @@ class HistoryDetailsViewModel @Inject constructor(
 
     fun getMonthDetails(month: GroupMonthDomain){
         viewModelScope.launch(dispatchersIO) {
-            _currentMonth.postValue(month)
+            _month.postValue(month)
         }
     }
 

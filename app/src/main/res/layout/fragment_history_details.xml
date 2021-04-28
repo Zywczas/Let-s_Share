@@ -112,10 +112,23 @@
                     app:layout_constraintTop_toTopOf="parent"
                     tools:context=".fragments.groupdetails.presentation.GroupDetailsFragment">
 
+                    <TextView
+                        android:id="@+id/settledUpMessage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:textSize="18sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="This month is not settled up yet." />
+
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/expensesRecycler"
-                        android:layout_width="0dp"
+                        android:layout_width="412dp"
                         android:layout_height="0dp"
+                        android:layout_marginTop="8dp"
                         app:adapter="@{expensesAdapterXML}"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         app:layout_anchor="@+id/constraintLayout"
@@ -124,7 +137,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/settledUpMessage"
                         tools:itemCount="2"
                         tools:listitem="@layout/list_item_expenses" />
 

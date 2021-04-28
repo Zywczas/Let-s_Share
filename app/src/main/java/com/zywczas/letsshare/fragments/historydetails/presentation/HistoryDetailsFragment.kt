@@ -17,12 +17,10 @@ import com.zywczas.letsshare.adapters.ExpensesAdapter
 import com.zywczas.letsshare.adapters.GroupMembersAdapter
 import com.zywczas.letsshare.databinding.FragmentHistoryDetailsBinding
 import com.zywczas.letsshare.di.factories.UniversalViewModelFactory
-import com.zywczas.letsshare.di.modules.DispatchersModule.*
 import com.zywczas.letsshare.fragments.groupdetails.presentation.GroupDetailsFragmentDirections
 import com.zywczas.letsshare.utils.autoRelease
 import com.zywczas.letsshare.utils.dimBackgroundOnMainButtonClick
 import com.zywczas.letsshare.utils.showSnackbar
-import java.util.*
 import javax.inject.Inject
 
 class HistoryDetailsFragment @Inject constructor(viewModelFactory: UniversalViewModelFactory) : Fragment() {
@@ -60,6 +58,7 @@ class HistoryDetailsFragment @Inject constructor(viewModelFactory: UniversalView
         viewModel.monthlySum.observe(viewLifecycleOwner){ binding.toolbar.title = "${args.group.name} - $it ${args.group.currency}" }
         viewModel.members.observe(viewLifecycleOwner){ membersAdapter.submitList(it.toMutableList()) }
         viewModel.expenses.observe(viewLifecycleOwner){ expensesAdapter.submitList(it.toMutableList()) }
+        viewModel.settledUpMessage.observe(viewLifecycleOwner){ binding.settledUpMessage.text = getString(it) }
     }
 
     private fun setupSpeedDial(){

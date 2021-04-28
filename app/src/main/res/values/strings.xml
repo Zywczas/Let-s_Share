@@ -67,6 +67,8 @@
     <string name="your_email">Your email:</string>
     <string name="history">History</string>
     <string name="settle_up">Settle up</string>
+    <string name="settled_up_message">This month is settled up.</string>
+    <string name="not_settled_up_message">This month is not settled up yet.</string>
 
     <!--    content description-->
     <string name="check">Check</string>
