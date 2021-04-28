@@ -11,7 +11,6 @@ import com.zywczas.letsshare.activitymain.domain.SharedPrefsWrapper
 import com.zywczas.letsshare.activitymain.domain.toDomain
 import com.zywczas.letsshare.model.*
 import com.zywczas.letsshare.utils.dateInPoland
-import com.zywczas.letsshare.utils.dayFormat
 import com.zywczas.letsshare.utils.logD
 import com.zywczas.letsshare.utils.monthId
 import kotlinx.coroutines.ExperimentalCoroutinesApi

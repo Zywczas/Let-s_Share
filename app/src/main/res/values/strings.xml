@@ -66,6 +66,7 @@
     <string name="your_name">Your name:</string>
     <string name="your_email">Your email:</string>
     <string name="history">History</string>
+    <string name="settle_up">Settle up</string>
 
     <!--    content description-->
     <string name="check">Check</string>

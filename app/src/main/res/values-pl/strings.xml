@@ -66,6 +66,7 @@
     <string name="your_name">Twoje imię:</string>
     <string name="your_email">Twój email:</string>
     <string name="history">Historia</string>
+    <string name="settle_up">Rozlicz</string>
 
     <!--    content description-->
     <string name="check">Potwierdź</string>

@@ -33,7 +33,7 @@
         android:contentDescription="@string/check"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_check_24"
+        app:srcCompat="@drawable/ic_check"
         app:tint="@color/check" />
 
     <ImageView
@@ -47,7 +47,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nameFrame"
-        app:srcCompat="@drawable/ic_x_35_white"
+        app:srcCompat="@drawable/ic_x"
         app:tint="@color/cancel" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -22,7 +22,7 @@ class HistoryFragment @Inject constructor(viewModelFactory: UniversalViewModelFa
     private var binding: FragmentHistoryBinding by autoRelease()
     private val args: HistoryFragmentArgs by navArgs()
     private val adapter by lazy { GroupMonthAdapter(args.group.currency){ month ->
-        showSnackbar("dziala")
+        findNavController().navigate(HistoryFragmentDirections.toHistoryDetailsFragment(args.group, month))
     } }
 
     override fun onCreateView(

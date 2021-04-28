@@ -92,7 +92,7 @@
                             android:layout_marginBottom="11dp"
                             android:indeterminateTint="@color/onPrimary"
                             android:visibility="invisible"
-                            app:isVisible="@{vm.isProgressBarVisible()}"
+                            app:isVisible="@{vm.isMembersProgressBarVisible()}"
                             app:layout_collapseMode="parallax"
                             app:layout_collapseParallaxMultiplier="0.7"
                             tools:visibility="visible" />
@@ -157,8 +157,8 @@
             android:theme="@style/Theme.LetsShare"
             app:fabSize="normal"
             app:sdMainFabAnimationRotateAngle="360"
-            app:sdMainFabClosedSrc="@drawable/ic_plus_35_white"
-            app:sdMainFabOpenedSrc="@drawable/ic_x_35_white"
+            app:sdMainFabClosedSrc="@drawable/ic_plus"
+            app:sdMainFabOpenedSrc="@drawable/ic_x"
             app:sdUseReverseAnimationOnClose="true" />
 
     </FrameLayout>

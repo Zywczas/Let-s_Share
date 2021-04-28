@@ -2,6 +2,7 @@ package com.zywczas.letsshare.fragments.groupdetails.presentation
 
 import androidx.lifecycle.*
 import com.zywczas.letsshare.R
+import com.zywczas.letsshare.activitymain.domain.withBalance
 import com.zywczas.letsshare.activitymain.presentation.BaseViewModel
 import com.zywczas.letsshare.di.modules.DispatchersModule.DispatchersIO
 import com.zywczas.letsshare.fragments.groupdetails.domain.GroupDetailsRepository
@@ -26,21 +27,12 @@ class GroupDetailsViewModel @Inject constructor(
     private val _currentMonth = MutableLiveData<GroupMonthDomain>()
     private val currentMonth: LiveData<GroupMonthDomain> = _currentMonth
 
-    val monthlySum: LiveData<String> = Transformations.switchMap(currentMonth) { month ->
-        liveData(dispatchersIO) {
-            emit(month.totalExpenses.toString())
-        }
-    }
-
     private val _isMembersProgressBarVisible = MutableLiveData<Boolean>()
     val isMembersProgressBarVisible: LiveData<Boolean> = _isMembersProgressBarVisible
 
-    val expenses: LiveData<List<ExpenseDomain>> = Transformations.switchMap(currentMonth) { month ->
+    val monthlySum: LiveData<String> = Transformations.switchMap(currentMonth) { month ->
         liveData(dispatchersIO) {
-            showProgressBar(true)
-            repository.getExpenses(month.id)?.let { emit(it) }
-                ?: postMessage(R.string.cant_get_expenses)
-            showProgressBar(false)
+            emit(month.totalExpenses.toString())
         }
     }
 
@@ -54,21 +46,16 @@ class GroupDetailsViewModel @Inject constructor(
             }
         }
 
-    private fun List<GroupMemberDomain>.withBalance(groupTotalExpense: BigDecimal): List<GroupMemberDomain> {
-        forEach { member ->
-            val whatShouldPay = groupTotalExpense.multiply(member.share).divide(BigDecimal((100)))
-            val balance = whatShouldPay.minus(member.expenses)
-            if (balance > BigDecimal.ZERO) {
-                member.owesOrOver = R.string.owes
-            } else {
-                member.owesOrOver = R.string.over
-            }
-            member.difference = balance.setScale(2, BigDecimal.ROUND_HALF_UP).abs()
-        }
-        return this
-    }
-
     private fun postMonthError() = postMessage(R.string.cant_get_month)
+
+    val expenses: LiveData<List<ExpenseDomain>> = Transformations.switchMap(currentMonth) { month ->
+        liveData(dispatchersIO) {
+            showProgressBar(true)
+            repository.getExpenses(month.id)?.let { emit(it) }
+                ?: postMessage(R.string.cant_get_expenses)
+            showProgressBar(false)
+        }
+    }
 
     fun getMonthDetails() {
         viewModelScope.launch(dispatchersIO) {

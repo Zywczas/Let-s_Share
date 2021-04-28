@@ -42,6 +42,6 @@
         app:layout_constraintDimensionRatio="h,1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/expenses"
-        app:srcCompat="@drawable/ic_check_circle_24"
+        app:srcCompat="@drawable/ic_check_circle"
         android:contentDescription="@string/is_settled_up" />
 </androidx.constraintlayout.widget.ConstraintLayout>

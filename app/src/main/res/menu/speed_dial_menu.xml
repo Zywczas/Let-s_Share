@@ -25,4 +25,8 @@
         android:id="@+id/history"
         android:title="@string/history" />
 
+    <item
+        android:id="@+id/settleUp"
+        android:title="@string/settle_up" />
+
 </menu>

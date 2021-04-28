@@ -12,7 +12,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.setupWithNavController
 import com.leinardi.android.speeddial.SpeedDialActionItem
-import com.leinardi.android.speeddial.SpeedDialView
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.databinding.FragmentGroupDetailsBinding
 import com.zywczas.letsshare.di.factories.UniversalViewModelFactory
@@ -74,7 +73,7 @@ class GroupDetailsFragment @Inject constructor(viewModelFactory: UniversalViewMo
 
     private fun setupSpeedDialMenu(){
         binding.speedDial.addActionItem(
-            SpeedDialActionItem.Builder(R.id.history, R.drawable.ic_history_24)
+            SpeedDialActionItem.Builder(R.id.history, R.drawable.ic_history)
                 .setFabBackgroundColor(ContextCompat.getColor(requireContext(), R.color.thirdFABItem))
                 .setFabImageTintColor(Color.WHITE)
                 .setLabel(getString(R.string.history))
@@ -83,7 +82,7 @@ class GroupDetailsFragment @Inject constructor(viewModelFactory: UniversalViewMo
                 .create()
         )
         binding.speedDial.addActionItem(
-            SpeedDialActionItem.Builder(R.id.groupSettings, R.drawable.ic_settings_24)
+            SpeedDialActionItem.Builder(R.id.groupSettings, R.drawable.ic_settings)
                 .setFabBackgroundColor(ContextCompat.getColor(requireContext(), R.color.secondFABItem))
                 .setFabImageTintColor(Color.WHITE)
                 .setLabel(getString(R.string.group_settings))

@@ -88,8 +88,8 @@
             android:theme="@style/Theme.LetsShare"
             app:fabSize="normal"
             app:sdMainFabAnimationRotateAngle="360"
-            app:sdMainFabClosedSrc="@drawable/ic_plus_35_white"
-            app:sdMainFabOpenedSrc="@drawable/ic_x_35_white"
+            app:sdMainFabClosedSrc="@drawable/ic_plus"
+            app:sdMainFabOpenedSrc="@drawable/ic_x"
             app:sdUseReverseAnimationOnClose="true" />
     </FrameLayout>
 </layout>
