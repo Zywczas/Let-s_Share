@@ -1,11 +1,10 @@
 package com.zywczas.letsshare.fragments.historydetails.presentation
 
-import androidx.annotation.StringRes
 import androidx.lifecycle.*
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.activitymain.domain.withBalance
 import com.zywczas.letsshare.activitymain.presentation.BaseViewModel
-import com.zywczas.letsshare.di.modules.DispatchersModule.*
+import com.zywczas.letsshare.di.modules.DispatchersModule.DispatchersIO
 import com.zywczas.letsshare.fragments.historydetails.domain.HistoryDetailsRepository
 import com.zywczas.letsshare.model.ExpenseDomain
 import com.zywczas.letsshare.model.GroupMemberDomain

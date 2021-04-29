@@ -69,10 +69,11 @@
     <string name="settle_up">Rozlicz</string>
     <string name="settled_up_message">Ten mesiąc został już rozliczony.</string>
     <string name="not_settled_up_message">Ten mesiąc nie jest jeszcze rozliczony.</string>
-
-    <!--    content description-->
-    <string name="check">Potwierdź</string>
+    <string name="settle_up_dialog_title">Rozliczyć ten miesiąc?</string>
+    <string name="settle_up_dialog_message">Jak rozliczysz ten miesiąc to już nie będzie można go modyfikować.</string>
+    <string name="confirm">Potwierdź</string>
     <string name="cancel">Anuluj</string>
+    <string name="check">Potwierdź</string>
     <string name="is_settled_up">Rozliczony</string>
 
 </resources>
