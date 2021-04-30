@@ -1,10 +1,10 @@
-package com.zywczas.letsshare.model.db
+package com.zywczas.letsshare.db
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.zywczas.letsshare.model.Friend
+import com.zywczas.letsshare.models.Friend
 
 @Dao
 interface FriendsDao {

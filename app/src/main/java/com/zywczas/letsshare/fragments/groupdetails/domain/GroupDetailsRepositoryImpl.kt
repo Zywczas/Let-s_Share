@@ -9,7 +9,7 @@ import com.zywczas.letsshare.activitymain.domain.CrashlyticsWrapper
 import com.zywczas.letsshare.activitymain.domain.FirestoreReferences
 import com.zywczas.letsshare.activitymain.domain.SharedPrefsWrapper
 import com.zywczas.letsshare.activitymain.domain.toDomain
-import com.zywczas.letsshare.model.*
+import com.zywczas.letsshare.models.*
 import com.zywczas.letsshare.utils.dateInPoland
 import com.zywczas.letsshare.utils.logD
 import com.zywczas.letsshare.utils.monthId

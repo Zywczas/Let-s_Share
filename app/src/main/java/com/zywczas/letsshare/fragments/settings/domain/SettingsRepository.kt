@@ -1,6 +1,6 @@
 package com.zywczas.letsshare.fragments.settings.domain
 
-import com.zywczas.letsshare.model.User
+import com.zywczas.letsshare.models.User
 
 interface SettingsRepository {
 

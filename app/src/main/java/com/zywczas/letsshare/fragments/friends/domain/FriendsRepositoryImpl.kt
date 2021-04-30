@@ -8,9 +8,9 @@ import com.zywczas.letsshare.R
 import com.zywczas.letsshare.activitymain.domain.CrashlyticsWrapper
 import com.zywczas.letsshare.activitymain.domain.FirestoreReferences
 import com.zywczas.letsshare.activitymain.domain.SharedPrefsWrapper
-import com.zywczas.letsshare.model.Friend
-import com.zywczas.letsshare.model.User
-import com.zywczas.letsshare.model.db.FriendsDao
+import com.zywczas.letsshare.db.FriendsDao
+import com.zywczas.letsshare.models.Friend
+import com.zywczas.letsshare.models.User
 import com.zywczas.letsshare.utils.logD
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.SendChannel

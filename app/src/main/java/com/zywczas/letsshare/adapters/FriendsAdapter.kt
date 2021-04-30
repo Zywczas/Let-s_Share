@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.zywczas.letsshare.R
-import com.zywczas.letsshare.model.Friend
+import com.zywczas.letsshare.models.Friend
 
 class FriendsAdapter(private val onClick: (Friend) -> Unit = {}) :
     ListAdapter<Friend, FriendsAdapter.ViewHolder>(object : DiffUtil.ItemCallback<Friend>() {

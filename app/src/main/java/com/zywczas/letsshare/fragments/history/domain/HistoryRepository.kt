@@ -1,6 +1,6 @@
 package com.zywczas.letsshare.fragments.history.domain
 
-import com.zywczas.letsshare.model.GroupMonthDomain
+import com.zywczas.letsshare.models.GroupMonthDomain
 
 interface HistoryRepository {
 

@@ -6,9 +6,9 @@ import com.zywczas.letsshare.SessionManager
 import com.zywczas.letsshare.activitymain.presentation.BaseViewModel
 import com.zywczas.letsshare.di.modules.DispatchersModule.*
 import com.zywczas.letsshare.fragments.groupsettings.domain.GroupSettingsRepository
-import com.zywczas.letsshare.model.Friend
-import com.zywczas.letsshare.model.GroupMemberDomain
-import com.zywczas.letsshare.model.GroupMonthDomain
+import com.zywczas.letsshare.models.Friend
+import com.zywczas.letsshare.models.GroupMemberDomain
+import com.zywczas.letsshare.models.GroupMonthDomain
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 import java.math.BigDecimal

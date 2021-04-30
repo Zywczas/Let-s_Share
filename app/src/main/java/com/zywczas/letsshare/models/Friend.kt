@@ -1,4 +1,4 @@
-package com.zywczas.letsshare.model
+package com.zywczas.letsshare.models
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

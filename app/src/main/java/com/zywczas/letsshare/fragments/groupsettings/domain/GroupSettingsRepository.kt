@@ -1,7 +1,7 @@
 package com.zywczas.letsshare.fragments.groupsettings.domain
 
-import com.zywczas.letsshare.model.Friend
-import com.zywczas.letsshare.model.GroupMemberDomain
+import com.zywczas.letsshare.models.Friend
+import com.zywczas.letsshare.models.GroupMemberDomain
 
 interface GroupSettingsRepository {
 

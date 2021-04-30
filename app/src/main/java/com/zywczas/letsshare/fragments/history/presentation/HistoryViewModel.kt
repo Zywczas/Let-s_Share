@@ -7,7 +7,7 @@ import com.zywczas.letsshare.R
 import com.zywczas.letsshare.activitymain.presentation.BaseViewModel
 import com.zywczas.letsshare.di.modules.DispatchersModule.DispatchersIO
 import com.zywczas.letsshare.fragments.history.domain.HistoryRepository
-import com.zywczas.letsshare.model.GroupMonthDomain
+import com.zywczas.letsshare.models.GroupMonthDomain
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 import javax.inject.Inject

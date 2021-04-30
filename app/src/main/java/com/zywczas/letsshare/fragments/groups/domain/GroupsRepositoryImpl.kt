@@ -7,10 +7,10 @@ import com.zywczas.letsshare.R
 import com.zywczas.letsshare.activitymain.domain.CrashlyticsWrapper
 import com.zywczas.letsshare.activitymain.domain.FirestoreReferences
 import com.zywczas.letsshare.activitymain.domain.SharedPrefsWrapper
-import com.zywczas.letsshare.model.Group
-import com.zywczas.letsshare.model.GroupMember
-import com.zywczas.letsshare.model.GroupMonth
-import com.zywczas.letsshare.model.User
+import com.zywczas.letsshare.models.Group
+import com.zywczas.letsshare.models.GroupMember
+import com.zywczas.letsshare.models.GroupMonth
+import com.zywczas.letsshare.models.User
 import com.zywczas.letsshare.utils.logD
 import com.zywczas.letsshare.utils.monthId
 import kotlinx.coroutines.ExperimentalCoroutinesApi

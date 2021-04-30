@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.zywczas.letsshare.R
-import com.zywczas.letsshare.model.ExpenseDomain
+import com.zywczas.letsshare.models.ExpenseDomain
 import java.util.*
 
 class ExpensesAdapter(private val currency: String) : ListAdapter<ExpenseDomain, ExpensesAdapter.ViewHolder>(object : DiffUtil.ItemCallback<ExpenseDomain>() {

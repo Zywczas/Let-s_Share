@@ -6,9 +6,9 @@ import com.zywczas.letsshare.activitymain.domain.withBalance
 import com.zywczas.letsshare.activitymain.presentation.BaseViewModel
 import com.zywczas.letsshare.di.modules.DispatchersModule.DispatchersIO
 import com.zywczas.letsshare.fragments.groupdetails.domain.GroupDetailsRepository
-import com.zywczas.letsshare.model.ExpenseDomain
-import com.zywczas.letsshare.model.GroupMemberDomain
-import com.zywczas.letsshare.model.GroupMonthDomain
+import com.zywczas.letsshare.models.ExpenseDomain
+import com.zywczas.letsshare.models.GroupMemberDomain
+import com.zywczas.letsshare.models.GroupMonthDomain
 import com.zywczas.letsshare.utils.monthId
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.channels.Channel

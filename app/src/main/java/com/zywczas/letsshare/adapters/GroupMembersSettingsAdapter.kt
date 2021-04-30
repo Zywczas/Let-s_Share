@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputEditText
 import com.zywczas.letsshare.R
-import com.zywczas.letsshare.model.GroupMemberDomain
+import com.zywczas.letsshare.models.GroupMemberDomain
 import kotlinx.coroutines.*
 import java.math.BigDecimal
 import java.util.*

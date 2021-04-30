@@ -1,7 +1,7 @@
 package com.zywczas.letsshare.fragments.historydetails.domain
 
-import com.zywczas.letsshare.model.ExpenseDomain
-import com.zywczas.letsshare.model.GroupMemberDomain
+import com.zywczas.letsshare.models.ExpenseDomain
+import com.zywczas.letsshare.models.GroupMemberDomain
 
 interface HistoryDetailsRepository {
 

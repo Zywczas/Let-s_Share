@@ -1,7 +1,7 @@
 package com.zywczas.letsshare.fragments.groups.domain
 
-import com.zywczas.letsshare.model.Group
-import com.zywczas.letsshare.model.User
+import com.zywczas.letsshare.models.Group
+import com.zywczas.letsshare.models.User
 import kotlinx.coroutines.flow.Flow
 
 interface GroupsRepository {

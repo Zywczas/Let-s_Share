@@ -1,4 +1,4 @@
-package com.zywczas.letsshare.model
+package com.zywczas.letsshare.models
 
 data class User(
     val id: String = "",

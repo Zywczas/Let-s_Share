@@ -1,4 +1,4 @@
-package com.zywczas.letsshare.model
+package com.zywczas.letsshare.models
 
 import com.zywczas.letsshare.utils.dateInPoland
 import java.util.*

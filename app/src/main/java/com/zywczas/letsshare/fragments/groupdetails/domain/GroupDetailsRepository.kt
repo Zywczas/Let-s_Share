@@ -1,8 +1,8 @@
 package com.zywczas.letsshare.fragments.groupdetails.domain
 
-import com.zywczas.letsshare.model.ExpenseDomain
-import com.zywczas.letsshare.model.GroupMemberDomain
-import com.zywczas.letsshare.model.GroupMonthDomain
+import com.zywczas.letsshare.models.ExpenseDomain
+import com.zywczas.letsshare.models.GroupMemberDomain
+import com.zywczas.letsshare.models.GroupMonthDomain
 import kotlinx.coroutines.flow.Flow
 import java.math.BigDecimal
 

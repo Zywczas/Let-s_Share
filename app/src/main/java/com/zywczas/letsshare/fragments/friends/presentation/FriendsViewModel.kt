@@ -8,7 +8,7 @@ import com.zywczas.letsshare.SessionManager
 import com.zywczas.letsshare.activitymain.presentation.BaseViewModel
 import com.zywczas.letsshare.di.modules.DispatchersModule.DispatchersIO
 import com.zywczas.letsshare.fragments.friends.domain.FriendsRepository
-import com.zywczas.letsshare.model.Friend
+import com.zywczas.letsshare.models.Friend
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.buffer

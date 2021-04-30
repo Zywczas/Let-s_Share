@@ -1,4 +1,4 @@
-package com.zywczas.letsshare.model
+package com.zywczas.letsshare.models
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

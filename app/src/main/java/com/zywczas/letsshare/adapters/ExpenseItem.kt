@@ -6,7 +6,7 @@ import com.mikepenz.fastadapter.binding.AbstractBindingItem
 import com.mikepenz.fastadapter.diff.DiffCallback
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.databinding.ItemExpensesBinding
-import com.zywczas.letsshare.model.ExpenseDomain
+import com.zywczas.letsshare.models.ExpenseDomain
 import java.util.*
 
 class ExpenseItem(private val expense: ExpenseDomain, private val currency: String) : AbstractBindingItem<ItemExpensesBinding>()  {

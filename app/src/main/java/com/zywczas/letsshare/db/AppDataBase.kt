@@ -1,8 +1,8 @@
-package com.zywczas.letsshare.model.db
+package com.zywczas.letsshare.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.zywczas.letsshare.model.Friend
+import com.zywczas.letsshare.models.Friend
 
 @Database(entities = [Friend::class], version = 1)
 abstract class AppDataBase : RoomDatabase() {

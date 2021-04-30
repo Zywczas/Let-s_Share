@@ -6,8 +6,8 @@ import com.zywczas.letsshare.activitymain.domain.CrashlyticsWrapper
 import com.zywczas.letsshare.activitymain.domain.FirestoreReferences
 import com.zywczas.letsshare.activitymain.domain.SharedPrefsWrapper
 import com.zywczas.letsshare.activitymain.domain.toDomain
-import com.zywczas.letsshare.model.GroupMonth
-import com.zywczas.letsshare.model.GroupMonthDomain
+import com.zywczas.letsshare.models.GroupMonth
+import com.zywczas.letsshare.models.GroupMonthDomain
 import com.zywczas.letsshare.utils.logD
 import com.zywczas.letsshare.utils.monthId
 import kotlinx.coroutines.tasks.await

@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.zywczas.letsshare.R
-import com.zywczas.letsshare.model.GroupMonthDomain
+import com.zywczas.letsshare.models.GroupMonthDomain
 import java.util.*
 
 class GroupMonthAdapter(

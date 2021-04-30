@@ -2,8 +2,8 @@ package com.zywczas.letsshare.di.modules
 
 import android.content.Context
 import androidx.room.Room
-import com.zywczas.letsshare.model.db.AppDataBase
-import com.zywczas.letsshare.model.db.FriendsDao
+import com.zywczas.letsshare.db.AppDataBase
+import com.zywczas.letsshare.db.FriendsDao
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
