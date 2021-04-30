@@ -9,7 +9,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.setupWithNavController
@@ -33,7 +32,7 @@ class GroupSettingsFragment @Inject constructor(
     private var binding: FragmentGroupSettingsBinding by autoRelease()
     private val args: GroupSettingsFragmentArgs by navArgs()
     private val membersAdapter by lazy { GroupMembersSettingsAdapter(lifecycle, textDebounce){
-        memberId, split -> lifecycleScope.launchWhenResumed { viewModel.updatePercentage(memberId, split) }
+        memberId, split -> viewModel.updatePercentage(memberId, split)
     } }
 
     override fun onCreateView(
@@ -46,7 +45,7 @@ class GroupSettingsFragment @Inject constructor(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getMembers(args.monthId)
+        viewModel.getMonthSettings(args.month)
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             vm = viewModel
@@ -84,8 +83,8 @@ class GroupSettingsFragment @Inject constructor(
     private fun setupOnClickListeners(){
         setupSpeedDialMainBtnClick()
         setupSpeedDialMenuClick()
-        binding.equalSplit.setOnClickListener { lifecycleScope.launchWhenResumed { viewModel.setEqualSplits() } }
-        binding.save.setOnClickListener { lifecycleScope.launchWhenResumed { viewModel.saveSplits() } }
+        binding.equalSplit.setOnClickListener { viewModel.setEqualSplits() }
+        binding.save.setOnClickListener { viewModel.saveSplits() }
     }
 
     private fun setupSpeedDialMainBtnClick(){

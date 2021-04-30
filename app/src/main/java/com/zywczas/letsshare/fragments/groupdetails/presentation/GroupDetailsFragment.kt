@@ -125,7 +125,9 @@ class GroupDetailsFragment @Inject constructor(viewModelFactory: UniversalViewMo
     }
 
     private fun goToGroupSettingFragment(){
-        findNavController().navigate(GroupDetailsFragmentDirections.toGroupSettingsFragment(Date().monthId()))
+        viewModel.currentMonth.observe(viewLifecycleOwner){
+            findNavController().navigate(GroupDetailsFragmentDirections.toGroupSettingsFragment(it))
+        }
     }
 
     private fun showAddExpenseDialog(){

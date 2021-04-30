@@ -34,7 +34,7 @@ class AddGroupMemberDialog : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        lifecycleScope.launch { viewModel.getFriends() }
+        viewModel.getFriends()
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             adapterXML = adapter

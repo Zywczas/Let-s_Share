@@ -140,8 +140,8 @@
         android:label="@string/group_settings"
         tools:layout="@layout/fragment_group_settings">
         <argument
-            android:name="monthId"
-            app:argType="string" />
+            android:name="month"
+            app:argType="com.zywczas.letsshare.model.GroupMonthDomain" />
     </fragment>
 
     <fragment

@@ -25,7 +25,7 @@ class GroupDetailsViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     private val _currentMonth = MutableLiveData<GroupMonthDomain>()
-    private val currentMonth: LiveData<GroupMonthDomain> = _currentMonth
+    val currentMonth: LiveData<GroupMonthDomain> = _currentMonth
 
     private val _isMembersProgressBarVisible = MutableLiveData<Boolean>()
     val isMembersProgressBarVisible: LiveData<Boolean> = _isMembersProgressBarVisible
