@@ -35,6 +35,8 @@
     <string name="something_wrong">Coś poszło nie tak. Spróbuj ponownie.</string>
     <string name="percentage_not_100">Łączny podział musi wynosić 100,00%.</string>
     <string name="cant_get_months_list">Nie udało się pobrać listy miesięcy. Spróbuj ponownie.</string>
+    <string name="settled_up_message">Ten mesiąc został już rozliczony.</string>
+    <string name="not_settled_up_message">Ten mesiąc nie jest jeszcze rozliczony.</string>
     <string name="cant_settle_up">Nie udało się rozliczyć tego miesiąca. Spróbuj ponownie.</string>
 
     <!--    UI elements -->
@@ -68,8 +70,6 @@
     <string name="your_email">Twój email:</string>
     <string name="history">Historia</string>
     <string name="settle_up">Rozlicz</string>
-    <string name="settled_up_message">Ten mesiąc został już rozliczony.</string>
-    <string name="not_settled_up_message">Ten mesiąc nie jest jeszcze rozliczony.</string>
     <string name="settle_up_dialog_title">Rozliczyć ten miesiąc?</string>
     <string name="settle_up_dialog_message">Jak rozliczysz ten miesiąc to już nie będzie można go modyfikować.</string>
     <string name="confirm">Potwierdź</string>

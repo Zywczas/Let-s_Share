@@ -23,7 +23,7 @@
     <color name="hint">@color/onPrimary</color>
     <color name="outlinedButtonStroke">@color/primary</color>
     <color name="outlinedButtonText">@color/primary</color>
-    <color name="check">@color/primary</color>
+    <color name="check">@color/green900Light</color>
     <color name="uncheck">@color/blueGrey500</color>
     <color name="cancel">@color/red500Dark</color>
     <color name="snackBarBackground">@color/onPrimary</color>

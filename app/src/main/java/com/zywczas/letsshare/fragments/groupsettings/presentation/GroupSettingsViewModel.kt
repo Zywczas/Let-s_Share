@@ -35,7 +35,7 @@ class GroupSettingsViewModel @Inject constructor(
             emit(String.format(Locale.UK, "%.2f%s", totalPercentageTemp, "%"))
         }
     }
-
+//todo tutaj chyba musi byc caly miesiac domain bo trzeba sprawdzac czy nie jest settled up juz przy tych wszystkich transakcjach
     private val _isPercentageChanged = MutableLiveData<Boolean>()
     val isPercentageChanged: LiveData<Boolean> = _isPercentageChanged
 

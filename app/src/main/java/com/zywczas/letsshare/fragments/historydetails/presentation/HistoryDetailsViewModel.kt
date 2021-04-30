@@ -67,8 +67,13 @@ class HistoryDetailsViewModel @Inject constructor(
     fun settleUp(){
         viewModelScope.launch(dispatchersIO) {
             month.value?.let {
-                repository.settleUpMonth(it.id)?.let { error -> postMessage(error) }
-                    ?: getMonthDetails(GroupMonthDomain(it.id, it.totalExpenses, isSettledUp = true))
+                when {
+                    it.isSettledUp -> postMessage(R.string.settled_up_message)
+                    else -> {
+                        repository.settleUpMonth(it.id)?.let { error -> postMessage(error) }
+                            ?: getMonthDetails(GroupMonthDomain(it.id, it.totalExpenses, isSettledUp = true))
+                    }
+                }
             } ?: postMonthError()
         }
     }

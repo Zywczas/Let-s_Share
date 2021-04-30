@@ -35,6 +35,8 @@
     <string name="something_wrong">Something went wrong. Try again.</string>
     <string name="percentage_not_100">Total percentage must be equal 100.00%.</string>
     <string name="cant_get_months_list">Couldn\'t get months list. Try again.</string>
+    <string name="settled_up_message">This month is settled up.</string>
+    <string name="not_settled_up_message">This month is not settled up yet.</string>
     <string name="cant_settle_up">Couldn\'t settled up the month. Try again.</string>
 
     <!--    UI elements -->
@@ -68,8 +70,6 @@
     <string name="your_email">Your email:</string>
     <string name="history">History</string>
     <string name="settle_up">Settle up</string>
-    <string name="settled_up_message">This month is settled up.</string>
-    <string name="not_settled_up_message">This month is not settled up yet.</string>
     <string name="settle_up_dialog_title">Settle up the month?</string>
     <string name="settle_up_dialog_message">Once you settle up this month\nyou won\'t be able to modify it.</string>
     <string name="confirm">Confirm</string>
