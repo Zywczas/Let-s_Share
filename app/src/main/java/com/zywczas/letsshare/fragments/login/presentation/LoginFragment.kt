@@ -6,15 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.zywczas.letsshare.R
 import com.zywczas.letsshare.databinding.FragmentLoginBinding
 import com.zywczas.letsshare.di.factories.UniversalViewModelFactory
 import com.zywczas.letsshare.utils.autoRelease
 import com.zywczas.letsshare.utils.hideSoftKeyboard
 import com.zywczas.letsshare.utils.showSnackbar
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class LoginFragment @Inject constructor(viewModelFactory: UniversalViewModelFactory) : Fragment(){

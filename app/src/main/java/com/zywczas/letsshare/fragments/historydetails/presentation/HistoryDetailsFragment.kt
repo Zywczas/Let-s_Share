@@ -1,15 +1,12 @@
 package com.zywczas.letsshare.fragments.historydetails.presentation
 
-import android.app.AlertDialog
 import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -20,7 +17,6 @@ import com.zywczas.letsshare.adapters.ExpensesAdapter
 import com.zywczas.letsshare.adapters.GroupMembersAdapter
 import com.zywczas.letsshare.databinding.FragmentHistoryDetailsBinding
 import com.zywczas.letsshare.di.factories.UniversalViewModelFactory
-import com.zywczas.letsshare.fragments.groupdetails.presentation.AddExpenseDialog
 import com.zywczas.letsshare.fragments.groupdetails.presentation.GroupDetailsFragmentDirections
 import com.zywczas.letsshare.utils.autoRelease
 import com.zywczas.letsshare.utils.dimBackgroundOnMainButtonClick
@@ -111,7 +107,7 @@ class HistoryDetailsFragment @Inject constructor(viewModelFactory: UniversalView
     }
 
     private fun goToGroupSettingFragment(){
-        findNavController().navigate(GroupDetailsFragmentDirections.toGroupSettingsFragment(args.groupMonth.id))
+        findNavController().navigate(GroupDetailsFragmentDirections.toGroupSettingsFragment(args.groupMonth))
     }
 
     private fun showSettleUpDialog(){

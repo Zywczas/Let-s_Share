@@ -2,22 +2,16 @@ package com.zywczas.letsshare.utils
 
 import android.app.Activity
 import android.content.Context
-import android.content.res.ColorStateList
-import android.graphics.Color
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.annotation.StringRes
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 import com.leinardi.android.speeddial.SpeedDialView
 import com.zywczas.letsshare.R
-import kotlinx.coroutines.channels.SendChannel
 import java.text.SimpleDateFormat
 import java.util.*
 

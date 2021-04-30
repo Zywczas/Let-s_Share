@@ -9,10 +9,8 @@ import com.zywczas.letsshare.fragments.groupsettings.domain.GroupSettingsReposit
 import com.zywczas.letsshare.model.Friend
 import com.zywczas.letsshare.model.GroupMemberDomain
 import com.zywczas.letsshare.model.GroupMonthDomain
-import com.zywczas.letsshare.utils.logD
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.math.BigDecimal
 import java.util.*
 import javax.inject.Inject

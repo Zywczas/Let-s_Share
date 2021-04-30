@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import com.zywczas.letsshare.databinding.DialogAddFriendBinding
 import com.zywczas.letsshare.utils.autoRelease
 

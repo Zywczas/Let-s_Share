@@ -15,10 +15,10 @@ import androidx.navigation.ui.setupWithNavController
 import com.leinardi.android.speeddial.SpeedDialActionItem
 import com.leinardi.android.speeddial.SpeedDialView
 import com.zywczas.letsshare.R
+import com.zywczas.letsshare.adapters.GroupMembersSettingsAdapter
 import com.zywczas.letsshare.databinding.FragmentGroupSettingsBinding
 import com.zywczas.letsshare.di.factories.UniversalViewModelFactory
 import com.zywczas.letsshare.di.modules.UtilsModule.TextListenerDebounce
-import com.zywczas.letsshare.adapters.GroupMembersSettingsAdapter
 import com.zywczas.letsshare.utils.autoRelease
 import com.zywczas.letsshare.utils.showSnackbar
 import javax.inject.Inject

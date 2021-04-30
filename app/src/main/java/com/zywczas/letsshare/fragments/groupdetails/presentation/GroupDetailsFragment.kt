@@ -13,15 +13,13 @@ import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.setupWithNavController
 import com.leinardi.android.speeddial.SpeedDialActionItem
 import com.zywczas.letsshare.R
-import com.zywczas.letsshare.databinding.FragmentGroupDetailsBinding
-import com.zywczas.letsshare.di.factories.UniversalViewModelFactory
 import com.zywczas.letsshare.adapters.ExpensesAdapter
 import com.zywczas.letsshare.adapters.GroupMembersAdapter
+import com.zywczas.letsshare.databinding.FragmentGroupDetailsBinding
+import com.zywczas.letsshare.di.factories.UniversalViewModelFactory
 import com.zywczas.letsshare.utils.autoRelease
 import com.zywczas.letsshare.utils.dimBackgroundOnMainButtonClick
-import com.zywczas.letsshare.utils.monthId
 import com.zywczas.letsshare.utils.showSnackbar
-import java.util.*
 import javax.inject.Inject
 
 class GroupDetailsFragment @Inject constructor(viewModelFactory: UniversalViewModelFactory): Fragment() {

@@ -3,8 +3,7 @@ package com.zywczas.letsshare.fragments.welcome.presentation
 import androidx.lifecycle.*
 import com.zywczas.letsshare.SessionManager
 import com.zywczas.letsshare.di.modules.DispatchersModule.DispatchersIO
-import com.zywczas.letsshare.di.modules.UtilsModule
-import com.zywczas.letsshare.di.modules.UtilsModule.*
+import com.zywczas.letsshare.di.modules.UtilsModule.WelcomeScreenDelay
 import com.zywczas.letsshare.utils.SingleLiveData
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
