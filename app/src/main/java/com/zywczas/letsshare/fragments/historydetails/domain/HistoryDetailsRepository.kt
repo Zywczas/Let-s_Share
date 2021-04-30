@@ -9,4 +9,6 @@ interface HistoryDetailsRepository {
 
     suspend fun getExpenses(monthId: String): List<ExpenseDomain>?
 
+    suspend fun settleUpMonth(monthId: String): Int?
+
 }

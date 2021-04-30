@@ -35,6 +35,7 @@
     <string name="something_wrong">Coś poszło nie tak. Spróbuj ponownie.</string>
     <string name="percentage_not_100">Łączny podział musi wynosić 100,00%.</string>
     <string name="cant_get_months_list">Nie udało się pobrać listy miesięcy. Spróbuj ponownie.</string>
+    <string name="cant_settle_up">Nie udało się rozliczyć tego miesiąca. Spróbuj ponownie.</string>
 
     <!--    UI elements -->
     <string name="friends">Znajomi</string>

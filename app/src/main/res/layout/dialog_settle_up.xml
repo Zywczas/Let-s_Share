@@ -9,11 +9,13 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/mediumMarginDialog"
         android:layout_marginTop="@dimen/mediumMarginDialog"
+        android:layout_marginEnd="@dimen/mediumMarginDialog"
         android:text="@string/settle_up_dialog_title"
         android:textSize="@dimen/titleDialog"
-        app:layout_constraintEnd_toEndOf="@+id/textView6"
-        app:layout_constraintStart_toStartOf="@+id/textView6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView

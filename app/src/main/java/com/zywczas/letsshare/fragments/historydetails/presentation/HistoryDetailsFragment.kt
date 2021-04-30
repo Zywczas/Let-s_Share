@@ -20,6 +20,7 @@ import com.zywczas.letsshare.adapters.ExpensesAdapter
 import com.zywczas.letsshare.adapters.GroupMembersAdapter
 import com.zywczas.letsshare.databinding.FragmentHistoryDetailsBinding
 import com.zywczas.letsshare.di.factories.UniversalViewModelFactory
+import com.zywczas.letsshare.fragments.groupdetails.presentation.AddExpenseDialog
 import com.zywczas.letsshare.fragments.groupdetails.presentation.GroupDetailsFragmentDirections
 import com.zywczas.letsshare.utils.autoRelease
 import com.zywczas.letsshare.utils.dimBackgroundOnMainButtonClick
@@ -114,7 +115,7 @@ class HistoryDetailsFragment @Inject constructor(viewModelFactory: UniversalView
     }
 
     private fun showSettleUpDialog(){
-       //todo
+        SettleUpDialog().show(childFragmentManager, "AddExpenseDialog")
     }
 
 }

@@ -2,6 +2,7 @@ package com.zywczas.letsshare.fragments.historydetails.domain
 
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.toObjects
+import com.zywczas.letsshare.R
 import com.zywczas.letsshare.activitymain.domain.CrashlyticsWrapper
 import com.zywczas.letsshare.activitymain.domain.FirestoreReferences
 import com.zywczas.letsshare.activitymain.domain.SharedPrefsWrapper
@@ -43,6 +44,17 @@ class HistoryDetailsRepositoryImpl @Inject constructor(
             crashlyticsWrapper.sendExceptionToFirebase(e)
             logD(e)
             null
+        }
+
+    override suspend fun settleUpMonth(monthId: String): Int? =
+        try {
+            firestoreRefs.groupMonthRefs(groupId, monthId)
+                .update(firestoreRefs.isSettledUpField, true).await()
+            null
+        } catch (e: Exception) {
+            crashlyticsWrapper.sendExceptionToFirebase(e)
+            logD(e)
+            R.string.cant_settle_up
         }
 
 }

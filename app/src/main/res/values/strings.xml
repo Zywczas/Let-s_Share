@@ -35,6 +35,7 @@
     <string name="something_wrong">Something went wrong. Try again.</string>
     <string name="percentage_not_100">Total percentage must be equal 100.00%.</string>
     <string name="cant_get_months_list">Couldn\'t get months list. Try again.</string>
+    <string name="cant_settle_up">Couldn\'t settled up the month. Try again.</string>
 
     <!--    UI elements -->
     <string name="friends">Friends</string>
