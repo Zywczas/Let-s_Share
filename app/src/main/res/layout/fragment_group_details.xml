@@ -81,7 +81,7 @@
                             app:layout_collapseMode="parallax"
                             app:layout_collapseParallaxMultiplier="0.7"
                             tools:itemCount="3"
-                            tools:listitem="@layout/list_item_group_members" />
+                            tools:listitem="@layout/item_group_members_details" />
 
                         <ProgressBar
                             android:id="@+id/progressBarMembers"
@@ -126,7 +126,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         tools:itemCount="2"
-                        tools:listitem="@layout/list_item_expenses" />
+                        tools:listitem="@layout/item_expenses" />
 
                     <ProgressBar
                         android:id="@+id/progressBar"

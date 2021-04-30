@@ -42,7 +42,7 @@ class GroupMembersAdapter(private val currency: String) : ListAdapter<GroupMembe
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item_group_members, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_group_members_details, parent, false)
         return ViewHolder(view)
     }
 

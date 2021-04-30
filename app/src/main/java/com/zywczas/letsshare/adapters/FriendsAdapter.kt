@@ -33,7 +33,7 @@ class FriendsAdapter(private val onClick: (Friend) -> Unit = {}) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item_friends, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_friends, parent, false)
         return ViewHolder(view)
     }
 

@@ -43,7 +43,7 @@ class GroupMonthAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item_group_month, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_group_month, parent, false)
         return ViewHolder(view)
     }
 

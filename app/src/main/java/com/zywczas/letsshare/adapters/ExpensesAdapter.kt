@@ -35,7 +35,7 @@ class ExpensesAdapter(private val currency: String) : ListAdapter<ExpenseDomain,
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item_expenses, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_expenses, parent, false)
         return ViewHolder(view)
     }
 
