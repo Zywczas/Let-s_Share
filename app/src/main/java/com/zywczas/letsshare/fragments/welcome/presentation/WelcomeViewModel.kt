@@ -13,7 +13,7 @@ class WelcomeViewModel @Inject constructor(
     @DispatchersIO private val dispatchersIO: CoroutineDispatcher,
     private val sessionManager: SessionManager,
     @WelcomeScreenDelay private val period: Long
-): ViewModel(), LifecycleObserver {
+): ViewModel() {
 
     private val _goToLoginFragment = SingleLiveData<Boolean>()
     val goToLoginFragment: LiveData<Boolean> = _goToLoginFragment
@@ -21,8 +21,7 @@ class WelcomeViewModel @Inject constructor(
     private val _goToFriendsFragment = SingleLiveData<Boolean>()
     val goToFriendsFragment: LiveData<Boolean> = _goToFriendsFragment
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
-    private fun onResume(){
+    fun chooseNextDestination(){
         viewModelScope.launch(dispatchersIO) {
             presentLogoToUser()
             chooseFragmentToGoNext()

@@ -27,7 +27,7 @@ class WelcomeFragment @Inject constructor(viewModelFactory: UniversalViewModelFa
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        lifecycle.addObserver(viewModel)
+        viewModel.chooseNextDestination()
         setupObservers()
     }
 
