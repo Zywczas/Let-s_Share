@@ -3,18 +3,22 @@
 
     <item
         android:id="@+id/groupSettings"
+        android:icon="@drawable/ic_settings"
         android:title="@string/group_settings" />
 
     <item
         android:id="@+id/addExpense"
+        android:icon="@drawable/ic_add_expense"
         android:title="@string/add_expense" />
 
     <item
         android:id="@+id/addMember"
+        android:icon="@drawable/ic_add_friend"
         android:title="@string/add_new_member" />
 
     <item
         android:id="@+id/addFriend"
+        android:icon="@drawable/ic_add_friend"
         android:title="@string/add_friend" />
 
     <item
@@ -23,10 +27,12 @@
 
     <item
         android:id="@+id/history"
+        android:icon="@drawable/ic_history"
         android:title="@string/history" />
 
     <item
         android:id="@+id/settleUp"
+        android:icon="@drawable/ic_dolar"
         android:title="@string/settle_up" />
 
 </menu>
