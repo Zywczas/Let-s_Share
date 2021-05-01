@@ -59,12 +59,15 @@
     <string name="login">Login</string>
     <string name="register">Register</string>
     <string name="password">Password</string>
+    <string name="confirm_password">Confirm password</string>
     <string name="email">Email</string>
+    <string name="confirm_email">Confirm email</string>
     <string name="first_time_here">First time here? Register new user:</string>
     <string name="add_friend">Add friend</string>
     <string name="last_3_months">Last 3 months</string>
     <string name="expense_name">Name</string>
     <string name="expense_value">Value</string>
+    <string name="person_name">Name</string>
     <string name="group_name">Name</string>
     <string name="add_group">Add group</string>
     <string name="your_name">Your name:</string>
@@ -77,5 +80,6 @@
     <string name="cancel">Cancel</string>
     <string name="check">Check</string>
     <string name="is_settled_up">Is settled up</string>
+    <string name="create_user">Create user</string>
 
 </resources>

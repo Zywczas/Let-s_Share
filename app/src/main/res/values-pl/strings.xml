@@ -59,12 +59,15 @@
     <string name="login">Zaloguj</string>
     <string name="register">Zarejestruj</string>
     <string name="password">Hasło</string>
+    <string name="confirm_password">Potwierdź hasło</string>
     <string name="email">Email</string>
+    <string name="confirm_email">Potwierdź email</string>
     <string name="first_time_here">Pierwszy raz tutaj? Zarejestruj nowego użytkownika:</string>
     <string name="add_friend">Dodaj znajomego</string>
     <string name="last_3_months">Ostatnie 3 miesiace</string>
     <string name="expense_name">Nazwa</string>
     <string name="expense_value">Kwota</string>
+    <string name="person_name">Imię</string>
     <string name="group_name">Nazwa</string>
     <string name="add_group">Dodaj grupę</string>
     <string name="your_name">Twoje imię:</string>
@@ -77,5 +80,6 @@
     <string name="cancel">Anuluj</string>
     <string name="check">Potwierdź</string>
     <string name="is_settled_up">Rozliczony</string>
+    <string name="create_user">Stwórz użytkownika</string>
 
 </resources>
