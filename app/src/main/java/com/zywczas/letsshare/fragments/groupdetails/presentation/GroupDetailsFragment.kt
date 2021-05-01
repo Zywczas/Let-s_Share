@@ -12,11 +12,16 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.setupWithNavController
 import com.leinardi.android.speeddial.SpeedDialActionItem
+import com.mikepenz.fastadapter.FastAdapter
+import com.mikepenz.fastadapter.adapters.ItemAdapter
+import com.mikepenz.fastadapter.diff.FastAdapterDiffUtil
 import com.zywczas.letsshare.R
+import com.zywczas.letsshare.adapters.ExpenseItem
 import com.zywczas.letsshare.adapters.ExpensesAdapter
 import com.zywczas.letsshare.adapters.GroupMembersAdapter
 import com.zywczas.letsshare.databinding.FragmentGroupDetailsBinding
 import com.zywczas.letsshare.di.factories.UniversalViewModelFactory
+import com.zywczas.letsshare.models.ExpenseDomain
 import com.zywczas.letsshare.utils.autoRelease
 import com.zywczas.letsshare.utils.dimBackgroundOnMainButtonClick
 import com.zywczas.letsshare.utils.showSnackbar
@@ -28,7 +33,8 @@ class GroupDetailsFragment @Inject constructor(viewModelFactory: UniversalViewMo
     private var binding: FragmentGroupDetailsBinding by autoRelease()
     private val args: GroupDetailsFragmentArgs by navArgs()
     private val membersAdapter by lazy { GroupMembersAdapter(args.group.currency) }
-    private val expensesAdapter by lazy { ExpensesAdapter(args.group.currency) }
+    private val expensesItemAdapter by lazy { ItemAdapter<ExpenseItem>() }
+    private val expensesAdapter by lazy { FastAdapter.with(expensesItemAdapter) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,10 +63,12 @@ class GroupDetailsFragment @Inject constructor(viewModelFactory: UniversalViewMo
         viewModel.monthlySum.observe(viewLifecycleOwner){ binding.toolbar.title = "${args.group.name} - $it ${args.group.currency}" }
         viewModel.members.observe(viewLifecycleOwner){ membersAdapter.submitList(it.toMutableList()) }
         viewModel.expenses.observe(viewLifecycleOwner){
-            expensesAdapter.submitList(it.toMutableList()){
-                binding.expensesRecycler.smoothScrollToPosition(0)
-            }
+            FastAdapterDiffUtil.set(expensesItemAdapter, it.toAdapterItems(), ExpenseItem.DiffUtil())
         }
+    }
+
+    private fun List<ExpenseDomain>.toAdapterItems() = map {
+        ExpenseItem(it, args.group.currency)
     }
 
     private fun setupSpeedDial(){
