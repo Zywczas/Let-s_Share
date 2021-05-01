@@ -55,7 +55,11 @@ class GroupSettingsViewModel @Inject constructor(
     }
 
     fun getFriends(){
-        viewModelScope.launch(dispatchersIO){ _friends.postValue(repository.getFriends()) }
+        viewModelScope.launch(dispatchersIO){
+            showProgressBar(true)
+            _friends.postValue(repository.getFriends())
+            showProgressBar(false)
+        }
     }
 
     fun addNewMember(friend: Friend){

@@ -47,7 +47,10 @@ class RegisterViewModel @Inject constructor(
         } else if (password1 != password2){
             postMessage(R.string.different_passwords)
             false
-        } else if (Patterns.EMAIL_ADDRESS.matcher(email1).matches()) {
+        } else if (Patterns.EMAIL_ADDRESS.matcher(email1).matches().not()) {
+            postMessage(R.string.invalid_email)
+            false
+        } else {
             when(repository.isEmailFreeToUse(email1)){
                 null -> {
                     postMessage(R.string.something_wrong)
@@ -59,9 +62,6 @@ class RegisterViewModel @Inject constructor(
                 }
                 true -> true
             }
-        } else {
-            postMessage(R.string.invalid_email)
-            false
         }
 
     private suspend fun registerToFirebase(name: String, email: String, password: String) {

@@ -67,6 +67,7 @@ class HistoryDetailsViewModel @Inject constructor(
     fun settleUp(){
         viewModelScope.launch(dispatchersIO) {
             month.value?.let {
+                showProgressBar(true)
                 when {
                     it.isSettledUp -> postMessage(R.string.settled_up_message)
                     else -> {
@@ -74,6 +75,7 @@ class HistoryDetailsViewModel @Inject constructor(
                             ?: getMonthDetails(GroupMonthDomain(it.id, it.totalExpenses, isSettledUp = true))
                     }
                 }
+                showProgressBar(false)
             } ?: postMonthError()
         }
     }

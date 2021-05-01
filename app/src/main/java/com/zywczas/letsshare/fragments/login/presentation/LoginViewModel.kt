@@ -33,19 +33,22 @@ class LoginViewModel @Inject constructor(
     fun login(email: String, password: String) {
         viewModelScope.launch(dispatchersIO) {
             repository.saveLastUsedEmail(email)
-            if (sessionManager.isNetworkAvailable()) { loginToFirebase(email, password) }
-            else { postMessage(R.string.connection_problem) }
+            if (sessionManager.isNetworkAvailable()) {
+                showProgressBar(true)
+                loginToFirebase(email, password)
+                showProgressBar(false)
+            } else {
+                postMessage(R.string.connection_problem)
+            }
         }
     }
 
     private suspend fun loginToFirebase(email: String, password: String) {
-        showProgressBar(true)
         repository.loginToFirebase(email, password)?.let { error -> postMessage(error) }
             ?: kotlin.run {
                 repository.saveUserLocally()?.let { error -> postMessage(error) }
                     ?: kotlin.run { _isLoggedIn.postValue(true) }
             }
-        showProgressBar(false)
     }
 
 }
