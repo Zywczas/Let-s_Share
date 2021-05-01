@@ -11,6 +11,8 @@
     <string name="email_already_exists">Ten email już istnieje w bazie. Użyj innego.</string>
     <string name="verify_email">Potwierdz swój adres email zanim się zalogujesz. Sprawdź swoją skrzynkę pocztową.</string>
     <string name="login_problem">Nie można się zalogować. Sprawdź mail i hasło i spróbuj ponownie.</string>
+    <string name="different_emails">Emaile nie są takie same.</string>
+    <string name="different_passwords">Hasła nie są takie same.</string>
 
     <!--    other messages-->
     <string name="connection_problem">Brak połączenie z internetem.</string>

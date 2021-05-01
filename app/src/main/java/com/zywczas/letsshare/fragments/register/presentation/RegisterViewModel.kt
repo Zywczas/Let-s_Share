@@ -21,27 +21,33 @@ class RegisterViewModel @Inject constructor(
     private val _isRegisteredAndUserName = MutableLiveData<Pair<Boolean, String>>()
     val isRegisteredAndUserName: LiveData<Pair<Boolean, String>> = _isRegisteredAndUserName
 
-    fun registerUser(name: String, email: String, password: String) {
+    fun registerUser(name: String, email1: String,  email2: String, password1: String, password2: String) {
         viewModelScope.launch(dispatchersIO) {
             showProgressBar(true)
-            repository.saveLastUsedEmail(email)
+            repository.saveLastUsedEmail(email1)
             when {
                 sessionManager.isNetworkAvailable().not() -> postMessage(R.string.connection_problem)
-                areCredentialsValid(name, email, password) -> registerToFirebase(name, email, password)
+                areCredentialsValid(name, email1, email2, password1, password2) -> registerToFirebase(name, email1, password1)
             }
             showProgressBar(false)
         }
     }
 
-    private suspend fun areCredentialsValid(name: String, email: String, password: String): Boolean =
-        if (name.isBlank() || email.isBlank() || password.isBlank()) {
+    private suspend fun areCredentialsValid(name: String, email1: String,  email2: String, password1: String, password2: String): Boolean =
+        if (name.isBlank() || email1.isBlank() || email2.isBlank() || password1.isBlank() || password2.isBlank()) {
             postMessage(R.string.name_email_password_not_blank)
             false
-        } else if (password.length < 6) {
+        } else if (password1.length < 6) {
             postMessage(R.string.password_needs_6letters)
             false
+        } else if (email1 != email2){
+            postMessage(R.string.different_emails)
+            false
+        } else if (password1 != password2){
+            postMessage(R.string.different_passwords)
+            false
         } else {
-            when(repository.isEmailFreeToUse(email)){
+            when(repository.isEmailFreeToUse(email1)){
                 null -> {
                     postMessage(R.string.something_wrong)
                     false

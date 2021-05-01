@@ -64,8 +64,10 @@ class RegisterFragment @Inject constructor(viewModelFactory: UniversalViewModelF
     private fun registerUser(){
         viewModel.registerUser(
             binding.name.text.toString(),
-            binding.email.text.toString(),
-            binding.password.text.toString()
+            binding.email1.text.toString(),
+            binding.email2.text.toString(),
+            binding.password1.text.toString(),
+            binding.password2.text.toString()
         )
     }
 
