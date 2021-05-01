@@ -3,6 +3,9 @@ package com.zywczas.letsshare
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.Network
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.OnLifecycleEvent
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.delay
 import javax.inject.Inject
@@ -16,10 +19,7 @@ class SessionManagerImpl @Inject constructor(
     private var isConnected = false
     private var isLoggedIn = false
 
-    init {
-        registerNetworkCallback()
-    }
-
+    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     private fun registerNetworkCallback() {
         val cm  =
             context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager

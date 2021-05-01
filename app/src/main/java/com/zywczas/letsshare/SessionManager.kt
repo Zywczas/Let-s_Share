@@ -1,6 +1,8 @@
 package com.zywczas.letsshare
 
-interface SessionManager {
+import androidx.lifecycle.LifecycleObserver
+
+interface SessionManager : LifecycleObserver {
 
     suspend fun isNetworkAvailable() : Boolean
 
