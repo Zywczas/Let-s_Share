@@ -17,7 +17,6 @@ import com.mikepenz.fastadapter.adapters.ItemAdapter
 import com.mikepenz.fastadapter.diff.FastAdapterDiffUtil
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.adapters.ExpenseItem
-import com.zywczas.letsshare.adapters.ExpensesAdapter
 import com.zywczas.letsshare.adapters.GroupMembersAdapter
 import com.zywczas.letsshare.databinding.FragmentGroupDetailsBinding
 import com.zywczas.letsshare.di.factories.UniversalViewModelFactory

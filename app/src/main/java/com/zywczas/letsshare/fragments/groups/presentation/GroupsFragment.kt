@@ -17,6 +17,7 @@ import com.zywczas.letsshare.adapters.GroupsAdapter
 import com.zywczas.letsshare.databinding.FragmentGroupsBinding
 import com.zywczas.letsshare.di.factories.UniversalViewModelFactory
 import com.zywczas.letsshare.utils.autoRelease
+import com.zywczas.letsshare.utils.dimBackgroundOnMainButtonClick
 import com.zywczas.letsshare.utils.showSnackbar
 import com.zywczas.letsshare.utils.turnOffOnBackPressed
 import javax.inject.Inject
@@ -50,13 +51,19 @@ class GroupsFragment @Inject constructor(viewModelFactory: UniversalViewModelFac
         }
         binding.bottomNavBar.selectedItemId = R.id.groupsFragment
         setupObservers()
-        setupSpeedDialMenu()
+        setupSpeedDial()
         setupOnClickListeners()
     }
 
     private fun setupObservers(){
         viewModel.message.observe(viewLifecycleOwner){ showSnackbar(it)}
         viewModel.groups.observe(viewLifecycleOwner){ groupsAdapter.submitList(it.toMutableList()) }
+    }
+
+    private fun setupSpeedDial(){
+        setupSpeedDialMenu()
+        setupSpeedDialMenuClick()
+        binding.speedDial.dimBackgroundOnMainButtonClick(requireActivity(), binding.mainLayout)
     }
 
     private fun setupSpeedDialMenu(){
@@ -69,48 +76,6 @@ class GroupsFragment @Inject constructor(viewModelFactory: UniversalViewModelFac
                 .setLabelBackgroundColor(Color.WHITE)
                 .create()
         )
-    }
-
-    private fun setupOnClickListeners(){
-        binding.bottomNavBar.setOnNavigationItemSelectedListener(bottomNavClick)
-        setupSpeedDialMainBtnClick()
-        setupSpeedDialMenuClick()
-    }
-
-    private val bottomNavClick = BottomNavigationView.OnNavigationItemSelectedListener { item ->
-        when (item.itemId){
-            R.id.friendsFragment -> {
-                findNavController().navigate(GroupsFragmentDirections.toFriendsFragment())
-                true
-            }
-            R.id.settingsFragment -> {
-                findNavController().navigate(GroupsFragmentDirections.toSettingsFragment())
-                true
-            }
-            else -> false
-        }
-    }
-
-    private fun setupSpeedDialMainBtnClick(){
-        binding.speedDial.setOnChangeListener(object : SpeedDialView.OnChangeListener{
-            override fun onMainActionSelected(): Boolean {
-                return false
-            }
-            override fun onToggleChanged(isOpen: Boolean) {
-                dimOrRestoreBackground(isOpen)
-            }
-        })
-    }
-
-    private fun dimOrRestoreBackground(isDialOpen : Boolean){
-        val window = requireActivity().window
-        if (isDialOpen){
-            window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.primaryVariantAlpha03)
-            binding.mainLayout.alpha = 0.3F
-        } else {
-            window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.primaryVariant)
-            binding.mainLayout.alpha = 1F
-        }
     }
 
     private fun setupSpeedDialMenuClick(){
@@ -128,6 +93,24 @@ class GroupsFragment @Inject constructor(viewModelFactory: UniversalViewModelFac
 
     private fun showAddGroupDialog(){
         AddGroupDialog().show(childFragmentManager, "AddGroupDialog")
+    }
+
+    private fun setupOnClickListeners(){
+        binding.bottomNavBar.setOnNavigationItemSelectedListener(bottomNavClick)
+    }
+
+    private val bottomNavClick = BottomNavigationView.OnNavigationItemSelectedListener { item ->
+        when (item.itemId){
+            R.id.friendsFragment -> {
+                findNavController().navigate(GroupsFragmentDirections.toFriendsFragment())
+                true
+            }
+            R.id.settingsFragment -> {
+                findNavController().navigate(GroupsFragmentDirections.toSettingsFragment())
+                true
+            }
+            else -> false
+        }
     }
 
 }

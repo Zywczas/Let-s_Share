@@ -20,6 +20,7 @@ import com.zywczas.letsshare.databinding.FragmentGroupSettingsBinding
 import com.zywczas.letsshare.di.factories.UniversalViewModelFactory
 import com.zywczas.letsshare.di.modules.UtilsModule.TextListenerDebounce
 import com.zywczas.letsshare.utils.autoRelease
+import com.zywczas.letsshare.utils.dimBackgroundOnMainButtonClick
 import com.zywczas.letsshare.utils.showSnackbar
 import javax.inject.Inject
 
@@ -51,14 +52,10 @@ class GroupSettingsFragment @Inject constructor(
             vm = viewModel
             membersAdapterXML = membersAdapter
         }
-        setupToolbar()
-        setupObservers()
-        setupSpeedDialMenu()
-        setupOnClickListeners()
-    }
-
-    private fun setupToolbar(){
         binding.toolbar.setupWithNavController(findNavController())
+        setupObservers()
+        setupSpeedDial()
+        setupOnClickListeners()
     }
 
     private fun setupObservers(){
@@ -66,6 +63,12 @@ class GroupSettingsFragment @Inject constructor(
         viewModel.members.observe(viewLifecycleOwner){ membersAdapter.submitList(it.toMutableList()) }
         viewModel.totalPercentage.observe(viewLifecycleOwner){ binding.splitTotalValue.text = it }
         viewModel.isPercentageChanged.observe(viewLifecycleOwner){ binding.save.isVisible = it }
+    }
+
+    private fun setupSpeedDial(){
+        setupSpeedDialMenu()
+        setupSpeedDialMenuClick()
+        binding.speedDial.dimBackgroundOnMainButtonClick(requireActivity(), binding.mainLayout)
     }
 
     private fun setupSpeedDialMenu(){
@@ -78,35 +81,6 @@ class GroupSettingsFragment @Inject constructor(
                 .setLabelBackgroundColor(Color.WHITE)
                 .create()
         )
-    }
-
-    private fun setupOnClickListeners(){
-        setupSpeedDialMainBtnClick()
-        setupSpeedDialMenuClick()
-        binding.equalSplit.setOnClickListener { viewModel.setEqualSplits() }
-        binding.save.setOnClickListener { viewModel.saveSplits() }
-    }
-
-    private fun setupSpeedDialMainBtnClick(){
-        binding.speedDial.setOnChangeListener(object : SpeedDialView.OnChangeListener{
-            override fun onMainActionSelected(): Boolean {
-                return false
-            }
-            override fun onToggleChanged(isOpen: Boolean) {
-                dimOrRestoreBackground(isOpen)
-            }
-        })
-    }
-
-    private fun dimOrRestoreBackground(isDialOpen : Boolean){
-        val window = requireActivity().window
-        if (isDialOpen){
-            window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.primaryVariantAlpha03)
-            binding.mainLayout.alpha = 0.3F
-        } else {
-            window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.primaryVariant)
-            binding.mainLayout.alpha = 1F
-        }
     }
 
     private fun setupSpeedDialMenuClick(){
@@ -124,6 +98,11 @@ class GroupSettingsFragment @Inject constructor(
 
     private fun showAddGroupMemberDialog(){
         AddGroupMemberDialog().show(childFragmentManager, "AddGroupMemberDialog")
+    }
+
+    private fun setupOnClickListeners(){
+        binding.equalSplit.setOnClickListener { viewModel.setEqualSplits() }
+        binding.save.setOnClickListener { viewModel.saveSplits() }
     }
 
 }
