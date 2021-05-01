@@ -13,6 +13,7 @@
     <string name="login_problem">Cannot login. Check your email and password and try again.</string>
     <string name="different_emails">Emails are not identical.</string>
     <string name="different_passwords">Passwords are not identical.</string>
+    <string name="invalid_email">Invalid email format.</string>
 
     <!--    other messages-->
     <string name="connection_problem">No internet connection.</string>

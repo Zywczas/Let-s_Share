@@ -1,5 +1,6 @@
 package com.zywczas.letsshare.fragments.register.presentation
 
+import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -46,7 +47,7 @@ class RegisterViewModel @Inject constructor(
         } else if (password1 != password2){
             postMessage(R.string.different_passwords)
             false
-        } else {
+        } else if (Patterns.EMAIL_ADDRESS.matcher(email1).matches()) {
             when(repository.isEmailFreeToUse(email1)){
                 null -> {
                     postMessage(R.string.something_wrong)
@@ -58,6 +59,9 @@ class RegisterViewModel @Inject constructor(
                 }
                 true -> true
             }
+        } else {
+            postMessage(R.string.invalid_email)
+            false
         }
 
     private suspend fun registerToFirebase(name: String, email: String, password: String) {

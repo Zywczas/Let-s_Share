@@ -13,6 +13,7 @@
     <string name="login_problem">Nie można się zalogować. Sprawdź mail i hasło i spróbuj ponownie.</string>
     <string name="different_emails">Emaile nie są takie same.</string>
     <string name="different_passwords">Hasła nie są takie same.</string>
+    <string name="invalid_email">Nieprawidłowy format adresu email.</string>
 
     <!--    other messages-->
     <string name="connection_problem">Brak połączenie z internetem.</string>
