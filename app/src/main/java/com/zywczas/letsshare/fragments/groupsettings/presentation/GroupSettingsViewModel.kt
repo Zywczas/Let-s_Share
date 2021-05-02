@@ -37,8 +37,8 @@ class GroupSettingsViewModel @Inject constructor(
         }
     }
 
-    private val _isPercentageChanged = MutableLiveData<Boolean>()
-    val isPercentageChanged: LiveData<Boolean> = _isPercentageChanged
+    private val _areSettingsChanged = MutableLiveData<Boolean>()
+    val areSettingsChanged: LiveData<Boolean> = _areSettingsChanged
 
     fun getMonthSettings(month: GroupMonthDomain){
         viewModelScope.launch(dispatchersIO){
@@ -73,9 +73,13 @@ class GroupSettingsViewModel @Inject constructor(
                         when(repository.isFriendIn5GroupsAlready(friend.id)){
                             null -> postMessage(R.string.something_wrong)
                             true -> postMessage(R.string.friend_in_too_many_groups)
-                            false -> repository.addMemberIfBelow7PeopleInGroup(month.id, friend)?.let { error ->
-                                postMessage(error)
-                            } ?: getMembers()
+                            false -> {
+                                repository.addMemberIfBelow7PeopleInGroup(month.id, friend)?.let { error -> postMessage(error)}
+                                    ?: kotlin.run {
+                                        getMembers()
+                                        _areSettingsChanged.postValue(true)
+                                    }
+                            }
                         }
                     }
                 }
@@ -94,7 +98,7 @@ class GroupSettingsViewModel @Inject constructor(
             members.value?.let { members ->
                 members.first { it.id == memberId }.share = share.setScale(2, BigDecimal.ROUND_HALF_UP)
                 _members.postValue(members)
-                _isPercentageChanged.postValue(true)
+                _areSettingsChanged.postValue(true)
             }
         }
     }
@@ -111,7 +115,7 @@ class GroupSettingsViewModel @Inject constructor(
                             expenses = it.expenses,share = newSplit)
                         }
                     _members.postValue(newMembersRef)
-                    _isPercentageChanged.postValue(true)
+                    _areSettingsChanged.postValue(true)
                 }
             }
         }
@@ -127,7 +131,7 @@ class GroupSettingsViewModel @Inject constructor(
                 members.value == null -> postMessage(R.string.cant_get_group_members)
                 else -> {
                     repository.saveSplits(month.id, members.value!!)?.let { error -> postMessage(error) }
-                        ?: _isPercentageChanged.postValue(false)
+                        ?: _areSettingsChanged.postValue(false)
                 }
             }
             showProgressBar(false)

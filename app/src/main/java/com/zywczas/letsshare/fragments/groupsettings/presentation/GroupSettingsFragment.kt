@@ -13,7 +13,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.setupWithNavController
 import com.leinardi.android.speeddial.SpeedDialActionItem
-import com.leinardi.android.speeddial.SpeedDialView
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.adapters.GroupMembersSettingsAdapter
 import com.zywczas.letsshare.databinding.FragmentGroupSettingsBinding
@@ -62,7 +61,7 @@ class GroupSettingsFragment @Inject constructor(
         viewModel.message.observe(viewLifecycleOwner){ showSnackbar(it) }
         viewModel.members.observe(viewLifecycleOwner){ membersAdapter.submitList(it.toMutableList()) }
         viewModel.totalPercentage.observe(viewLifecycleOwner){ binding.splitTotalValue.text = it }
-        viewModel.isPercentageChanged.observe(viewLifecycleOwner){ binding.save.isVisible = it }
+        viewModel.areSettingsChanged.observe(viewLifecycleOwner){ binding.save.isVisible = it }
     }
 
     private fun setupSpeedDial(){
