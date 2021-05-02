@@ -63,7 +63,7 @@ class GroupDetailsFragment @Inject constructor(viewModelFactory: UniversalViewMo
         viewModel.message.observe(viewLifecycleOwner){ showSnackbar(it) }
         viewModel.monthlySum.observe(viewLifecycleOwner){ binding.toolbar.title = "${args.group.name} - $it ${args.group.currency}" }
         viewModel.members.observe(viewLifecycleOwner){ membersAdapter.submitList(it.toMutableList()) }
-        viewModel.expenses.observe(viewLifecycleOwner){ FastAdapterDiffUtil.set(expensesItemAdapter, it.toAdapterItems(), ExpenseItem.DiffUtil()) } //todo jak tu nie ma detect moves to chyba tez powinno przewijac na gore
+        viewModel.expenses.observe(viewLifecycleOwner){ FastAdapterDiffUtil.set(expensesItemAdapter, it.toAdapterItems(), ExpenseItem.DiffUtil()) }
     }
 
     private fun List<ExpenseDomain>.toAdapterItems() = map {
