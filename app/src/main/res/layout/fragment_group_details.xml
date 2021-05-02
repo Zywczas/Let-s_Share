@@ -11,7 +11,7 @@
 
         <variable
             name="membersAdapterXML"
-            type="com.zywczas.letsshare.adapters.GroupMembersAdapter" />
+            type="com.mikepenz.fastadapter.FastAdapter" />
 
         <variable
             name="expensesAdapterXML"

@@ -18,10 +18,11 @@ import com.mikepenz.fastadapter.adapters.ItemAdapter
 import com.mikepenz.fastadapter.diff.FastAdapterDiffUtil
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.adapters.ExpenseItem
-import com.zywczas.letsshare.adapters.GroupMembersAdapter
+import com.zywczas.letsshare.adapters.GroupMemberItemDetails
 import com.zywczas.letsshare.databinding.FragmentGroupDetailsBinding
 import com.zywczas.letsshare.di.factories.UniversalViewModelFactory
 import com.zywczas.letsshare.models.ExpenseDomain
+import com.zywczas.letsshare.models.GroupMemberDomain
 import com.zywczas.letsshare.utils.autoRelease
 import com.zywczas.letsshare.utils.dimBackgroundOnMainButtonClick
 import com.zywczas.letsshare.utils.showSnackbar
@@ -32,7 +33,7 @@ class GroupDetailsFragment @Inject constructor(viewModelFactory: UniversalViewMo
     private val viewModel: GroupDetailsViewModel by viewModels { viewModelFactory }
     private var binding: FragmentGroupDetailsBinding by autoRelease()
     private val args: GroupDetailsFragmentArgs by navArgs()
-    private val membersAdapter by lazy { GroupMembersAdapter(args.group.currency) }
+    private val membersItemAdapter by lazy { ItemAdapter<GroupMemberItemDetails>() }
     private val expensesItemAdapter by lazy { ItemAdapter<ExpenseItem>() }
     private val expensesAdapter by lazy { FastAdapter.with(expensesItemAdapter) }
 
@@ -50,7 +51,7 @@ class GroupDetailsFragment @Inject constructor(viewModelFactory: UniversalViewMo
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             vm = viewModel
-            membersAdapterXML = membersAdapter
+            membersAdapterXML = FastAdapter.with(membersItemAdapter)
             expensesAdapterXML = expensesAdapter
         }
         binding.toolbar.setupWithNavController(findNavController())
@@ -62,11 +63,15 @@ class GroupDetailsFragment @Inject constructor(viewModelFactory: UniversalViewMo
     private fun setupObservers(){
         viewModel.message.observe(viewLifecycleOwner){ showSnackbar(it) }
         viewModel.monthlySum.observe(viewLifecycleOwner){ binding.toolbar.title = "${args.group.name} - $it ${args.group.currency}" }
-        viewModel.members.observe(viewLifecycleOwner){ membersAdapter.submitList(it.toMutableList()) }
-        viewModel.expenses.observe(viewLifecycleOwner){ FastAdapterDiffUtil.set(expensesItemAdapter, it.toAdapterItems(), ExpenseItem.DiffUtil()) }
+        viewModel.members.observe(viewLifecycleOwner){ FastAdapterDiffUtil.set(membersItemAdapter, it.toMemberItems(), GroupMemberItemDetails.DiffUtil()) }
+        viewModel.expenses.observe(viewLifecycleOwner){ FastAdapterDiffUtil.set(expensesItemAdapter, it.toExpenseItems(), ExpenseItem.DiffUtil()) }
     }
 
-    private fun List<ExpenseDomain>.toAdapterItems() = map {
+    private fun List<GroupMemberDomain>.toMemberItems() = map {
+        GroupMemberItemDetails(it, args.group.currency)
+    }
+
+    private fun List<ExpenseDomain>.toExpenseItems() = map {
         ExpenseItem(it, args.group.currency)
     }
 

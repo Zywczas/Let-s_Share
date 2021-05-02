@@ -14,13 +14,15 @@ import androidx.navigation.ui.setupWithNavController
 import com.leinardi.android.speeddial.SpeedDialActionItem
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.adapters.ItemAdapter
+import com.mikepenz.fastadapter.diff.FastAdapterDiffUtil
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.adapters.ExpenseItem
-import com.zywczas.letsshare.adapters.GroupMembersAdapter
+import com.zywczas.letsshare.adapters.GroupMemberItemDetails
 import com.zywczas.letsshare.databinding.FragmentHistoryDetailsBinding
 import com.zywczas.letsshare.di.factories.UniversalViewModelFactory
 import com.zywczas.letsshare.fragments.groupdetails.presentation.GroupDetailsFragmentDirections
 import com.zywczas.letsshare.models.ExpenseDomain
+import com.zywczas.letsshare.models.GroupMemberDomain
 import com.zywczas.letsshare.utils.autoRelease
 import com.zywczas.letsshare.utils.dimBackgroundOnMainButtonClick
 import com.zywczas.letsshare.utils.showSnackbar
@@ -31,7 +33,7 @@ class HistoryDetailsFragment @Inject constructor(viewModelFactory: UniversalView
     val viewModel: HistoryDetailsViewModel by viewModels { viewModelFactory }
     private var binding: FragmentHistoryDetailsBinding by autoRelease()
     private val args: HistoryDetailsFragmentArgs by navArgs()
-    private val membersAdapter by lazy { GroupMembersAdapter(args.group.currency) }
+    private val membersItemAdapter by lazy { ItemAdapter<GroupMemberItemDetails>() }
     private val expensesItemAdapter by lazy { ItemAdapter<ExpenseItem>() }
 
     override fun onCreateView(
@@ -48,7 +50,7 @@ class HistoryDetailsFragment @Inject constructor(viewModelFactory: UniversalView
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             vm = viewModel
-            membersAdapterXML = membersAdapter
+            membersAdapterXML = FastAdapter.with(membersItemAdapter)
             expensesAdapterXML = FastAdapter.with(expensesItemAdapter)
         }
         binding.toolbar.setupWithNavController(findNavController())
@@ -59,12 +61,16 @@ class HistoryDetailsFragment @Inject constructor(viewModelFactory: UniversalView
     private fun setupObservers(){
         viewModel.message.observe(viewLifecycleOwner){ showSnackbar(it) }
         viewModel.monthlySum.observe(viewLifecycleOwner){ binding.toolbar.title = "${args.group.name} - $it ${args.group.currency}" }
-        viewModel.members.observe(viewLifecycleOwner){ membersAdapter.submitList(it.toMutableList()) }
-        viewModel.expenses.observe(viewLifecycleOwner){ expensesItemAdapter.add(it.toAdapterItems()) }
+        viewModel.members.observe(viewLifecycleOwner){ FastAdapterDiffUtil.set(membersItemAdapter, it.toMemberItems(), GroupMemberItemDetails.DiffUtil()) }
+        viewModel.expenses.observe(viewLifecycleOwner){ FastAdapterDiffUtil.set(expensesItemAdapter, it.toExpenseItems(), ExpenseItem.DiffUtil()) }
         viewModel.settledUpMessage.observe(viewLifecycleOwner){ binding.settledUpMessage.text = getString(it) }
     }
 
-    private fun List<ExpenseDomain>.toAdapterItems() = map {
+    private fun List<GroupMemberDomain>.toMemberItems() = map {
+        GroupMemberItemDetails(it, args.group.currency)
+    }
+
+    private fun List<ExpenseDomain>.toExpenseItems() = map {
         ExpenseItem(it, args.group.currency)
     }
 
