@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.setupWithNavController
+import androidx.recyclerview.widget.RecyclerView
 import com.leinardi.android.speeddial.SpeedDialActionItem
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.adapters.ItemAdapter
@@ -55,15 +56,14 @@ class GroupDetailsFragment @Inject constructor(viewModelFactory: UniversalViewMo
         binding.toolbar.setupWithNavController(findNavController())
         setupObservers()
         setupSpeedDial()
+        setupExpenseAdapter()
     }
 
     private fun setupObservers(){
         viewModel.message.observe(viewLifecycleOwner){ showSnackbar(it) }
         viewModel.monthlySum.observe(viewLifecycleOwner){ binding.toolbar.title = "${args.group.name} - $it ${args.group.currency}" }
         viewModel.members.observe(viewLifecycleOwner){ membersAdapter.submitList(it.toMutableList()) }
-        viewModel.expenses.observe(viewLifecycleOwner){
-            FastAdapterDiffUtil.set(expensesItemAdapter, it.toAdapterItems(), ExpenseItem.DiffUtil())
-        }
+        viewModel.expenses.observe(viewLifecycleOwner){ FastAdapterDiffUtil.set(expensesItemAdapter, it.toAdapterItems(), ExpenseItem.DiffUtil()) } //todo jak tu nie ma detect moves to chyba tez powinno przewijac na gore
     }
 
     private fun List<ExpenseDomain>.toAdapterItems() = map {
@@ -141,6 +141,14 @@ class GroupDetailsFragment @Inject constructor(viewModelFactory: UniversalViewMo
 
     private fun goToHistoryFragment(){
         findNavController().navigate(GroupDetailsFragmentDirections.toHistoryFragment(args.group))
+    }
+
+    private fun setupExpenseAdapter(){
+        expensesAdapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver(){
+            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                binding.expensesRecycler.smoothScrollToPosition(0)
+            }
+        })
     }
 
 }

@@ -15,7 +15,7 @@
 
         <variable
             name="expensesAdapterXML"
-            type="com.zywczas.letsshare.adapters.ExpensesAdapter" />
+            type="com.mikepenz.fastadapter.FastAdapter" />
     </data>
 
     <FrameLayout
