@@ -12,11 +12,14 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.leinardi.android.speeddial.SpeedDialActionItem
-import com.leinardi.android.speeddial.SpeedDialView
+import com.mikepenz.fastadapter.FastAdapter
+import com.mikepenz.fastadapter.adapters.ItemAdapter
+import com.mikepenz.fastadapter.diff.FastAdapterDiffUtil
 import com.zywczas.letsshare.R
-import com.zywczas.letsshare.adapters.FriendsAdapter
+import com.zywczas.letsshare.adapters.FriendItem
 import com.zywczas.letsshare.databinding.FragmentFriendsBinding
 import com.zywczas.letsshare.di.factories.UniversalViewModelFactory
+import com.zywczas.letsshare.models.Friend
 import com.zywczas.letsshare.utils.autoRelease
 import com.zywczas.letsshare.utils.dimBackgroundOnMainButtonClick
 import com.zywczas.letsshare.utils.showSnackbar
@@ -27,12 +30,9 @@ class FriendsFragment @Inject constructor(viewModelFactory: UniversalViewModelFa
 
     private val viewModel: FriendsViewModel by viewModels { viewModelFactory }
     private var binding: FragmentFriendsBinding by autoRelease()
-    private val adapter by lazy { FriendsAdapter() }
+    private val friendItemAdapter by lazy { ItemAdapter<FriendItem>() }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentFriendsBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -44,7 +44,7 @@ class FriendsFragment @Inject constructor(viewModelFactory: UniversalViewModelFa
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             vm = viewModel
-            adapterXML = adapter
+            adapterXML = FastAdapter.with(friendItemAdapter)
         }
         binding.bottomNavBar.selectedItemId = R.id.friendsFragment
         setupObservers()
@@ -54,8 +54,10 @@ class FriendsFragment @Inject constructor(viewModelFactory: UniversalViewModelFa
 
     private fun setupObservers(){
         viewModel.message.observe(viewLifecycleOwner){ showSnackbar(it) }
-        viewModel.friends.observe(viewLifecycleOwner){ adapter.submitList(it.toMutableList()) }
+        viewModel.friends.observe(viewLifecycleOwner){ FastAdapterDiffUtil.set(friendItemAdapter, it.toFriendItems(), FriendItem.DiffUtil()) }
     }
+
+    private fun List<Friend>.toFriendItems() = map { FriendItem(it) }
 
     private fun setupSpeedDial(){
         setupSpeedDialMenu()

@@ -6,7 +6,7 @@
     <data>
         <variable
             name="adapterXML"
-            type="com.zywczas.letsshare.adapters.FriendsAdapter" />
+            type="com.mikepenz.fastadapter.FastAdapter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
