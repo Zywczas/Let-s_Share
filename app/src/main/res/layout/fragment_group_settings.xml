@@ -80,6 +80,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:text="@string/set_split_equal"
                 tools:text="Ustaw %\npo równo"
                 app:layout_constraintEnd_toEndOf="@+id/splitTotalValue"
                 app:layout_constraintStart_toStartOf="@+id/splitTotalValue"
