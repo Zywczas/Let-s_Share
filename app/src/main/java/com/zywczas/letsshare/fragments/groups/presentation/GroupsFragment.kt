@@ -11,7 +11,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.leinardi.android.speeddial.SpeedDialActionItem
-import com.leinardi.android.speeddial.SpeedDialView
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.adapters.GroupsAdapter
 import com.zywczas.letsshare.databinding.FragmentGroupsBinding
@@ -19,7 +18,6 @@ import com.zywczas.letsshare.di.factories.UniversalViewModelFactory
 import com.zywczas.letsshare.utils.autoRelease
 import com.zywczas.letsshare.utils.dimBackgroundOnMainButtonClick
 import com.zywczas.letsshare.utils.showSnackbar
-import com.zywczas.letsshare.utils.turnOffOnBackPressed
 import javax.inject.Inject
 
 class GroupsFragment @Inject constructor(viewModelFactory: UniversalViewModelFactory) : Fragment() {
@@ -42,7 +40,6 @@ class GroupsFragment @Inject constructor(viewModelFactory: UniversalViewModelFac
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        turnOffOnBackPressed()
         viewModel.getUserGroups()
         binding.apply {
             lifecycleOwner = viewLifecycleOwner

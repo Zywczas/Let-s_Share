@@ -30,8 +30,6 @@ fun Fragment.hideSoftKeyboard(){
     }
 }
 
-fun Fragment.turnOffOnBackPressed() = requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner){}
-
 fun dateInPoland(): Date = Calendar.getInstance(LOCALE_POLAND).time
 
 fun Date.monthId(): String = SimpleDateFormat("yyyy-MM", LOCALE_POLAND).format(this)

@@ -23,7 +23,6 @@ import com.zywczas.letsshare.models.Friend
 import com.zywczas.letsshare.utils.autoRelease
 import com.zywczas.letsshare.utils.dimBackgroundOnMainButtonClick
 import com.zywczas.letsshare.utils.showSnackbar
-import com.zywczas.letsshare.utils.turnOffOnBackPressed
 import javax.inject.Inject
 
 class FriendsFragment @Inject constructor(viewModelFactory: UniversalViewModelFactory) : Fragment() {
@@ -39,7 +38,6 @@ class FriendsFragment @Inject constructor(viewModelFactory: UniversalViewModelFa
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        turnOffOnBackPressed()
         viewModel.getFriends()
         binding.apply {
             lifecycleOwner = viewLifecycleOwner

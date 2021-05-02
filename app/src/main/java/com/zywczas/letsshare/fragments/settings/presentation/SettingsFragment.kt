@@ -13,7 +13,6 @@ import com.zywczas.letsshare.databinding.FragmentSettingsBinding
 import com.zywczas.letsshare.di.factories.UniversalViewModelFactory
 import com.zywczas.letsshare.utils.autoRelease
 import com.zywczas.letsshare.utils.showSnackbar
-import com.zywczas.letsshare.utils.turnOffOnBackPressed
 import javax.inject.Inject
 
 class SettingsFragment @Inject constructor(viewModelFactory: UniversalViewModelFactory) : Fragment() {
@@ -31,7 +30,6 @@ class SettingsFragment @Inject constructor(viewModelFactory: UniversalViewModelF
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        turnOffOnBackPressed()
         viewModel.getUser()
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
