@@ -9,6 +9,8 @@ import androidx.activity.addCallback
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.leinardi.android.speeddial.SpeedDialView
 import com.zywczas.letsshare.R
@@ -52,4 +54,12 @@ fun SpeedDialView.dimBackgroundOnMainButtonClick(activity: Activity, mainLayout:
             }
         }
     })
+}
+
+fun RecyclerView.addTransparentItemDivider(){
+    val itemDivider = DividerItemDecoration(context, RecyclerView.HORIZONTAL)
+    ContextCompat.getDrawable(context, R.drawable.item_divider_transparent)?.let {
+        itemDivider.setDrawable(it)
+    }
+    addItemDecoration(itemDivider)
 }

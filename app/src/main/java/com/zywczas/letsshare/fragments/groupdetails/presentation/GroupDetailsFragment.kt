@@ -23,6 +23,7 @@ import com.zywczas.letsshare.databinding.FragmentGroupDetailsBinding
 import com.zywczas.letsshare.di.factories.UniversalViewModelFactory
 import com.zywczas.letsshare.models.ExpenseDomain
 import com.zywczas.letsshare.models.GroupMemberDomain
+import com.zywczas.letsshare.utils.addTransparentItemDivider
 import com.zywczas.letsshare.utils.autoRelease
 import com.zywczas.letsshare.utils.dimBackgroundOnMainButtonClick
 import com.zywczas.letsshare.utils.showSnackbar
@@ -55,6 +56,7 @@ class GroupDetailsFragment @Inject constructor(viewModelFactory: UniversalViewMo
             expensesAdapterXML = expensesAdapter
         }
         binding.toolbar.setupWithNavController(findNavController())
+        binding.membersRecycler.addTransparentItemDivider()
         setupObservers()
         setupSpeedDial()
         setupExpenseAdapter()
