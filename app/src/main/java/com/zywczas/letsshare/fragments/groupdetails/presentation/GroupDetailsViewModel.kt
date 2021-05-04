@@ -103,4 +103,14 @@ class GroupDetailsViewModel @Inject constructor(
         }
     }
 
+    fun deleteExpense(position: Int){
+        viewModelScope.launch(dispatchersIO){
+            showProgressBar(true)
+            repository.delete(expenses.value!![position])?.let { error ->
+                postMessage(error)
+                showProgressBar(false)
+            }
+        }
+    }
+
 }

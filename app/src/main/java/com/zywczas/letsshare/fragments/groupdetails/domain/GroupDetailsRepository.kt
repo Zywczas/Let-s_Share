@@ -20,4 +20,6 @@ interface GroupDetailsRepository {
 
     suspend fun addExpense(monthId: String, name: String, amount: BigDecimal): Int?
 
+    suspend fun delete(expense: ExpenseDomain): Int?
+
 }

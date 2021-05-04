@@ -151,4 +151,14 @@ class GroupDetailsRepositoryImpl @Inject constructor(
             R.string.cant_add_expense
         }
 
+    override suspend fun delete(expense: ExpenseDomain): Int? =
+        try {
+
+            null
+        } catch (e: Exception) {
+            crashlyticsWrapper.sendExceptionToFirebase(e)
+            logD(e)
+            R.string.cant_delete_expense
+        }
+
 }

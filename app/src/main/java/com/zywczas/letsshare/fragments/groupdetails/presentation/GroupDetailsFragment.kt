@@ -184,9 +184,7 @@ class GroupDetailsFragment @Inject constructor(viewModelFactory: UniversalViewMo
         touchHelper.attachToRecyclerView(binding.expensesRecycler)
     }
 
-    override fun itemSwiped(position: Int, direction: Int) {
-        //todo dac tutaj usuwanie
-    }
+    override fun itemSwiped(position: Int, direction: Int) = viewModel.deleteExpense(position)
 
     override fun itemTouchOnMove(oldPosition: Int, newPosition: Int): Boolean = false
 
