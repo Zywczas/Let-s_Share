@@ -11,7 +11,6 @@ import com.zywczas.letsshare.models.GroupMemberDomain
 import com.zywczas.letsshare.models.GroupMonthDomain
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
-import java.lang.reflect.Member
 import java.math.BigDecimal
 import java.util.*
 import javax.inject.Inject
@@ -27,6 +26,9 @@ class GroupSettingsViewModel @Inject constructor(
 
     private val _friends = MutableLiveData<List<Friend>>()
     val friends: LiveData<List<Friend>> = _friends
+
+    private val _goToGroupsListFragment = MutableLiveData<Boolean>()
+    val goToGroupsListFragment: LiveData<Boolean> = _goToGroupsListFragment
 
     private var month = GroupMonthDomain()
 
@@ -103,18 +105,23 @@ class GroupSettingsViewModel @Inject constructor(
                 else -> {
                     showProgressBar(true)
                     val member = members.value!!.first { it.id == friend.id }
-                    repository.removeMember(month.id, member.id)?.let { error ->
+                    repository.removeMemberOrCloseGroup(month.id, member.id)?.let { error ->
                         postMessage(error)
                         showProgressBar(false)
                     } ?: kotlin.run {
-                        getMembers()
-                        _areSettingsChanged.postValue(true)
+                        if (hasUserLeftTheGroup(friend.id)){
+                            _goToGroupsListFragment.postValue(true)
+                        } else {
+                            getMembers()
+                            _areSettingsChanged.postValue(true)
+                        }
                     }
                 }
             }
         }
-
     }
+
+    private suspend fun hasUserLeftTheGroup(memberId: String): Boolean = memberId == repository.userId()
 
     fun updatePercentage(memberId: String, share: BigDecimal){
         viewModelScope.launch(dispatchersIO){

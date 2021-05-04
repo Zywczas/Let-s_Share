@@ -62,6 +62,9 @@ class GroupSettingsFragment @Inject constructor(
         viewModel.members.observe(viewLifecycleOwner){ membersAdapter.submitList(it.toMutableList()) }
         viewModel.totalPercentage.observe(viewLifecycleOwner){ binding.splitTotalValue.text = it }
         viewModel.areSettingsChanged.observe(viewLifecycleOwner){ binding.save.isVisible = it }
+        viewModel.goToGroupsListFragment.observe(viewLifecycleOwner){
+            findNavController().navigate(GroupSettingsFragmentDirections.toGroupsFragment())
+        }
     }
 
     private fun setupSpeedDial(){

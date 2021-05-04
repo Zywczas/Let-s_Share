@@ -17,7 +17,7 @@ import javax.inject.Inject
 
 class GroupSettingsRepositoryImpl @Inject constructor(
     private val firestoreRefs: FirestoreReferences,
-    sharedPrefs: SharedPrefsWrapper,
+    private val sharedPrefs: SharedPrefsWrapper,
     private val crashlyticsWrapper: CrashlyticsWrapper,
     private val friendsDao: FriendsDao,
     private val firestore: FirebaseFirestore
@@ -72,6 +72,31 @@ class GroupSettingsRepositoryImpl @Inject constructor(
         }
 
     private fun Friend.toGroupMember() = GroupMember(id = id, name = name, email = email)
+
+    override suspend fun removeMemberOrCloseGroup(monthId: String, memberId: String): Int? =
+        try {
+            val memberRef = firestoreRefs.groupMemberRefs(groupId, monthId, memberId)
+            val userToBeUpdatedRefs = firestoreRefs.userRefs(memberId)
+            val groupRef = firestoreRefs.groupRefs(groupId)
+
+            firestore.runTransaction { transaction ->
+                val group = transaction.get(groupRef).toObject<Group>()!!
+                if (group.membersNum < 2){
+                    transaction.delete(groupRef)
+                } else {
+                    transaction.delete(memberRef)
+                    transaction.update(groupRef, firestoreRefs.membersNumField, FieldValue.increment(-1)) //todo sprawdzic czy to dobrze liczy
+                }
+                transaction.update(userToBeUpdatedRefs, firestoreRefs.groupsIdsField, FieldValue.arrayRemove(groupId))
+            }.await()
+            null
+        } catch (e: Exception) {
+            crashlyticsWrapper.sendExceptionToFirebase(e)
+            logD(e)
+            R.string.something_wrong
+        }
+
+    override suspend fun userId(): String = sharedPrefs.userId
 
     override suspend fun saveSplits(monthId: String, members: List<GroupMemberDomain>): Int? =
         try {
