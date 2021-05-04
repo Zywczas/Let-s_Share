@@ -13,6 +13,8 @@ interface GroupSettingsRepository {
 
     suspend fun addMemberIfBelow7PeopleInGroup(monthId: String, friend: Friend): Int?
 
+    suspend fun removeMember(monthId: String, memberId: String): Int?
+
     suspend fun saveSplits(monthId: String, members: List<GroupMemberDomain>): Int?
 
 }

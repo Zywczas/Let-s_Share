@@ -94,6 +94,28 @@ class GroupSettingsViewModel @Inject constructor(
     private fun isFriendInTheGroupAlready(newMemberId: String): Boolean? =
         members.value?.any{ it.id == newMemberId }
 
+    fun deleteMember(friend: Friend){
+        viewModelScope.launch(dispatchersIO){
+            showProgressBar(true)
+            when {
+                month.isSettledUp -> postMessage(R.string.cant_operate_on_settled_up_month)
+                sessionManager.isNetworkAvailable().not() -> postMessage(R.string.connection_problem)
+                else -> {
+                    showProgressBar(true)
+                    val member = members.value!!.first { it.id == friend.id }
+                    repository.removeMember(month.id, member.id)?.let { error ->
+                        postMessage(error)
+                        showProgressBar(false)
+                    } ?: kotlin.run {
+                        getMembers()
+                        _areSettingsChanged.postValue(true)
+                    }
+                }
+            }
+        }
+
+    }
+
     fun updatePercentage(memberId: String, share: BigDecimal){
         viewModelScope.launch(dispatchersIO){
             members.value?.let { members ->
@@ -137,10 +159,6 @@ class GroupSettingsViewModel @Inject constructor(
             }
             showProgressBar(false)
         }
-    }
-
-    fun deleteMember(friend: Friend){
-
     }
 
 }
