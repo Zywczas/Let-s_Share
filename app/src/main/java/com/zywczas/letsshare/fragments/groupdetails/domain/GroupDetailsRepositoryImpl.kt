@@ -170,7 +170,6 @@ class GroupDetailsRepositoryImpl @Inject constructor(
                 )
                 transaction.update(memberRef, firestoreRefs.expensesField, decreasedMemberExpenses)
                 transaction.delete(expenseRef)
-                transaction.delete(expenseRef)
             }.await()
             null
         } catch (e: Exception) {
