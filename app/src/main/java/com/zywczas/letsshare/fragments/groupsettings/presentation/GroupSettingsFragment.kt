@@ -72,6 +72,15 @@ class GroupSettingsFragment @Inject constructor(
 
     private fun setupSpeedDialMenu(){
         binding.speedDial.addActionItem(
+            SpeedDialActionItem.Builder(R.id.removeMember, R.drawable.ic_remove_member)
+                .setFabBackgroundColor(ContextCompat.getColor(requireContext(), R.color.secondFABItem))
+                .setFabImageTintColor(Color.WHITE)
+                .setLabel(getString(R.string.remove_member))
+                .setLabelClickable(true)
+                .setLabelBackgroundColor(Color.WHITE)
+                .create()
+        )
+        binding.speedDial.addActionItem(
             SpeedDialActionItem.Builder(R.id.addMember, R.drawable.ic_add_friend)
                 .setFabBackgroundColor(ContextCompat.getColor(requireContext(), R.color.firstFABItem))
                 .setFabImageTintColor(Color.WHITE)
@@ -90,6 +99,11 @@ class GroupSettingsFragment @Inject constructor(
                     showAddGroupMemberDialog()
                     true
                 }
+                R.id.removeMember -> {
+                    binding.speedDial.close()
+                    showRemoveMemberDialog()
+                    true
+                }
                 else -> false
             }
         }
@@ -97,6 +111,10 @@ class GroupSettingsFragment @Inject constructor(
 
     private fun showAddGroupMemberDialog(){
         AddGroupMemberDialog().show(childFragmentManager, "AddGroupMemberDialog")
+    }
+
+    private fun showRemoveMemberDialog(){
+        RemoveMemberDialog().show(childFragmentManager, "RemoveMemberDialog")
     }
 
     private fun setupOnClickListeners(){

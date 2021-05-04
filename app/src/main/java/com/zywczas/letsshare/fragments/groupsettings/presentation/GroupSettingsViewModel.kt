@@ -11,6 +11,7 @@ import com.zywczas.letsshare.models.GroupMemberDomain
 import com.zywczas.letsshare.models.GroupMonthDomain
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
+import java.lang.reflect.Member
 import java.math.BigDecimal
 import java.util.*
 import javax.inject.Inject
@@ -136,6 +137,10 @@ class GroupSettingsViewModel @Inject constructor(
             }
             showProgressBar(false)
         }
+    }
+
+    fun deleteMember(friend: Friend){
+
     }
 
 }

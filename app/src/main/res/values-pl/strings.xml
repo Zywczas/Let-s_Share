@@ -55,6 +55,7 @@
     <string name="group_settings">Ustawienia grupy</string>
     <string name="add_expense">Dodaj wydatek</string>
     <string name="add_new_member">Dodaj członka</string>
+    <string name="remove_member">Usuń członka</string>
     <string name="login_title">Logowanie</string>
     <string name="registration">Rejestracja</string>
     <string name="split">Udział:</string>

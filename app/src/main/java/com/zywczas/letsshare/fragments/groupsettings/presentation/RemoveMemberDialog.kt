@@ -12,9 +12,10 @@ import com.mikepenz.fastadapter.diff.FastAdapterDiffUtil
 import com.zywczas.letsshare.adapters.FriendItem
 import com.zywczas.letsshare.databinding.DialogGroupMembersBinding
 import com.zywczas.letsshare.models.Friend
+import com.zywczas.letsshare.models.GroupMemberDomain
 import com.zywczas.letsshare.utils.autoRelease
 
-class AddGroupMemberDialog : DialogFragment() {
+class RemoveMemberDialog : DialogFragment() {
 
     private val viewModel: GroupSettingsViewModel by viewModels({ requireParentFragment() })
     private var binding: DialogGroupMembersBinding by autoRelease()
@@ -38,14 +39,14 @@ class AddGroupMemberDialog : DialogFragment() {
     }
 
     private fun setupObservers() {
-        viewModel.friends.observe(viewLifecycleOwner) { FastAdapterDiffUtil.set(friendItemAdapter, it.toFriendItems(), FriendItem.DiffUtil()) }
+        viewModel.members.observe(viewLifecycleOwner) { FastAdapterDiffUtil.set(friendItemAdapter, it.toFriendItems(), FriendItem.DiffUtil()) }
     }
 
-    private fun List<Friend>.toFriendItems() = map { FriendItem(it) }
+    private fun List<GroupMemberDomain>.toFriendItems() = map { FriendItem(Friend(id = it.id, email = it.email, name = it.name)) }
 
     private fun setupFriendsAdapter(){
         friendAdapter.onClickListener = { _, _, item, _ ->
-            viewModel.addNewMember(item.friend)
+            viewModel.deleteMember(item.friend)
             dismiss()
             false
         }

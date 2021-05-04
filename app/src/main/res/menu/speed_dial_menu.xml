@@ -17,6 +17,11 @@
         android:title="@string/add_new_member" />
 
     <item
+        android:id="@+id/removeMember"
+        android:icon="@drawable/ic_remove_member"
+        android:title="@string/remove_member" />
+
+    <item
         android:id="@+id/addFriend"
         android:icon="@drawable/ic_add_friend"
         android:title="@string/add_friend" />

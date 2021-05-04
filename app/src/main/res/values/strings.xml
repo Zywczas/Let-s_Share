@@ -55,6 +55,7 @@
     <string name="group_settings">Group settings</string>
     <string name="add_expense">Add expense</string>
     <string name="add_new_member">Add member</string>
+    <string name="remove_member">Delete member</string>
     <string name="login_title">Login</string>
     <string name="registration">Registration</string>
     <string name="split">Split:</string>
