@@ -123,7 +123,7 @@ class GroupDetailsRepositoryImpl @Inject constructor(
             val newExpense = Expense(
                 id = newExpenseRefs.id,
                 name = name,
-                payeeEmail = sharedPrefs.userEmail,
+                payeeId = sharedPrefs.userId,
                 payeeName = sharedPrefs.userName,
                 value = amount.toString(),
                 dateCreated = dateInPoland()
@@ -141,8 +141,8 @@ class GroupDetailsRepositoryImpl @Inject constructor(
                     firestoreRefs.totalExpensesField,
                     increasedMonthlyExpenses
                 )
-                transaction.set(newExpenseRefs, newExpense)
                 transaction.update(memberRef, firestoreRefs.expensesField, increasedMemberExpenses)
+                transaction.set(newExpenseRefs, newExpense)
             }.await()
             null
         } catch (e: Exception) {
@@ -151,9 +151,27 @@ class GroupDetailsRepositoryImpl @Inject constructor(
             R.string.cant_add_expense
         }
 
-    override suspend fun delete(expense: ExpenseDomain): Int? =
+    override suspend fun delete(monthId: String, expense: ExpenseDomain): Int? =
         try {
+            val monthRefs = firestoreRefs.groupMonthRefs(groupId, monthId)
+            val memberRef = firestoreRefs.groupMemberRefs(groupId, monthId, expense.payeeId)
+            val expenseRef = firestoreRefs.expenseRefs(groupId, monthId, expense.id)
 
+            firestore.runTransaction { transaction ->
+                val month = transaction.get(monthRefs).toObject<GroupMonth>()!!
+                val member = transaction.get(memberRef).toObject<GroupMember>()!!
+                val decreasedMonthlyExpenses =
+                    (month.totalExpenses.toBigDecimal() - expense.value).toString()
+                val decreasedMemberExpenses = (member.expenses.toBigDecimal() - expense.value).toString()
+                transaction.update(
+                    monthRefs,
+                    firestoreRefs.totalExpensesField,
+                    decreasedMonthlyExpenses
+                )
+                transaction.update(memberRef, firestoreRefs.expensesField, decreasedMemberExpenses)
+                transaction.delete(expenseRef)
+                transaction.delete(expenseRef)
+            }.await()
             null
         } catch (e: Exception) {
             crashlyticsWrapper.sendExceptionToFirebase(e)

@@ -83,4 +83,10 @@ class FirestoreReferencesImpl @Inject constructor(private val firestore: Firebas
             .collection(collectionExpenses)
             .document()
 
+    override fun expenseRefs(groupId: String, monthId: String, expenseId: String): DocumentReference =
+        firestore.collection(collectionGroups).document(groupId)
+            .collection(collectionMonths).document(monthId)
+            .collection(collectionExpenses)
+            .document(expenseId)
+
 }
