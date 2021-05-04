@@ -54,7 +54,7 @@
     <string name="provide_value">Provide value</string>
     <string name="group_settings">Group settings</string>
     <string name="add_expense">Add expense</string>
-    <string name="add_new_member">Add new member</string>
+    <string name="add_new_member">Add member</string>
     <string name="login_title">Login</string>
     <string name="registration">Registration</string>
     <string name="split">Split:</string>
