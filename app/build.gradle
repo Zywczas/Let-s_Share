@@ -78,6 +78,9 @@ dependencies {
     implementation "com.mikepenz:fastadapter:$fast_adapter"
     implementation "com.mikepenz:fastadapter-extensions-binding:$fast_adapter"
     implementation "com.mikepenz:fastadapter-extensions-diff:$fast_adapter"
+    implementation "com.mikepenz:fastadapter-extensions-swipe:$fast_adapter"
+    implementation "com.mikepenz:fastadapter-extensions-drag:$fast_adapter"
+    implementation "com.mikepenz:fastadapter-extensions-utils:$fast_adapter"
 
     //dagger
     implementation 'com.google.dagger:dagger:2.33'

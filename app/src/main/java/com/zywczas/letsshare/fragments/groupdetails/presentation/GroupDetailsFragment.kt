@@ -11,11 +11,15 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.setupWithNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.leinardi.android.speeddial.SpeedDialActionItem
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.adapters.ItemAdapter
 import com.mikepenz.fastadapter.diff.FastAdapterDiffUtil
+import com.mikepenz.fastadapter.drag.ItemTouchCallback
+import com.mikepenz.fastadapter.swipe.SimpleSwipeCallback
+import com.mikepenz.fastadapter.swipe_drag.SimpleSwipeDragCallback
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.adapters.ExpenseItem
 import com.zywczas.letsshare.adapters.GroupMemberItemDetails
@@ -29,7 +33,8 @@ import com.zywczas.letsshare.utils.dimBackgroundOnMainButtonClick
 import com.zywczas.letsshare.utils.showSnackbar
 import javax.inject.Inject
 
-class GroupDetailsFragment @Inject constructor(viewModelFactory: UniversalViewModelFactory): Fragment() {
+class GroupDetailsFragment @Inject constructor(viewModelFactory: UniversalViewModelFactory) :
+    Fragment(), ItemTouchCallback, SimpleSwipeCallback.ItemSwipeCallback {
 
     private val viewModel: GroupDetailsViewModel by viewModels { viewModelFactory }
     private var binding: FragmentGroupDetailsBinding by autoRelease()
@@ -156,6 +161,33 @@ class GroupDetailsFragment @Inject constructor(viewModelFactory: UniversalViewMo
                 binding.expensesRecycler.smoothScrollToPosition(0)
             }
         })
+
+        expensesAdapter.onClickListener = { _, _, _, _ ->
+            showSnackbar(R.string.swipe_to_delete)
+            false
+        }
+
+        val leaveBehindIcon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_delete)!!
+        val touchCallback = SimpleSwipeDragCallback(
+            this,
+            this,
+            leaveBehindIcon,
+            ItemTouchHelper.LEFT,
+            Color.RED
+        )
+            .withBackgroundSwipeRight(Color.RED)
+            .withLeaveBehindSwipeRight(leaveBehindIcon)
+            .withSensitivity(10f)
+            .withSurfaceThreshold(0.6f)
+
+        val touchHelper = ItemTouchHelper(touchCallback)
+        touchHelper.attachToRecyclerView(binding.expensesRecycler)
     }
+
+    override fun itemSwiped(position: Int, direction: Int) {
+        //todo dac tutaj usuwanie
+    }
+
+    override fun itemTouchOnMove(oldPosition: Int, newPosition: Int): Boolean = false
 
 }

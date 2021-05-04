@@ -42,6 +42,7 @@
     <string name="not_settled_up_message">This month is not settled up yet.</string>
     <string name="cant_settle_up">Couldn\'t settled up the month. Try again.</string>
     <string name="cant_operate_on_settled_up_month">Can\'t do this when month is already settled up.</string>
+    <string name="swipe_to_delete">Swipe to delete.</string>
 
     <!--    UI elements -->
     <string name="friends">Friends</string>

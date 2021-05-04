@@ -42,6 +42,7 @@
     <string name="not_settled_up_message">Ten mesiąc nie jest jeszcze rozliczony.</string>
     <string name="cant_settle_up">Nie udało się rozliczyć tego miesiąca. Spróbuj ponownie.</string>
     <string name="cant_operate_on_settled_up_month">Nie można tego zrobić, gdy miesiąc jest już rozliczony.</string>
+    <string name="swipe_to_delete">Przesuń, żeby usunąć.</string>
 
     <!--    UI elements -->
     <string name="friends">Znajomi</string>
