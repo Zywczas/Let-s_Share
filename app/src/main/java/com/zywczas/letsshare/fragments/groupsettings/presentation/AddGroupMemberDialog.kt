@@ -35,6 +35,7 @@ class AddGroupMemberDialog : DialogFragment() {
         }
         setupObservers()
         setupFriendsAdapter()
+        binding.cancel.setOnClickListener { dismiss() }
     }
 
     private fun setupObservers() {
