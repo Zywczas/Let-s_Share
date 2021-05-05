@@ -87,7 +87,7 @@
     <string name="check">Check</string>
     <string name="is_settled_up">Is settled up</string>
     <string name="create_user">Create user</string>
-    <string name="total_split_100">Total split must be\nequal 100.00%:</string>
+    <string name="total_split_100">Total split must be equal 100.00%:</string>
     <string name="set_split_equal">Set %\nequally</string>
     <string name="save">Save</string>
 

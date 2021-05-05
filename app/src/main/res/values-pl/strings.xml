@@ -87,7 +87,7 @@
     <string name="check">Potwierdź</string>
     <string name="is_settled_up">Rozliczony</string>
     <string name="create_user">Stwórz użytkownika</string>
-    <string name="total_split_100">Łączny podział musi być\nrówny 100,00%:</string>
+    <string name="total_split_100">Łączny podział musi być równy 100,00%:</string>
     <string name="set_split_equal">Ustaw %\npo równo</string>
     <string name="save">Zapisz</string>
 
