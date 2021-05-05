@@ -85,7 +85,7 @@ class GroupSettingsRepositoryImpl @Inject constructor(
                     transaction.delete(groupRef)
                 } else {
                     transaction.delete(memberRef)
-                    transaction.update(groupRef, firestoreRefs.membersNumField, FieldValue.increment(-1)) //todo sprawdzic czy to dobrze liczy
+                    transaction.update(groupRef, firestoreRefs.membersNumField, FieldValue.increment(-1))
                 }
                 transaction.update(userToBeUpdatedRefs, firestoreRefs.groupsIdsField, FieldValue.arrayRemove(groupId))
             }.await()
