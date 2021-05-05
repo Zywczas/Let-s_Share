@@ -76,6 +76,11 @@
                 tools:visibility="visible" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <com.leinardi.android.speeddial.SpeedDialOverlayLayout
+            android:id="@+id/overlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
         <com.leinardi.android.speeddial.SpeedDialView
             android:id="@+id/speedDial"
             android:layout_width="wrap_content"
@@ -85,6 +90,7 @@
             android:scaleType="centerCrop"
             android:theme="@style/Theme.LetsShare"
             app:fabSize="normal"
+            app:sdOverlayLayout="@id/overlay"
             app:sdMainFabAnimationRotateAngle="360"
             app:sdMainFabClosedSrc="@drawable/ic_plus"
             app:sdMainFabOpenedSrc="@drawable/ic_x"
