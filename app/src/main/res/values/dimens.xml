@@ -13,6 +13,7 @@
     <dimen name="headerMediumTextSizeListItem">20sp</dimen>
     <dimen name="headerLargeTextSizeListItem">24sp</dimen>
     <dimen name="titleDialog">20sp</dimen>
+    <dimen name="messageDialog">18sp</dimen>
 
 <!--    dialog-->
     <dimen name="editTextSmallWidthDialog">150dp</dimen>

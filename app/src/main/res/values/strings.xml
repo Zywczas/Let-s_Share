@@ -5,8 +5,8 @@
     <!--    login and registration messages-->
     <string name="name_email_password_not_blank">You need to provide name, email and password.</string>
     <string name="password_needs_6letters">Your password must have at least 6 characters.</string>
-    <string name="user_registered">Hello %1$s. You have successfully registered.</string>
-    <string name="verification_email_sent">You should have an email with verification link. Please verify your account.</string>
+    <string name="hello_user">Hello %1$s!</string>
+    <string name="verification_email_sent">You should have an email with verification link. Please verify your account first.</string>
     <string name="problem_registration">Registration failure. Try again.</string>
     <string name="email_already_exists">This email is already registered. Use different one.</string>
     <string name="verify_email">In order to login you need to verify your email first. Check you email box.</string>

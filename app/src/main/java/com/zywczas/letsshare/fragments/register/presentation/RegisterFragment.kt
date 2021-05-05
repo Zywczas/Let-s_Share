@@ -45,11 +45,15 @@ class RegisterFragment @Inject constructor(viewModelFactory: UniversalViewModelF
         viewModel.message.observe(viewLifecycleOwner){ showSnackbar(it) }
         viewModel.isRegisteredAndUserName.observe(viewLifecycleOwner) { isRegisteredAndName ->
             if (isRegisteredAndName.first){
-                val message = getString(R.string.user_registered, isRegisteredAndName.second)
-                showSnackbar(message)
+                val dialogTitle = getString(R.string.hello_user, isRegisteredAndName.second)
+                showInfoAlertDialog(dialogTitle)
                 goToLoginFragment()
             }
         }
+    }
+
+    private fun showInfoAlertDialog(title: String){
+        findNavController().navigate(RegisterFragmentDirections.showInfoDialog(title))
     }
 
     private fun goToLoginFragment() = requireActivity().onBackPressed()

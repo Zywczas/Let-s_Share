@@ -31,7 +31,11 @@
         android:id="@+id/registerFragment"
         android:name="com.zywczas.letsshare.fragments.register.presentation.RegisterFragment"
         android:label="@string/registration"
-        tools:layout="@layout/fragment_register" />
+        tools:layout="@layout/fragment_register" >
+        <action
+            android:id="@+id/showInfoDialog"
+            app:destination="@id/infoDialog" />
+    </fragment>
 
     <fragment
         android:id="@+id/welcomeFragment"
@@ -220,4 +224,13 @@
             app:popExitAnim="@anim/slide_out_right"
             app:destination="@id/groupSettingsFragment" />
     </fragment>
+    <dialog
+        android:id="@+id/infoDialog"
+        tools:layout="@layout/dialog_info"
+        android:name="com.zywczas.letsshare.fragments.register.presentation.InfoDialog"
+        android:label="InfoDialog" >
+        <argument
+            android:name="title"
+            app:argType="string" />
+    </dialog>
 </navigation>
