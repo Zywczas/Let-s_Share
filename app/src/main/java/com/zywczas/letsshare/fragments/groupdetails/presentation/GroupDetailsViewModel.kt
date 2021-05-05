@@ -93,11 +93,15 @@ class GroupDetailsViewModel @Inject constructor(
     fun addExpense(name: String, amount: BigDecimal) {
         viewModelScope.launch(dispatchersIO) {
             currentMonth.value?.id?.let { monthId ->
-                showProgressBar(true)
                 val roundedAmount = amount.setScale(2, BigDecimal.ROUND_HALF_UP)
-                repository.addExpense(monthId, name, roundedAmount)?.let { error ->
-                    postMessage(error)
-                    showProgressBar(false)
+                if (roundedAmount == BigDecimal("0.00")){
+                    postMessage(R.string.expense_too_small)
+                } else {
+                    showProgressBar(true)
+                    repository.addExpense(monthId, name, roundedAmount)?.let { error ->
+                        postMessage(error)
+                        showProgressBar(false)
+                    }
                 }
             }
         }

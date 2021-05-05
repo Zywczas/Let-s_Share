@@ -17,7 +17,7 @@ android {
         minSdkVersion 24
         targetSdkVersion 30
         versionCode 1
-        versionName "0.09"
+        versionName "1.00"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -57,7 +57,6 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
-    //firebase
     implementation platform('com.google.firebase:firebase-bom:26.5.0')
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.google.firebase:firebase-crashlytics-ktx'
@@ -82,16 +81,13 @@ dependencies {
     implementation "com.mikepenz:fastadapter-extensions-drag:$fast_adapter"
     implementation "com.mikepenz:fastadapter-extensions-utils:$fast_adapter"
 
-    //dagger
     implementation 'com.google.dagger:dagger:2.33'
     implementation 'com.google.dagger:dagger-android-support:2.27'
     kapt 'com.google.dagger:dagger-android-processor:2.27'
     kapt 'com.google.dagger:dagger-compiler:2.33'
 
-    //FAB speed dial
     implementation "com.leinardi.android:speed-dial:3.1.1"
 
-    //Room
     def room_version = "2.2.6"
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
