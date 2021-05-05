@@ -68,7 +68,7 @@
     <string name="confirm_password">Confirm password</string>
     <string name="email">Email</string>
     <string name="confirm_email">Confirm email</string>
-    <string name="first_time_here">First time here? Register new user:</string>
+    <string name="first_time_here">First time here?\nRegister new user:</string>
     <string name="add_friend">Add friend</string>
     <string name="last_3_months">Last 3 months</string>
     <string name="expense_name">Name</string>
