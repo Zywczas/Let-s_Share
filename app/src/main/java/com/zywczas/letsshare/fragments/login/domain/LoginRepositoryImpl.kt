@@ -2,6 +2,9 @@ package com.zywczas.letsshare.fragments.login.domain
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.toObject
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.messaging.RemoteMessage
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.activitymain.domain.CrashlyticsWrapper
 import com.zywczas.letsshare.activitymain.domain.FirestoreReferences
@@ -16,7 +19,7 @@ class LoginRepositoryImpl @Inject constructor(
     private val firestoreRefs: FirestoreReferences,
     private val sharedPrefs: SharedPrefsWrapper,
     private val crashlytics: CrashlyticsWrapper
-    ): LoginRepository {
+): LoginRepository {
 
     override suspend fun getLastUsedEmail(): String = sharedPrefs.lastUsedEmail
 

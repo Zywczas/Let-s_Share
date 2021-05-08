@@ -4,17 +4,32 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.Network
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.messaging.FirebaseMessaging
+import com.zywczas.letsshare.activitymain.domain.CrashlyticsWrapper
+import com.zywczas.letsshare.activitymain.domain.FirestoreReferences
+import com.zywczas.letsshare.activitymain.domain.SharedPrefsWrapper
+import com.zywczas.letsshare.di.modules.DispatchersModule.DispatchersIO
+import com.zywczas.letsshare.utils.logD
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class SessionManagerImpl @Inject constructor(
     private val context: Context,
-    private val firebaseAuth: FirebaseAuth) : SessionManager {
+    private val firebaseAuth: FirebaseAuth,
+    @DispatchersIO private val dispatchersIO: CoroutineDispatcher,
+    private val messaging: FirebaseMessaging,
+    private val firestoreRefs: FirestoreReferences,
+    private val sharedPrefs: SharedPrefsWrapper,
+    private val crashlytics: CrashlyticsWrapper
+) : SessionManager {
 
     private var isConnected = false
     private var isLoggedIn = false
@@ -51,6 +66,21 @@ class SessionManagerImpl @Inject constructor(
     override suspend fun logout() {
         firebaseAuth.signOut()
         isLoggedIn = false
+    }
+
+    override fun saveMessagingToken() {
+        GlobalScope.launch(dispatchersIO){
+            try {
+                logD("zaczyna zapisywac token")  //todo usunac
+                val token = messaging.token.await()
+                logD("user:${sharedPrefs.userName}, zapisany token: $token") //todo niby dziala, ale sprawdzic czy sie da stworzyc nowy token, bo teraz tata ma taki sam jak ja
+                    //todo bo loguje sie z mojego urzadzenia
+                firestoreRefs.userRefs(sharedPrefs.userId).update(firestoreRefs.messagingTokenField, token).await()
+            } catch (e: Exception){
+                crashlytics.sendExceptionToFirebase(e)
+                logD(e)
+            }
+        }
     }
 
 }

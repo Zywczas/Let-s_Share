@@ -9,6 +9,8 @@ import com.google.firebase.crashlytics.ktx.crashlytics
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.messaging.ktx.messaging
 import dagger.Module
 import dagger.Provides
 
@@ -26,5 +28,8 @@ class AppModule {
 
     @Provides
     fun provideFirebaseCrashlytics(): FirebaseCrashlytics = Firebase.crashlytics
+
+    @Provides
+    fun provideFirebaseMessaging(): FirebaseMessaging = Firebase.messaging
 
 }

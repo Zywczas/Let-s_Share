@@ -12,4 +12,6 @@ interface SessionManager : LifecycleObserver {
 
     suspend fun logout()
 
+    fun saveMessagingToken()
+
 }
