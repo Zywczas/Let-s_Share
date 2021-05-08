@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey
 data class Friend (
 
     @PrimaryKey
-    @ColumnInfo(name = "id")
+    @ColumnInfo(name = "id") //todo pousuwac column info jak nie potrzeba
     val id: String = "",
 
     @ColumnInfo(name = "email")

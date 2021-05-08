@@ -2,13 +2,11 @@ package com.zywczas.letsshare.fragments.login.domain
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.toObject
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.messaging.FirebaseMessaging
-import com.google.firebase.messaging.RemoteMessage
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.activitymain.domain.CrashlyticsWrapper
 import com.zywczas.letsshare.activitymain.domain.FirestoreReferences
 import com.zywczas.letsshare.activitymain.domain.SharedPrefsWrapper
+import com.zywczas.letsshare.db.UserDao
 import com.zywczas.letsshare.models.User
 import com.zywczas.letsshare.utils.logD
 import kotlinx.coroutines.tasks.await
@@ -18,7 +16,8 @@ class LoginRepositoryImpl @Inject constructor(
     private val firebaseAuth: FirebaseAuth,
     private val firestoreRefs: FirestoreReferences,
     private val sharedPrefs: SharedPrefsWrapper,
-    private val crashlytics: CrashlyticsWrapper
+    private val crashlytics: CrashlyticsWrapper,
+    private val userDao: UserDao
 ): LoginRepository {
 
     override suspend fun getLastUsedEmail(): String = sharedPrefs.lastUsedEmail
@@ -47,6 +46,8 @@ class LoginRepositoryImpl @Inject constructor(
             val user = firestoreRefs.userRefs(userId).get().await().toObject<User>()!!
             logD("zalogowany uzytkownik: ${user.name}") //todo
             sharedPrefs.saveUserLocally(user)
+            userDao.clearTable()
+            userDao.insert(user)
             logD("zapisalo uzytkownika: ${user.name}") //todo
             null
         } catch (e: Exception) {

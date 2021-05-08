@@ -20,6 +20,14 @@ android {
         versionName "1.00"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments["room.incremental"] = "true"
+                arguments += ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
+
     }
 
     buildTypes {
@@ -43,6 +51,7 @@ android {
         viewBinding true
         dataBinding true
     }
+
 }
 
 dependencies {
