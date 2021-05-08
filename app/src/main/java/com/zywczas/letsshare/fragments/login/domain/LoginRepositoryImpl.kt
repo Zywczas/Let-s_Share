@@ -45,7 +45,9 @@ class LoginRepositoryImpl @Inject constructor(
         try {
             val userId = firebaseAuth.currentUser?.uid!!
             val user = firestoreRefs.userRefs(userId).get().await().toObject<User>()!!
+            logD("zalogowany uzytkownik: ${user.name}") //todo
             sharedPrefs.saveUserLocally(user)
+            logD("zapisalo uzytkownika: ${user.name}") //todo
             null
         } catch (e: Exception) {
             crashlytics.sendExceptionToFirebase(e)
