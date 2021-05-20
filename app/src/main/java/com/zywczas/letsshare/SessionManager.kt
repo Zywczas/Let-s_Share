@@ -14,4 +14,6 @@ interface SessionManager : LifecycleObserver {
 
     fun saveMessagingToken()
 
+    fun sendNotification()
+
 }

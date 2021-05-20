@@ -9,7 +9,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.messaging.FirebaseMessaging
 import com.zywczas.letsshare.activitymain.domain.CrashlyticsWrapper
 import com.zywczas.letsshare.activitymain.domain.FirestoreReferences
-import com.zywczas.letsshare.activitymain.domain.SharedPrefsWrapper
 import com.zywczas.letsshare.db.UserDao
 import com.zywczas.letsshare.di.modules.DispatchersModule.DispatchersIO
 import com.zywczas.letsshare.utils.logD
@@ -31,10 +30,6 @@ class SessionManagerImpl @Inject constructor(
     private val crashlytics: CrashlyticsWrapper,
     private val userDao: UserDao
 ) : SessionManager {
-
-    init {
-        logD("manager startuje") //todo
-    }
 
     private var isConnected = false
     private var isLoggedIn = false
@@ -78,13 +73,17 @@ class SessionManagerImpl @Inject constructor(
             try {
                 val token = messaging.token.await()
                 val user = userDao.getUser()
-                logD("user:${user.name}, zapisany token: $token") //todo niby dziala, ale sprawdzic czy sie da stworzyc nowy token, bo teraz tata ma taki sam jak ja
-                    //todo bo loguje sie z mojego urzadzenia
                 firestoreRefs.userRefs(user.id).update(firestoreRefs.messagingTokenField, token).await()
             } catch (e: Exception){
                 crashlytics.sendExceptionToFirebase(e)
                 logD(e)
             }
+        }
+    }
+
+    override fun sendNotification() {
+        GlobalScope.launch(dispatchersIO){
+            //todo
         }
     }
 

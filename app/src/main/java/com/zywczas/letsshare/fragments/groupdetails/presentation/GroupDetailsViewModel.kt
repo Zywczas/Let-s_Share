@@ -2,6 +2,7 @@ package com.zywczas.letsshare.fragments.groupdetails.presentation
 
 import androidx.lifecycle.*
 import com.zywczas.letsshare.R
+import com.zywczas.letsshare.SessionManager
 import com.zywczas.letsshare.activitymain.domain.withBalance
 import com.zywczas.letsshare.activitymain.presentation.BaseViewModel
 import com.zywczas.letsshare.di.modules.DispatchersModule.DispatchersIO
@@ -22,7 +23,8 @@ import javax.inject.Inject
 
 class GroupDetailsViewModel @Inject constructor(
     @DispatchersIO private val dispatchersIO: CoroutineDispatcher,
-    private val repository: GroupDetailsRepository
+    private val repository: GroupDetailsRepository,
+    private val sessionManager: SessionManager
 ) : BaseViewModel() {
 
     private val _currentMonth = MutableLiveData<GroupMonthDomain>()
@@ -101,7 +103,7 @@ class GroupDetailsViewModel @Inject constructor(
                     repository.addExpense(monthId, name, roundedAmount)?.let { error ->
                         postMessage(error)
                         showProgressBar(false)
-                    }
+                    } ?: sessionManager.sendNotification()
                 }
             }
         }
