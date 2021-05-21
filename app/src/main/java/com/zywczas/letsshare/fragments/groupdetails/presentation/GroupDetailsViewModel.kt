@@ -104,17 +104,17 @@ class GroupDetailsViewModel @Inject constructor(
                     repository.addExpense(monthId, name, roundedAmount)?.let { error ->
                         postMessage(error)
                         showProgressBar(false)
-                    } ?: sendNotification()
+                    } ?: sendNotification(groupName)
                 }
             }
         }
     }
 
-    private suspend fun sendNotification(){
+    private suspend fun sendNotification(groupName: String){
         members.value.takeIf { it.isNullOrEmpty().not() }?.map { it.id }?.let { ids ->
             val notification = ExpenseNotification(
                 ownerName = repository.getUserName(),
-                groupName = "jakies imie", //todo dokonczyc
+                groupName = groupName,
                 receiversIds = ids
             )
             sessionManager.sendNotification(notification)
