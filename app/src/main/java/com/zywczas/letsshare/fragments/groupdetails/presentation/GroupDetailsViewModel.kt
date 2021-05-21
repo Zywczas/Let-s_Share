@@ -93,7 +93,7 @@ class GroupDetailsViewModel @Inject constructor(
             .collect { _currentMonth.postValue(it) }
     }
 
-    fun addExpense(name: String, amount: BigDecimal) {
+    fun addExpense(name: String, amount: BigDecimal, groupName: String) {
         viewModelScope.launch(dispatchersIO) {
             currentMonth.value?.id?.let { monthId ->
                 val roundedAmount = amount.setScale(2, BigDecimal.ROUND_HALF_UP)

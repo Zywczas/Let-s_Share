@@ -10,6 +10,6 @@ import retrofit2.http.POST
 interface NotificationService {
 
     @POST("api/v1/notification/send_expense")
-    suspend fun hello(@Body ): Response<Hello>
+    suspend fun hello(): Response<String> //todo
 
 }

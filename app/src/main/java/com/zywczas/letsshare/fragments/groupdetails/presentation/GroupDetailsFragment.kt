@@ -28,10 +28,7 @@ import com.zywczas.letsshare.databinding.FragmentGroupDetailsBinding
 import com.zywczas.letsshare.di.factories.UniversalViewModelFactory
 import com.zywczas.letsshare.models.ExpenseDomain
 import com.zywczas.letsshare.models.GroupMemberDomain
-import com.zywczas.letsshare.utils.addTransparentItemDivider
-import com.zywczas.letsshare.utils.autoRelease
-import com.zywczas.letsshare.utils.dimBackgroundOnMainButtonClick
-import com.zywczas.letsshare.utils.showSnackbar
+import com.zywczas.letsshare.utils.*
 import javax.inject.Inject
 
 class GroupDetailsFragment @Inject constructor(viewModelFactory: UniversalViewModelFactory) :
@@ -149,7 +146,8 @@ class GroupDetailsFragment @Inject constructor(viewModelFactory: UniversalViewMo
     }
 
     private fun showAddExpenseDialog(){
-        AddExpenseDialog().show(childFragmentManager, "AddExpenseDialog")
+        val bundle = Bundle().apply { putString(GROUP_NAME_KEY, args.group.name) }
+        AddExpenseDialog().apply { arguments = bundle }.show(childFragmentManager, "AddExpenseDialog")
     }
 
     private fun goToHistoryFragment(){

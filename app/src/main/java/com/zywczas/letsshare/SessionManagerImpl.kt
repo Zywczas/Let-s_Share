@@ -11,6 +11,7 @@ import com.zywczas.letsshare.activitymain.domain.CrashlyticsWrapper
 import com.zywczas.letsshare.activitymain.domain.FirestoreReferences
 import com.zywczas.letsshare.db.UserDao
 import com.zywczas.letsshare.di.modules.DispatchersModule.DispatchersIO
+import com.zywczas.letsshare.models.ExpenseNotification
 import com.zywczas.letsshare.utils.logD
 import com.zywczas.letsshare.webservices.NotificationService
 import kotlinx.coroutines.CoroutineDispatcher
@@ -84,21 +85,20 @@ class SessionManagerImpl @Inject constructor(
         }
     }
 
-    override fun sendNotification() {
+    override fun sendNotification(notification: ExpenseNotification) {
         GlobalScope.launch(dispatchersIO){
             try {
-                val response = notificationService.wakeUpTheServer()
-                if (response.isSuccessful){
-                    logD("sukces: ${response.body()}")
-                    logD("sukces: ${response.code()}")
-                } else {
-                    logD("porazka: ${response.message()}")
-                    logD("porazka: ${response.code()}")
-                }
+//                val response = notificationService.wakeUpTheServer()
+//                if (response.isSuccessful){
+//                    logD("sukces: ${response.body()}")
+//                    logD("sukces: ${response.code()}")
+//                } else {
+//                    logD("porazka: ${response.message()}")
+//                    logD("porazka: ${response.code()}")
+//                }
             } catch (e: Exception){
                 logD("exception: ${e.message}")
             }
-
         }
     }
 
