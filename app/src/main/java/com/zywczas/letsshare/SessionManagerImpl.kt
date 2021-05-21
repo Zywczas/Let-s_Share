@@ -12,6 +12,7 @@ import com.zywczas.letsshare.activitymain.domain.FirestoreReferences
 import com.zywczas.letsshare.db.UserDao
 import com.zywczas.letsshare.di.modules.DispatchersModule.DispatchersIO
 import com.zywczas.letsshare.utils.logD
+import com.zywczas.letsshare.webservices.NotificationService
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
@@ -19,6 +20,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.math.log
 
 @Singleton
 class SessionManagerImpl @Inject constructor(
@@ -28,7 +30,8 @@ class SessionManagerImpl @Inject constructor(
     private val messaging: FirebaseMessaging,
     private val firestoreRefs: FirestoreReferences,
     private val crashlytics: CrashlyticsWrapper,
-    private val userDao: UserDao
+    private val userDao: UserDao,
+    private val notificationService: NotificationService
 ) : SessionManager {
 
     private var isConnected = false
@@ -83,7 +86,19 @@ class SessionManagerImpl @Inject constructor(
 
     override fun sendNotification() {
         GlobalScope.launch(dispatchersIO){
-            //todo
+            try {
+                val response = notificationService.wakeUpTheServer()
+                if (response.isSuccessful){
+                    logD("sukces: ${response.body()}")
+                    logD("sukces: ${response.code()}")
+                } else {
+                    logD("porazka: ${response.message()}")
+                    logD("porazka: ${response.code()}")
+                }
+            } catch (e: Exception){
+                logD("exception: ${e.message}")
+            }
+
         }
     }
 

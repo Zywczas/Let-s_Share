@@ -22,8 +22,8 @@ class MessagingService : FirebaseMessagingService() {
         val messageTitle = message.data[messageTitle]
         logD("tytul powiadomienia: $notificationTitle")
         logD("cialo powiadomienia: $notificationBody")
-        logD("tytul wiadomosci: $messageTitle")
-        logD("tresc wiadomosci: $messageContent")
+        logD("tytul wiadomosci: $messageTitle") //Nowy wydatek
+        logD("tresc wiadomosci: $messageContent") //Piotr dodał nowy wydatek do grupy Dom
     }
 
 }

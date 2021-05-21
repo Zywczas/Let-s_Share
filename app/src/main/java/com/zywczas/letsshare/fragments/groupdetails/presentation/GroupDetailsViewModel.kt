@@ -8,6 +8,7 @@ import com.zywczas.letsshare.activitymain.presentation.BaseViewModel
 import com.zywczas.letsshare.di.modules.DispatchersModule.DispatchersIO
 import com.zywczas.letsshare.fragments.groupdetails.domain.GroupDetailsRepository
 import com.zywczas.letsshare.models.ExpenseDomain
+import com.zywczas.letsshare.models.ExpenseNotification
 import com.zywczas.letsshare.models.GroupMemberDomain
 import com.zywczas.letsshare.models.GroupMonthDomain
 import com.zywczas.letsshare.utils.monthId
@@ -103,9 +104,20 @@ class GroupDetailsViewModel @Inject constructor(
                     repository.addExpense(monthId, name, roundedAmount)?.let { error ->
                         postMessage(error)
                         showProgressBar(false)
-                    } ?: sessionManager.sendNotification()
+                    } ?: sendNotification()
                 }
             }
+        }
+    }
+
+    private suspend fun sendNotification(){
+        members.value.takeIf { it.isNullOrEmpty().not() }?.map { it.id }?.let { ids ->
+            val notification = ExpenseNotification(
+                ownerName = repository.getUserName(),
+                groupName = "jakies imie", //todo dokonczyc
+                receiversIds = ids
+            )
+            sessionManager.sendNotification(notification)
         }
     }
 
