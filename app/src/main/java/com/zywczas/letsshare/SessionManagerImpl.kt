@@ -88,14 +88,14 @@ class SessionManagerImpl @Inject constructor(
     override fun sendNotification(notification: ExpenseNotification) {
         GlobalScope.launch(dispatchersIO){
             try {
-//                val response = notificationService.wakeUpTheServer()
-//                if (response.isSuccessful){
-//                    logD("sukces: ${response.body()}")
-//                    logD("sukces: ${response.code()}")
-//                } else {
-//                    logD("porazka: ${response.message()}")
-//                    logD("porazka: ${response.code()}")
-//                }
+                val response = notificationService.sendNotification(notification)
+                if (response.isSuccessful){
+                    logD("sukces: ${response.body()?.message}")
+                    logD("sukces: ${response.code()}")
+                } else {
+                    logD("porazka: ${response.message()}")
+                    logD("porazka: ${response.code()}")
+                }
             } catch (e: Exception){
                 logD("exception: ${e.message}")
             }
