@@ -28,6 +28,10 @@ class GroupDetailsViewModel @Inject constructor(
     private val sessionManager: SessionManager
 ) : BaseViewModel() {
 
+    init {
+        sessionManager.wakeUpServer()
+    }
+
     private val _currentMonth = MutableLiveData<GroupMonthDomain>()
     val currentMonth: LiveData<GroupMonthDomain> = _currentMonth
 

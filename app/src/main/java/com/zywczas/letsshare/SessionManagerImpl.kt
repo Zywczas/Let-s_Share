@@ -85,18 +85,22 @@ class SessionManagerImpl @Inject constructor(
         }
     }
 
+    override fun wakeUpServer() {
+        GlobalScope.launch(dispatchersIO){
+            try {
+                notificationService.wakeUpTheServer()
+            } catch (e: Exception){
+                logD("Waking up server ${e.message}")
+            }
+        }
+    }
+
     override fun sendNotification(notification: ExpenseNotification) {
         GlobalScope.launch(dispatchersIO){
             try {
-                val response = notificationService.sendNotification(notification)
-                if (response.isSuccessful){
-                    logD("sukces: ${response.body()?.message}")
-                    logD("sukces: ${response.code()}")
-                } else {
-                    logD("porazka: ${response.message()}")
-                    logD("porazka: ${response.code()}")
-                }
+                notificationService.sendNotification(notification)
             } catch (e: Exception){
+                crashlytics.sendExceptionToFirebase(e)
                 logD("exception: ${e.message}")
             }
         }

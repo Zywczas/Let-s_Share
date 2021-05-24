@@ -45,6 +45,8 @@
     <string name="cant_operate_on_settled_up_month">Nie można tego zrobić, gdy miesiąc jest już rozliczony.</string>
     <string name="swipe_to_delete">Przesuń, żeby usunąć.</string>
     <string name="expense_too_small">Wydatek musi wynosić conajmniej "0.01".</string>
+    <string name="new_expense_notification_title">Nowy wydatek od %1$s.</string>
+    <string name="new_expense_notification_message">Nowy wydatek w grupie %1$s.</string>
 
     <!--    UI elements -->
     <string name="friends">Znajomi</string>
