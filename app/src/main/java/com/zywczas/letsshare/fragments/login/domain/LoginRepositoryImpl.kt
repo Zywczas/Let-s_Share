@@ -6,6 +6,7 @@ import com.zywczas.letsshare.R
 import com.zywczas.letsshare.activitymain.domain.CrashlyticsWrapper
 import com.zywczas.letsshare.activitymain.domain.FirestoreReferences
 import com.zywczas.letsshare.activitymain.domain.SharedPrefsWrapper
+import com.zywczas.letsshare.db.UserDao
 import com.zywczas.letsshare.models.User
 import com.zywczas.letsshare.utils.logD
 import kotlinx.coroutines.tasks.await
@@ -15,8 +16,9 @@ class LoginRepositoryImpl @Inject constructor(
     private val firebaseAuth: FirebaseAuth,
     private val firestoreRefs: FirestoreReferences,
     private val sharedPrefs: SharedPrefsWrapper,
-    private val crashlytics: CrashlyticsWrapper
-    ): LoginRepository {
+    private val crashlytics: CrashlyticsWrapper,
+    private val userDao: UserDao
+): LoginRepository {
 
     override suspend fun getLastUsedEmail(): String = sharedPrefs.lastUsedEmail
 
@@ -42,7 +44,9 @@ class LoginRepositoryImpl @Inject constructor(
         try {
             val userId = firebaseAuth.currentUser?.uid!!
             val user = firestoreRefs.userRefs(userId).get().await().toObject<User>()!!
-            sharedPrefs.saveUserLocally(user)
+            sharedPrefs.saveUserLocally(user) //todo usunac
+            userDao.clearTable()
+            userDao.insert(user)
             null
         } catch (e: Exception) {
             crashlytics.sendExceptionToFirebase(e)

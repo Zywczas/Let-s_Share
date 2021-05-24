@@ -19,7 +19,8 @@ import javax.inject.Singleton
     FragmentFactoryModule::class,
     ViewModelFactoryModule::class,
     RoomModule::class,
-    UtilsModule::class
+    UtilsModule::class,
+    RetrofitModule::class
 ])
 interface AppComponent : AndroidInjector<BaseApp> {
 

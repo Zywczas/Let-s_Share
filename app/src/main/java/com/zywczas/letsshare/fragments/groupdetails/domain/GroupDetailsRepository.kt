@@ -3,6 +3,7 @@ package com.zywczas.letsshare.fragments.groupdetails.domain
 import com.zywczas.letsshare.models.ExpenseDomain
 import com.zywczas.letsshare.models.GroupMemberDomain
 import com.zywczas.letsshare.models.GroupMonthDomain
+import com.zywczas.letsshare.models.User
 import kotlinx.coroutines.flow.Flow
 import java.math.BigDecimal
 
@@ -21,5 +22,7 @@ interface GroupDetailsRepository {
     suspend fun addExpense(monthId: String, name: String, amount: BigDecimal): Int?
 
     suspend fun deleteExpense(monthId: String, expense: ExpenseDomain): Int?
+
+    suspend fun getUserName(): String
 
 }

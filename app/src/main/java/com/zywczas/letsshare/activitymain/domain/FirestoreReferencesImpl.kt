@@ -17,6 +17,7 @@ class FirestoreReferencesImpl @Inject constructor(private val firestore: Firebas
     override val groupsIdsField = "groupsIds"
     override val percentageShareField = "share"
     override val isSettledUpField = "isSettledUp"
+    override val messagingTokenField = "messagingToken"
 
     private val emailField = "email"
     private val collectionUsers = "users"

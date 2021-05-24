@@ -63,3 +63,5 @@ fun RecyclerView.addTransparentItemDivider(){
     }
     addItemDecoration(itemDivider)
 }
+
+//todo te funkcje powrzucac w rozne pliki

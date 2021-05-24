@@ -6,7 +6,7 @@
     <string name="name_email_password_not_blank">You need to provide name, email and password.</string>
     <string name="password_needs_6letters">Your password must have at least 6 characters.</string>
     <string name="hello_user">Hello %1$s!</string>
-    <string name="verification_email_sent">You should have an email with verification link. Please verify your account first.</string>
+    <string name="verification_email_sent">You should have an email with verification link. Please verify your account before login.</string>
     <string name="problem_registration">Registration failure. Try again.</string>
     <string name="email_already_exists">This email is already registered. Use different one.</string>
     <string name="verify_email">In order to login you need to verify your email first. Check you email box.</string>
@@ -45,6 +45,8 @@
     <string name="cant_operate_on_settled_up_month">Can\'t do this when month is already settled up.</string>
     <string name="swipe_to_delete">Swipe to delete.</string>
     <string name="expense_too_small">Value of expense must be at least "0.01".</string>
+    <string name="new_expense_notification_title">New expense from %1$s.</string>
+    <string name="new_expense_notification_message">New expense in %1$s group.</string>
 
     <!--    UI elements -->
     <string name="friends">Friends</string>

@@ -1,6 +1,7 @@
 package com.zywczas.letsshare
 
 import androidx.lifecycle.LifecycleObserver
+import com.zywczas.letsshare.models.ExpenseNotification
 
 interface SessionManager : LifecycleObserver {
 
@@ -11,5 +12,11 @@ interface SessionManager : LifecycleObserver {
     suspend fun delayCoroutine(millis: Long)
 
     suspend fun logout()
+
+    fun saveMessagingToken()
+
+    fun wakeUpServer()
+
+    fun sendNotification(notification: ExpenseNotification)
 
 }

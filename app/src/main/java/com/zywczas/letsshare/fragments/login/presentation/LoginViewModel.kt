@@ -47,7 +47,10 @@ class LoginViewModel @Inject constructor(
         repository.loginToFirebase(email, password)?.let { error -> postMessage(error) }
             ?: kotlin.run {
                 repository.saveUserLocally()?.let { error -> postMessage(error) }
-                    ?: kotlin.run { _isLoggedIn.postValue(true) }
+                    ?: kotlin.run {
+                        sessionManager.saveMessagingToken()
+                        _isLoggedIn.postValue(true)
+                    }
             }
     }
 

@@ -15,6 +15,7 @@ interface FirestoreReferences {
     val groupsIdsField: String
     val percentageShareField: String
     val isSettledUpField: String
+    val messagingTokenField: String
 
     fun userRefs(id: String): DocumentReference
 

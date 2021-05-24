@@ -2,11 +2,13 @@ package com.zywczas.letsshare.fragments.groupdetails.presentation
 
 import androidx.lifecycle.*
 import com.zywczas.letsshare.R
+import com.zywczas.letsshare.SessionManager
 import com.zywczas.letsshare.activitymain.domain.withBalance
 import com.zywczas.letsshare.activitymain.presentation.BaseViewModel
 import com.zywczas.letsshare.di.modules.DispatchersModule.DispatchersIO
 import com.zywczas.letsshare.fragments.groupdetails.domain.GroupDetailsRepository
 import com.zywczas.letsshare.models.ExpenseDomain
+import com.zywczas.letsshare.models.ExpenseNotification
 import com.zywczas.letsshare.models.GroupMemberDomain
 import com.zywczas.letsshare.models.GroupMonthDomain
 import com.zywczas.letsshare.utils.monthId
@@ -22,8 +24,13 @@ import javax.inject.Inject
 
 class GroupDetailsViewModel @Inject constructor(
     @DispatchersIO private val dispatchersIO: CoroutineDispatcher,
-    private val repository: GroupDetailsRepository
+    private val repository: GroupDetailsRepository,
+    private val sessionManager: SessionManager
 ) : BaseViewModel() {
+
+    init {
+        sessionManager.wakeUpServer()
+    }
 
     private val _currentMonth = MutableLiveData<GroupMonthDomain>()
     val currentMonth: LiveData<GroupMonthDomain> = _currentMonth
@@ -90,7 +97,7 @@ class GroupDetailsViewModel @Inject constructor(
             .collect { _currentMonth.postValue(it) }
     }
 
-    fun addExpense(name: String, amount: BigDecimal) {
+    fun addExpense(name: String, amount: BigDecimal, groupName: String) {
         viewModelScope.launch(dispatchersIO) {
             currentMonth.value?.id?.let { monthId ->
                 val roundedAmount = amount.setScale(2, BigDecimal.ROUND_HALF_UP)
@@ -101,9 +108,20 @@ class GroupDetailsViewModel @Inject constructor(
                     repository.addExpense(monthId, name, roundedAmount)?.let { error ->
                         postMessage(error)
                         showProgressBar(false)
-                    }
+                    } ?: sendNotification(groupName)
                 }
             }
+        }
+    }
+
+    private suspend fun sendNotification(groupName: String){
+        members.value.takeIf { it.isNullOrEmpty().not() }?.map { it.id }?.let { ids ->
+            val notification = ExpenseNotification(
+                ownerName = repository.getUserName(),
+                groupName = groupName,
+                receiversIds = ids
+            )
+            sessionManager.sendNotification(notification)
         }
     }
 

@@ -12,7 +12,7 @@ interface FriendsDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(friends: List<Friend>)
 
-    @Query("SELECT * FROM friends ORDER BY name ASC")
+    @Query("SELECT * FROM friend ORDER BY name ASC")
     suspend fun getFriends(): List<Friend>
 
 }
