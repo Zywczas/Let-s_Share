@@ -47,7 +47,7 @@ class LoginViewModel @Inject constructor(
         repository.loginToFirebase(email, password)?.let { error -> postMessage(error) }
             ?: kotlin.run {
                 repository.saveUserLocally()?.let { error -> postMessage(error) }
-                    ?: kotlin.run {
+                    ?: kotlin.run { //todo dac zapisywanie tokena w innym miejscu bo jak ktos jest juz zalogowany to ten fragment sie nie odpala
                         sessionManager.saveMessagingToken()
                         _isLoggedIn.postValue(true)
                     }
