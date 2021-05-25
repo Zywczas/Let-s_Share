@@ -2,11 +2,12 @@ package com.zywczas.letsshare.services
 
 import android.app.NotificationManager
 import android.app.PendingIntent
-import android.content.Context
 import android.content.Intent
 import android.media.RingtoneManager
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toBitmap
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.zywczas.letsshare.R
@@ -42,9 +43,12 @@ class MessagingService : FirebaseMessagingService() {
         //guzik wstecz to go prekierowalo do glownego okna
         //creates the pending intent
         val notifyPendingIntent = PendingIntent.getActivity(this, 0, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val largeIcon = ContextCompat.getDrawable(this, R.mipmap.ic_launcher_round)!!.toBitmap()
 
         val builder = NotificationCompat.Builder(this, EXPENSE_CHANNEL_ID)
             .setSmallIcon(R.mipmap.ic_launcher_round)
+            .setColor(ContextCompat.getColor(this, R.color.primary))
+            .setLargeIcon(largeIcon)
             .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
             .setContentTitle(title)
             .setContentText(message)
@@ -55,8 +59,6 @@ class MessagingService : FirebaseMessagingService() {
             .setCategory(NotificationCompat.CATEGORY_SOCIAL)
 
         NotificationManagerCompat.from(this).notify(10001, builder.build())
-//        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-//        notificationManager.notify()
     }
 
 }
