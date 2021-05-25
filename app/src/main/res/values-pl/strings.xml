@@ -46,7 +46,9 @@
     <string name="swipe_to_delete">Przesuń, żeby usunąć.</string>
     <string name="expense_too_small">Wydatek musi wynosić conajmniej "0.01".</string>
     <string name="new_expense_notification_title">Nowy wydatek od %1$s.</string>
+    <string name="new_expense">Nowy wydatek.</string>
     <string name="new_expense_notification_message">Nowy wydatek w grupie %1$s.</string>
+    <string name="new_expense_notification_info">Powiadomienia o nowych wydatkach.</string>
 
     <!--    UI elements -->
     <string name="friends">Znajomi</string>

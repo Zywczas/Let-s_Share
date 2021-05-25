@@ -46,7 +46,9 @@
     <string name="swipe_to_delete">Swipe to delete.</string>
     <string name="expense_too_small">Value of expense must be at least "0.01".</string>
     <string name="new_expense_notification_title">New expense from %1$s.</string>
+    <string name="new_expense">New expense.</string>
     <string name="new_expense_notification_message">New expense in %1$s group.</string>
+    <string name="new_expense_notification_info">Notifications about new expenses.</string>
 
     <!--    UI elements -->
     <string name="friends">Friends</string>
