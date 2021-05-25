@@ -20,28 +20,27 @@ class MessagingService : FirebaseMessagingService() {
     private val ownerNameKey = "ownerName"
     private val groupNameKey = "groupName"
 
-    //todo dac zapisywanie tokena do bazy - aktualizowanie
     override fun onNewToken(token: String) {
+        //dac zapisywanie tokena do bazy - aktualizowanie
         logD("nowy token: $token")
     }
 
     override fun onMessageReceived(message: RemoteMessage) {
         val expenseOwner = message.data[ownerNameKey]
         val groupName = message.data[groupNameKey]
-        logD("nowy wydatek") //todo
-        logD("groupName: $groupName") //todo
-        logD("expenseOwner: $expenseOwner") //todo
+        logD("nowy wydatek")
+        logD("groupName: $groupName")
+        logD("expenseOwner: $expenseOwner")
         sendBroadcastNotification(getString(R.string.new_expense_notification_title, expenseOwner), getString(R.string.new_expense_notification_message, groupName))
     }
 
     private fun sendBroadcastNotification(title : String, message : String){
-        logD("sendBroadcastNotification") //todo
+        logD("sendBroadcastNotification")
         val notifyIntent = Intent(this, MainActivity::class.java)
         notifyIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-//        notifyIntent.putExtra("klucz chatoroomu", "chatroom number") - to mozna uzyc do przekierowania do odpowiedniej wiadomosci, i wtedy przeskakujemy od razu //todo
-        //na drugie activity, odpowiednie dla danego chatroomu, lepiej zeby w stacku byly 2 activity a nie tylko od razu odpowiedni chatroom, zeby uzytkwnik jak wcisnie
-        //guzik wstecz to go prekierowalo do glownego okna
-        //creates the pending intent
+
+//        notifyIntent.putExtra("klucz chatoroomu", "chatroom number") todo
+
         val notifyPendingIntent = PendingIntent.getActivity(this, 0, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT)
         val largeIcon = ContextCompat.getDrawable(this, R.mipmap.ic_launcher_round)!!.toBitmap()
 
