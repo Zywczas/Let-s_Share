@@ -14,6 +14,7 @@ import com.zywczas.letsshare.R
 import com.zywczas.letsshare.SessionManager
 import com.zywczas.letsshare.activitymain.presentation.MainActivity
 import com.zywczas.letsshare.utils.EXPENSE_CHANNEL_ID
+import com.zywczas.letsshare.utils.IS_FROM_EXPENSE_NOTIFY_KEY
 import dagger.android.AndroidInjection
 import javax.inject.Inject
 
@@ -41,18 +42,16 @@ class MessagingService : FirebaseMessagingService() {
     }
 
     private fun sendBroadcastNotification(title : String, message : String){
-        val notifyIntent = Intent(this, MainActivity::class.java)
-        notifyIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-
-//        notifyIntent.putExtra("klucz chatoroomu", "chatroom number") todo
-
+        val notifyIntent = Intent(this, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            putExtra(IS_FROM_EXPENSE_NOTIFY_KEY, true)
+        }
         val notifyPendingIntent = PendingIntent.getActivity(this, 0, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT)
-        val largeIcon = ContextCompat.getDrawable(this, R.mipmap.ic_launcher_round)!!.toBitmap()
 
         val builder = NotificationCompat.Builder(this, EXPENSE_CHANNEL_ID)
             .setSmallIcon(R.mipmap.ic_launcher_round)
             .setColor(ContextCompat.getColor(this, R.color.primary))
-            .setLargeIcon(largeIcon)
+            .setLargeIcon(ContextCompat.getDrawable(this, R.mipmap.ic_launcher_round)!!.toBitmap())
             .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
             .setContentTitle(title)
             .setContentText(message)

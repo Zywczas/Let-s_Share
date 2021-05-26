@@ -13,6 +13,7 @@ import com.zywczas.letsshare.R
 import com.zywczas.letsshare.SessionManager
 import com.zywczas.letsshare.di.factories.UniversalFragmentFactory
 import com.zywczas.letsshare.utils.EXPENSE_CHANNEL_ID
+import com.zywczas.letsshare.utils.IS_FROM_EXPENSE_NOTIFY_KEY
 import dagger.android.AndroidInjection
 import javax.inject.Inject
 
@@ -30,9 +31,17 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         lifecycle.addObserver(sessionManager)
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainer) as NavHostFragment
+        goToGroupsFragment(navHostFragment.navController)
         setupDestinationChangeListener(navHostFragment.navController)
         sessionManager.wakeUpServer()
         createNotificationChannel()
+    }
+
+    private fun goToGroupsFragment(navController: NavController){
+        val isActivityOpenedFromExpenseNotification = intent.getBooleanExtra(IS_FROM_EXPENSE_NOTIFY_KEY, false)
+        if (isActivityOpenedFromExpenseNotification){
+            navController.navigate(R.id.groupsFragment)
+        }
     }
 
     private fun setupDestinationChangeListener(navController: NavController) {
