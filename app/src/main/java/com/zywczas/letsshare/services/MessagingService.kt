@@ -11,16 +11,27 @@ import androidx.core.graphics.drawable.toBitmap
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.zywczas.letsshare.R
+import com.zywczas.letsshare.SessionManager
 import com.zywczas.letsshare.activitymain.presentation.MainActivity
 import com.zywczas.letsshare.utils.EXPENSE_CHANNEL_ID
+import dagger.android.AndroidInjection
+import javax.inject.Inject
 
 class MessagingService : FirebaseMessagingService() {
+
+    @Inject
+    lateinit var sessionManager: SessionManager
 
     private val ownerNameKey = "ownerName"
     private val groupNameKey = "groupName"
 
+    override fun onCreate() {
+        super.onCreate()
+        AndroidInjection.inject(this)
+    }
+
     override fun onNewToken(token: String) {
-        //dac zapisywanie tokena do bazy - aktualizowanie todo
+        sessionManager.saveMessagingToken(token)
     }
 
     override fun onMessageReceived(message: RemoteMessage) {

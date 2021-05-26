@@ -13,7 +13,7 @@ interface SessionManager : LifecycleObserver {
 
     suspend fun logout()
 
-    fun saveMessagingToken()
+    fun saveMessagingToken(newToken: String? = null)
 
     fun wakeUpServer()
 

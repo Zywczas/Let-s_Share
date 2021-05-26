@@ -24,7 +24,7 @@ import javax.inject.Singleton
 
 @Singleton
 class SessionManagerImpl @Inject constructor(
-    private val context: Context,
+    context: Context,
     private val firebaseAuth: FirebaseAuth,
     @DispatchersIO private val dispatchersIO: CoroutineDispatcher,
     private val messaging: FirebaseMessaging,
@@ -44,7 +44,6 @@ class SessionManagerImpl @Inject constructor(
             super.onAvailable(network)
             isConnected = true
         }
-
         override fun onLost(network: Network) {
             super.onLost(network)
             isConnected = false
@@ -77,10 +76,10 @@ class SessionManagerImpl @Inject constructor(
         isLoggedIn = false
     }
 
-    override fun saveMessagingToken() {
+    override fun saveMessagingToken(newToken: String?) {
         GlobalScope.launch(dispatchersIO){
             try {
-                val token = messaging.token.await()
+                val token = newToken ?: messaging.token.await()
                 val user = userDao.getUser()
                 firestoreRefs.userRefs(user.id).update(firestoreRefs.messagingTokenField, token).await()
             } catch (e: Exception){
