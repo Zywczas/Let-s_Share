@@ -24,18 +24,15 @@ class WelcomeViewModel @Inject constructor(
     fun chooseNextDestination(){
         viewModelScope.launch(dispatchersIO) {
             presentLogoToUser()
-            chooseFragmentToGoNext()
+            if (sessionManager.isUserLoggedIn()){
+                sessionManager.saveMessagingToken()
+                _goToFriendsFragment.postValue(true)
+            } else {
+                _goToLoginFragment.postValue(true)
+            }
         }
     }
 
     private suspend fun presentLogoToUser() = sessionManager.delayCoroutine(period)
-
-    private suspend fun chooseFragmentToGoNext(){
-        if (sessionManager.isUserLoggedIn()){
-            _goToFriendsFragment.postValue(true)
-        } else {
-            _goToLoginFragment.postValue(true)
-        }
-    }
 
 }

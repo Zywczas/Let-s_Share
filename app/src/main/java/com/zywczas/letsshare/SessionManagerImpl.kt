@@ -37,22 +37,28 @@ class SessionManagerImpl @Inject constructor(
     private var isConnected = false
     private var isLoggedIn = false
 
+    private val cm  = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+    private val networkCallback = object : ConnectivityManager.NetworkCallback() {
+        override fun onAvailable(network: Network) {
+            super.onAvailable(network)
+            isConnected = true
+        }
+
+        override fun onLost(network: Network) {
+            super.onLost(network)
+            isConnected = false
+        }
+    }
+
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     private fun registerNetworkCallback() {
-        val cm  =
-            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        cm.registerDefaultNetworkCallback(networkCallback)
+    }
 
-        cm.registerDefaultNetworkCallback(object : ConnectivityManager.NetworkCallback() {
-            override fun onAvailable(network: Network) {
-                super.onAvailable(network)
-                isConnected = true
-            }
-
-            override fun onLost(network: Network) {
-                super.onLost(network)
-                isConnected = false
-            }
-        })
+    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+    private fun unregisterNetworkCallback() {
+        cm.unregisterNetworkCallback(networkCallback)
     }
 
     override suspend fun isNetworkAvailable(): Boolean = isConnected
@@ -100,7 +106,7 @@ class SessionManagerImpl @Inject constructor(
                 notificationService.sendNotification(notification)
             } catch (e: Exception){
                 crashlytics.sendExceptionToFirebase(e)
-                logD("exception: ${e.message}")
+                logD("'sendNotification' exception: ${e.message}")
             }
         }
     }
