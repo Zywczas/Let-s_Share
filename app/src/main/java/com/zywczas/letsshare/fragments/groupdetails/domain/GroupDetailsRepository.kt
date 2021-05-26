@@ -23,6 +23,6 @@ interface GroupDetailsRepository {
 
     suspend fun deleteExpense(monthId: String, expense: ExpenseDomain): Int?
 
-    suspend fun getUserName(): String
+    suspend fun getUser(): User
 
 }

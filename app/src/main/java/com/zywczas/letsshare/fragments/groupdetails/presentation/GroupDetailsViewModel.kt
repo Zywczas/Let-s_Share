@@ -111,13 +111,17 @@ class GroupDetailsViewModel @Inject constructor(
     }
 
     private suspend fun sendNotification(groupName: String){
-        members.value.takeIf { it.isNullOrEmpty().not() }?.map { it.id }?.let { ids ->
-            val notification = ExpenseNotification(
-                ownerName = repository.getUserName(),
-                groupName = groupName,
-                receiversIds = ids
-            )
-            sessionManager.sendNotification(notification)
+        val user = repository.getUser()
+        members.value.takeIf { it.isNullOrEmpty().not() }
+            ?.filterNot { it.id == user.id }
+            ?.map { it.id }
+            ?.let { ids ->
+                val notification = ExpenseNotification(
+                    ownerName = user.name,
+                    groupName = groupName,
+                    receiversIds = ids
+                )
+                sessionManager.sendNotification(notification)
         }
     }
 

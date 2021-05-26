@@ -180,6 +180,6 @@ class GroupDetailsRepositoryImpl @Inject constructor(
             R.string.cant_delete_expense
         }
 
-    override suspend fun getUserName(): String = sharedPrefs.userName
+    override suspend fun getUser(): User = sharedPrefs.getLocalUser()
 
 }
