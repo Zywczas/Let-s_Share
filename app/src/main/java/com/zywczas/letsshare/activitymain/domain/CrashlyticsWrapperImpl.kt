@@ -19,7 +19,10 @@ class CrashlyticsWrapperImpl @Inject constructor(
 
     override fun sendExceptionToFirebase(e: Exception, key: Pair<String, String>?, log: String?){
         GlobalScope.launch(dispatchersIO){
-            crashlytics.setUserId(userDao.getUser().email)
+            @Suppress("UNNECESSARY_SAFE_CALL", "RedundantNullableReturnType")
+            //this is the only place where 'getUser()' can be null
+            val userEmail: String? = userDao.getUser()?.email
+            crashlytics.setUserId(userEmail ?: "")
             key?.let { crashlytics.setCustomKey(it.first, it.second) }
             log?.let { crashlytics.log(it) }
             crashlytics.recordException(e)
