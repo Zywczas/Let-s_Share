@@ -94,7 +94,7 @@ class SessionManagerImpl @Inject constructor(
             try {
                 notificationService.wakeUpTheServer()
             } catch (e: Exception){
-                logD("Waking up server ${e.message}")
+                logD("Waking up server: ${e.message}")
             }
         }
     }

@@ -10,6 +10,7 @@ import com.zywczas.letsshare.activitymain.domain.FirestoreReferences
 import com.zywczas.letsshare.activitymain.domain.SharedPrefsWrapper
 import com.zywczas.letsshare.activitymain.domain.toDomain
 import com.zywczas.letsshare.db.FriendsDao
+import com.zywczas.letsshare.db.UserDao
 import com.zywczas.letsshare.extentions.logD
 import com.zywczas.letsshare.models.*
 import kotlinx.coroutines.tasks.await
@@ -17,10 +18,11 @@ import javax.inject.Inject
 
 class GroupSettingsRepositoryImpl @Inject constructor(
     private val firestoreRefs: FirestoreReferences,
-    private val sharedPrefs: SharedPrefsWrapper,
+    sharedPrefs: SharedPrefsWrapper,
     private val crashlyticsWrapper: CrashlyticsWrapper,
     private val friendsDao: FriendsDao,
-    private val firestore: FirebaseFirestore
+    private val firestore: FirebaseFirestore,
+    private val userDao: UserDao
 ) : GroupSettingsRepository {
 
     private val groupId = sharedPrefs.currentGroupId
@@ -96,7 +98,7 @@ class GroupSettingsRepositoryImpl @Inject constructor(
             R.string.something_wrong
         }
 
-    override suspend fun userId(): String = sharedPrefs.userId
+    override suspend fun userId(): String = userDao.getUser().id
 
     override suspend fun saveSplits(monthId: String, members: List<GroupMemberDomain>): Int? =
         try {

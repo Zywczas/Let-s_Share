@@ -7,8 +7,8 @@ import com.google.firebase.firestore.ktx.toObjects
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.activitymain.domain.CrashlyticsWrapper
 import com.zywczas.letsshare.activitymain.domain.FirestoreReferences
-import com.zywczas.letsshare.activitymain.domain.SharedPrefsWrapper
 import com.zywczas.letsshare.db.FriendsDao
+import com.zywczas.letsshare.db.UserDao
 import com.zywczas.letsshare.extentions.logD
 import com.zywczas.letsshare.models.Friend
 import com.zywczas.letsshare.models.User
@@ -24,16 +24,16 @@ class FriendsRepositoryImpl @Inject constructor(
     private val firebaseAuth: FirebaseAuth,
     private val firestore: FirebaseFirestore,
     private val firestoreRefs: FirestoreReferences,
-    private val sharedPrefs: SharedPrefsWrapper,
     private val crashlyticsWrapper: CrashlyticsWrapper,
-    private val friendsDao: FriendsDao
+    private val friendsDao: FriendsDao,
+    private val userDao: UserDao
 ) : FriendsRepository {
 
-    private val userId = sharedPrefs.userId
+    private suspend fun getUser() = userDao.getUser()
 
     @ExperimentalCoroutinesApi
     override suspend fun getFriends(): Flow<List<Friend>> = callbackFlow {
-        val listener = firestoreRefs.collectionFriends(userId)
+        val listener = firestoreRefs.collectionFriends(getUser().id)
             .orderBy(firestoreRefs.nameField, Query.Direction.ASCENDING)
             .addSnapshotListener { snapshot, error ->
                 if (error != null) {
@@ -54,7 +54,7 @@ class FriendsRepositoryImpl @Inject constructor(
 
     override suspend fun saveFriendsLocally(friends: List<Friend>) = friendsDao.insert(friends)
 
-    override suspend fun userEmail(): String = sharedPrefs.userEmail
+    override suspend fun userEmail(): String = getUser().email
 
     override suspend fun addFriend(email: String): Int? =
         try {
@@ -75,9 +75,9 @@ class FriendsRepositoryImpl @Inject constructor(
 
     private suspend fun addFriendsToCollections(friend: Friend): Int? =
         try {
-            val friendToUserCollectionRefs = firestoreRefs.friendRefs(userId, friend.id)
-            val userToFriendCollectionRefs = firestoreRefs.friendRefs(friend.id, userId)
-            val userAsFriend = sharedPrefs.getLocalUser().toFriend()
+            val friendToUserCollectionRefs = firestoreRefs.friendRefs(getUser().id, friend.id)
+            val userToFriendCollectionRefs = firestoreRefs.friendRefs(friend.id, getUser().id)
+            val userAsFriend =userDao.getUser().toFriend()
             firestore.runBatch { batch ->
                 batch.set(friendToUserCollectionRefs, friend)
                 batch.set(userToFriendCollectionRefs, userAsFriend)

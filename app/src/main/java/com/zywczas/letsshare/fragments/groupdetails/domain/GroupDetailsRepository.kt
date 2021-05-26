@@ -9,6 +9,8 @@ import java.math.BigDecimal
 
 interface GroupDetailsRepository {
 
+    suspend fun getUser(): User
+
     suspend fun getLastMonth(): GroupMonthDomain?
 
     suspend fun listenToMonth(monthId: String): Flow<GroupMonthDomain>
@@ -22,7 +24,5 @@ interface GroupDetailsRepository {
     suspend fun addExpense(monthId: String, name: String, amount: BigDecimal): Int?
 
     suspend fun deleteExpense(monthId: String, expense: ExpenseDomain): Int?
-
-    suspend fun getUser(): User
 
 }

@@ -9,6 +9,7 @@ import com.zywczas.letsshare.activitymain.domain.CrashlyticsWrapper
 import com.zywczas.letsshare.activitymain.domain.FirestoreReferences
 import com.zywczas.letsshare.activitymain.domain.SharedPrefsWrapper
 import com.zywczas.letsshare.activitymain.domain.toDomain
+import com.zywczas.letsshare.db.UserDao
 import com.zywczas.letsshare.extentions.dateInPoland
 import com.zywczas.letsshare.extentions.logD
 import com.zywczas.letsshare.extentions.monthId
@@ -27,10 +28,13 @@ class GroupDetailsRepositoryImpl @Inject constructor(
     private val firestoreRefs: FirestoreReferences,
     private val firestore: FirebaseFirestore,
     private val crashlyticsWrapper: CrashlyticsWrapper,
-    private val sharedPrefs: SharedPrefsWrapper
+    private val sharedPrefs: SharedPrefsWrapper,
+    private val userDao: UserDao
 ) : GroupDetailsRepository {
 
     private val groupId = sharedPrefs.currentGroupId
+
+    override suspend fun getUser(): User = userDao.getUser()
 
     override suspend fun getLastMonth(): GroupMonthDomain? =
         try {
@@ -118,17 +122,18 @@ class GroupDetailsRepositoryImpl @Inject constructor(
 
     override suspend fun addExpense(monthId: String, name: String, amount: BigDecimal): Int? =
         try {
+            val user = getUser()
             val monthRefs = firestoreRefs.groupMonthRefs(groupId, monthId)
             val newExpenseRefs = firestoreRefs.newExpenseRefs(groupId, monthId)
             val newExpense = Expense(
                 id = newExpenseRefs.id,
                 name = name,
-                payeeId = sharedPrefs.userId,
-                payeeName = sharedPrefs.userName,
+                payeeId = user.id,
+                payeeName = user.name,
                 value = amount.toString(),
                 dateCreated = dateInPoland()
             )
-            val memberRef = firestoreRefs.groupMemberRefs(groupId, monthId, sharedPrefs.userId)
+            val memberRef = firestoreRefs.groupMemberRefs(groupId, monthId, user.id)
 
             firestore.runTransaction { transaction ->
                 val month = transaction.get(monthRefs).toObject<GroupMonth>()!!
@@ -179,7 +184,5 @@ class GroupDetailsRepositoryImpl @Inject constructor(
             logD(e)
             R.string.cant_delete_expense
         }
-
-    override suspend fun getUser(): User = sharedPrefs.getLocalUser()
 
 }

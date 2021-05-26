@@ -7,6 +7,7 @@ import com.zywczas.letsshare.R
 import com.zywczas.letsshare.activitymain.domain.CrashlyticsWrapper
 import com.zywczas.letsshare.activitymain.domain.FirestoreReferences
 import com.zywczas.letsshare.activitymain.domain.SharedPrefsWrapper
+import com.zywczas.letsshare.db.UserDao
 import com.zywczas.letsshare.extentions.logD
 import com.zywczas.letsshare.extentions.monthId
 import com.zywczas.letsshare.models.Group
@@ -26,14 +27,13 @@ class GroupsRepositoryImpl @Inject constructor(
     private val firestore: FirebaseFirestore,
     private val firestoreRefs: FirestoreReferences,
     private val sharedPrefs: SharedPrefsWrapper,
-    private val crashlyticsWrapper: CrashlyticsWrapper
+    private val crashlyticsWrapper: CrashlyticsWrapper,
+    private val userDao: UserDao
 ) : GroupsRepository {
-
-    private val userId = sharedPrefs.userId
 
     override suspend fun isUserIn5GroupsAlready(): Boolean? =
         try {
-            firestoreRefs.userRefs(userId).get().await()
+            firestoreRefs.userRefs(userDao.getUser().id).get().await()
                 .toObject<User>()!!.groupsIds.size > 4
         } catch (e: Exception) {
             crashlyticsWrapper.sendExceptionToFirebase(e)
@@ -43,7 +43,7 @@ class GroupsRepositoryImpl @Inject constructor(
 
     override suspend fun addGroup(name: String, currency: String): Int? =
         try {
-            val userEmail = sharedPrefs.userEmail
+            val user = userDao.getUser()
             val newGroupRef = firestoreRefs.newGroupRefs()
             val newGroup = Group(
                 id = newGroupRef.id,
@@ -54,9 +54,9 @@ class GroupsRepositoryImpl @Inject constructor(
             val newMonthId = date.monthId()
             val newMonthRefs = firestoreRefs.groupMonthRefs(newGroupRef.id, newMonthId)
             val newMonth = GroupMonth(id = newMonthId, dateCreated = date)
-            val newGroupMemberRef = firestoreRefs.groupMemberRefs(newGroupRef.id, newMonthId, userId)
-            val newMember = GroupMember(id = userId, name = sharedPrefs.userName, email = userEmail)
-            val userRef = firestoreRefs.userRefs(userId)
+            val newGroupMemberRef = firestoreRefs.groupMemberRefs(newGroupRef.id, newMonthId, user.id)
+            val newMember = GroupMember(id = user.id, name = user.name, email = user.email)
+            val userRef = firestoreRefs.userRefs(user.id)
 
             firestore.runBatch { batch ->
                 batch.set(newGroupRef, newGroup)
@@ -73,7 +73,7 @@ class GroupsRepositoryImpl @Inject constructor(
 
     @ExperimentalCoroutinesApi
     override suspend fun getUser(): Flow<User> = callbackFlow {
-        val listener = firestoreRefs.userRefs(userId)
+        val listener = firestoreRefs.userRefs(userDao.getUser().id)
             .addSnapshotListener { snapshot, error ->
             if (error != null) {
                 channel.closeFlowAndThrow(error)

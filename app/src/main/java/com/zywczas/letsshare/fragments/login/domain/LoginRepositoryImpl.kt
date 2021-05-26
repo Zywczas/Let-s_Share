@@ -44,7 +44,6 @@ class LoginRepositoryImpl @Inject constructor(
         try {
             val userId = firebaseAuth.currentUser?.uid!!
             val user = firestoreRefs.userRefs(userId).get().await().toObject<User>()!!
-            sharedPrefs.saveUserLocally(user) // todo usunac
             userDao.clearTable()
             userDao.insert(user)
             null
