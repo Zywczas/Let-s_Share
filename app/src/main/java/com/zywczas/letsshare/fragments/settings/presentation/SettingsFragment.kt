@@ -11,8 +11,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.databinding.FragmentSettingsBinding
 import com.zywczas.letsshare.di.factories.UniversalViewModelFactory
+import com.zywczas.letsshare.extentions.showSnackbar
 import com.zywczas.letsshare.utils.autoRelease
-import com.zywczas.letsshare.utils.showSnackbar
 import javax.inject.Inject
 
 class SettingsFragment @Inject constructor(viewModelFactory: UniversalViewModelFactory) : Fragment() {

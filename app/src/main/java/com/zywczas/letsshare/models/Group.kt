@@ -1,7 +1,7 @@
 package com.zywczas.letsshare.models
 
 import android.os.Parcelable
-import com.zywczas.letsshare.utils.dateInPoland
+import com.zywczas.letsshare.extentions.dateInPoland
 import kotlinx.parcelize.Parcelize
 import java.util.*
 

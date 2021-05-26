@@ -1,8 +1,8 @@
 package com.zywczas.letsshare.activitymain.domain
 
 import com.zywczas.letsshare.R
+import com.zywczas.letsshare.extentions.dayFormat
 import com.zywczas.letsshare.models.*
-import com.zywczas.letsshare.utils.dayFormat
 import java.math.BigDecimal
 
 fun GroupMember.toDomain() = GroupMemberDomain(

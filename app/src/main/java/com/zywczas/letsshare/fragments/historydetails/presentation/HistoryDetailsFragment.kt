@@ -20,13 +20,13 @@ import com.zywczas.letsshare.adapters.ExpenseItem
 import com.zywczas.letsshare.adapters.GroupMemberItemDetails
 import com.zywczas.letsshare.databinding.FragmentHistoryDetailsBinding
 import com.zywczas.letsshare.di.factories.UniversalViewModelFactory
+import com.zywczas.letsshare.extentions.addTransparentItemDivider
+import com.zywczas.letsshare.extentions.dimBackgroundOnMainButtonClick
+import com.zywczas.letsshare.extentions.showSnackbar
 import com.zywczas.letsshare.fragments.groupdetails.presentation.GroupDetailsFragmentDirections
 import com.zywczas.letsshare.models.ExpenseDomain
 import com.zywczas.letsshare.models.GroupMemberDomain
-import com.zywczas.letsshare.utils.addTransparentItemDivider
 import com.zywczas.letsshare.utils.autoRelease
-import com.zywczas.letsshare.utils.dimBackgroundOnMainButtonClick
-import com.zywczas.letsshare.utils.showSnackbar
 import javax.inject.Inject
 
 class HistoryDetailsFragment @Inject constructor(viewModelFactory: UniversalViewModelFactory) : Fragment() {

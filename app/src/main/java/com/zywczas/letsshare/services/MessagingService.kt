@@ -13,7 +13,6 @@ import com.google.firebase.messaging.RemoteMessage
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.activitymain.presentation.MainActivity
 import com.zywczas.letsshare.utils.EXPENSE_CHANNEL_ID
-import com.zywczas.letsshare.utils.logD
 
 class MessagingService : FirebaseMessagingService() {
 
@@ -21,21 +20,16 @@ class MessagingService : FirebaseMessagingService() {
     private val groupNameKey = "groupName"
 
     override fun onNewToken(token: String) {
-        //dac zapisywanie tokena do bazy - aktualizowanie
-        logD("nowy token: $token")
+        //dac zapisywanie tokena do bazy - aktualizowanie todo
     }
 
     override fun onMessageReceived(message: RemoteMessage) {
         val expenseOwner = message.data[ownerNameKey]
         val groupName = message.data[groupNameKey]
-        logD("nowy wydatek")
-        logD("groupName: $groupName")
-        logD("expenseOwner: $expenseOwner")
         sendBroadcastNotification(getString(R.string.new_expense_notification_title, expenseOwner), getString(R.string.new_expense_notification_message, groupName))
     }
 
     private fun sendBroadcastNotification(title : String, message : String){
-        logD("sendBroadcastNotification")
         val notifyIntent = Intent(this, MainActivity::class.java)
         notifyIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
 

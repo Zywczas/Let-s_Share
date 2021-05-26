@@ -9,9 +9,9 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.zywczas.letsshare.databinding.FragmentLoginBinding
 import com.zywczas.letsshare.di.factories.UniversalViewModelFactory
+import com.zywczas.letsshare.extentions.hideSoftKeyboard
+import com.zywczas.letsshare.extentions.showSnackbar
 import com.zywczas.letsshare.utils.autoRelease
-import com.zywczas.letsshare.utils.hideSoftKeyboard
-import com.zywczas.letsshare.utils.showSnackbar
 import javax.inject.Inject
 
 class LoginFragment @Inject constructor(viewModelFactory: UniversalViewModelFactory) : Fragment(){

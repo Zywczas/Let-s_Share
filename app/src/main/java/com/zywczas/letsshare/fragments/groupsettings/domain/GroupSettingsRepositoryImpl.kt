@@ -10,8 +10,8 @@ import com.zywczas.letsshare.activitymain.domain.FirestoreReferences
 import com.zywczas.letsshare.activitymain.domain.SharedPrefsWrapper
 import com.zywczas.letsshare.activitymain.domain.toDomain
 import com.zywczas.letsshare.db.FriendsDao
+import com.zywczas.letsshare.extentions.logD
 import com.zywczas.letsshare.models.*
-import com.zywczas.letsshare.utils.logD
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 

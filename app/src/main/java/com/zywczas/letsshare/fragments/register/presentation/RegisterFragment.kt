@@ -11,9 +11,9 @@ import androidx.navigation.ui.setupWithNavController
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.databinding.FragmentRegisterBinding
 import com.zywczas.letsshare.di.factories.UniversalViewModelFactory
+import com.zywczas.letsshare.extentions.hideSoftKeyboard
+import com.zywczas.letsshare.extentions.showSnackbar
 import com.zywczas.letsshare.utils.autoRelease
-import com.zywczas.letsshare.utils.hideSoftKeyboard
-import com.zywczas.letsshare.utils.showSnackbar
 import javax.inject.Inject
 
 class RegisterFragment @Inject constructor(viewModelFactory: UniversalViewModelFactory) : Fragment(){

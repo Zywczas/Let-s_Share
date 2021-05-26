@@ -7,12 +7,12 @@ import com.zywczas.letsshare.R
 import com.zywczas.letsshare.activitymain.domain.CrashlyticsWrapper
 import com.zywczas.letsshare.activitymain.domain.FirestoreReferences
 import com.zywczas.letsshare.activitymain.domain.SharedPrefsWrapper
+import com.zywczas.letsshare.extentions.logD
+import com.zywczas.letsshare.extentions.monthId
 import com.zywczas.letsshare.models.Group
 import com.zywczas.letsshare.models.GroupMember
 import com.zywczas.letsshare.models.GroupMonth
 import com.zywczas.letsshare.models.User
-import com.zywczas.letsshare.utils.logD
-import com.zywczas.letsshare.utils.monthId
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.SendChannel
 import kotlinx.coroutines.channels.awaitClose

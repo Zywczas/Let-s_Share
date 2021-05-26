@@ -1,6 +1,6 @@
 package com.zywczas.letsshare.models
 
-import com.zywczas.letsshare.utils.dateInPoland
+import com.zywczas.letsshare.extentions.dateInPoland
 import java.util.*
 
 data class Expense (
