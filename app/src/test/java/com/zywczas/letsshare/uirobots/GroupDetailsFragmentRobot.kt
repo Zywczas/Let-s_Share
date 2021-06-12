@@ -21,8 +21,8 @@ class GroupDetailsFragmentRobot {
 
     fun isLayoutDisplayed(){
         isMainLayoutDisplayed()
-//        isToolbarDisplayed()
-//        isRecyclerDisplayed()
+        isToolbarDisplayed()
+        isRecyclerDisplayed()
     }
 
     private fun isMainLayoutDisplayed() = onView(withId(R.id.mainLayout)).check(matches(isDisplayed()))

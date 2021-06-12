@@ -59,7 +59,7 @@ class GroupDetailsFragmentTest {
         navController.setGraph(R.navigation.main_nav_graph)
         navController.setCurrentDestination(R.id.groupDetailsFragment)
 
-        return launchFragment(fragmentArgs = bundle, themeResId = R.style.Theme_LetsShare){
+        return launchFragmentInContainer(fragmentArgs = bundle, themeResId = R.style.Theme_LetsShare){
             GroupDetailsFragment(viewModelFactory).also { fragment ->
                 fragment.viewLifecycleOwnerLiveData.observeForever { viewLifeCycleOwner ->
                     if (viewLifeCycleOwner != null) {
@@ -72,7 +72,7 @@ class GroupDetailsFragmentTest {
 
     @Test
     fun startFragment_shouldGetLayoutDisplayed() = coroutineTest.runBlockingTest {
-        val scenario = launchGroupDetailsFragment()
+        launchGroupDetailsFragment()
 
         uiRobot.isLayoutDisplayed()
     }
