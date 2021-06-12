@@ -1,9 +1,8 @@
 package com.zywczas.letsshare.fragments.groupsettings.presentation
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.test.core.app.ApplicationProvider
+import androidx.lifecycle.LifecycleObserver
 import com.nhaarman.mockitokotlin2.*
-import com.zywczas.letsshare.BaseApp
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.SessionManager
 import com.zywczas.letsshare.fragments.groupsettings.domain.GroupSettingsRepository
@@ -17,6 +16,9 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.mockito.Mockito
+import java.lang.System.out
+import kotlin.reflect.KClass
 
 @ExperimentalCoroutinesApi
 class GroupSettingsViewModelTest {
@@ -80,7 +82,7 @@ class GroupSettingsViewModelTest {
     }
 
     @Test
-    fun addNewMember_shouldAddNewMember() = coroutineTest.runBlockingTest {
+    fun addNewMember_shouldGetNewMembersList() = coroutineTest.runBlockingTest {
         val expected = listOf(groupMemberDomainMocks.groupMemberDomain1, groupMemberDomainMocks.groupMemberDomain2)
         val newFriend = Friend("123", "123@o2.pl", "No name")
         whenever(repository.isFriendIn5GroupsAlready(any())).thenReturn(false)
@@ -150,6 +152,26 @@ class GroupSettingsViewModelTest {
         val actual = LiveDataTestUtil.getValue(tested.message)
 
         assertThat(actual).isEqualTo(R.string.member_exists)
+    }
+
+    @Test
+    fun addNewMember_shouldGetMessage_whenIsFriendInTheGroupAlreadyIsNull() = coroutineTest.runBlockingTest {
+        Mockito.reset(repository)
+
+        tested.getMonthSettings(GroupMonthDomain(isSettledUp = false))
+        tested.addNewMember(Friend(id = "memberId1"))
+        val actual = LiveDataTestUtil.getValue(tested.message)
+
+        assertThat(actual).isEqualTo(R.string.something_wrong)
+    }
+
+    @Test
+    fun addNewMember_shouldGetMessage_whenMonthIsSettledUp() = coroutineTest.runBlockingTest {
+        tested.getMonthSettings(GroupMonthDomain(isSettledUp = true))
+        tested.addNewMember(Friend(id = "memberId1"))
+        val actual = LiveDataTestUtil.getValue(tested.message)
+
+        assertThat(actual).isEqualTo(R.string.cant_operate_on_settled_up_month)
     }
 
 }
