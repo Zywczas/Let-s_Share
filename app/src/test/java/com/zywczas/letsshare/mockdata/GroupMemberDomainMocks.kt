@@ -17,7 +17,7 @@ class GroupMemberDomainMocks {
     )
 
     val groupMemberDomain1 = GroupMemberDomain(
-        id = "someIdNumber1",
+        id = "memberId1",
         name = "Piotr",
         email = "piotr@gmail.com",
         expenses = BigDecimal("219.32"),
@@ -27,7 +27,7 @@ class GroupMemberDomainMocks {
     )
 
     val groupMemberDomain2 = GroupMemberDomain(
-        id = "someIdNumber2",
+        id = "memberId2",
         name = "Michał",
         email = "michal@gmail.com",
         expenses = BigDecimal("111.11"),

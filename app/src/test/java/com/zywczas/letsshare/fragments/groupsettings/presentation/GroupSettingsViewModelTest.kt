@@ -1,10 +1,9 @@
 package com.zywczas.letsshare.fragments.groupsettings.presentation
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.nhaarman.mockitokotlin2.any
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.verify
-import com.nhaarman.mockitokotlin2.whenever
+import androidx.test.core.app.ApplicationProvider
+import com.nhaarman.mockitokotlin2.*
+import com.zywczas.letsshare.BaseApp
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.SessionManager
 import com.zywczas.letsshare.fragments.groupsettings.domain.GroupSettingsRepository
@@ -15,6 +14,7 @@ import com.zywczas.letsshare.testrules.TestCoroutineRule
 import com.zywczas.letsshare.utils.LiveDataTestUtil
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
@@ -32,17 +32,10 @@ class GroupSettingsViewModelTest {
 
     private val groupMemberDomainMocks = GroupMemberDomainMocks()
 
-    @Test
-    fun getFriends_shouldGetFriends() = coroutineTest.runBlockingTest {
-        val expected = listOf(Friend("id", "email", "name"))
-        whenever(repository.getFriends()).thenReturn(expected)
-
-        tested.getFriends()
-        val actual = LiveDataTestUtil.getValue(tested.friends)
-
-        verify(repository).getFriends()
-        assertThat(actual).isEqualTo(expected)
-    }
+//    @Before
+//    fun setUp() = coroutineTest.runBlockingTest {
+//        whenever(repository.getMembers(any())).thenReturn(listOf(groupMemberDomainMocks.groupMemberDomain1, groupMemberDomainMocks.groupMemberDomain2))
+//    }
 
     @Test
     fun getMonthSettings_shouldGetTotalPercentage() = coroutineTest.runBlockingTest {
@@ -74,6 +67,104 @@ class GroupSettingsViewModelTest {
         val actual = LiveDataTestUtil.getValue(tested.message)
 
         assertThat(actual).isEqualTo(R.string.cant_get_group_members)
+    }
+
+    @Test
+    fun getFriends_shouldGetFriends() = coroutineTest.runBlockingTest {
+        val expected = listOf(Friend("id", "email", "name"))
+        whenever(repository.getFriends()).thenReturn(expected)
+
+        tested.getFriends()
+        val actual = LiveDataTestUtil.getValue(tested.friends)
+
+        verify(repository).getFriends()
+        assertThat(actual).isEqualTo(expected)
+    }
+
+    @Test
+    fun addNewMember_shouldAddNewMember() = coroutineTest.runBlockingTest {
+        val expected = listOf(groupMemberDomainMocks.groupMemberDomain1, groupMemberDomainMocks.groupMemberDomain2)
+        val newFriend = Friend("123", "123@o2.pl", "No name")
+        whenever(repository.isFriendIn5GroupsAlready(any())).thenReturn(false)
+        whenever(repository.addMemberIfBelow7PeopleInGroup(any(), any())).thenReturn(null)
+        whenever(repository.getMembers(any())).thenReturn(expected)
+
+        tested.getMonthSettings(GroupMonthDomain(isSettledUp = false))
+        tested.addNewMember(newFriend)
+        val actual = LiveDataTestUtil.getValue(tested.members)
+
+        verify(repository).isFriendIn5GroupsAlready("123")
+        verify(repository).addMemberIfBelow7PeopleInGroup("", newFriend)
+        verify(repository, times(2)).getMembers("")
+        assertThat(actual).isEqualTo(expected)
+    }
+
+    @Test
+    fun addNewMember_shouldBeSettingsChanged() = coroutineTest.runBlockingTest {
+        val members = listOf(groupMemberDomainMocks.groupMemberDomain1, groupMemberDomainMocks.groupMemberDomain2)
+        whenever(repository.isFriendIn5GroupsAlready(any())).thenReturn(false)
+        whenever(repository.addMemberIfBelow7PeopleInGroup(any(), any())).thenReturn(null)
+        whenever(repository.getMembers(any())).thenReturn(members)
+
+        tested.getMonthSettings(GroupMonthDomain(isSettledUp = false))
+        tested.addNewMember(Friend())
+        val actual = LiveDataTestUtil.getValue(tested.areSettingsChanged)
+
+        assertThat(actual).isTrue
+    }
+
+    @Test
+    fun addNewMember_shouldGetMessage_whenAddMemberIfBelow7PeopleInGroupIsNull() = coroutineTest.runBlockingTest {
+        val expected = R.string.something_wrong
+        whenever(repository.getMembers(any())).thenReturn(listOf(groupMemberDomainMocks.groupMemberDomain1, groupMemberDomainMocks.groupMemberDomain2))
+        whenever(repository.isFriendIn5GroupsAlready(any())).thenReturn(false)
+        whenever(repository.addMemberIfBelow7PeopleInGroup(any(), any())).thenReturn(expected)
+
+        tested.getMonthSettings(GroupMonthDomain(isSettledUp = false))
+        tested.addNewMember(Friend())
+        val actual = LiveDataTestUtil.getValue(tested.message)
+
+        assertThat(actual).isEqualTo(expected)
+    }
+
+    @Test
+    fun addNewMember_shouldGetMessage_whenIsFriendIn5GroupsAlreadyIsNull() = coroutineTest.runBlockingTest {
+        whenever(repository.getMembers(any())).thenReturn(listOf(groupMemberDomainMocks.groupMemberDomain1, groupMemberDomainMocks.groupMemberDomain2))
+        whenever(repository.isFriendIn5GroupsAlready(any())).thenReturn(null)
+
+        tested.getMonthSettings(GroupMonthDomain(isSettledUp = false))
+        tested.addNewMember(Friend())
+        val actual = LiveDataTestUtil.getValue(tested.message)
+
+        assertThat(actual).isEqualTo(R.string.something_wrong)
+    }
+
+    @Test
+    fun addNewMember_shouldGetMessage_whenIsFriendIn5GroupsAlreadyIsTrue() = coroutineTest.runBlockingTest {
+        whenever(repository.getMembers(any())).thenReturn(listOf(groupMemberDomainMocks.groupMemberDomain1, groupMemberDomainMocks.groupMemberDomain2))
+        whenever(repository.isFriendIn5GroupsAlready(any())).thenReturn(true)
+
+        tested.getMonthSettings(GroupMonthDomain(isSettledUp = false))
+        tested.addNewMember(Friend())
+        val actual = LiveDataTestUtil.getValue(tested.message)
+
+        println("something_wrong: ${R.string.something_wrong}")
+        println("member_exists: ${R.string.member_exists}")
+        println("friend_in_too_many_groups: ${R.string.friend_in_too_many_groups}")
+        println("cant_operate_on_settled_up_month: ${R.string.cant_operate_on_settled_up_month}")
+
+        assertThat(actual).isEqualTo(R.string.friend_in_too_many_groups)
+    }
+
+    @Test
+    fun addNewMember_shouldGetMessage_whenIsFriendInTheGroupAlreadyIsTrue() = coroutineTest.runBlockingTest {
+        whenever(repository.getMembers(any())).thenReturn(listOf(groupMemberDomainMocks.groupMemberDomain1, groupMemberDomainMocks.groupMemberDomain2))
+
+        tested.getMonthSettings(GroupMonthDomain(isSettledUp = false))
+        tested.addNewMember(Friend(id = "memberId1"))
+        val actual = LiveDataTestUtil.getValue(tested.message)
+
+        assertThat(actual).isEqualTo(R.string.member_exists)
     }
 
 }
