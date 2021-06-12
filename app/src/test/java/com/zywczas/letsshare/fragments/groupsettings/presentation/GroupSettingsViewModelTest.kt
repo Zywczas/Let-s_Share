@@ -1,12 +1,15 @@
 package com.zywczas.letsshare.fragments.groupsettings.presentation
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import com.zywczas.letsshare.SessionManager
 import com.zywczas.letsshare.fragments.groupsettings.domain.GroupSettingsRepository
 import com.zywczas.letsshare.models.Friend
+import com.zywczas.letsshare.models.GroupMemberDomain
+import com.zywczas.letsshare.models.GroupMonthDomain
 import com.zywczas.letsshare.testrules.TestCoroutineRule
 import com.zywczas.letsshare.utils.LiveDataTestUtil
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -27,7 +30,7 @@ class GroupSettingsViewModelTest {
     private val tested = GroupSettingsViewModel(TestCoroutineRule.testDispatcher, repository, sessionManager)
 
     @Test
-    fun getFriendsShouldGetFriends() = coroutineTest.runBlockingTest {
+    fun getFriends_shouldGetFriends() = coroutineTest.runBlockingTest {
         val expected = listOf(Friend("id", "email", "name"))
         whenever(repository.getFriends()).thenReturn(expected)
 
@@ -36,6 +39,17 @@ class GroupSettingsViewModelTest {
 
         verify(repository).getFriends()
         assertThat(actual).isEqualTo(expected)
+    }
+
+    @Test
+    fun getMonthSettings_shouldGetTotalPercentage() = coroutineTest.runBlockingTest {
+        val expeced = listOf(GroupMemberDomain())
+//        whenever(repository.getMembers(any())).thenReturn()
+
+        tested.getMonthSettings(GroupMonthDomain("3.21"))
+        val actual = LiveDataTestUtil.getValue(tested.totalPercentage)
+
+        verify(repository).getMembers("3.21")
     }
 
 }

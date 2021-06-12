@@ -160,7 +160,7 @@
     <fragment
         android:id="@+id/historyFragment"
         android:name="com.zywczas.letsshare.fragments.history.presentation.HistoryFragment"
-        android:label="@string/last_3_months"
+        android:label="@string/previous_months"
         tools:layout="@layout/fragment_history">
         <argument
             android:name="group"

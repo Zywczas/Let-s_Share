@@ -75,7 +75,7 @@
     <string name="confirm_email">Confirm email</string>
     <string name="first_time_here">First time here?\nRegister new user:</string>
     <string name="add_friend">Add friend</string>
-    <string name="last_3_months">Last 3 months</string>
+    <string name="previous_months">Previous months</string>
     <string name="expense_name">Name</string>
     <string name="expense_value">Value</string>
     <string name="person_name">Name</string>
