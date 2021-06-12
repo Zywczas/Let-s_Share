@@ -5,10 +5,11 @@ import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
+import com.zywczas.letsshare.R
 import com.zywczas.letsshare.SessionManager
 import com.zywczas.letsshare.fragments.groupsettings.domain.GroupSettingsRepository
+import com.zywczas.letsshare.mockdata.GroupMemberDomainMocks
 import com.zywczas.letsshare.models.Friend
-import com.zywczas.letsshare.models.GroupMemberDomain
 import com.zywczas.letsshare.models.GroupMonthDomain
 import com.zywczas.letsshare.testrules.TestCoroutineRule
 import com.zywczas.letsshare.utils.LiveDataTestUtil
@@ -29,6 +30,8 @@ class GroupSettingsViewModelTest {
     private val sessionManager: SessionManager = mock()
     private val tested = GroupSettingsViewModel(TestCoroutineRule.testDispatcher, repository, sessionManager)
 
+    private val groupMemberDomainMocks = GroupMemberDomainMocks()
+
     @Test
     fun getFriends_shouldGetFriends() = coroutineTest.runBlockingTest {
         val expected = listOf(Friend("id", "email", "name"))
@@ -43,13 +46,34 @@ class GroupSettingsViewModelTest {
 
     @Test
     fun getMonthSettings_shouldGetTotalPercentage() = coroutineTest.runBlockingTest {
-        val expeced = listOf(GroupMemberDomain())
-//        whenever(repository.getMembers(any())).thenReturn()
+        whenever(repository.getMembers(any())).thenReturn(listOf(groupMemberDomainMocks.groupMemberDomain1, groupMemberDomainMocks.groupMemberDomain2))
 
         tested.getMonthSettings(GroupMonthDomain("3.21"))
         val actual = LiveDataTestUtil.getValue(tested.totalPercentage)
 
         verify(repository).getMembers("3.21")
+        assertThat(actual).isEqualTo("80.44%")
+    }
+
+    @Test
+    fun getMonthSettings_shouldGetMember() = coroutineTest.runBlockingTest {
+        val expected = listOf(groupMemberDomainMocks.groupMemberDomain1, groupMemberDomainMocks.groupMemberDomain2)
+        whenever(repository.getMembers(any())).thenReturn(expected)
+
+        tested.getMonthSettings(GroupMonthDomain("3.21"))
+        val actual = LiveDataTestUtil.getValue(tested.members)
+
+        assertThat(actual).isEqualTo(expected)
+    }
+
+    @Test
+    fun getMonthSettings_shouldGetMessage() = coroutineTest.runBlockingTest {
+        whenever(repository.getMembers(any())).thenReturn(null)
+
+        tested.getMonthSettings(GroupMonthDomain("3.21"))
+        val actual = LiveDataTestUtil.getValue(tested.message)
+
+        assertThat(actual).isEqualTo(R.string.cant_get_group_members)
     }
 
 }
