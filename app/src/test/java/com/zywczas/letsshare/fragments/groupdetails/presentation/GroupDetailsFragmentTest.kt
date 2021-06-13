@@ -12,10 +12,12 @@ import com.nhaarman.mockitokotlin2.*
 import com.zywczas.letsshare.BaseApp
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.SessionManager
+import com.zywczas.letsshare.activitymain.domain.DateUtil
 import com.zywczas.letsshare.di.factories.UniversalViewModelFactory
 import com.zywczas.letsshare.fragments.groupdetails.domain.GroupDetailsRepository
 import com.zywczas.letsshare.fragments.groups.presentation.GroupsFragmentDirections
 import com.zywczas.letsshare.models.Group
+import com.zywczas.letsshare.models.GroupMonthDomain
 import com.zywczas.letsshare.testrules.TestCoroutineRule
 import com.zywczas.letsshare.uirobots.GroupDetailsFragmentRobot
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -26,6 +28,11 @@ import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.LooperMode
+import java.math.BigDecimal
+import java.time.Clock
+import java.time.Instant
+import java.time.LocalDateTime
+import java.time.ZoneId
 import java.util.*
 
 @ExperimentalCoroutinesApi
@@ -41,6 +48,7 @@ class GroupDetailsFragmentTest {
     private val navController = TestNavHostController(ApplicationProvider.getApplicationContext<BaseApp>())
     private val sessionManager: SessionManager = mock()
     private val repository: GroupDetailsRepository = mock()
+    private val dateUtil: DateUtil = mock()
 
     private val uiRobot = GroupDetailsFragmentRobot()
 
@@ -53,7 +61,7 @@ class GroupDetailsFragmentTest {
             membersNum = 3
         )).arguments
         val viewModelFactory = spy(UniversalViewModelFactory(emptyMap()))
-        val viewModel = GroupDetailsViewModel(TestCoroutineRule.testDispatcher, repository, sessionManager)
+        val viewModel = GroupDetailsViewModel(TestCoroutineRule.testDispatcher, repository, sessionManager, dateUtil)
 
         doReturn(viewModel).`when`(viewModelFactory).create(GroupDetailsViewModel::class.java)
         navController.setGraph(R.navigation.main_nav_graph)
@@ -75,6 +83,16 @@ class GroupDetailsFragmentTest {
         launchGroupDetailsFragment()
 
         uiRobot.isLayoutDisplayed()
+    }
+
+    @Test
+    fun startFragment_shouldGetToolbarTitle() = coroutineTest.runBlockingTest {
+        whenever(repository.getLastMonth()).thenReturn(GroupMonthDomain(id = "2021-05", totalExpenses = BigDecimal("123.45")))
+        whenever(dateUtil.presentMonthId()).thenReturn("2021-05")
+
+        launchGroupDetailsFragment()
+
+        uiRobot.isToolbarTitle("Dom - 123.45 zł")
     }
 
 }

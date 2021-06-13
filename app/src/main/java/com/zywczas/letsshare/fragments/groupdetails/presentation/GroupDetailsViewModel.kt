@@ -3,6 +3,7 @@ package com.zywczas.letsshare.fragments.groupdetails.presentation
 import androidx.lifecycle.*
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.SessionManager
+import com.zywczas.letsshare.activitymain.domain.DateUtil
 import com.zywczas.letsshare.activitymain.domain.withBalance
 import com.zywczas.letsshare.activitymain.presentation.BaseViewModel
 import com.zywczas.letsshare.di.modules.DispatchersModule.DispatchersIO
@@ -25,7 +26,8 @@ import javax.inject.Inject
 class GroupDetailsViewModel @Inject constructor(
     @DispatchersIO private val dispatchersIO: CoroutineDispatcher,
     private val repository: GroupDetailsRepository,
-    private val sessionManager: SessionManager
+    private val sessionManager: SessionManager,
+    private val dateUtil: DateUtil
 ) : BaseViewModel() {
 
     private val _currentMonth = MutableLiveData<GroupMonthDomain>()
@@ -65,7 +67,7 @@ class GroupDetailsViewModel @Inject constructor(
         viewModelScope.launch(dispatchersIO) {
             showProgressBar(true)
             repository.getLastMonth()?.let { lastMonth ->
-                val hasNewCalendarMonthStarted = lastMonth.id != Date().monthId()
+                val hasNewCalendarMonthStarted = lastMonth.id != dateUtil.presentMonthId()
                 if (hasNewCalendarMonthStarted) {
                     startNewMonth(lastMonth.id)
                 } else {

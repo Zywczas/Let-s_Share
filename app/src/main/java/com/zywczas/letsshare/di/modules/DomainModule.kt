@@ -66,4 +66,7 @@ abstract class DomainModule {
     @Binds
     abstract fun bindHistoryDetailsRepository(repo: HistoryDetailsRepositoryImpl): HistoryDetailsRepository
 
+    @Binds
+    abstract fun bindDateUtil(repo: DateUtilImpl): DateUtil
+
 }
