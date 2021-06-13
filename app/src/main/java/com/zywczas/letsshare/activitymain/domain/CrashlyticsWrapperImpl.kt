@@ -2,11 +2,8 @@ package com.zywczas.letsshare.activitymain.domain
 
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.zywczas.letsshare.db.UserDao
-import com.zywczas.letsshare.di.modules.DispatchersModule
-import com.zywczas.letsshare.di.modules.DispatchersModule.*
-import com.zywczas.letsshare.models.User
+import com.zywczas.letsshare.di.modules.DispatchersModule.DispatchersIO
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject

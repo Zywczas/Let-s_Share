@@ -1,7 +1,6 @@
 package com.zywczas.letsshare.fragments.groupsettings.presentation
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.LifecycleObserver
 import com.nhaarman.mockitokotlin2.*
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.SessionManager
@@ -17,8 +16,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mockito
-import java.lang.System.out
-import kotlin.reflect.KClass
 
 @ExperimentalCoroutinesApi
 class GroupSettingsViewModelTest {

@@ -1,8 +1,6 @@
 package com.zywczas.letsshare.utils
 
 import android.view.View
-import android.widget.ProgressBar
-import androidx.annotation.CheckResult
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.matcher.BoundedMatcher
 import org.hamcrest.Description

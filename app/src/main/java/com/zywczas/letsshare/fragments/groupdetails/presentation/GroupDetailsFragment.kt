@@ -30,7 +30,8 @@ import com.zywczas.letsshare.extentions.dimBackgroundOnMainButtonClick
 import com.zywczas.letsshare.extentions.showSnackbar
 import com.zywczas.letsshare.models.ExpenseDomain
 import com.zywczas.letsshare.models.GroupMemberDomain
-import com.zywczas.letsshare.utils.*
+import com.zywczas.letsshare.utils.GROUP_NAME_KEY
+import com.zywczas.letsshare.utils.autoRelease
 import javax.inject.Inject
 
 class GroupDetailsFragment @Inject constructor(viewModelFactory: UniversalViewModelFactory) :

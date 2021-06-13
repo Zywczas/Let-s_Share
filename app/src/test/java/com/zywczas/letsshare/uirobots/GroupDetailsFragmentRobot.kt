@@ -4,15 +4,9 @@ package com.zywczas.letsshare.uirobots
 import androidx.annotation.StringRes
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions.scrollToPosition
-import androidx.test.espresso.matcher.RootMatchers.isDialog
-import androidx.test.espresso.matcher.ViewMatchers.hasDescendant
-import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
-import androidx.test.espresso.matcher.ViewMatchers.withHint
-import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.espresso.matcher.ViewMatchers.withText
+import androidx.test.espresso.matcher.ViewMatchers.*
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.utils.childAtRecyclerPosition
 import com.zywczas.letsshare.utils.recyclerViewHasSize
@@ -99,5 +93,7 @@ class GroupDetailsFragmentRobot {
         isPercentageShareDisplayed(1, "50.00%")
         isDifferenceDisplayed(1, "38.89 zł")
     }
+
+    fun isSnackbarDisplayed(@StringRes text: Int) = onView(allOf(withId(com.google.android.material.R.id.snackbar_text), withText(text))).check(matches(isDisplayed()))
 
 }

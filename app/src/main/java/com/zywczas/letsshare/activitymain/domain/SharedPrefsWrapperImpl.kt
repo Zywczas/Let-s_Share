@@ -2,7 +2,6 @@ package com.zywczas.letsshare.activitymain.domain
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.zywczas.letsshare.models.User
 import javax.inject.Inject
 
 class SharedPrefsWrapperImpl @Inject constructor (context: Context): SharedPrefsWrapper {
