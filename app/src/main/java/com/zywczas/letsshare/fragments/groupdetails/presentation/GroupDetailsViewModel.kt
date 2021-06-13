@@ -7,7 +7,6 @@ import com.zywczas.letsshare.activitymain.domain.DateUtil
 import com.zywczas.letsshare.activitymain.domain.withBalance
 import com.zywczas.letsshare.activitymain.presentation.BaseViewModel
 import com.zywczas.letsshare.di.modules.DispatchersModule.DispatchersIO
-import com.zywczas.letsshare.extentions.monthId
 import com.zywczas.letsshare.fragments.groupdetails.domain.GroupDetailsRepository
 import com.zywczas.letsshare.models.ExpenseDomain
 import com.zywczas.letsshare.models.ExpenseNotification
@@ -20,7 +19,6 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.math.BigDecimal
-import java.util.*
 import javax.inject.Inject
 
 class GroupDetailsViewModel @Inject constructor(
@@ -83,7 +81,7 @@ class GroupDetailsViewModel @Inject constructor(
         showProgressBar(true)
         repository.getMembers(lastMonthId)?.let { members ->
             repository.createNewMonth(members)?.let { error -> postMessage(error) }
-                ?: listenToMonth(Date().monthId())
+                ?: listenToMonth(dateUtil.presentMonthId())
         } ?: postMonthError()
         showProgressBar(false)
     }

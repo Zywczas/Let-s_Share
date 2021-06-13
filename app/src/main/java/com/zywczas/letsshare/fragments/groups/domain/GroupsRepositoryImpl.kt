@@ -5,6 +5,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObject
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.activitymain.domain.CrashlyticsWrapper
+import com.zywczas.letsshare.activitymain.domain.DateUtil
 import com.zywczas.letsshare.activitymain.domain.FirestoreReferences
 import com.zywczas.letsshare.activitymain.domain.SharedPrefsWrapper
 import com.zywczas.letsshare.db.UserDao
@@ -20,7 +21,6 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
-import java.util.*
 import javax.inject.Inject
 
 class GroupsRepositoryImpl @Inject constructor(
@@ -28,7 +28,8 @@ class GroupsRepositoryImpl @Inject constructor(
     private val firestoreRefs: FirestoreReferences,
     private val sharedPrefs: SharedPrefsWrapper,
     private val crashlyticsWrapper: CrashlyticsWrapper,
-    private val userDao: UserDao
+    private val userDao: UserDao,
+    private val dateUtil: DateUtil
 ) : GroupsRepository {
 
     override suspend fun isUserIn5GroupsAlready(): Boolean? =
@@ -50,7 +51,7 @@ class GroupsRepositoryImpl @Inject constructor(
                 name = name,
                 currency = currency,
                 membersNum = 1)
-            val date = Date()
+            val date = dateUtil.presentDate()
             val newMonthId = date.monthId()
             val newMonthRefs = firestoreRefs.groupMonthRefs(newGroupRef.id, newMonthId)
             val newMonth = GroupMonth(id = newMonthId, dateCreated = date)
