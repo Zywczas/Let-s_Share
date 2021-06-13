@@ -30,7 +30,6 @@ import java.util.*
 
 @ExperimentalCoroutinesApi
 @RunWith(RobolectricTestRunner::class)
-@LooperMode(LooperMode.Mode.PAUSED)
 class GroupDetailsFragmentTest {
 
     @get:Rule

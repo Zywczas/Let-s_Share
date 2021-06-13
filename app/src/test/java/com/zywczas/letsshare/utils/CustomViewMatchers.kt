@@ -17,7 +17,7 @@ fun recyclerViewHasSize(matcherSize: Int): Matcher<View> =
             matcherSize == item?.adapter?.itemCount
     }
 
-fun childAtRecyclerPosition(position: Int, itemMatcher: Matcher<View?>): Matcher<View?> { //todo
+fun childAtRecyclerPosition(position: Int, itemMatcher: Matcher<View?>): Matcher<View?> {
     return object : BoundedMatcher<View?, RecyclerView>(RecyclerView::class.java) {
         override fun describeTo(description: Description) {
             description.appendText("Has item at position $position: ")
