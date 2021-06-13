@@ -16,6 +16,7 @@ import com.zywczas.letsshare.activitymain.domain.DateUtil
 import com.zywczas.letsshare.di.factories.UniversalViewModelFactory
 import com.zywczas.letsshare.fragments.groupdetails.domain.GroupDetailsRepository
 import com.zywczas.letsshare.fragments.groups.presentation.GroupsFragmentDirections
+import com.zywczas.letsshare.mockdata.GroupMemberDomainMocks
 import com.zywczas.letsshare.models.Group
 import com.zywczas.letsshare.models.GroupMonthDomain
 import com.zywczas.letsshare.testrules.TestCoroutineRule
@@ -51,6 +52,7 @@ class GroupDetailsFragmentTest {
     private val dateUtil: DateUtil = mock()
 
     private val uiRobot = GroupDetailsFragmentRobot()
+    private val groupMemberDomainMocks = GroupMemberDomainMocks()
 
     private fun launchGroupDetailsFragment() : FragmentScenario<GroupDetailsFragment>{
         val bundle = GroupsFragmentDirections.toGroupDetailsFragment(Group(
@@ -94,5 +96,23 @@ class GroupDetailsFragmentTest {
 
         uiRobot.isToolbarTitle("Dom - 123.45 zł")
     }
+
+    @Test
+    fun startFragment_shouldGetMembers() = coroutineTest.runBlockingTest {
+        whenever(repository.getLastMonth()).thenReturn(GroupMonthDomain(id = "2021-05", totalExpenses = BigDecimal("300.00")))
+        whenever(dateUtil.presentMonthId()).thenReturn("2021-05")
+        whenever(repository.getMembers(any())).thenReturn(listOf(groupMemberDomainMocks.groupMemberDomain1, groupMemberDomainMocks.groupMemberDomain2))
+
+        launchGroupDetailsFragment()
+
+        uiRobot.isMembersRecyclerDisplayed()
+        uiRobot.membersRecyclerHasItems(2)
+        uiRobot.isFirstMemberDataDisplayed()
+        uiRobot.isSecondMemberDataDisplayed()
+    }
+
+    //pokazywanie snacknbara
+
+        //przechodzenie do kolejnego fragmentu
 
 }

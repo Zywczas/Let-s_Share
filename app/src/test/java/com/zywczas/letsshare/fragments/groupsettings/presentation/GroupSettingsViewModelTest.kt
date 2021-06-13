@@ -41,11 +41,11 @@ class GroupSettingsViewModelTest {
 
     @Test
     fun getMonthSettings_shouldGetTotalPercentage() = coroutineTest.runBlockingTest {
-        tested.getMonthSettings(GroupMonthDomain("3.21"))
+        tested.getMonthSettings(GroupMonthDomain("2021-03"))
         val actual = LiveDataTestUtil.getValue(tested.totalPercentage)
 
-        verify(repository).getMembers("3.21")
-        assertThat(actual).isEqualTo("80.44%")
+        verify(repository).getMembers("2021-03")
+        assertThat(actual).isEqualTo("100.00%")
     }
 
     @Test

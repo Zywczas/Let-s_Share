@@ -31,7 +31,7 @@ class GroupMemberDomainMocks {
         name = "Michał",
         email = "michal@gmail.com",
         expenses = BigDecimal("111.11"),
-        share = BigDecimal("30.44"),
+        share = BigDecimal("50.00"),
         owesOrOver = R.string.owes,
         difference = BigDecimal("37.64")
     )
