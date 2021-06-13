@@ -5,10 +5,7 @@ import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.firestore.ktx.toObjects
 import com.zywczas.letsshare.R
-import com.zywczas.letsshare.activitymain.domain.CrashlyticsWrapper
-import com.zywczas.letsshare.activitymain.domain.FirestoreReferences
-import com.zywczas.letsshare.activitymain.domain.SharedPrefsWrapper
-import com.zywczas.letsshare.activitymain.domain.toDomain
+import com.zywczas.letsshare.activitymain.domain.*
 import com.zywczas.letsshare.db.UserDao
 import com.zywczas.letsshare.extentions.dateInPoland
 import com.zywczas.letsshare.extentions.logD
@@ -21,15 +18,15 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
 import java.math.BigDecimal
-import java.util.*
 import javax.inject.Inject
 
 class GroupDetailsRepositoryImpl @Inject constructor(
     private val firestoreRefs: FirestoreReferences,
     private val firestore: FirebaseFirestore,
     private val crashlyticsWrapper: CrashlyticsWrapper,
-    private val sharedPrefs: SharedPrefsWrapper,
-    private val userDao: UserDao
+    sharedPrefs: SharedPrefsWrapper,
+    private val userDao: UserDao,
+    private val dateUtil: DateUtil
 ) : GroupDetailsRepository {
 
     private val groupId = sharedPrefs.currentGroupId
@@ -93,7 +90,7 @@ class GroupDetailsRepositoryImpl @Inject constructor(
 
     override suspend fun createNewMonth(members: List<GroupMemberDomain>): Int? =
         try {
-            val date = Date()
+            val date = dateUtil.presentDate()
             val monthId = date.monthId()
             val newMonthRefs = firestoreRefs.groupMonthRefs(groupId, monthId)
             val newMonth = GroupMonth(id = monthId, dateCreated = date)

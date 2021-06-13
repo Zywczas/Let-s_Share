@@ -7,6 +7,8 @@ import javax.inject.Inject
 
 class DateUtilImpl @Inject constructor() : DateUtil {
 
+    override suspend fun presentDate(): Date = Date()
+
     override suspend fun presentMonthId(): String = SimpleDateFormat("yyyy-MM", LOCALE_POLAND).format(Date()) //todo dac to we wszystkich view modelach
 
 }
