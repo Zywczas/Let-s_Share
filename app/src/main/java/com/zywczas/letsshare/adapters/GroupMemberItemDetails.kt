@@ -20,7 +20,7 @@ class GroupMemberItemDetails(private val member: GroupMemberDomain, private val 
         binding.memberName.text = member.name
         binding.memberExpenses.text = String.format(Locale.UK, "%.2f %s", member.expenses, currency)
         binding.percentageShare.text = String.format(Locale.UK, "%.2f%s", member.share, "%")
-        binding.owesOrOver.text = binding.root.context.getString(member.owesOrOver)
+        binding.owesOrOver.setText(member.owesOrOver)
         binding.difference.text = String.format(Locale.UK, "%.2f %s", member.difference, currency)
     }
 

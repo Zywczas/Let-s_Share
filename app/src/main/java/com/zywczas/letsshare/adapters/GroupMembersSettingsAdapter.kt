@@ -41,20 +41,20 @@ class GroupMembersSettingsAdapter(
         private val name: TextView = itemView.findViewById(R.id.memberName)
         private val split: TextInputEditText = itemView.findViewById(R.id.split)
 
-        private var newSplitJob: Job? = null
+        private var updatedPercentageJob: Job? = null
         private val coroutineScope = CoroutineScope(Dispatchers.Main)
 
         @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
         fun onDestroy() {
-            newSplitJob?.cancel()
+            updatedPercentageJob?.cancel()
         }
 
         fun bindMember(member: GroupMemberDomain) {
             name.text = member.name
             split.setText(String.format(Locale.UK, "%.2f", member.share))
             split.doOnTextChanged { text, _, _, _ ->
-                newSplitJob?.cancel()
-                newSplitJob = coroutineScope.launch {
+                updatedPercentageJob?.cancel()
+                updatedPercentageJob = coroutineScope.launch {
                     delay(textDebounce)
                     text?.let {
                         var splitText = it.toString()
