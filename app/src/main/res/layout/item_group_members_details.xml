@@ -72,7 +72,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/smallMarginListItem"
         android:layout_marginTop="@dimen/smallMarginListItem"
-        android:text="@string/split"
+        android:text="@string/split_colon"
         android:textColor="@color/textOnPrimary"
         app:layout_constraintEnd_toStartOf="@+id/percentageShare"
         app:layout_constraintHorizontal_chainStyle="packed"

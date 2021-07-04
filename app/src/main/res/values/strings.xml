@@ -63,8 +63,8 @@
     <string name="remove_member">Delete member</string>
     <string name="login_title">Login</string>
     <string name="registration">Registration</string>
-<!--    todo poprawic-->
-    <string name="split">Split:</string>
+    <string name="split_colon">Split:</string>
+    <string name="split">Split</string>
     <string name="total_expense">Total:</string>
     <string name="settings">Settings</string>
     <string name="logout">Logout</string>

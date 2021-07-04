@@ -63,7 +63,8 @@
     <string name="remove_member">Usuń członka</string>
     <string name="login_title">Logowanie</string>
     <string name="registration">Rejestracja</string>
-    <string name="split">Udział:</string>
+    <string name="split_colon">Udział:</string>
+    <string name="split">Udział</string>
     <string name="total_expense">Łącznie:</string>
     <string name="settings">Ustawienia</string>
     <string name="logout">Wyloguj</string>
