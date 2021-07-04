@@ -8,6 +8,7 @@
     <dimen name="smallMarginListItem">6dp</dimen>
     <dimen name="mediumMarginListItem">8dp</dimen>
     <dimen name="largeMarginListItem">16dp</dimen>
+    <dimen name="minVerticalPaddingListItem">16dp</dimen>
 
 <!--    text sizes-->
     <dimen name="headerMediumTextSizeListItem">20sp</dimen>
