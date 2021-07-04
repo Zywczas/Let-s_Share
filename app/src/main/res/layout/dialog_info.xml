@@ -15,7 +15,6 @@
         android:textAlignment="center"
         android:textSize="@dimen/titleDialog"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Hello Piotr!" />
@@ -28,7 +27,6 @@
         android:text="@string/verification_email_sent"
         android:textSize="@dimen/messageDialog"
         app:layout_constraintEnd_toEndOf="@+id/title"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/title"
         app:layout_constraintTop_toBottomOf="@+id/title" />
 

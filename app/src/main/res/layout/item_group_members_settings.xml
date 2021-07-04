@@ -34,14 +34,13 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.5"
         tools:visibility="visible">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/split"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Split"
+            android:hint="@string/split"
             android:inputType="numberDecimal"
             android:maxLength="6"
             tools:text="100.00" />

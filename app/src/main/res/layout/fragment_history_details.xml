@@ -27,7 +27,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent">
 
             <androidx.appcompat.widget.Toolbar
@@ -49,21 +48,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/toolbar">
-
-                <com.leinardi.android.speeddial.SpeedDialView
-                    android:id="@+id/speedDial"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|end"
-                    android:scaleType="centerCrop"
-                    android:theme="@style/Theme.LetsShare"
-                    app:fabSize="normal"
-                    app:layout_behavior="@string/speeddial_scrolling_view_snackbar_behavior"
-                    app:sdMainFabAnimationRotateAngle="360"
-                    app:sdMainFabClosedSrc="@drawable/ic_plus"
-                    app:sdMainFabOpenedSrc="@drawable/ic_x"
-                    app:sdOverlayLayout="@id/overlay"
-                    app:sdUseReverseAnimationOnClose="true" />
 
                 <com.google.android.material.appbar.AppBarLayout
                     android:id="@+id/appbar"
@@ -120,7 +104,6 @@
                     app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:context=".fragments.groupdetails.presentation.GroupDetailsFragment">
@@ -132,7 +115,6 @@
                         android:layout_marginTop="8dp"
                         android:textSize="18sp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         tools:text="This month is not settled up yet." />
@@ -148,7 +130,6 @@
                         app:layout_anchorGravity="center"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/settledUpMessage"
                         tools:itemCount="2"
@@ -163,7 +144,6 @@
                         app:isVisible="@{vm.isProgressBarVisible()}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintVertical_bias="0.2"
@@ -178,6 +158,20 @@
             android:id="@+id/overlay"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+
+        <com.leinardi.android.speeddial.SpeedDialView
+            android:id="@+id/speedDial"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:sdOverlayLayout="@id/overlay"
+            android:layout_gravity="bottom|end"
+            android:scaleType="centerCrop"
+            android:theme="@style/Theme.LetsShare"
+            app:fabSize="normal"
+            app:sdMainFabAnimationRotateAngle="360"
+            app:sdMainFabClosedSrc="@drawable/ic_plus"
+            app:sdMainFabOpenedSrc="@drawable/ic_x"
+            app:sdUseReverseAnimationOnClose="true" />
 
     </FrameLayout>
 </layout>

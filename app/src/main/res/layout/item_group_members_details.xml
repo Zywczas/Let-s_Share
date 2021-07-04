@@ -8,7 +8,6 @@
     android:background="@drawable/stroke_background_primary_variant"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintHorizontal_bias="0.5"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent">
 
@@ -36,7 +35,6 @@
         android:textColor="@color/textOnPrimary"
         app:layout_constraintBottom_toBottomOf="@+id/total"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/total"
         app:layout_constraintTop_toTopOf="@+id/total"
         tools:text="203.69 zł" />
@@ -51,7 +49,6 @@
         android:textColor="@color/textOnPrimary"
         app:layout_constraintBottom_toBottomOf="@+id/split"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/split"
         app:layout_constraintTop_toTopOf="@+id/split"
         tools:text="33.33%" />
@@ -65,7 +62,6 @@
         android:text="@string/total_expense"
         android:textColor="@color/textOnPrimary"
         app:layout_constraintEnd_toStartOf="@+id/memberExpenses"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/memberName" />
@@ -79,7 +75,6 @@
         android:text="@string/split"
         android:textColor="@color/textOnPrimary"
         app:layout_constraintEnd_toStartOf="@+id/percentageShare"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/total" />
@@ -94,7 +89,6 @@
         android:textColor="@color/textOnPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/difference"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/split"
@@ -109,7 +103,6 @@
         android:textColor="@color/textOnPrimary"
         app:layout_constraintBottom_toBottomOf="@+id/owesOrOver"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/owesOrOver"
         app:layout_constraintTop_toTopOf="@+id/owesOrOver"
         tools:text="34.15 zł" />

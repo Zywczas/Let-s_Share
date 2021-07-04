@@ -27,7 +27,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent">
 
             <androidx.appcompat.widget.Toolbar
@@ -39,7 +38,6 @@
                 android:theme="?attr/actionBarTheme"
                 app:layout_collapseMode="pin"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -48,7 +46,6 @@
                 android:layout_height="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
@@ -107,7 +104,6 @@
                     app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:context=".fragments.groupdetails.presentation.GroupDetailsFragment">
@@ -122,7 +118,6 @@
                         app:layout_anchorGravity="center"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         tools:itemCount="2"
@@ -137,27 +132,12 @@
                         app:isVisible="@{vm.isProgressBarVisible()}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintVertical_bias="0.2"
                         tools:visibility="visible" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <com.leinardi.android.speeddial.SpeedDialView
-                    android:id="@+id/speedDial"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|end"
-                    android:scaleType="centerCrop"
-                    android:theme="@style/Theme.LetsShare"
-                    app:fabSize="normal"
-                    app:sdMainFabAnimationRotateAngle="360"
-                    app:sdMainFabClosedSrc="@drawable/ic_plus"
-                    app:sdMainFabOpenedSrc="@drawable/ic_x"
-                    app:sdOverlayLayout="@id/overlay"
-                    app:sdUseReverseAnimationOnClose="true" />
 
             </androidx.coordinatorlayout.widget.CoordinatorLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -166,6 +146,20 @@
             android:id="@+id/overlay"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+
+        <com.leinardi.android.speeddial.SpeedDialView
+            android:id="@+id/speedDial"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:sdOverlayLayout="@id/overlay"
+            android:layout_gravity="bottom|end"
+            android:scaleType="centerCrop"
+            android:theme="@style/Theme.LetsShare"
+            app:fabSize="normal"
+            app:sdMainFabAnimationRotateAngle="360"
+            app:sdMainFabClosedSrc="@drawable/ic_plus"
+            app:sdMainFabOpenedSrc="@drawable/ic_x"
+            app:sdUseReverseAnimationOnClose="true" />
 
     </FrameLayout>
 </layout>
