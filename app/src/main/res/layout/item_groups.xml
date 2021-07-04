@@ -11,10 +11,23 @@
         android:id="@+id/nameGroupsListItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="@dimen/largeMarginListItem"
         android:theme="@style/Widget.App.LargeListItemHeader"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Grupa 1" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="@dimen/largeMarginListItem"
+        android:background="@drawable/ic_arrow_right_circle"
+        android:backgroundTint="@color/headerListItem"
+        app:layout_constraintBottom_toBottomOf="@+id/nameGroupsListItem"
+        app:layout_constraintDimensionRatio="h,1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/nameGroupsListItem"
+        tools:ignore="ContentDescription" />
 </androidx.constraintlayout.widget.ConstraintLayout>
