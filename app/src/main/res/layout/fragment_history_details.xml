@@ -160,10 +160,10 @@
                 android:theme="@style/Theme.LetsShare"
                 app:fabSize="normal"
                 app:layout_behavior="@string/speeddial_scrolling_view_snackbar_behavior"
+                app:sdOverlayLayout="@id/speedDialOverlay"
                 app:sdMainFabAnimationRotateAngle="360"
                 app:sdMainFabClosedSrc="@drawable/ic_plus"
                 app:sdMainFabOpenedSrc="@drawable/ic_x"
-                app:sdOverlayLayout="@id/speedDialOverlay"
                 app:sdUseReverseAnimationOnClose="true" />
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
