@@ -19,7 +19,6 @@ import com.zywczas.letsshare.R
 import com.zywczas.letsshare.adapters.FriendItem
 import com.zywczas.letsshare.databinding.FragmentFriendsBinding
 import com.zywczas.letsshare.di.factories.UniversalViewModelFactory
-import com.zywczas.letsshare.extentions.dimBackgroundOnMainButtonClick
 import com.zywczas.letsshare.extentions.showSnackbar
 import com.zywczas.letsshare.models.Friend
 import com.zywczas.letsshare.utils.autoRelease
@@ -60,7 +59,6 @@ class FriendsFragment @Inject constructor(viewModelFactory: UniversalViewModelFa
     private fun setupSpeedDial(){
         setupSpeedDialMenu()
         setupSpeedDialMenuClick()
-        binding.speedDial.dimBackgroundOnMainButtonClick(requireActivity(), binding.mainLayout)
     }
 
     private fun setupSpeedDialMenu(){

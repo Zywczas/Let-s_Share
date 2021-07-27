@@ -18,7 +18,6 @@ import com.zywczas.letsshare.adapters.GroupMembersSettingsAdapter
 import com.zywczas.letsshare.databinding.FragmentGroupSettingsBinding
 import com.zywczas.letsshare.di.factories.UniversalViewModelFactory
 import com.zywczas.letsshare.di.modules.UtilsModule.TextListenerDebounce
-import com.zywczas.letsshare.extentions.dimBackgroundOnMainButtonClick
 import com.zywczas.letsshare.extentions.showSnackbar
 import com.zywczas.letsshare.utils.autoRelease
 import javax.inject.Inject
@@ -70,7 +69,6 @@ class GroupSettingsFragment @Inject constructor(
     private fun setupSpeedDial(){
         setupSpeedDialMenu()
         setupSpeedDialMenuClick()
-        binding.speedDial.dimBackgroundOnMainButtonClick(requireActivity(), binding.mainLayout)
     }
 
     private fun setupSpeedDialMenu(){
