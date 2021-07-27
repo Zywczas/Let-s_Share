@@ -156,6 +156,7 @@
             android:scaleType="centerCrop"
             android:theme="@style/Theme.LetsShare"
             app:fabSize="normal"
+            app:layout_behavior="@string/speeddial_scrolling_view_snackbar_behavior"
             app:sdMainFabAnimationRotateAngle="360"
             app:sdMainFabClosedSrc="@drawable/ic_plus"
             app:sdMainFabOpenedSrc="@drawable/ic_x"

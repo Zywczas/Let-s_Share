@@ -28,4 +28,5 @@
     <color name="cancel">@color/red500Dark</color>
     <color name="snackBarBackground">@color/onPrimary</color>
     <color name="snackBarText">@color/primaryVariant</color>
+    <color name="speedDialOverlayColor">@color/white</color>
 </resources>

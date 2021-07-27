@@ -79,7 +79,6 @@ class HistoryDetailsFragment @Inject constructor(viewModelFactory: UniversalView
     private fun setupSpeedDial(){
         setupSpeedDialMenu()
         setupSpeedDialMenuClick()
-        binding.speedDial.dimBackgroundOnMainButtonClick(requireActivity(), binding.mainLayout)
     }
 
     private fun setupSpeedDialMenu(){

@@ -85,6 +85,7 @@
             android:layout_marginBottom="@dimen/fabBottomMargin"
             android:scaleType="centerCrop"
             android:theme="@style/Theme.LetsShare"
+            app:layout_behavior="@string/speeddial_scrolling_view_snackbar_behavior"
             app:fabSize="normal"
             app:sdOverlayLayout="@id/overlay"
             app:sdMainFabAnimationRotateAngle="360"
