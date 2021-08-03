@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="Theme.LetsShare" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/green700</item>
+        <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryVariant">@color/green700Dark</item>
         <item name="colorOnPrimary">@color/golden</item>
         <item name="colorSecondary">?attr/colorPrimary</item>
@@ -15,7 +15,7 @@
         <item name="materialButtonOutlinedStyle">@style/Widget.App.MyOutLinedButton</item>
         <item name="snackbarStyle">@style/Widget.App.MySnackBar</item>
         <item name="snackbarTextViewStyle">@style/Widget.App.MySnackBarTextView</item>
-        <item name="speedDialOverlayColor">@color/speedDialOverlayColor</item>
+        <item name="speedDialOverlayColor">@color/white</item>
         <item name="listItemHeaderColor">@color/teal700</item>
         <item name="listItemHeaderDarkColor">@color/teal700Dark</item>
         <item name="listItemHeaderOnPrimaryColor">@color/silver</item>
@@ -25,14 +25,15 @@
         <item name="outlinedButtonTextColor">?attr/colorPrimaryVariant</item>
         <item name="checkColor">?attr/colorPrimary</item>
         <item name="unCheckColor">@color/blueGrey300</item>
+        <item name="cancelColor">@color/red500Dark</item>
+        <item name="snackBarBackgroundColor">?attr/colorOnPrimary</item>
+        <item name="snackBarTextColor">?attr/colorPrimaryVariant</item>
     </style>
+
+    <color name="primary">@color/green700</color>
 
     <color name="firstFABItem">@color/lightBlue500</color>
     <color name="secondFABItem">@color/deepPurple700</color>
     <color name="thirdFABItem">@color/pink500</color>
 
-    <color name="cancel">@color/red500Dark</color>
-    <color name="snackBarBackground">@color/onPrimary</color>
-    <color name="snackBarText">@color/primaryVariant</color>
-    <color name="speedDialOverlayColor">@color/white</color>
 </resources>

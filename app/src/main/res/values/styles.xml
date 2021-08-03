@@ -20,11 +20,11 @@
     </style>
 
     <style name="Widget.App.MySnackBar" parent="Widget.MaterialComponents.Snackbar">
-        <item name="backgroundTint">@color/snackBarBackground</item>
+        <item name="backgroundTint">?attr/snackBarBackgroundColor</item>
     </style>
 
     <style name="Widget.App.MySnackBarTextView" parent="Widget.MaterialComponents.Snackbar.TextView">
-        <item name="android:textColor">@color/snackBarText</item>
+        <item name="android:textColor">?attr/snackBarTextColor</item>
         <item name="android:textAlignment">center</item>
     </style>
 

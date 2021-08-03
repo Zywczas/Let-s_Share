@@ -32,7 +32,6 @@ class MainActivity : AppCompatActivity() {
         lifecycle.addObserver(sessionManager)
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainer) as NavHostFragment
         goToGroupsFragment(navHostFragment.navController)
-        setupDestinationChangeListener(navHostFragment.navController)
         sessionManager.wakeUpServer()
         createNotificationChannel()
     }
@@ -41,12 +40,6 @@ class MainActivity : AppCompatActivity() {
         val isActivityOpenedFromExpenseNotification = intent.getBooleanExtra(IS_FROM_EXPENSE_NOTIFY_KEY, false)
         if (isActivityOpenedFromExpenseNotification){
             navController.navigate(R.id.groupsFragment)
-        }
-    }
-
-    private fun setupDestinationChangeListener(navController: NavController) {
-        navController.addOnDestinationChangedListener { _, _, _ ->
-            window.statusBarColor = ContextCompat.getColor(this, R.color.primaryVariant)
         }
     }
 

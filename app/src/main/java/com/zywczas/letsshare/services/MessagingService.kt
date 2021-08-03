@@ -13,6 +13,7 @@ import com.google.firebase.messaging.RemoteMessage
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.SessionManager
 import com.zywczas.letsshare.activitymain.presentation.MainActivity
+import com.zywczas.letsshare.extentions.getColorFromAttr
 import com.zywczas.letsshare.utils.EXPENSE_CHANNEL_ID
 import com.zywczas.letsshare.utils.IS_FROM_EXPENSE_NOTIFY_KEY
 import dagger.android.AndroidInjection
@@ -50,7 +51,7 @@ class MessagingService : FirebaseMessagingService() {
 
         val builder = NotificationCompat.Builder(this, EXPENSE_CHANNEL_ID)
             .setSmallIcon(R.mipmap.ic_launcher_round)
-            .setColor(ContextCompat.getColor(this, R.color.primary))
+            .setColor(getColorFromAttr(R.attr.colorPrimary))
             .setLargeIcon(ContextCompat.getDrawable(this, R.mipmap.ic_launcher_round)!!.toBitmap())
             .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
             .setContentTitle(title)

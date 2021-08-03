@@ -10,4 +10,7 @@
     <attr name="outlinedButtonTextColor" format="color"/>
     <attr name="checkColor" format="color"/>
     <attr name="unCheckColor" format="color"/>
+    <attr name="cancelColor" format="color"/>
+    <attr name="snackBarBackgroundColor" format="color"/>
+    <attr name="snackBarTextColor" format="color"/>
 </resources>

@@ -65,7 +65,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/amountFrame"
         app:srcCompat="@drawable/ic_x"
-        app:tint="@color/cancel"
+        app:tint="?attr/cancelColor"
         android:contentDescription="@string/cancel" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

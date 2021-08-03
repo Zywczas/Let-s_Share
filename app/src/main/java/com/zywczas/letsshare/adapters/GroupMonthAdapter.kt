@@ -6,13 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.zywczas.letsshare.R
+import com.zywczas.letsshare.extentions.getColorFromAttr
 import com.zywczas.letsshare.models.GroupMonthDomain
-import java.util.*
+import java.util.Locale
 
 class GroupMonthAdapter(
     private val currency: String,
@@ -35,7 +35,8 @@ class GroupMonthAdapter(
             name.text = month.id
             expenses.text = String.format(Locale.UK, "%.2f $currency", month.totalExpenses)
             if (month.isSettledUp){
-                isSettledUp.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(itemView.context, R.color.check))
+//                isSettledUp.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(itemView.context, R.color.check)) todo - zamienci tez koloryw  fabie
+                isSettledUp.imageTintList = ColorStateList.valueOf(itemView.context.getColorFromAttr(R.attr.checkColor))
             }
             itemView.setOnClickListener { onClick(month) }
         }
