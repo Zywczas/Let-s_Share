@@ -3,4 +3,11 @@
     <attr name="speedDialOverlayColor" format="color"/>
     <attr name="listItemHeaderColor" format="color"/>
     <attr name="listItemHeaderDarkColor" format="color"/>
+    <attr name="listItemHeaderOnPrimaryColor" format="color"/>
+    <attr name="textOnPrimaryColor" format="color"/>
+    <attr name="textInputLayoutHintColor" format="color"/>
+    <attr name="outlinedButtonStrokeColor" format="color"/>
+    <attr name="outlinedButtonTextColor" format="color"/>
+    <attr name="checkColor" format="color"/>
+    <attr name="unCheckColor" format="color"/>
 </resources>

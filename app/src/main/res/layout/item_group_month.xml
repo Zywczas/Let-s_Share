@@ -54,7 +54,7 @@
         app:layout_constraintStart_toEndOf="@+id/expenses"
         app:layout_constraintTop_toTopOf="@+id/expenses"
         app:srcCompat="@drawable/ic_check_circle"
-        app:tint="@color/uncheck" />
+        app:tint="?attr/unCheckColor" />
 
     <ImageView
         android:id="@+id/imageView2"

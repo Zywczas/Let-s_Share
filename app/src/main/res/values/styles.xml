@@ -11,12 +11,12 @@
     </style>
 
     <style name="Widget.App.MyTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="hintTextColor">@color/hint</item>
+        <item name="hintTextColor">?attr/textInputLayoutHintColor</item>
     </style>
 
     <style name="Widget.App.MyOutLinedButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
-        <item name="strokeColor">@color/outlinedButtonStroke</item>
-        <item name="android:textColor">@color/outlinedButtonText</item>
+        <item name="strokeColor">?attr/outlinedButtonStrokeColor</item>
+        <item name="android:textColor">?attr/outlinedButtonTextColor</item>
     </style>
 
     <style name="Widget.App.MySnackBar" parent="Widget.MaterialComponents.Snackbar">

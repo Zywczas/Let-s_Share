@@ -18,19 +18,19 @@
         <item name="speedDialOverlayColor">@color/speedDialOverlayColor</item>
         <item name="listItemHeaderColor">@color/teal700</item>
         <item name="listItemHeaderDarkColor">@color/teal700Dark</item>
+        <item name="listItemHeaderOnPrimaryColor">@color/silver</item>
+        <item name="textOnPrimaryColor">@color/blueGrey300</item>
+        <item name="textInputLayoutHintColor">?attr/colorPrimary</item>
+        <item name="outlinedButtonStrokeColor">?attr/colorPrimaryVariant</item>
+        <item name="outlinedButtonTextColor">?attr/colorPrimaryVariant</item>
+        <item name="checkColor">?attr/colorPrimary</item>
+        <item name="unCheckColor">@color/blueGrey300</item>
     </style>
 
     <color name="firstFABItem">@color/lightBlue500</color>
     <color name="secondFABItem">@color/deepPurple700</color>
     <color name="thirdFABItem">@color/pink500</color>
 
-    <color name="headerOnPrimaryListItem">@color/silver</color>
-    <color name="textOnPrimary">@color/blueGrey300</color>
-    <color name="hint">@color/primary</color>
-    <color name="outlinedButtonStroke">@color/primaryVariant</color>
-    <color name="outlinedButtonText">@color/primaryVariant</color>
-    <color name="check">@color/primary</color>
-    <color name="uncheck">@color/blueGrey300</color>
     <color name="cancel">@color/red500Dark</color>
     <color name="snackBarBackground">@color/onPrimary</color>
     <color name="snackBarText">@color/primaryVariant</color>
