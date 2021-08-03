@@ -1,16 +1,26 @@
-<resources>
-    <!-- Primary brand color. -->
-    <color name="primary">@color/green700</color>
-    <color name="primaryVariant">@color/green700Dark</color>
-    <color name="onPrimary">@color/golden</color>
-    <!-- Secondary brand color. -->
-    <color name="secondary">@color/primary</color>
-    <color name="secondaryVariant">@color/primaryVariant</color>
-    <color name="onSecondary">@color/onPrimary</color>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="Theme.LetsShare" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/green700</item>
+        <item name="colorPrimaryVariant">@color/green700Dark</item>
+        <item name="colorOnPrimary">@color/golden</item>
+        <item name="colorSecondary">?attr/colorPrimary</item>
+        <item name="colorSecondaryVariant">?attr/colorPrimaryVariant</item>
+        <item name="colorOnSecondary">?attr/colorOnPrimary</item>
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <!-- Customize your theme here. -->
+        <item name="android:textColor">@color/black</item>
+        <item name="toolbarStyle">@style/Widget.App.MyToolbar</item>
+        <item name="drawerArrowStyle">@style/Widget.App.MyDrawerArrow</item>
+        <item name="textInputStyle">@style/Widget.App.MyTextInputLayout</item>
+        <item name="materialButtonOutlinedStyle">@style/Widget.App.MyOutLinedButton</item>
+        <item name="snackbarStyle">@style/Widget.App.MySnackBar</item>
+        <item name="snackbarTextViewStyle">@style/Widget.App.MySnackBarTextView</item>
+        <item name="speedDialOverlayColor">@color/speedDialOverlayColor</item>
+    </style>
 
     <!-- Customize your theme here. -->
     <color name="primaryVariantAlpha03">@color/green700DarkAlpha03</color>
-    <color name="text">@android:color/black</color>
     <color name="toolbarTitleText">@color/onPrimary</color>
     <color name="drawerArrow">@color/onPrimary</color>
     <color name="firstFABItem">@color/lightBlue500</color>

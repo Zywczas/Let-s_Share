@@ -1,24 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools">
-
-    <style name="Theme.LetsShare" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/primary</item>
-        <item name="colorPrimaryVariant">@color/primaryVariant</item>
-        <item name="colorOnPrimary">@color/onPrimary</item>
-        <item name="colorSecondary">@color/primary</item>
-        <item name="colorSecondaryVariant">@color/secondaryVariant</item>
-        <item name="colorOnSecondary">@color/onSecondary</item>
-        <item name="android:statusBarColor" tools:targetApi="l">@color/primaryVariant</item>
-        <!-- Customize your theme here. -->
-        <item name="android:textColor">@color/text</item>
-        <item name="toolbarStyle">@style/Widget.App.MyToolbar</item>
-        <item name="drawerArrowStyle">@style/Widget.App.MyDrawerArrow</item>
-        <item name="textInputStyle">@style/Widget.App.MyTextInputLayout</item>
-        <item name="materialButtonOutlinedStyle">@style/Widget.App.MyOutLinedButton</item>
-        <item name="snackbarStyle">@style/Widget.App.MySnackBar</item>
-        <item name="snackbarTextViewStyle">@style/Widget.App.MySnackBarTextView</item>
-        <item name="speedDialOverlayColor">@color/speedDialOverlayColor</item>
-    </style>
+<resources>
 
     <style name="Widget.App.MyToolbar" parent="Widget.MaterialComponents.Toolbar">
         <item name="titleTextColor">@color/toolbarTitleText</item>
