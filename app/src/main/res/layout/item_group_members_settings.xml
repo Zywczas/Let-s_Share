@@ -14,7 +14,7 @@
         android:layout_marginEnd="@dimen/smallMarginListItem"
         android:layout_marginBottom="@dimen/smallMarginListItem"
         android:textAlignment="textStart"
-        android:textColor="@color/headerListItem"
+        android:textColor="?attr/listItemHeaderColor"
         android:textSize="@dimen/headerMediumTextSizeListItem"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

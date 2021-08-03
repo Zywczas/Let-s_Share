@@ -8,7 +8,6 @@
         <item name="colorSecondaryVariant">?attr/colorPrimaryVariant</item>
         <item name="colorOnSecondary">?attr/colorOnPrimary</item>
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
         <item name="android:textColor">@color/white</item>
         <item name="toolbarStyle">@style/Widget.App.MyToolbar</item>
         <item name="drawerArrowStyle">@style/Widget.App.MyDrawerArrow</item>
@@ -17,17 +16,14 @@
         <item name="snackbarStyle">@style/Widget.App.MySnackBar</item>
         <item name="snackbarTextViewStyle">@style/Widget.App.MySnackBarTextView</item>
         <item name="speedDialOverlayColor">@color/speedDialOverlayColor</item>
+        <item name="listItemHeaderColor">@color/lightBlue500Dark</item>
+        <item name="listItemHeaderDarkColor">@color/lightBlue700Dark</item>
     </style>
 
-    <!-- Customize your theme here. -->
-    <color name="primaryVariantAlpha03">@color/green900DarkAlpha03</color>
-    <color name="toolbarTitleText">@color/onPrimary</color>
-    <color name="drawerArrow">@color/onPrimary</color>
     <color name="firstFABItem">@color/lightBlue500Dark</color>
     <color name="secondFABItem">@color/deepPurple900</color>
     <color name="thirdFABItem">@color/pink500Dark</color>
-    <color name="headerListItem">@color/lightBlue500Dark</color>
-    <color name="headerListItemDark">@color/lightBlue700Dark</color>
+
     <color name="headerOnPrimaryListItem">@color/lime600Dark</color>
     <color name="textOnPrimary">@color/blueGrey300</color>
     <color name="hint">@color/onPrimary</color>

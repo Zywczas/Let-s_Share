@@ -2,11 +2,12 @@
 <resources>
 
     <style name="Widget.App.MyToolbar" parent="Widget.MaterialComponents.Toolbar">
-        <item name="titleTextColor">@color/toolbarTitleText</item>
+        <item name="titleTextColor">?attr/colorOnPrimary</item>
+<!--        todo sprawdzic-->
     </style>
 
     <style name="Widget.App.MyDrawerArrow" parent="Widget.AppCompat.DrawerArrowToggle">
-        <item name="color">@color/drawerArrow</item>
+        <item name="color">?attr/colorOnPrimary</item>
     </style>
 
     <style name="Widget.App.MyTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
@@ -29,7 +30,7 @@
 
     <style name="Widget.App.LargeListItemHeader" parent="Widget.MaterialComponents.TextView">
         <item name="android:textSize">@dimen/headerLargeTextSizeListItem</item>
-        <item name="android:textColor">@color/headerListItem</item>
+        <item name="android:textColor">?attr/listItemHeaderColor</item>
     </style>
 
 </resources>
