@@ -23,16 +23,12 @@ class GroupsFragment @Inject constructor(viewModelFactory: UniversalViewModelFac
 
     private val viewModel: GroupsViewModel by viewModels { viewModelFactory }
     private var binding: FragmentGroupsBinding by autoRelease()
-    private val groupsAdapter by lazy { GroupsAdapter{ group ->
-            viewModel.saveCurrentlyOpenGroupId(group.id)
-            findNavController().navigate(GroupsFragmentDirections.toGroupDetailsFragment(group))
-    }
-    }
+    private val groupsAdapter by lazy { GroupsAdapter { group ->
+        viewModel.saveCurrentlyOpenGroupId(group.id)
+        findNavController().navigate(GroupsFragmentDirections.toGroupDetailsFragment(group))
+    }}
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentGroupsBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -51,17 +47,17 @@ class GroupsFragment @Inject constructor(viewModelFactory: UniversalViewModelFac
         setupOnClickListeners()
     }
 
-    private fun setupObservers(){
-        viewModel.message.observe(viewLifecycleOwner){ showSnackbar(it)}
-        viewModel.groups.observe(viewLifecycleOwner){ groupsAdapter.submitList(it.toMutableList()) }
+    private fun setupObservers() {
+        viewModel.message.observe(viewLifecycleOwner) { showSnackbar(it) }
+        viewModel.groups.observe(viewLifecycleOwner) { groupsAdapter.submitList(it.toMutableList()) }
     }
 
-    private fun setupSpeedDial(){
+    private fun setupSpeedDial() {
         setupSpeedDialMenu()
         setupSpeedDialMenuClick()
     }
 
-    private fun setupSpeedDialMenu(){
+    private fun setupSpeedDialMenu() {
         binding.speedDial.addActionItem(
             SpeedDialActionItem.Builder(R.id.addGroup, R.drawable.ic_add_friend)
                 .setFabBackgroundColor(ContextCompat.getColor(requireContext(), R.color.firstFABItem))
@@ -73,9 +69,9 @@ class GroupsFragment @Inject constructor(viewModelFactory: UniversalViewModelFac
         )
     }
 
-    private fun setupSpeedDialMenuClick(){
+    private fun setupSpeedDialMenuClick() {
         binding.speedDial.setOnActionSelectedListener { item ->
-            when(item.id){
+            when (item.id) {
                 R.id.addGroup -> {
                     binding.speedDial.close()
                     showAddGroupDialog()
@@ -86,16 +82,16 @@ class GroupsFragment @Inject constructor(viewModelFactory: UniversalViewModelFac
         }
     }
 
-    private fun showAddGroupDialog(){
+    private fun showAddGroupDialog() {
         AddGroupDialog().show(childFragmentManager, "AddGroupDialog")
     }
 
-    private fun setupOnClickListeners(){
+    private fun setupOnClickListeners() {
         binding.bottomNavBar.setOnNavigationItemSelectedListener(bottomNavClick)
     }
 
     private val bottomNavClick = BottomNavigationView.OnNavigationItemSelectedListener { item ->
-        when (item.itemId){
+        when (item.itemId) {
             R.id.friendsFragment -> {
                 findNavController().navigate(GroupsFragmentDirections.toFriendsFragment())
                 true

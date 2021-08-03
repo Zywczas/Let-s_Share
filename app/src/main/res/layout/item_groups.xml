@@ -30,4 +30,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/nameGroupsListItem"
         tools:ignore="ContentDescription" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
