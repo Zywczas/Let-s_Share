@@ -28,12 +28,11 @@
         <item name="cancelColor">@color/red500Dark</item>
         <item name="snackBarBackgroundColor">?attr/colorOnPrimary</item>
         <item name="snackBarTextColor">?attr/colorPrimaryVariant</item>
+        <item name="firstFABItemColor">@color/lightBlue500Dark</item>
+        <item name="secondFABItemColor">@color/deepPurple900</item>
+        <item name="thirdFABItemColor">@color/pink500Dark</item>
     </style>
 
     <color name="primary">@color/green900</color>
-
-    <color name="firstFABItem">@color/lightBlue500Dark</color>
-    <color name="secondFABItem">@color/deepPurple900</color>
-    <color name="thirdFABItem">@color/pink500Dark</color>
 
 </resources>

@@ -35,7 +35,6 @@ class GroupMonthAdapter(
             name.text = month.id
             expenses.text = String.format(Locale.UK, "%.2f $currency", month.totalExpenses)
             if (month.isSettledUp){
-//                isSettledUp.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(itemView.context, R.color.check)) todo - zamienci tez koloryw  fabie
                 isSettledUp.imageTintList = ColorStateList.valueOf(itemView.context.getColorFromAttr(R.attr.checkColor))
             }
             itemView.setOnClickListener { onClick(month) }

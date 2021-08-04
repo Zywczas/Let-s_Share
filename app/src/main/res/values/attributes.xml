@@ -13,4 +13,7 @@
     <attr name="cancelColor" format="color"/>
     <attr name="snackBarBackgroundColor" format="color"/>
     <attr name="snackBarTextColor" format="color"/>
+    <attr name="firstFABItemColor" format="color"/>
+    <attr name="secondFABItemColor" format="color"/>
+    <attr name="thirdFABItemColor" format="color"/>
 </resources>

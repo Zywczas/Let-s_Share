@@ -15,6 +15,7 @@ import com.zywczas.letsshare.R
 import com.zywczas.letsshare.adapters.GroupsAdapter
 import com.zywczas.letsshare.databinding.FragmentGroupsBinding
 import com.zywczas.letsshare.di.factories.UniversalViewModelFactory
+import com.zywczas.letsshare.extentions.getColorFromAttr
 import com.zywczas.letsshare.extentions.showSnackbar
 import com.zywczas.letsshare.utils.autoRelease
 import javax.inject.Inject
@@ -60,7 +61,7 @@ class GroupsFragment @Inject constructor(viewModelFactory: UniversalViewModelFac
     private fun setupSpeedDialMenu() {
         binding.speedDial.addActionItem(
             SpeedDialActionItem.Builder(R.id.addGroup, R.drawable.ic_add_friend)
-                .setFabBackgroundColor(ContextCompat.getColor(requireContext(), R.color.firstFABItem))
+                .setFabBackgroundColor(requireContext().getColorFromAttr(R.attr.firstFABItemColor))
                 .setFabImageTintColor(Color.WHITE)
                 .setLabel(getString(R.string.add_group))
                 .setLabelClickable(true)

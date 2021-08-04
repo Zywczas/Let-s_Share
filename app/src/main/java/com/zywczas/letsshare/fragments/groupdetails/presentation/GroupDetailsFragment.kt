@@ -26,6 +26,7 @@ import com.zywczas.letsshare.adapters.GroupMemberItemDetails
 import com.zywczas.letsshare.databinding.FragmentGroupDetailsBinding
 import com.zywczas.letsshare.di.factories.UniversalViewModelFactory
 import com.zywczas.letsshare.extentions.addTransparentItemDivider
+import com.zywczas.letsshare.extentions.getColorFromAttr
 import com.zywczas.letsshare.extentions.showSnackbar
 import com.zywczas.letsshare.models.ExpenseDomain
 import com.zywczas.letsshare.models.GroupMemberDomain
@@ -90,7 +91,7 @@ class GroupDetailsFragment @Inject constructor(viewModelFactory: UniversalViewMo
     private fun setupSpeedDialMenu(){
         binding.speedDial.addActionItem(
             SpeedDialActionItem.Builder(R.id.history, R.drawable.ic_history)
-                .setFabBackgroundColor(ContextCompat.getColor(requireContext(), R.color.thirdFABItem))
+                .setFabBackgroundColor(requireContext().getColorFromAttr(R.attr.thirdFABItemColor))
                 .setFabImageTintColor(Color.WHITE)
                 .setLabel(getString(R.string.history))
                 .setLabelClickable(true)
@@ -99,7 +100,7 @@ class GroupDetailsFragment @Inject constructor(viewModelFactory: UniversalViewMo
         )
         binding.speedDial.addActionItem(
             SpeedDialActionItem.Builder(R.id.groupSettings, R.drawable.ic_settings)
-                .setFabBackgroundColor(ContextCompat.getColor(requireContext(), R.color.secondFABItem))
+                .setFabBackgroundColor(requireContext().getColorFromAttr(R.attr.secondFABItemColor))
                 .setFabImageTintColor(Color.WHITE)
                 .setLabel(getString(R.string.group_settings))
                 .setLabelClickable(true)
@@ -108,7 +109,7 @@ class GroupDetailsFragment @Inject constructor(viewModelFactory: UniversalViewMo
         )
         binding.speedDial.addActionItem(
             SpeedDialActionItem.Builder(R.id.addExpense, R.drawable.ic_add_expense)
-                .setFabBackgroundColor(ContextCompat.getColor(requireContext(), R.color.firstFABItem))
+                .setFabBackgroundColor(requireContext().getColorFromAttr(R.attr.firstFABItemColor))
                 .setFabImageTintColor(Color.WHITE)
                 .setLabel(getString(R.string.add_expense))
                 .setLabelClickable(true)

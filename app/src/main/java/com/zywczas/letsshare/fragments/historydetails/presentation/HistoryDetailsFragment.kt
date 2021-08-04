@@ -21,6 +21,7 @@ import com.zywczas.letsshare.adapters.GroupMemberItemDetails
 import com.zywczas.letsshare.databinding.FragmentHistoryDetailsBinding
 import com.zywczas.letsshare.di.factories.UniversalViewModelFactory
 import com.zywczas.letsshare.extentions.addTransparentItemDivider
+import com.zywczas.letsshare.extentions.getColorFromAttr
 import com.zywczas.letsshare.extentions.showSnackbar
 import com.zywczas.letsshare.fragments.groupdetails.presentation.GroupDetailsFragmentDirections
 import com.zywczas.letsshare.models.ExpenseDomain
@@ -83,7 +84,7 @@ class HistoryDetailsFragment @Inject constructor(viewModelFactory: UniversalView
     private fun setupSpeedDialMenu(){
         binding.speedDial.addActionItem(
             SpeedDialActionItem.Builder(R.id.groupSettings, R.drawable.ic_settings)
-                .setFabBackgroundColor(ContextCompat.getColor(requireContext(), R.color.secondFABItem))
+                .setFabBackgroundColor(requireContext().getColorFromAttr(R.attr.secondFABItemColor))
                 .setFabImageTintColor(Color.WHITE)
                 .setLabel(getString(R.string.group_settings))
                 .setLabelClickable(true)
@@ -92,7 +93,7 @@ class HistoryDetailsFragment @Inject constructor(viewModelFactory: UniversalView
         )
         binding.speedDial.addActionItem(
             SpeedDialActionItem.Builder(R.id.settleUp, R.drawable.ic_dolar)
-                .setFabBackgroundColor(ContextCompat.getColor(requireContext(), R.color.firstFABItem))
+                .setFabBackgroundColor(requireContext().getColorFromAttr(R.attr.firstFABItemColor))
                 .setFabImageTintColor(Color.WHITE)
                 .setLabel(getString(R.string.settle_up))
                 .setLabelClickable(true)

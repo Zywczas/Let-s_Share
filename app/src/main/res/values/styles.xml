@@ -3,7 +3,6 @@
 
     <style name="Widget.App.MyToolbar" parent="Widget.MaterialComponents.Toolbar">
         <item name="titleTextColor">?attr/colorOnPrimary</item>
-<!--        todo sprawdzic-->
     </style>
 
     <style name="Widget.App.MyDrawerArrow" parent="Widget.AppCompat.DrawerArrowToggle">

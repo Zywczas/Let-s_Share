@@ -18,6 +18,7 @@ import com.zywczas.letsshare.adapters.GroupMembersSettingsAdapter
 import com.zywczas.letsshare.databinding.FragmentGroupSettingsBinding
 import com.zywczas.letsshare.di.factories.UniversalViewModelFactory
 import com.zywczas.letsshare.di.modules.UtilsModule.TextListenerDebounce
+import com.zywczas.letsshare.extentions.getColorFromAttr
 import com.zywczas.letsshare.extentions.showSnackbar
 import com.zywczas.letsshare.utils.autoRelease
 import javax.inject.Inject
@@ -74,7 +75,7 @@ class GroupSettingsFragment @Inject constructor(
     private fun setupSpeedDialMenu(){
         binding.speedDial.addActionItem(
             SpeedDialActionItem.Builder(R.id.removeMember, R.drawable.ic_remove_member)
-                .setFabBackgroundColor(ContextCompat.getColor(requireContext(), R.color.secondFABItem))
+                .setFabBackgroundColor(requireContext().getColorFromAttr(R.attr.secondFABItemColor))
                 .setFabImageTintColor(Color.WHITE)
                 .setLabel(getString(R.string.remove_member))
                 .setLabelClickable(true)
@@ -83,7 +84,7 @@ class GroupSettingsFragment @Inject constructor(
         )
         binding.speedDial.addActionItem(
             SpeedDialActionItem.Builder(R.id.addMember, R.drawable.ic_add_friend)
-                .setFabBackgroundColor(ContextCompat.getColor(requireContext(), R.color.firstFABItem))
+                .setFabBackgroundColor(requireContext().getColorFromAttr(R.attr.firstFABItemColor))
                 .setFabImageTintColor(Color.WHITE)
                 .setLabel(getString(R.string.add_new_member))
                 .setLabelClickable(true)

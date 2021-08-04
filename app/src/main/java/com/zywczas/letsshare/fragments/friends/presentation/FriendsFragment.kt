@@ -19,6 +19,7 @@ import com.zywczas.letsshare.R
 import com.zywczas.letsshare.adapters.FriendItem
 import com.zywczas.letsshare.databinding.FragmentFriendsBinding
 import com.zywczas.letsshare.di.factories.UniversalViewModelFactory
+import com.zywczas.letsshare.extentions.getColorFromAttr
 import com.zywczas.letsshare.extentions.showSnackbar
 import com.zywczas.letsshare.models.Friend
 import com.zywczas.letsshare.utils.autoRelease
@@ -64,7 +65,7 @@ class FriendsFragment @Inject constructor(viewModelFactory: UniversalViewModelFa
     private fun setupSpeedDialMenu(){
         binding.speedDial.addActionItem(
             SpeedDialActionItem.Builder(R.id.addFriend, R.drawable.ic_add_friend)
-                .setFabBackgroundColor(ContextCompat.getColor(requireContext(), R.color.firstFABItem))
+                .setFabBackgroundColor(requireContext().getColorFromAttr(R.attr.firstFABItemColor))
                 .setFabImageTintColor(Color.WHITE)
                 .setLabel(getString(R.string.add_friend))
                 .setLabelClickable(true)
