@@ -19,6 +19,7 @@
 <!--    dialog-->
     <dimen name="editTextSmallWidthDialog">150dp</dimen>
     <dimen name="editTextLargeWidthDialog">230dp</dimen>
+    <dimen name="textFieldMaxWidthDialog">250dp</dimen>
     <dimen name="smallMarginDialog">8dp</dimen>
     <dimen name="mediumMarginDialog">16dp</dimen>
     <dimen name="smallButtonSizeDialog">40dp</dimen>

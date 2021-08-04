@@ -29,6 +29,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4"
+        app:layout_constraintWidth_max="@dimen/textFieldMaxWidthDialog"
         tools:text="Once you settle up this month\nyou won\'t be able to modify it." />
 
     <TextView
