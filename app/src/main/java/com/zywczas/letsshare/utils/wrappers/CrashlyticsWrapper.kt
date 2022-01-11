@@ -1,9 +1,7 @@
-package com.zywczas.letsshare.activitymain.domain
+package com.zywczas.letsshare.utils.wrappers
 
 interface CrashlyticsWrapper {
 
     fun sendExceptionToFirebase(e: Exception, key: Pair<String, String>? = null, log: String? = null)
     
 }
-
-//todo przeniesc do utils

@@ -1,4 +1,4 @@
-package com.zywczas.letsshare.activitymain.domain
+package com.zywczas.letsshare.utils.wrappers
 
 import android.content.Context
 import android.content.SharedPreferences

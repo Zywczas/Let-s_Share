@@ -7,12 +7,12 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.OnLifecycleEvent
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.messaging.FirebaseMessaging
-import com.zywczas.letsshare.activitymain.domain.CrashlyticsWrapper
-import com.zywczas.letsshare.activitymain.domain.FirestoreReferences
 import com.zywczas.letsshare.db.UserDao
 import com.zywczas.letsshare.di.modules.DispatchersModule.DispatchersIO
 import com.zywczas.letsshare.extentions.logD
 import com.zywczas.letsshare.models.ExpenseNotification
+import com.zywczas.letsshare.utils.wrappers.CrashlyticsWrapper
+import com.zywczas.letsshare.utils.wrappers.FirestoreReferences
 import com.zywczas.letsshare.webservices.NotificationService
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.GlobalScope

@@ -21,7 +21,7 @@ fun Expense.toDomain() = ExpenseDomain(
     value = value.toBigDecimal(),
     dateCreated = dateCreated.dayFormat()
 )
-
+//todo pusuwac te rzeczy
 fun GroupMonth.toDomain() = GroupMonthDomain(
     id = id,
     totalExpenses = totalExpenses.toBigDecimal(),

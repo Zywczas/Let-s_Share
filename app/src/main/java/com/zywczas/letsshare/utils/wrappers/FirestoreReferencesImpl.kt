@@ -1,4 +1,4 @@
-package com.zywczas.letsshare.activitymain.domain
+package com.zywczas.letsshare.utils.wrappers
 
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference

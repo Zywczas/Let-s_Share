@@ -3,11 +3,11 @@ package com.zywczas.letsshare.fragments.register.domain
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.zywczas.letsshare.R
-import com.zywczas.letsshare.activitymain.domain.CrashlyticsWrapper
-import com.zywczas.letsshare.activitymain.domain.FirestoreReferences
-import com.zywczas.letsshare.activitymain.domain.SharedPrefsWrapper
 import com.zywczas.letsshare.extentions.logD
 import com.zywczas.letsshare.models.User
+import com.zywczas.letsshare.utils.wrappers.CrashlyticsWrapper
+import com.zywczas.letsshare.utils.wrappers.FirestoreReferences
+import com.zywczas.letsshare.utils.wrappers.SharedPrefsWrapper
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 

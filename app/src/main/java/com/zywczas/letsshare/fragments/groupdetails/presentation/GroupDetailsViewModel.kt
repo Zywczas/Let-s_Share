@@ -3,7 +3,6 @@ package com.zywczas.letsshare.fragments.groupdetails.presentation
 import androidx.lifecycle.*
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.SessionManager
-import com.zywczas.letsshare.activitymain.domain.DateUtil
 import com.zywczas.letsshare.activitymain.domain.withBalance
 import com.zywczas.letsshare.activitymain.presentation.BaseViewModel
 import com.zywczas.letsshare.di.modules.DispatchersModule.DispatchersIO
@@ -12,6 +11,7 @@ import com.zywczas.letsshare.models.ExpenseDomain
 import com.zywczas.letsshare.models.ExpenseNotification
 import com.zywczas.letsshare.models.GroupMemberDomain
 import com.zywczas.letsshare.models.GroupMonthDomain
+import com.zywczas.letsshare.utils.wrappers.DateUtil
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.buffer

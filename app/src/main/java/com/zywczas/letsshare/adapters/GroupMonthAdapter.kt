@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.extentions.getColorFromAttr
 import com.zywczas.letsshare.models.GroupMonthDomain
-import java.util.Locale
+import java.util.*
 
 class GroupMonthAdapter(
     private val currency: String,

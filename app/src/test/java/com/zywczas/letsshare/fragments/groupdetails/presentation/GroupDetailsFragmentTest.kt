@@ -10,7 +10,6 @@ import com.nhaarman.mockitokotlin2.*
 import com.zywczas.letsshare.BaseApp
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.SessionManager
-import com.zywczas.letsshare.activitymain.domain.DateUtil
 import com.zywczas.letsshare.di.factories.UniversalViewModelFactory
 import com.zywczas.letsshare.fragments.groupdetails.domain.GroupDetailsRepository
 import com.zywczas.letsshare.fragments.groups.presentation.GroupsFragmentDirections
@@ -19,12 +18,12 @@ import com.zywczas.letsshare.models.Group
 import com.zywczas.letsshare.models.GroupMonthDomain
 import com.zywczas.letsshare.testrules.TestCoroutineRule
 import com.zywczas.letsshare.uirobots.GroupDetailsFragmentRobot
+import com.zywczas.letsshare.utils.wrappers.DateUtil
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
-import org.robolectric.annotation.LooperMode
 import java.math.BigDecimal
 import java.util.*
 

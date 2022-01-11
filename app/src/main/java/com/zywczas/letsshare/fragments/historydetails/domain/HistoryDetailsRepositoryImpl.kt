@@ -3,15 +3,15 @@ package com.zywczas.letsshare.fragments.historydetails.domain
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.toObjects
 import com.zywczas.letsshare.R
-import com.zywczas.letsshare.activitymain.domain.CrashlyticsWrapper
-import com.zywczas.letsshare.activitymain.domain.FirestoreReferences
-import com.zywczas.letsshare.activitymain.domain.SharedPrefsWrapper
 import com.zywczas.letsshare.activitymain.domain.toDomain
 import com.zywczas.letsshare.extentions.logD
 import com.zywczas.letsshare.models.Expense
 import com.zywczas.letsshare.models.ExpenseDomain
 import com.zywczas.letsshare.models.GroupMember
 import com.zywczas.letsshare.models.GroupMemberDomain
+import com.zywczas.letsshare.utils.wrappers.CrashlyticsWrapper
+import com.zywczas.letsshare.utils.wrappers.FirestoreReferences
+import com.zywczas.letsshare.utils.wrappers.SharedPrefsWrapper
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 

@@ -2,7 +2,6 @@ package com.zywczas.letsshare.di.modules
 
 import com.zywczas.letsshare.SessionManager
 import com.zywczas.letsshare.SessionManagerImpl
-import com.zywczas.letsshare.activitymain.domain.*
 import com.zywczas.letsshare.fragments.friends.domain.FriendsRepository
 import com.zywczas.letsshare.fragments.friends.domain.FriendsRepositoryImpl
 import com.zywczas.letsshare.fragments.groupdetails.domain.GroupDetailsRepository
@@ -21,6 +20,7 @@ import com.zywczas.letsshare.fragments.register.domain.RegisterRepository
 import com.zywczas.letsshare.fragments.register.domain.RegisterRepositoryImpl
 import com.zywczas.letsshare.fragments.settings.domain.SettingsRepository
 import com.zywczas.letsshare.fragments.settings.domain.SettingsRepositoryImpl
+import com.zywczas.letsshare.utils.wrappers.*
 import dagger.Binds
 import dagger.Module
 
