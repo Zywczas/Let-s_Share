@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -20,7 +19,7 @@ import com.zywczas.letsshare.adapters.ExpenseItem
 import com.zywczas.letsshare.adapters.GroupMemberItemDetails
 import com.zywczas.letsshare.databinding.FragmentHistoryDetailsBinding
 import com.zywczas.letsshare.di.factories.UniversalViewModelFactory
-import com.zywczas.letsshare.extentions.addTransparentItemDivider
+import com.zywczas.letsshare.extentions.addHorizontalTransparentItemDivider
 import com.zywczas.letsshare.extentions.getColorFromAttr
 import com.zywczas.letsshare.extentions.showSnackbar
 import com.zywczas.letsshare.fragments.groupdetails.presentation.GroupDetailsFragmentDirections
@@ -55,7 +54,7 @@ class HistoryDetailsFragment @Inject constructor(viewModelFactory: UniversalView
             expensesAdapterXML = FastAdapter.with(expensesItemAdapter)
         }
         binding.toolbar.setupWithNavController(findNavController())
-        binding.membersRecycler.addTransparentItemDivider()
+        binding.membersRecycler.addHorizontalTransparentItemDivider()
         setupObservers()
         setupSpeedDial()
     }

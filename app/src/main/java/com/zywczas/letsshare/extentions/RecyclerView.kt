@@ -5,9 +5,9 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.zywczas.letsshare.R
 
-fun RecyclerView.addTransparentItemDivider(){ //todo poprawic nazwe bo to jest tylko dla horizontal
+fun RecyclerView.addHorizontalTransparentItemDivider(){
     val itemDivider = DividerItemDecoration(context, RecyclerView.HORIZONTAL)
-    ContextCompat.getDrawable(context, R.drawable.item_divider_transparent)?.let {
+    ContextCompat.getDrawable(context, R.drawable.item_divider_horizontal_transparent)?.let {
         itemDivider.setDrawable(it)
     }
     addItemDecoration(itemDivider)

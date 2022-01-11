@@ -25,7 +25,7 @@ import com.zywczas.letsshare.adapters.ExpenseItem
 import com.zywczas.letsshare.adapters.GroupMemberItemDetails
 import com.zywczas.letsshare.databinding.FragmentGroupDetailsBinding
 import com.zywczas.letsshare.di.factories.UniversalViewModelFactory
-import com.zywczas.letsshare.extentions.addTransparentItemDivider
+import com.zywczas.letsshare.extentions.addHorizontalTransparentItemDivider
 import com.zywczas.letsshare.extentions.getColorFromAttr
 import com.zywczas.letsshare.extentions.showSnackbar
 import com.zywczas.letsshare.models.ExpenseDomain
@@ -62,7 +62,7 @@ class GroupDetailsFragment @Inject constructor(viewModelFactory: UniversalViewMo
             expensesAdapterXML = expensesAdapter
         }
         binding.toolbar.setupWithNavController(findNavController())
-        binding.membersRecycler.addTransparentItemDivider()
+        binding.membersRecycler.addHorizontalTransparentItemDivider()
         setupObservers()
         setupSpeedDial()
         setupExpenseAdapter()
