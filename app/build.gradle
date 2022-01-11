@@ -94,10 +94,11 @@ dependencies {
     implementation "com.mikepenz:fastadapter-extensions-drag:$fast_adapter"
     implementation "com.mikepenz:fastadapter-extensions-utils:$fast_adapter"
 
-    implementation 'com.google.dagger:dagger:2.33'
-    implementation 'com.google.dagger:dagger-android-support:2.27'
-    kapt 'com.google.dagger:dagger-android-processor:2.27'
-    kapt 'com.google.dagger:dagger-compiler:2.33'
+    def dagger_version = "2.36"
+    implementation "com.google.dagger:dagger:$dagger_version"
+    implementation "com.google.dagger:dagger-android-support:$dagger_version"
+    kapt "com.google.dagger:dagger-android-processor:$dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
 
     implementation "com.leinardi.android:speed-dial:3.1.1"
 

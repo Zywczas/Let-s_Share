@@ -24,7 +24,7 @@ class SettingsViewModel @Inject constructor(
     private val _isLoggedOut = MutableLiveData<Boolean>()
     val isLoggedOut: LiveData<Boolean> = _isLoggedOut
 
-    fun getUser() {
+    fun getUserData() {
         viewModelScope.launch(dispatchersIO) {
             _user.postValue(repository.getUser())
         }

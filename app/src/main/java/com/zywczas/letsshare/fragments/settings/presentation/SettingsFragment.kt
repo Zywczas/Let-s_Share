@@ -30,7 +30,7 @@ class SettingsFragment @Inject constructor(viewModelFactory: UniversalViewModelF
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getUser()
+        viewModel.getUserData()
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             vm = viewModel

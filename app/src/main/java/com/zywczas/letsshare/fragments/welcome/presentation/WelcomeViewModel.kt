@@ -35,6 +35,6 @@ class WelcomeViewModel @Inject constructor(
         }
     }
 
-    private suspend fun presentLogoToUser() = sessionManager.delayCoroutine(period)
+    private suspend fun presentLogoToUser() = sessionManager.delayCoroutine(period) //todo tu chyba moze byc samo delay, chyba nie potrzebuje tego w managerze
 
 }
