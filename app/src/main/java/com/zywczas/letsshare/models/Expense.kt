@@ -9,5 +9,5 @@ data class Expense (
     val payeeId: String = "",
     val payeeName: String = "",
     val value: String = "0.00",
-    val dateCreated: Date = dateInPoland(),
+    val dateCreated: Date = dateInPoland(), //todo to moze nie potrzebne
 )
