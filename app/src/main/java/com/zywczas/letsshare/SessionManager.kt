@@ -9,8 +9,6 @@ interface SessionManager : LifecycleObserver {
 
     suspend fun isUserLoggedIn() : Boolean
 
-    suspend fun delayCoroutine(millis: Long)
-
     suspend fun logout()
 
     fun saveMessagingToken(newToken: String? = null)

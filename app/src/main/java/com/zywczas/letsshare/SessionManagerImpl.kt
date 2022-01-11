@@ -16,7 +16,6 @@ import com.zywczas.letsshare.models.ExpenseNotification
 import com.zywczas.letsshare.webservices.NotificationService
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
@@ -68,8 +67,6 @@ class SessionManagerImpl @Inject constructor(
             isLoggedIn = firebaseAuth.currentUser != null && firebaseAuth.currentUser!!.isEmailVerified
             isLoggedIn
         }
-
-    override suspend fun delayCoroutine(millis: Long) = delay(millis)
 
     override suspend fun logout() {
         firebaseAuth.signOut()

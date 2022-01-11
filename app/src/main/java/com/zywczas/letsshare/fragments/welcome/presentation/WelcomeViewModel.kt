@@ -8,6 +8,7 @@ import com.zywczas.letsshare.di.modules.DispatchersModule.DispatchersIO
 import com.zywczas.letsshare.di.modules.UtilsModule.WelcomeScreenDelay
 import com.zywczas.letsshare.utils.SingleLiveData
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -35,6 +36,6 @@ class WelcomeViewModel @Inject constructor(
         }
     }
 
-    private suspend fun presentLogoToUser() = sessionManager.delayCoroutine(period) //todo tu chyba moze byc samo delay, chyba nie potrzebuje tego w managerze
+    private suspend fun presentLogoToUser() = delay(period)
 
 }
