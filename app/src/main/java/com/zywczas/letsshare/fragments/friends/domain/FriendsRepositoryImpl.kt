@@ -9,7 +9,8 @@ import com.zywczas.letsshare.db.FriendsDao
 import com.zywczas.letsshare.db.UserDao
 import com.zywczas.letsshare.extentions.logD
 import com.zywczas.letsshare.models.Friend
-import com.zywczas.letsshare.models.User
+import com.zywczas.letsshare.models.firestore.UserFire
+import com.zywczas.letsshare.models.local.UserLocal
 import com.zywczas.letsshare.utils.wrappers.CrashlyticsWrapper
 import com.zywczas.letsshare.utils.wrappers.FirestoreReferences
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -62,7 +63,7 @@ class FriendsRepositoryImpl @Inject constructor(
             val isFriendRegistered = singInMethods?.size != null && singInMethods.size > 0
             if (isFriendRegistered){
                 val newFriend = firestoreRefs.userQueryRefs(email).get().await()
-                    .toObjects<User>().first().toFriend()
+                    .toObjects<UserFire>().first().toFriend()
                 addFriendsToCollections(newFriend)
             } else { R.string.user_with_email_not_in_database }
         } catch (e: Exception){
@@ -71,7 +72,7 @@ class FriendsRepositoryImpl @Inject constructor(
             R.string.cant_add_friend
         }
 
-    private fun User.toFriend() = Friend(id = id, email = email, name = name)
+    private fun UserFire.toFriend() = Friend(id = id, email = email, name = name)
 
     private suspend fun addFriendsToCollections(friend: Friend): Int? =
         try {
@@ -88,5 +89,7 @@ class FriendsRepositoryImpl @Inject constructor(
             logD(e)
             R.string.cant_add_friend
         }
+
+    private fun UserLocal.toFriend() = Friend(id = id, email = email, name = name)
 
 }

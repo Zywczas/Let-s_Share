@@ -4,7 +4,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.extentions.logD
-import com.zywczas.letsshare.models.User
+import com.zywczas.letsshare.models.firestore.UserFire
 import com.zywczas.letsshare.utils.wrappers.CrashlyticsWrapper
 import com.zywczas.letsshare.utils.wrappers.FirestoreReferences
 import com.zywczas.letsshare.utils.wrappers.SharedPrefsWrapper
@@ -52,7 +52,7 @@ class RegisterRepositoryImpl @Inject constructor(
     override suspend fun addUserToFirestore(name: String, email: String): Int? =
         try {
             val authId = firebaseAuth.currentUser!!.uid
-            val user = User(id = authId, name = name, email = email)
+            val user = UserFire(id = authId, name = name, email = email)
             firestoreRefs.userRefs(authId).set(user).await()
             null
         } catch (e: Exception){

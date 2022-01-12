@@ -11,6 +11,7 @@ import com.zywczas.letsshare.extentions.dateInPoland
 import com.zywczas.letsshare.extentions.logD
 import com.zywczas.letsshare.extentions.monthId
 import com.zywczas.letsshare.models.*
+import com.zywczas.letsshare.models.local.UserLocal
 import com.zywczas.letsshare.utils.wrappers.CrashlyticsWrapper
 import com.zywczas.letsshare.utils.wrappers.DateUtil
 import com.zywczas.letsshare.utils.wrappers.FirestoreReferences
@@ -35,7 +36,7 @@ class GroupDetailsRepositoryImpl @Inject constructor(
 
     private val groupId = sharedPrefs.currentGroupId
 
-    override suspend fun getUser(): User = userDao.getUser()
+    override suspend fun getUser(): UserLocal = userDao.getUser()
 
     override suspend fun getLastMonth(): GroupMonthDomain? =
         try {
