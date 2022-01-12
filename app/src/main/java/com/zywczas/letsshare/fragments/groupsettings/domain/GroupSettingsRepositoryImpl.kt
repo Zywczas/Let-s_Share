@@ -11,6 +11,7 @@ import com.zywczas.letsshare.db.UserDao
 import com.zywczas.letsshare.extentions.logD
 import com.zywczas.letsshare.models.*
 import com.zywczas.letsshare.models.firestore.UserFire
+import com.zywczas.letsshare.models.local.FriendLocal
 import com.zywczas.letsshare.utils.wrappers.CrashlyticsWrapper
 import com.zywczas.letsshare.utils.wrappers.FirestoreReferences
 import com.zywczas.letsshare.utils.wrappers.SharedPrefsWrapper
@@ -38,7 +39,13 @@ class GroupSettingsRepositoryImpl @Inject constructor(
             null
         }
 
-    override suspend fun getFriends(): List<Friend> = friendsDao.getFriends()
+    override suspend fun getFriends(): List<Friend> = friendsDao.getFriends().map { it.toDomain() }
+
+    private fun FriendLocal.toDomain() = Friend(
+        id = id,
+        email = email,
+        name = name
+    )
 
     override suspend fun isFriendIn5GroupsAlready(newMemberId: String): Boolean? =
         try {

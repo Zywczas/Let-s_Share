@@ -4,11 +4,9 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "User")
-data class UserLocal(
+@Entity(tableName = "Friend")
+data class FriendLocal (
     @PrimaryKey(autoGenerate = false) @ColumnInfo(name = "id") val id: String = "",
-    @ColumnInfo(name = "name") val name: String = "",
     @ColumnInfo(name = "email") val email: String = "",
-    @ColumnInfo(name = "groupsIds") val groupsIds: List<String> = emptyList(),
-    @ColumnInfo(name = "messagingToken") val messagingToken: String = ""
+    @ColumnInfo(name = "name") val name: String = ""
 )
