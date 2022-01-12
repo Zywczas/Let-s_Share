@@ -1,11 +1,6 @@
-package com.zywczas.letsshare.models
+package com.zywczas.letsshare.models.firestore
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-
-@Entity
-data class User(
-    @PrimaryKey
+data class UserFire(
     val id: String = "",
     val name: String = "",
     val email: String = "",

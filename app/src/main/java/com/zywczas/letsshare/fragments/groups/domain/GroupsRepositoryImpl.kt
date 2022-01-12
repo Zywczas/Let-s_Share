@@ -10,7 +10,7 @@ import com.zywczas.letsshare.extentions.monthId
 import com.zywczas.letsshare.models.Group
 import com.zywczas.letsshare.models.GroupMember
 import com.zywczas.letsshare.models.GroupMonth
-import com.zywczas.letsshare.models.User
+import com.zywczas.letsshare.models.firestore.UserFire
 import com.zywczas.letsshare.utils.wrappers.CrashlyticsWrapper
 import com.zywczas.letsshare.utils.wrappers.DateUtil
 import com.zywczas.letsshare.utils.wrappers.FirestoreReferences
@@ -35,7 +35,7 @@ class GroupsRepositoryImpl @Inject constructor(
     override suspend fun isUserIn5GroupsAlready(): Boolean? =
         try {
             firestoreRefs.userRefs(userDao.getUser().id).get().await()
-                .toObject<User>()!!.groupsIds.size > 4
+                .toObject<UserFire>()!!.groupsIds.size > 4
         } catch (e: Exception) {
             crashlyticsWrapper.sendExceptionToFirebase(e)
             logD(e)
@@ -73,7 +73,7 @@ class GroupsRepositoryImpl @Inject constructor(
         }
 
     @ExperimentalCoroutinesApi
-    override suspend fun getUser(): Flow<User> = callbackFlow {
+    override suspend fun getUser(): Flow<UserFire> = callbackFlow {
         val listener = firestoreRefs.userRefs(userDao.getUser().id)
             .addSnapshotListener { snapshot, error ->
             if (error != null) {

@@ -10,6 +10,7 @@ import com.zywczas.letsshare.db.FriendsDao
 import com.zywczas.letsshare.db.UserDao
 import com.zywczas.letsshare.extentions.logD
 import com.zywczas.letsshare.models.*
+import com.zywczas.letsshare.models.firestore.UserFire
 import com.zywczas.letsshare.utils.wrappers.CrashlyticsWrapper
 import com.zywczas.letsshare.utils.wrappers.FirestoreReferences
 import com.zywczas.letsshare.utils.wrappers.SharedPrefsWrapper
@@ -42,7 +43,7 @@ class GroupSettingsRepositoryImpl @Inject constructor(
     override suspend fun isFriendIn5GroupsAlready(newMemberId: String): Boolean? =
         try {
             firestoreRefs.userRefs(newMemberId).get().await()
-                .toObject<User>()!!.groupsIds.size > 4
+                .toObject<UserFire>()!!.groupsIds.size > 4
         } catch (e: Exception) {
             crashlyticsWrapper.sendExceptionToFirebase(e)
             logD(e)

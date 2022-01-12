@@ -5,7 +5,8 @@ import com.google.firebase.firestore.ktx.toObject
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.db.UserDao
 import com.zywczas.letsshare.extentions.logD
-import com.zywczas.letsshare.models.User
+import com.zywczas.letsshare.models.firestore.UserFire
+import com.zywczas.letsshare.models.toLocal
 import com.zywczas.letsshare.utils.wrappers.CrashlyticsWrapper
 import com.zywczas.letsshare.utils.wrappers.FirestoreReferences
 import com.zywczas.letsshare.utils.wrappers.SharedPrefsWrapper
@@ -43,7 +44,7 @@ class LoginRepositoryImpl @Inject constructor(
     override suspend fun saveUserLocally(): Int? =
         try {
             val userId = firebaseAuth.currentUser?.uid!!
-            val user = firestoreRefs.userRefs(userId).get().await().toObject<User>()!!
+            val user = firestoreRefs.userRefs(userId).get().await().toObject<UserFire>()!!.toLocal()
             userDao.clearTable()
             userDao.insert(user)
             null

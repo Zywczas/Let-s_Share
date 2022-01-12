@@ -4,11 +4,11 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.zywczas.letsshare.models.Friend
-import com.zywczas.letsshare.models.User
+import com.zywczas.letsshare.models.local.UserLocal
 
 @Database(
     entities = [
-        User::class,
+        UserLocal::class,
         Friend::class
                ],
     version = 2)

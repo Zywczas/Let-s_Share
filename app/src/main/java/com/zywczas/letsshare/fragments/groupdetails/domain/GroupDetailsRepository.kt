@@ -3,13 +3,13 @@ package com.zywczas.letsshare.fragments.groupdetails.domain
 import com.zywczas.letsshare.models.ExpenseDomain
 import com.zywczas.letsshare.models.GroupMemberDomain
 import com.zywczas.letsshare.models.GroupMonthDomain
-import com.zywczas.letsshare.models.User
+import com.zywczas.letsshare.models.local.UserLocal
 import kotlinx.coroutines.flow.Flow
 import java.math.BigDecimal
 
 interface GroupDetailsRepository {
 
-    suspend fun getUser(): User
+    suspend fun getUser(): UserLocal
 
     suspend fun getLastMonth(): GroupMonthDomain?
 

@@ -1,7 +1,7 @@
 package com.zywczas.letsshare.fragments.groups.domain
 
 import com.zywczas.letsshare.models.Group
-import com.zywczas.letsshare.models.User
+import com.zywczas.letsshare.models.firestore.UserFire
 import kotlinx.coroutines.flow.Flow
 
 interface GroupsRepository {
@@ -10,7 +10,7 @@ interface GroupsRepository {
 
     suspend fun addGroup(name: String, currency: String): Int?
 
-    suspend fun getUser(): Flow<User>
+    suspend fun getUser(): Flow<UserFire>
 
     suspend fun getGroups(groupsIds: List<String>): List<Group>?
 
