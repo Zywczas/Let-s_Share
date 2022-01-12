@@ -1,4 +1,4 @@
-package com.zywczas.letsshare.models
+package com.zywczas.letsshare.models.firestore
 
 import android.os.Parcelable
 import com.zywczas.letsshare.extentions.dateInPoland
@@ -6,7 +6,7 @@ import kotlinx.parcelize.Parcelize
 import java.util.*
 
 @Parcelize
-data class Group(
+data class GroupFire(
     val id: String = "",
     val name: String = "",
     val dateCreated: Date = dateInPoland(),

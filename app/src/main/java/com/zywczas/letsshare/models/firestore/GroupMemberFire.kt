@@ -1,6 +1,6 @@
-package com.zywczas.letsshare.models
+package com.zywczas.letsshare.models.firestore
 
-data class GroupMember (
+data class GroupMemberFire (
     val id: String = "",
     val name: String = "",
     val email: String = "",

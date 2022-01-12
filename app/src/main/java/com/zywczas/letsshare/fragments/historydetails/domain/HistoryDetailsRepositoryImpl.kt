@@ -5,9 +5,9 @@ import com.google.firebase.firestore.ktx.toObjects
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.activitymain.domain.toDomain
 import com.zywczas.letsshare.extentions.logD
-import com.zywczas.letsshare.models.Expense
+import com.zywczas.letsshare.models.firestore.ExpenseFire
 import com.zywczas.letsshare.models.ExpenseDomain
-import com.zywczas.letsshare.models.GroupMember
+import com.zywczas.letsshare.models.firestore.GroupMemberFire
 import com.zywczas.letsshare.models.GroupMemberDomain
 import com.zywczas.letsshare.utils.wrappers.CrashlyticsWrapper
 import com.zywczas.letsshare.utils.wrappers.FirestoreReferences
@@ -27,7 +27,7 @@ class HistoryDetailsRepositoryImpl @Inject constructor(
         try {
             firestoreRefs.collectionMembersRefs(groupId, monthId)
                 .get().await()
-                .toObjects<GroupMember>().map { it.toDomain() }.sortedByDescending { it.expenses }
+                .toObjects<GroupMemberFire>().map { it.toDomain() }.sortedByDescending { it.expenses }
         } catch (e: Exception) {
             crashlyticsWrapper.sendExceptionToFirebase(e)
             logD(e)
@@ -39,7 +39,7 @@ class HistoryDetailsRepositoryImpl @Inject constructor(
             firestoreRefs.collectionExpensesRefs(groupId, monthId)
                 .orderBy(firestoreRefs.dateCreatedField, Query.Direction.DESCENDING)
                 .get().await()
-                .toObjects<Expense>().map { it.toDomain() }
+                .toObjects<ExpenseFire>().map { it.toDomain() }
         } catch (e: Exception) {
             crashlyticsWrapper.sendExceptionToFirebase(e)
             logD(e)

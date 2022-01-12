@@ -3,9 +3,11 @@ package com.zywczas.letsshare.activitymain.domain
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.extentions.dayFormat
 import com.zywczas.letsshare.models.*
+import com.zywczas.letsshare.models.firestore.ExpenseFire
+import com.zywczas.letsshare.models.firestore.GroupMemberFire
 import java.math.BigDecimal
 
-fun GroupMember.toDomain() = GroupMemberDomain(
+fun GroupMemberFire.toDomain() = GroupMemberDomain(
     id = id,
     name = name,
     email = email,
@@ -13,7 +15,7 @@ fun GroupMember.toDomain() = GroupMemberDomain(
     share = share.toBigDecimal()
 )
 
-fun Expense.toDomain() = ExpenseDomain(
+fun ExpenseFire.toDomain() = ExpenseDomain(
     id = id,
     name = name,
     payeeId = payeeId,

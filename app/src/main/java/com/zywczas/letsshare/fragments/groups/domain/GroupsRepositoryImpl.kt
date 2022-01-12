@@ -7,8 +7,8 @@ import com.zywczas.letsshare.R
 import com.zywczas.letsshare.db.UserDao
 import com.zywczas.letsshare.extentions.logD
 import com.zywczas.letsshare.extentions.monthId
-import com.zywczas.letsshare.models.Group
-import com.zywczas.letsshare.models.GroupMember
+import com.zywczas.letsshare.models.firestore.GroupFire
+import com.zywczas.letsshare.models.firestore.GroupMemberFire
 import com.zywczas.letsshare.models.GroupMonth
 import com.zywczas.letsshare.models.firestore.UserFire
 import com.zywczas.letsshare.utils.wrappers.CrashlyticsWrapper
@@ -46,7 +46,7 @@ class GroupsRepositoryImpl @Inject constructor(
         try {
             val user = userDao.getUser()
             val newGroupRef = firestoreRefs.newGroupRefs()
-            val newGroup = Group(
+            val newGroup = GroupFire(
                 id = newGroupRef.id,
                 name = name,
                 currency = currency,
@@ -56,7 +56,7 @@ class GroupsRepositoryImpl @Inject constructor(
             val newMonthRefs = firestoreRefs.groupMonthRefs(newGroupRef.id, newMonthId)
             val newMonth = GroupMonth(id = newMonthId, dateCreated = date)
             val newGroupMemberRef = firestoreRefs.groupMemberRefs(newGroupRef.id, newMonthId, user.id)
-            val newMember = GroupMember(id = user.id, name = user.name, email = user.email)
+            val newMember = GroupMemberFire(id = user.id, name = user.name, email = user.email)
             val userRef = firestoreRefs.userRefs(user.id)
 
             firestore.runBatch { batch ->
@@ -92,13 +92,13 @@ class GroupsRepositoryImpl @Inject constructor(
         close(e)
     }
 
-    override suspend fun getGroups(groupsIds: List<String>): List<Group>? =
+    override suspend fun getGroups(groupsIds: List<String>): List<GroupFire>? =
         try {
-            val groups = mutableListOf<Group>()
+            val groups = mutableListOf<GroupFire>()
             groupsIds.forEach { id ->
                 val group = firestoreRefs.groupRefs(id)
                     .get().await()
-                    .toObject<Group>()!!
+                    .toObject<GroupFire>()!!
                 groups.add(group)
             }
             groups.sortedBy { it.name }

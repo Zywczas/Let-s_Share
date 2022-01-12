@@ -1,9 +1,9 @@
-package com.zywczas.letsshare.models
+package com.zywczas.letsshare.models.firestore
 
 import com.zywczas.letsshare.extentions.dateInPoland
 import java.util.*
 
-data class Expense (
+data class ExpenseFire (
     val id: String = "",
     val name: String = "",
     val payeeId: String = "",

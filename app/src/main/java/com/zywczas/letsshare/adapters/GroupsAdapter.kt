@@ -8,21 +8,21 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.zywczas.letsshare.R
-import com.zywczas.letsshare.models.Group
+import com.zywczas.letsshare.models.firestore.GroupFire
 
 class GroupsAdapter (
-    private val itemClick: (Group) -> Unit
-) : ListAdapter<Group, GroupsAdapter.ViewHolder>(object : DiffUtil.ItemCallback<Group>() {
+    private val itemClick: (GroupFire) -> Unit
+) : ListAdapter<GroupFire, GroupsAdapter.ViewHolder>(object : DiffUtil.ItemCallback<GroupFire>() {
 
-    override fun areItemsTheSame(oldItem: Group, newItem: Group): Boolean = oldItem.id == newItem.id
+    override fun areItemsTheSame(oldItem: GroupFire, newItem: GroupFire): Boolean = oldItem.id == newItem.id
 
-    override fun areContentsTheSame(oldItem: Group, newItem: Group): Boolean = oldItem.id == newItem.id
+    override fun areContentsTheSame(oldItem: GroupFire, newItem: GroupFire): Boolean = oldItem.id == newItem.id
 }) {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val name: TextView = itemView.findViewById(R.id.nameGroupsListItem)
 
-        fun bindGroup(group: Group) {
+        fun bindGroup(group: GroupFire) {
             name.text = group.name
             itemView.setOnClickListener { itemClick(group) }
         }

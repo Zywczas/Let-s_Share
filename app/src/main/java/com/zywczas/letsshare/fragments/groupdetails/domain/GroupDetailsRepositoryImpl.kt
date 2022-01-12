@@ -11,6 +11,8 @@ import com.zywczas.letsshare.extentions.dateInPoland
 import com.zywczas.letsshare.extentions.logD
 import com.zywczas.letsshare.extentions.monthId
 import com.zywczas.letsshare.models.*
+import com.zywczas.letsshare.models.firestore.ExpenseFire
+import com.zywczas.letsshare.models.firestore.GroupMemberFire
 import com.zywczas.letsshare.models.local.UserLocal
 import com.zywczas.letsshare.utils.wrappers.CrashlyticsWrapper
 import com.zywczas.letsshare.utils.wrappers.DateUtil
@@ -74,7 +76,7 @@ class GroupDetailsRepositoryImpl @Inject constructor(
         try {
             firestoreRefs.collectionMembersRefs(groupId, monthId)
                 .get().await()
-                .toObjects<GroupMember>().map { it.toDomain() }.sortedByDescending { it.expenses }
+                .toObjects<GroupMemberFire>().map { it.toDomain() }.sortedByDescending { it.expenses }
         } catch (e: Exception) {
             crashlyticsWrapper.sendExceptionToFirebase(e)
             logD(e)
@@ -86,7 +88,7 @@ class GroupDetailsRepositoryImpl @Inject constructor(
             firestoreRefs.collectionExpensesRefs(groupId, monthId)
                 .orderBy(firestoreRefs.dateCreatedField, Query.Direction.DESCENDING)
                 .get().await()
-                .toObjects<Expense>().map { it.toDomain() }
+                .toObjects<ExpenseFire>().map { it.toDomain() }
         } catch (e: Exception) {
             crashlyticsWrapper.sendExceptionToFirebase(e)
             logD(e)
@@ -115,7 +117,7 @@ class GroupDetailsRepositoryImpl @Inject constructor(
             R.string.cant_get_month
         }
 
-    private fun GroupMemberDomain.toNewMonthGroupMember() = GroupMember(
+    private fun GroupMemberDomain.toNewMonthGroupMember() = GroupMemberFire(
         id = id,
         name = name,
         email = email,
@@ -127,7 +129,7 @@ class GroupDetailsRepositoryImpl @Inject constructor(
             val user = getUser()
             val monthRefs = firestoreRefs.groupMonthRefs(groupId, monthId)
             val newExpenseRefs = firestoreRefs.newExpenseRefs(groupId, monthId)
-            val newExpense = Expense(
+            val newExpense = ExpenseFire(
                 id = newExpenseRefs.id,
                 name = name,
                 payeeId = user.id,
@@ -139,7 +141,7 @@ class GroupDetailsRepositoryImpl @Inject constructor(
 
             firestore.runTransaction { transaction ->
                 val month = transaction.get(monthRefs).toObject<GroupMonth>()!!
-                val member = transaction.get(memberRef).toObject<GroupMember>()!!
+                val member = transaction.get(memberRef).toObject<GroupMemberFire>()!!
                 val increasedMonthlyExpenses =
                     (month.totalExpenses.toBigDecimal() + amount).toString()
                 val increasedMemberExpenses = (member.expenses.toBigDecimal() + amount).toString()
@@ -166,7 +168,7 @@ class GroupDetailsRepositoryImpl @Inject constructor(
 
             firestore.runTransaction { transaction ->
                 val month = transaction.get(monthRefs).toObject<GroupMonth>()!!
-                val member = transaction.get(memberRef).toObject<GroupMember>()
+                val member = transaction.get(memberRef).toObject<GroupMemberFire>()
                 val decreasedMonthlyExpenses =
                     (month.totalExpenses.toBigDecimal() - expense.value).toString()
                 transaction.update(

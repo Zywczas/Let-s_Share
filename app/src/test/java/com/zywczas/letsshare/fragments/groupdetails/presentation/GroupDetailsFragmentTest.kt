@@ -14,7 +14,7 @@ import com.zywczas.letsshare.di.factories.UniversalViewModelFactory
 import com.zywczas.letsshare.fragments.groupdetails.domain.GroupDetailsRepository
 import com.zywczas.letsshare.fragments.groups.presentation.GroupsFragmentDirections
 import com.zywczas.letsshare.mockdata.GroupMemberDomainMocks
-import com.zywczas.letsshare.models.Group
+import com.zywczas.letsshare.models.firestore.GroupFire
 import com.zywczas.letsshare.models.GroupMonthDomain
 import com.zywczas.letsshare.testrules.TestCoroutineRule
 import com.zywczas.letsshare.uirobots.GroupDetailsFragmentRobot
@@ -45,7 +45,8 @@ class GroupDetailsFragmentTest {
     private val groupMemberDomainMocks = GroupMemberDomainMocks()
 
     private fun launchGroupDetailsFragment() : FragmentScenario<GroupDetailsFragment>{
-        val bundle = GroupsFragmentDirections.toGroupDetailsFragment(Group(
+        val bundle = GroupsFragmentDirections.toGroupDetailsFragment(
+            GroupFire(
             id = "id1",
             name = "Dom",
             dateCreated = Date(0),

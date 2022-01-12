@@ -10,6 +10,8 @@ import com.zywczas.letsshare.db.FriendsDao
 import com.zywczas.letsshare.db.UserDao
 import com.zywczas.letsshare.extentions.logD
 import com.zywczas.letsshare.models.*
+import com.zywczas.letsshare.models.firestore.GroupFire
+import com.zywczas.letsshare.models.firestore.GroupMemberFire
 import com.zywczas.letsshare.models.firestore.UserFire
 import com.zywczas.letsshare.models.local.FriendLocal
 import com.zywczas.letsshare.utils.wrappers.CrashlyticsWrapper
@@ -32,7 +34,7 @@ class GroupSettingsRepositoryImpl @Inject constructor(
     override suspend fun getMembers(monthId: String): List<GroupMemberDomain>? =
         try {
             firestoreRefs.collectionMembersRefs(groupId, monthId)
-                .get().await().toObjects<GroupMember>().map { it.toDomain() }
+                .get().await().toObjects<GroupMemberFire>().map { it.toDomain() }
         } catch (e: Exception) {
             crashlyticsWrapper.sendExceptionToFirebase(e)
             logD(e)
@@ -65,7 +67,7 @@ class GroupSettingsRepositoryImpl @Inject constructor(
             val newMemberRef = firestoreRefs.groupMemberRefs(groupId, monthId, newMember.id)
 
             firestore.runTransaction { transaction ->
-                val group = transaction.get(groupRef).toObject<Group>()!!
+                val group = transaction.get(groupRef).toObject<GroupFire>()!!
                 if (group.membersNum < 7) {
                     transaction.set(newMemberRef, newMember)
                     transaction.update(groupRef, firestoreRefs.membersNumField, FieldValue.increment(1))
@@ -81,7 +83,7 @@ class GroupSettingsRepositoryImpl @Inject constructor(
             R.string.cant_add_member
         }
 
-    private fun Friend.toGroupMember() = GroupMember(id = id, name = name, email = email)
+    private fun Friend.toGroupMember() = GroupMemberFire(id = id, name = name, email = email)
 
     override suspend fun removeMemberOrCloseGroup(monthId: String, memberId: String): Int? =
         try {
@@ -90,7 +92,7 @@ class GroupSettingsRepositoryImpl @Inject constructor(
             val groupRef = firestoreRefs.groupRefs(groupId)
 
             firestore.runTransaction { transaction ->
-                val group = transaction.get(groupRef).toObject<Group>()!!
+                val group = transaction.get(groupRef).toObject<GroupFire>()!!
                 if (group.membersNum < 2){
                     transaction.delete(groupRef)
                 } else {
@@ -127,7 +129,7 @@ class GroupSettingsRepositoryImpl @Inject constructor(
             R.string.something_wrong
         }
 
-    private fun GroupMemberDomain.toGroupMember() = GroupMember(
+    private fun GroupMemberDomain.toGroupMember() = GroupMemberFire(
         id = id,
         name = name,
         email = email,

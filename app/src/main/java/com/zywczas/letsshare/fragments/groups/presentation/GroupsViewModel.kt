@@ -6,7 +6,7 @@ import com.zywczas.letsshare.SessionManager
 import com.zywczas.letsshare.activitymain.presentation.BaseViewModel
 import com.zywczas.letsshare.di.modules.DispatchersModule.DispatchersIO
 import com.zywczas.letsshare.fragments.groups.domain.GroupsRepository
-import com.zywczas.letsshare.models.Group
+import com.zywczas.letsshare.models.firestore.GroupFire
 import com.zywczas.letsshare.models.firestore.UserFire
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.channels.Channel
@@ -25,7 +25,7 @@ class GroupsViewModel @Inject constructor(
     private val _user = MutableLiveData<UserFire>()
     private val user: LiveData<UserFire> = _user
 
-    val groups: LiveData<List<Group>> = Transformations.switchMap(user){ user ->
+    val groups: LiveData<List<GroupFire>> = Transformations.switchMap(user){ user ->
         liveData(dispatchersIO){
             showProgressBar(true)
             repository.getGroups(user.groupsIds)?.let { emit(it) } ?: postMessage(R.string.cant_get_groups)
