@@ -9,7 +9,9 @@ import com.zywczas.letsshare.db.FriendsDao
 import com.zywczas.letsshare.db.UserDao
 import com.zywczas.letsshare.extentions.logD
 import com.zywczas.letsshare.models.Friend
+import com.zywczas.letsshare.models.firestore.FriendFire
 import com.zywczas.letsshare.models.firestore.UserFire
+import com.zywczas.letsshare.models.local.FriendLocal
 import com.zywczas.letsshare.models.local.UserLocal
 import com.zywczas.letsshare.utils.wrappers.CrashlyticsWrapper
 import com.zywczas.letsshare.utils.wrappers.FirestoreReferences
@@ -41,11 +43,17 @@ class FriendsRepositoryImpl @Inject constructor(
                     channel.closeFlowAndThrow(error)
                 }
                 if (snapshot != null) {
-                    offer(snapshot.toObjects())
+                    offer(snapshot.toObjects<FriendFire>().map { it.toDomain() })
                 }
             }
         awaitClose { listener.remove() }
     }
+
+    private fun FriendFire.toDomain() = Friend(
+        id = id,
+        email = email,
+        name = name
+    )
 
     private fun <E> SendChannel<E>.closeFlowAndThrow(e: Exception){
         crashlyticsWrapper.sendExceptionToFirebase(e)
@@ -53,7 +61,13 @@ class FriendsRepositoryImpl @Inject constructor(
         close(e)
     }
 
-    override suspend fun saveFriendsLocally(friends: List<Friend>) = friendsDao.insert(friends)
+    override suspend fun saveFriendsLocally(friends: List<Friend>) = friendsDao.insert(friends.map { it.toLocal() })
+
+    private fun Friend.toLocal() = FriendLocal(
+        id = id,
+        email = email,
+        name = name
+    )
 
     override suspend fun userEmail(): String = getUser().email
 
@@ -72,9 +86,9 @@ class FriendsRepositoryImpl @Inject constructor(
             R.string.cant_add_friend
         }
 
-    private fun UserFire.toFriend() = Friend(id = id, email = email, name = name)
+    private fun UserFire.toFriend() = FriendFire(id = id, email = email, name = name)
 
-    private suspend fun addFriendsToCollections(friend: Friend): Int? =
+    private suspend fun addFriendsToCollections(friend: FriendFire): Int? =
         try {
             val friendToUserCollectionRefs = firestoreRefs.friendRefs(getUser().id, friend.id)
             val userToFriendCollectionRefs = firestoreRefs.friendRefs(friend.id, getUser().id)
@@ -90,6 +104,6 @@ class FriendsRepositoryImpl @Inject constructor(
             R.string.cant_add_friend
         }
 
-    private fun UserLocal.toFriend() = Friend(id = id, email = email, name = name)
+    private fun UserLocal.toFriend() = FriendFire(id = id, email = email, name = name)
 
 }

@@ -1,6 +1,6 @@
-package com.zywczas.letsshare.models
+package com.zywczas.letsshare.models.firestore
 
-data class Friend (
+data class FriendFire (
     val id: String = "",
     val email: String = "",
     val name: String = ""
