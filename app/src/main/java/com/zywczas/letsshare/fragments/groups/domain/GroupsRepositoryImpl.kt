@@ -9,7 +9,7 @@ import com.zywczas.letsshare.extentions.logD
 import com.zywczas.letsshare.extentions.monthId
 import com.zywczas.letsshare.models.firestore.GroupFire
 import com.zywczas.letsshare.models.firestore.GroupMemberFire
-import com.zywczas.letsshare.models.GroupMonth
+import com.zywczas.letsshare.models.firestore.GroupMonthFire
 import com.zywczas.letsshare.models.firestore.UserFire
 import com.zywczas.letsshare.utils.wrappers.CrashlyticsWrapper
 import com.zywczas.letsshare.utils.wrappers.DateUtil
@@ -54,7 +54,7 @@ class GroupsRepositoryImpl @Inject constructor(
             val date = dateUtil.presentDate()
             val newMonthId = date.monthId()
             val newMonthRefs = firestoreRefs.groupMonthRefs(newGroupRef.id, newMonthId)
-            val newMonth = GroupMonth(id = newMonthId, dateCreated = date)
+            val newMonth = GroupMonthFire(id = newMonthId, dateCreated = date)
             val newGroupMemberRef = firestoreRefs.groupMemberRefs(newGroupRef.id, newMonthId, user.id)
             val newMember = GroupMemberFire(id = user.id, name = user.name, email = user.email)
             val userRef = firestoreRefs.userRefs(user.id)

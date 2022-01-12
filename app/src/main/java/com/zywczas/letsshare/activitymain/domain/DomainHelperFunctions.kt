@@ -5,6 +5,7 @@ import com.zywczas.letsshare.extentions.dayFormat
 import com.zywczas.letsshare.models.*
 import com.zywczas.letsshare.models.firestore.ExpenseFire
 import com.zywczas.letsshare.models.firestore.GroupMemberFire
+import com.zywczas.letsshare.models.firestore.GroupMonthFire
 import java.math.BigDecimal
 
 fun GroupMemberFire.toDomain() = GroupMemberDomain(
@@ -24,7 +25,7 @@ fun ExpenseFire.toDomain() = ExpenseDomain(
     dateCreated = dateCreated.dayFormat()
 )
 //todo pusuwac te rzeczy
-fun GroupMonth.toDomain() = GroupMonthDomain(
+fun GroupMonthFire.toDomain() = GroupMonthDomain(
     id = id,
     totalExpenses = totalExpenses.toBigDecimal(),
     isSettledUp = isSettledUp

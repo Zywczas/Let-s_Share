@@ -121,7 +121,7 @@
         tools:layout="@layout/fragment_group_details">
         <argument
             android:name="group"
-            app:argType="com.zywczas.letsshare.models.Group" />
+            app:argType="com.zywczas.letsshare.models.firestore.GroupFire" />
         <action
             android:id="@+id/toGroupSettingsFragment"
             app:enterAnim="@anim/slide_in_right"
@@ -164,7 +164,7 @@
         tools:layout="@layout/fragment_history">
         <argument
             android:name="group"
-            app:argType="com.zywczas.letsshare.models.Group" />
+            app:argType="com.zywczas.letsshare.models.firestore.GroupFire" />
         <action
             android:id="@+id/toHistoryDetailsFragment"
             app:enterAnim="@anim/slide_in_right"
@@ -212,7 +212,7 @@
         tools:layout="@layout/fragment_history_details">
         <argument
             android:name="group"
-            app:argType="com.zywczas.letsshare.models.Group" />
+            app:argType="com.zywczas.letsshare.models.firestore.GroupFire" />
         <argument
             android:name="groupMonth"
             app:argType="com.zywczas.letsshare.models.GroupMonthDomain" />

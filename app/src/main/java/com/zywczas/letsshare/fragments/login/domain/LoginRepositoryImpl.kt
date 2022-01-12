@@ -6,7 +6,7 @@ import com.zywczas.letsshare.R
 import com.zywczas.letsshare.db.UserDao
 import com.zywczas.letsshare.extentions.logD
 import com.zywczas.letsshare.models.firestore.UserFire
-import com.zywczas.letsshare.models.toLocal
+import com.zywczas.letsshare.models.local.UserLocal
 import com.zywczas.letsshare.utils.wrappers.CrashlyticsWrapper
 import com.zywczas.letsshare.utils.wrappers.FirestoreReferences
 import com.zywczas.letsshare.utils.wrappers.SharedPrefsWrapper
@@ -53,5 +53,13 @@ class LoginRepositoryImpl @Inject constructor(
             logD(e)
             R.string.login_problem
         }
+
+    private fun UserFire.toLocal() = UserLocal(
+        id =id,
+        name = name,
+        email = email,
+        groupsIds = groupsIds,
+        messagingToken = messagingToken
+    )
 
 }

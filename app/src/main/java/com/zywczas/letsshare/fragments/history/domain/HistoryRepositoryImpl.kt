@@ -4,7 +4,7 @@ import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.toObjects
 import com.zywczas.letsshare.activitymain.domain.toDomain
 import com.zywczas.letsshare.extentions.logD
-import com.zywczas.letsshare.models.GroupMonth
+import com.zywczas.letsshare.models.firestore.GroupMonthFire
 import com.zywczas.letsshare.models.GroupMonthDomain
 import com.zywczas.letsshare.utils.wrappers.CrashlyticsWrapper
 import com.zywczas.letsshare.utils.wrappers.DateUtil
@@ -26,7 +26,7 @@ class HistoryRepositoryImpl @Inject constructor(
         try {
             firestoreRefs.collectionGroupMonthsRefs(groupId)
                 .orderBy(firestoreRefs.dateCreatedField, Query.Direction.DESCENDING)
-                .get().await().toObjects<GroupMonth>()
+                .get().await().toObjects<GroupMonthFire>()
                 .filter { it.id != dateUtil.presentMonthId() }
                 .map { it.toDomain() }
         } catch (e: Exception) {
