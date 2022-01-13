@@ -7,9 +7,9 @@ import com.zywczas.letsshare.activitymain.domain.withBalance
 import com.zywczas.letsshare.activitymain.presentation.BaseViewModel
 import com.zywczas.letsshare.di.modules.DispatchersModule.DispatchersIO
 import com.zywczas.letsshare.fragments.groupdetails.domain.GroupDetailsRepository
-import com.zywczas.letsshare.models.ExpenseDomain
+import com.zywczas.letsshare.models.Expense
 import com.zywczas.letsshare.models.ExpenseNotification
-import com.zywczas.letsshare.models.GroupMemberDomain
+import com.zywczas.letsshare.models.GroupMember
 import com.zywczas.letsshare.models.GroupMonthDomain
 import com.zywczas.letsshare.utils.wrappers.DateUtil
 import kotlinx.coroutines.CoroutineDispatcher
@@ -40,7 +40,7 @@ class GroupDetailsViewModel @Inject constructor(
         }
     }
 
-    val members: LiveData<List<GroupMemberDomain>> =
+    val members: LiveData<List<GroupMember>> =
         Transformations.switchMap(currentMonth) { month ->
             liveData(dispatchersIO) {
                 _isMembersProgressBarVisible.postValue(true)
@@ -52,7 +52,7 @@ class GroupDetailsViewModel @Inject constructor(
 
     private fun postMonthError() = postMessage(R.string.cant_get_month)
 
-    val expenses: LiveData<List<ExpenseDomain>> = Transformations.switchMap(currentMonth) { month ->
+    val expenses: LiveData<List<Expense>> = Transformations.switchMap(currentMonth) { month ->
         liveData(dispatchersIO) {
             showProgressBar(true)
             repository.getExpenses(month.id)?.let { emit(it) }

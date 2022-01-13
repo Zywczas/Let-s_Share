@@ -1,11 +1,11 @@
 package com.zywczas.letsshare.fragments.groupsettings.domain
 
 import com.zywczas.letsshare.models.Friend
-import com.zywczas.letsshare.models.GroupMemberDomain
+import com.zywczas.letsshare.models.GroupMember
 
 interface GroupSettingsRepository {
 
-    suspend fun getMembers(monthId: String): List<GroupMemberDomain>?
+    suspend fun getMembers(monthId: String): List<GroupMember>?
 
     suspend fun getFriends(): List<Friend>
 
@@ -17,6 +17,6 @@ interface GroupSettingsRepository {
 
     suspend fun userId(): String
 
-    suspend fun saveSplits(monthId: String, members: List<GroupMemberDomain>): Int?
+    suspend fun saveSplits(monthId: String, members: List<GroupMember>): Int?
 
 }

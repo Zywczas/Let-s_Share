@@ -12,7 +12,7 @@ import com.mikepenz.fastadapter.diff.FastAdapterDiffUtil
 import com.zywczas.letsshare.adapters.FriendItem
 import com.zywczas.letsshare.databinding.DialogGroupMembersBinding
 import com.zywczas.letsshare.models.Friend
-import com.zywczas.letsshare.models.GroupMemberDomain
+import com.zywczas.letsshare.models.GroupMember
 import com.zywczas.letsshare.utils.autoRelease
 
 class RemoveMemberDialog : DialogFragment() {
@@ -43,7 +43,7 @@ class RemoveMemberDialog : DialogFragment() {
         viewModel.members.observe(viewLifecycleOwner) { FastAdapterDiffUtil.set(friendItemAdapter, it.toFriendItems(), FriendItem.DiffUtil()) }
     }
 
-    private fun List<GroupMemberDomain>.toFriendItems() = map { FriendItem(Friend(id = it.id, email = it.email, name = it.name)) }
+    private fun List<GroupMember>.toFriendItems() = map { FriendItem(Friend(id = it.id, email = it.email, name = it.name)) }
 
     private fun setupFriendsAdapter(){
         friendAdapter.onClickListener = { _, _, item, _ ->

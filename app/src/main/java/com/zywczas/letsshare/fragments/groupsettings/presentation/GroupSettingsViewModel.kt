@@ -7,7 +7,7 @@ import com.zywczas.letsshare.activitymain.presentation.BaseViewModel
 import com.zywczas.letsshare.di.modules.DispatchersModule.*
 import com.zywczas.letsshare.fragments.groupsettings.domain.GroupSettingsRepository
 import com.zywczas.letsshare.models.Friend
-import com.zywczas.letsshare.models.GroupMemberDomain
+import com.zywczas.letsshare.models.GroupMember
 import com.zywczas.letsshare.models.GroupMonthDomain
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
@@ -21,8 +21,8 @@ class GroupSettingsViewModel @Inject constructor(
     private val sessionManager: SessionManager
 ) : BaseViewModel() {
 
-    private val _members = MutableLiveData<List<GroupMemberDomain>>()
-    val members: LiveData<List<GroupMemberDomain>> = _members
+    private val _members = MutableLiveData<List<GroupMember>>()
+    val members: LiveData<List<GroupMember>> = _members
 
     private val _friends = MutableLiveData<List<Friend>>()
     val friends: LiveData<List<Friend>> = _friends
@@ -140,10 +140,12 @@ class GroupSettingsViewModel @Inject constructor(
             if (numberOfMembers != 0){
                 val newSplit = BigDecimal(100).divide(numberOfMembers.toBigDecimal(), 2, BigDecimal.ROUND_HALF_UP)
                 membersTemp?.let { members ->
-                    val newMembersRef = members
-                        .map { GroupMemberDomain(id = it.id,name = it.name,email = it.email,
-                            expenses = it.expenses,share = newSplit)
-                        }
+                    val newMembersRef = members.map {
+                        GroupMember(
+                            id = it.id,
+                            name = it.name,
+                            share = newSplit
+                        )}
                     _members.postValue(newMembersRef)
                     _areSettingsChanged.postValue(true)
                 }

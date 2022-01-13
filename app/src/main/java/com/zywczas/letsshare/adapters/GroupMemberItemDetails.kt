@@ -6,10 +6,10 @@ import com.mikepenz.fastadapter.binding.AbstractBindingItem
 import com.mikepenz.fastadapter.diff.DiffCallback
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.databinding.ItemGroupMembersDetailsBinding
-import com.zywczas.letsshare.models.GroupMemberDomain
+import com.zywczas.letsshare.models.GroupMember
 import java.util.*
 
-class GroupMemberItemDetails(private val member: GroupMemberDomain, private val currency: String) : AbstractBindingItem<ItemGroupMembersDetailsBinding>() {
+class GroupMemberItemDetails(private val member: GroupMember, private val currency: String) : AbstractBindingItem<ItemGroupMembersDetailsBinding>() {
 
     override val type: Int = R.id.groupMemberItemDetails
 

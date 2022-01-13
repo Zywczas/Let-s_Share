@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputEditText
 import com.zywczas.letsshare.R
-import com.zywczas.letsshare.models.GroupMemberDomain
+import com.zywczas.letsshare.models.GroupMember
 import kotlinx.coroutines.*
 import java.math.BigDecimal
 import java.util.*
@@ -22,12 +22,12 @@ class GroupMembersSettingsAdapter(
     private val lifecycle: Lifecycle,
     private val textDebounce: Long,
     private val onSplitChangeAction: (String, BigDecimal) -> Unit
-) : ListAdapter<GroupMemberDomain, GroupMembersSettingsAdapter.ViewHolder>(object : DiffUtil.ItemCallback<GroupMemberDomain>() {
+) : ListAdapter<GroupMember, GroupMembersSettingsAdapter.ViewHolder>(object : DiffUtil.ItemCallback<GroupMember>() {
 
-    override fun areItemsTheSame(oldItem: GroupMemberDomain, newItem: GroupMemberDomain): Boolean =
+    override fun areItemsTheSame(oldItem: GroupMember, newItem: GroupMember): Boolean =
         oldItem.id == newItem.id
 
-    override fun areContentsTheSame(oldItem: GroupMemberDomain, newItem: GroupMemberDomain): Boolean =
+    override fun areContentsTheSame(oldItem: GroupMember, newItem: GroupMember): Boolean =
         oldItem.id == newItem.id &&
             oldItem.share.toString() == newItem.share.toString()
 }) {
@@ -49,7 +49,7 @@ class GroupMembersSettingsAdapter(
             updatedPercentageJob?.cancel()
         }
 
-        fun bindMember(member: GroupMemberDomain) {
+        fun bindMember(member: GroupMember) {
             name.text = member.name
             split.setText(String.format(Locale.UK, "%.2f", member.share))
             split.doOnTextChanged { text, _, _, _ ->

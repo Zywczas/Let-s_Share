@@ -3,7 +3,7 @@ package com.zywczas.letsshare.models
 import androidx.annotation.StringRes
 import java.math.BigDecimal
 
-data class GroupMemberDomain (
+data class GroupMember (
     val id: String = "",
     val name: String = "",
     val email: String = "",

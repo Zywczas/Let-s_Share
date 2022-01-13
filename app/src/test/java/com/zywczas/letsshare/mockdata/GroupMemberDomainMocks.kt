@@ -1,12 +1,12 @@
 package com.zywczas.letsshare.mockdata
 
 import com.zywczas.letsshare.R
-import com.zywczas.letsshare.models.GroupMemberDomain
+import com.zywczas.letsshare.models.GroupMember
 import java.math.BigDecimal
 
 class GroupMemberDomainMocks {
 
-    private val defaultGroupMemberDomain = GroupMemberDomain(
+    private val defaultGroupMemberDomain = GroupMember(
         id = "",
         name = "",
         email = "",
@@ -16,7 +16,7 @@ class GroupMemberDomainMocks {
         difference = BigDecimal.ZERO
     )
 
-    val groupMemberDomain1 = GroupMemberDomain(
+    val groupMemberDomain1 = GroupMember(
         id = "memberId1",
         name = "Piotr",
         email = "piotr@gmail.com",
@@ -26,7 +26,7 @@ class GroupMemberDomainMocks {
         difference = BigDecimal("120.99")
     )
 
-    val groupMemberDomain2 = GroupMemberDomain(
+    val groupMemberDomain2 = GroupMember(
         id = "memberId2",
         name = "Michał",
         email = "michal@gmail.com",

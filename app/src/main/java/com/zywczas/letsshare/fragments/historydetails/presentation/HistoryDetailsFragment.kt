@@ -23,8 +23,8 @@ import com.zywczas.letsshare.extentions.addHorizontalTransparentItemDivider
 import com.zywczas.letsshare.extentions.getColorFromAttr
 import com.zywczas.letsshare.extentions.showSnackbar
 import com.zywczas.letsshare.fragments.groupdetails.presentation.GroupDetailsFragmentDirections
-import com.zywczas.letsshare.models.ExpenseDomain
-import com.zywczas.letsshare.models.GroupMemberDomain
+import com.zywczas.letsshare.models.Expense
+import com.zywczas.letsshare.models.GroupMember
 import com.zywczas.letsshare.utils.autoRelease
 import javax.inject.Inject
 
@@ -67,11 +67,11 @@ class HistoryDetailsFragment @Inject constructor(viewModelFactory: UniversalView
         viewModel.settledUpMessage.observe(viewLifecycleOwner){ binding.settledUpMessage.text = getString(it) }
     }
 
-    private fun List<GroupMemberDomain>.toMemberItems() = map {
+    private fun List<GroupMember>.toMemberItems() = map {
         GroupMemberItemDetails(it, args.group.currency)
     }
 
-    private fun List<ExpenseDomain>.toExpenseItems() = map {
+    private fun List<Expense>.toExpenseItems() = map {
         ExpenseItem(it, args.group.currency)
     }
 

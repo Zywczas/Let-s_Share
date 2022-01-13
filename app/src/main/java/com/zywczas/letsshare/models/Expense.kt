@@ -2,7 +2,7 @@ package com.zywczas.letsshare.models
 
 import java.math.BigDecimal
 
-data class ExpenseDomain (
+data class Expense (
     val id: String = "",
     val name: String = "",
     val payeeId: String = "",

@@ -6,9 +6,9 @@ import com.zywczas.letsshare.R
 import com.zywczas.letsshare.activitymain.domain.toDomain
 import com.zywczas.letsshare.extentions.logD
 import com.zywczas.letsshare.models.firestore.ExpenseFire
-import com.zywczas.letsshare.models.ExpenseDomain
+import com.zywczas.letsshare.models.Expense
 import com.zywczas.letsshare.models.firestore.GroupMemberFire
-import com.zywczas.letsshare.models.GroupMemberDomain
+import com.zywczas.letsshare.models.GroupMember
 import com.zywczas.letsshare.utils.wrappers.CrashlyticsWrapper
 import com.zywczas.letsshare.utils.wrappers.FirestoreReferences
 import com.zywczas.letsshare.utils.wrappers.SharedPrefsWrapper
@@ -23,7 +23,7 @@ class HistoryDetailsRepositoryImpl @Inject constructor(
 
     private val groupId = sharedPrefs.currentGroupId
 
-    override suspend fun getMembers(monthId: String): List<GroupMemberDomain>? =
+    override suspend fun getMembers(monthId: String): List<GroupMember>? =
         try {
             firestoreRefs.collectionMembersRefs(groupId, monthId)
                 .get().await()
@@ -34,7 +34,7 @@ class HistoryDetailsRepositoryImpl @Inject constructor(
             null
         }
 
-    override suspend fun getExpenses(monthId: String): List<ExpenseDomain>? =
+    override suspend fun getExpenses(monthId: String): List<Expense>? =
         try {
             firestoreRefs.collectionExpensesRefs(groupId, monthId)
                 .orderBy(firestoreRefs.dateCreatedField, Query.Direction.DESCENDING)

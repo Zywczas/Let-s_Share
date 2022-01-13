@@ -54,7 +54,7 @@ class GroupDetailsRepositoryImpl @Inject constructor(
         }
 
     @ExperimentalCoroutinesApi
-    override suspend fun listenToMonth(monthId: String): Flow<GroupMonthDomain> = callbackFlow {
+    override fun listenToMonth(monthId: String): Flow<GroupMonthDomain> = callbackFlow {
         val listener = firestoreRefs.groupMonthRefs(groupId, monthId)
             .addSnapshotListener { snapshot, error ->
                 if (error != null) {
@@ -73,7 +73,7 @@ class GroupDetailsRepositoryImpl @Inject constructor(
         close(e)
     }
 
-    override suspend fun getMembers(monthId: String): List<GroupMemberDomain>? =
+    override suspend fun getMembers(monthId: String): List<GroupMember>? =
         try {
             firestoreRefs.collectionMembersRefs(groupId, monthId)
                 .get().await()
@@ -84,7 +84,7 @@ class GroupDetailsRepositoryImpl @Inject constructor(
             null
         }
 
-    override suspend fun getExpenses(monthId: String): List<ExpenseDomain>? =
+    override suspend fun getExpenses(monthId: String): List<Expense>? =
         try {
             firestoreRefs.collectionExpensesRefs(groupId, monthId)
                 .orderBy(firestoreRefs.dateCreatedField, Query.Direction.DESCENDING)
@@ -96,7 +96,7 @@ class GroupDetailsRepositoryImpl @Inject constructor(
             null
         }
 
-    override suspend fun createNewMonth(members: List<GroupMemberDomain>): Int? =
+    override suspend fun createNewMonth(members: List<GroupMember>): Int? =
         try {
             val date = dateUtil.presentDate()
             val monthId = date.monthId()
@@ -118,7 +118,7 @@ class GroupDetailsRepositoryImpl @Inject constructor(
             R.string.cant_get_month
         }
 
-    private fun GroupMemberDomain.toNewMonthGroupMember() = GroupMemberFire(
+    private fun GroupMember.toNewMonthGroupMember() = GroupMemberFire(
         id = id,
         name = name,
         email = email,
@@ -161,7 +161,7 @@ class GroupDetailsRepositoryImpl @Inject constructor(
             R.string.cant_add_expense
         }
 
-    override suspend fun deleteExpense(monthId: String, expense: ExpenseDomain): Int? =
+    override suspend fun deleteExpense(monthId: String, expense: Expense): Int? =
         try {
             val monthRefs = firestoreRefs.groupMonthRefs(groupId, monthId)
             val memberRef = firestoreRefs.groupMemberRefs(groupId, monthId, expense.payeeId)
