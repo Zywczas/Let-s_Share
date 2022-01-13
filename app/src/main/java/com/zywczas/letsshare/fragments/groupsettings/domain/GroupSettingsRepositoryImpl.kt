@@ -61,7 +61,7 @@ class GroupSettingsRepositoryImpl @Inject constructor(
 
     override suspend fun addMemberIfBelow7PeopleInGroup(monthId: String, friend: Friend): Int? =
         try {
-            val newMember = friend.toFirestore()
+            val newMember = friend.toGroupMemberFire()
             val userToBeUpdatedRefs = firestoreRefs.userRefs(newMember.id)
             val groupRef = firestoreRefs.groupRefs(groupId)
             val newMemberRef = firestoreRefs.groupMemberRefs(groupId, monthId, newMember.id)
@@ -83,7 +83,7 @@ class GroupSettingsRepositoryImpl @Inject constructor(
             R.string.cant_add_member
         }
 
-    private fun Friend.toFirestore() = GroupMemberFire(id = id, name = name, email = email)
+    private fun Friend.toGroupMemberFire() = GroupMemberFire(id = id, name = name, email = email)
 
     override suspend fun removeMemberOrCloseGroup(monthId: String, memberId: String): Int? =
         try {
@@ -112,7 +112,7 @@ class GroupSettingsRepositoryImpl @Inject constructor(
 
     override suspend fun saveSplits(monthId: String, members: List<GroupMember>): Int? =
         try {
-            val groupMembers = members.map { it.toFirestore() }
+            val groupMembers = members.map { it.toGroupMemberFire() }
             firestore.runBatch { batch ->
                 groupMembers.forEach { member ->
                     batch.update(
@@ -129,7 +129,7 @@ class GroupSettingsRepositoryImpl @Inject constructor(
             R.string.something_wrong
         }
 
-    private fun GroupMember.toFirestore() = GroupMemberFire( //todo popatrzec czy inne takie funkcje tez trzeba pozamieniac
+    private fun GroupMember.toGroupMemberFire() = GroupMemberFire(
         id = id,
         name = name,
         email = email,

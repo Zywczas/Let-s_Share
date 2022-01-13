@@ -77,7 +77,7 @@ class FriendsRepositoryImpl @Inject constructor(
             val isFriendRegistered = singInMethods?.size != null && singInMethods.size > 0
             if (isFriendRegistered){
                 val newFriend = firestoreRefs.userQueryRefs(email).get().await()
-                    .toObjects<UserFire>().first().toFriend()
+                    .toObjects<UserFire>().first().toFriendFire()
                 addFriendsToCollections(newFriend)
             } else { R.string.user_with_email_not_in_database }
         } catch (e: Exception){
@@ -86,13 +86,13 @@ class FriendsRepositoryImpl @Inject constructor(
             R.string.cant_add_friend
         }
 
-    private fun UserFire.toFriend() = FriendFire(id = id, email = email, name = name)
+    private fun UserFire.toFriendFire() = FriendFire(id = id, email = email, name = name)
 
     private suspend fun addFriendsToCollections(friend: FriendFire): Int? =
         try {
             val friendToUserCollectionRefs = firestoreRefs.friendRefs(getUser().id, friend.id)
             val userToFriendCollectionRefs = firestoreRefs.friendRefs(friend.id, getUser().id)
-            val userAsFriend =userDao.getUser().toFriend()
+            val userAsFriend =userDao.getUser().toFriendFire()
             firestore.runBatch { batch ->
                 batch.set(friendToUserCollectionRefs, friend)
                 batch.set(userToFriendCollectionRefs, userAsFriend)
@@ -104,6 +104,6 @@ class FriendsRepositoryImpl @Inject constructor(
             R.string.cant_add_friend
         }
 
-    private fun UserLocal.toFriend() = FriendFire(id = id, email = email, name = name)
+    private fun UserLocal.toFriendFire() = FriendFire(id = id, email = email, name = name)
 
 }

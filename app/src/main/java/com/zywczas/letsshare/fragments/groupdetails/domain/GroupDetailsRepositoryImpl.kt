@@ -54,7 +54,7 @@ class GroupDetailsRepositoryImpl @Inject constructor(
         }
 
     @ExperimentalCoroutinesApi
-    override fun listenToMonth(monthId: String): Flow<GroupMonth> = callbackFlow {
+    override suspend fun listenToMonth(monthId: String): Flow<GroupMonth> = callbackFlow {
         val listener = firestoreRefs.groupMonthRefs(groupId, monthId)
             .addSnapshotListener { snapshot, error ->
                 if (error != null) {
@@ -102,7 +102,7 @@ class GroupDetailsRepositoryImpl @Inject constructor(
             val monthId = date.monthId()
             val newMonthRefs = firestoreRefs.groupMonthRefs(groupId, monthId)
             val newMonth = GroupMonthFire(id = monthId, dateCreated = date)
-            val newMonthMembers = members.map { it.toNewMonthGroupMember() }
+            val newMonthMembers = members.map { it.toNewMonthGroupMemberFire() }
 
             firestore.runBatch { batch ->
                 batch.set(newMonthRefs, newMonth)
@@ -118,7 +118,7 @@ class GroupDetailsRepositoryImpl @Inject constructor(
             R.string.cant_get_month
         }
 
-    private fun GroupMember.toNewMonthGroupMember() = GroupMemberFire(
+    private fun GroupMember.toNewMonthGroupMemberFire() = GroupMemberFire(
         id = id,
         name = name,
         email = email,

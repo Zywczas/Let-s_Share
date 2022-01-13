@@ -13,7 +13,7 @@ interface GroupDetailsRepository {
 
     suspend fun getLastMonth(): GroupMonth?
 
-    fun listenToMonth(monthId: String): Flow<GroupMonth>
+    suspend fun listenToMonth(monthId: String): Flow<GroupMonth>
 
     suspend fun getMembers(monthId: String): List<GroupMember>?
 
