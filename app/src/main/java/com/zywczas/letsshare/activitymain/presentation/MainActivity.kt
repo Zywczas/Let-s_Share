@@ -11,8 +11,8 @@ import androidx.navigation.fragment.NavHostFragment
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.SessionManager
 import com.zywczas.letsshare.di.factories.UniversalFragmentFactory
-import com.zywczas.letsshare.utils.EXPENSE_CHANNEL_ID
-import com.zywczas.letsshare.utils.IS_FROM_EXPENSE_NOTIFY_KEY
+import com.zywczas.letsshare.services.ChannelIds
+import com.zywczas.letsshare.services.MessagingService
 import dagger.android.AndroidInjection
 import javax.inject.Inject
 
@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun goToGroupsFragment(navController: NavController){
-        val isActivityOpenedFromExpenseNotification = intent.getBooleanExtra(IS_FROM_EXPENSE_NOTIFY_KEY, false)
+        val isActivityOpenedFromExpenseNotification = intent.getBooleanExtra(MessagingService.KEY_IS_FROM_EXPENSE_NOTIFY, false)
         if (isActivityOpenedFromExpenseNotification){
             navController.navigate(R.id.groupsFragment)
         }
@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
             val name = getString(R.string.new_expense)
             val descriptionText = getString(R.string.new_expense_notification_info)
             val importance = NotificationManager.IMPORTANCE_HIGH
-            val channel = NotificationChannel(EXPENSE_CHANNEL_ID, name, importance).apply {
+            val channel = NotificationChannel(ChannelIds.EXPENSE, name, importance).apply {
                 description = descriptionText
             }
             val notificationManager: NotificationManager =

@@ -30,12 +30,15 @@ import com.zywczas.letsshare.extentions.getColorFromAttr
 import com.zywczas.letsshare.extentions.showSnackbar
 import com.zywczas.letsshare.models.Expense
 import com.zywczas.letsshare.models.GroupMember
-import com.zywczas.letsshare.utils.GROUP_NAME_KEY
 import com.zywczas.letsshare.utils.autoRelease
 import javax.inject.Inject
 
 class GroupDetailsFragment @Inject constructor(viewModelFactory: UniversalViewModelFactory) :
     Fragment(), ItemTouchCallback, SimpleSwipeCallback.ItemSwipeCallback {
+
+    companion object {
+        const val KEY_GROUP_NAME = "KEY_GROUP_NAME"
+    }
 
     private val viewModel: GroupDetailsViewModel by viewModels { viewModelFactory }
     private var binding: FragmentGroupDetailsBinding by autoRelease()
@@ -148,7 +151,7 @@ class GroupDetailsFragment @Inject constructor(viewModelFactory: UniversalViewMo
     }
 
     private fun showAddExpenseDialog(){
-        val bundle = Bundle().apply { putString(GROUP_NAME_KEY, args.group.name) }
+        val bundle = Bundle().apply { putString(KEY_GROUP_NAME, args.group.name) }
         AddExpenseDialog().apply { arguments = bundle }.show(childFragmentManager, "AddExpenseDialog")
     }
 

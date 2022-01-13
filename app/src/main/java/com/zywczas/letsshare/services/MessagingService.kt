@@ -14,12 +14,14 @@ import com.zywczas.letsshare.R
 import com.zywczas.letsshare.SessionManager
 import com.zywczas.letsshare.activitymain.presentation.MainActivity
 import com.zywczas.letsshare.extentions.getColorFromAttr
-import com.zywczas.letsshare.utils.EXPENSE_CHANNEL_ID
-import com.zywczas.letsshare.utils.IS_FROM_EXPENSE_NOTIFY_KEY
 import dagger.android.AndroidInjection
 import javax.inject.Inject
 
 class MessagingService : FirebaseMessagingService() {
+
+    companion object {
+        const val KEY_IS_FROM_EXPENSE_NOTIFY = "KEY_IS_FROM_EXPENSE_NOTIFY"
+    }
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -45,11 +47,11 @@ class MessagingService : FirebaseMessagingService() {
     private fun sendBroadcastNotification(title : String, message : String){
         val notifyIntent = Intent(this, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            putExtra(IS_FROM_EXPENSE_NOTIFY_KEY, true)
+            putExtra(KEY_IS_FROM_EXPENSE_NOTIFY, true)
         }
         val notifyPendingIntent = PendingIntent.getActivity(this, 0, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT)
 
-        val builder = NotificationCompat.Builder(this, EXPENSE_CHANNEL_ID)
+        val builder = NotificationCompat.Builder(this, ChannelIds.EXPENSE)
             .setSmallIcon(R.mipmap.ic_launcher_round)
             .setColor(getColorFromAttr(R.attr.colorPrimary))
             .setLargeIcon(ContextCompat.getDrawable(this, R.mipmap.ic_launcher_round)!!.toBitmap())

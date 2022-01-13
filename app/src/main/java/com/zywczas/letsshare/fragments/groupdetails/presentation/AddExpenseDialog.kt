@@ -8,14 +8,13 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.databinding.DialogAddExpenseBinding
-import com.zywczas.letsshare.utils.GROUP_NAME_KEY
 import com.zywczas.letsshare.utils.autoRelease
 
 class AddExpenseDialog : DialogFragment() {
 
     private val viewModel: GroupDetailsViewModel by viewModels({ requireParentFragment() })
     private var binding: DialogAddExpenseBinding by autoRelease()
-    private val groupName by lazy { requireArguments().getString(GROUP_NAME_KEY)!! }
+    private val groupName by lazy { requireArguments().getString(GroupDetailsFragment.KEY_GROUP_NAME, "") }
 
     override fun onCreateView(
         inflater: LayoutInflater,
