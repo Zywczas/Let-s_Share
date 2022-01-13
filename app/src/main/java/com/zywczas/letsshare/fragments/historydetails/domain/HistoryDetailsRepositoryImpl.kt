@@ -3,7 +3,7 @@ package com.zywczas.letsshare.fragments.historydetails.domain
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.toObjects
 import com.zywczas.letsshare.R
-import com.zywczas.letsshare.activitymain.domain.toDomain
+import com.zywczas.letsshare.models.toDomain
 import com.zywczas.letsshare.extentions.logD
 import com.zywczas.letsshare.models.firestore.ExpenseFire
 import com.zywczas.letsshare.models.Expense

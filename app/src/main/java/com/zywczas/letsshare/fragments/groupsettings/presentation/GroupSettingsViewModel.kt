@@ -3,12 +3,12 @@ package com.zywczas.letsshare.fragments.groupsettings.presentation
 import androidx.lifecycle.*
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.SessionManager
-import com.zywczas.letsshare.activitymain.presentation.BaseViewModel
+import com.zywczas.letsshare.fragments.BaseViewModel
 import com.zywczas.letsshare.di.modules.DispatchersModule.*
 import com.zywczas.letsshare.fragments.groupsettings.domain.GroupSettingsRepository
 import com.zywczas.letsshare.models.Friend
 import com.zywczas.letsshare.models.GroupMember
-import com.zywczas.letsshare.models.GroupMonthDomain
+import com.zywczas.letsshare.models.GroupMonth
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 import java.math.BigDecimal
@@ -30,7 +30,7 @@ class GroupSettingsViewModel @Inject constructor(
     private val _goToGroupsListFragment = MutableLiveData<Boolean>()
     val goToGroupsListFragment: LiveData<Boolean> = _goToGroupsListFragment
 
-    private var month = GroupMonthDomain()
+    private var month = GroupMonth()
 
     val totalPercentage: LiveData<String> = Transformations.switchMap(members){ members ->
         liveData(dispatchersIO){
@@ -43,7 +43,7 @@ class GroupSettingsViewModel @Inject constructor(
     private val _areSettingsChanged = MutableLiveData<Boolean>()
     val areSettingsChanged: LiveData<Boolean> = _areSettingsChanged
 
-    fun getMonthSettings(month: GroupMonthDomain){
+    fun getMonthSettings(month: GroupMonth){
         viewModelScope.launch(dispatchersIO){
             this@GroupSettingsViewModel.month = month
             getMembers()

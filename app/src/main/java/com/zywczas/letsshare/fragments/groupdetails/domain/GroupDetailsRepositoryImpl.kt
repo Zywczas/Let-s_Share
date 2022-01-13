@@ -5,7 +5,7 @@ import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.firestore.ktx.toObjects
 import com.zywczas.letsshare.R
-import com.zywczas.letsshare.activitymain.domain.toDomain
+import com.zywczas.letsshare.models.toDomain
 import com.zywczas.letsshare.db.UserDao
 import com.zywczas.letsshare.extentions.dateInPoland
 import com.zywczas.letsshare.extentions.logD
@@ -41,12 +41,12 @@ class GroupDetailsRepositoryImpl @Inject constructor(
 
     override suspend fun getUser(): UserLocal = userDao.getUser()
 
-    override suspend fun getLastMonth(): GroupMonthDomain? =
+    override suspend fun getLastMonth(): GroupMonth? =
         try {
             firestoreRefs.collectionGroupMonthsRefs(groupId)
                 .orderBy(firestoreRefs.dateCreatedField, Query.Direction.DESCENDING)
                 .get().await().toObjects<GroupMonthFire>()
-                .takeIf { it.isNotEmpty() }?.first()?.toDomain() ?: GroupMonthDomain()
+                .takeIf { it.isNotEmpty() }?.first()?.toDomain() ?: GroupMonth()
         } catch (e: Exception) {
             crashlyticsWrapper.sendExceptionToFirebase(e)
             logD(e)
@@ -54,7 +54,7 @@ class GroupDetailsRepositoryImpl @Inject constructor(
         }
 
     @ExperimentalCoroutinesApi
-    override fun listenToMonth(monthId: String): Flow<GroupMonthDomain> = callbackFlow {
+    override fun listenToMonth(monthId: String): Flow<GroupMonth> = callbackFlow {
         val listener = firestoreRefs.groupMonthRefs(groupId, monthId)
             .addSnapshotListener { snapshot, error ->
                 if (error != null) {

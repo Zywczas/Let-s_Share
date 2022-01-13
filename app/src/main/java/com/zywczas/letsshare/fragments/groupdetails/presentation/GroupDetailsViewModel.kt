@@ -3,14 +3,14 @@ package com.zywczas.letsshare.fragments.groupdetails.presentation
 import androidx.lifecycle.*
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.SessionManager
-import com.zywczas.letsshare.activitymain.domain.withBalance
-import com.zywczas.letsshare.activitymain.presentation.BaseViewModel
+import com.zywczas.letsshare.models.withBalance
+import com.zywczas.letsshare.fragments.BaseViewModel
 import com.zywczas.letsshare.di.modules.DispatchersModule.DispatchersIO
 import com.zywczas.letsshare.fragments.groupdetails.domain.GroupDetailsRepository
 import com.zywczas.letsshare.models.Expense
 import com.zywczas.letsshare.models.ExpenseNotification
 import com.zywczas.letsshare.models.GroupMember
-import com.zywczas.letsshare.models.GroupMonthDomain
+import com.zywczas.letsshare.models.GroupMonth
 import com.zywczas.letsshare.utils.wrappers.DateUtil
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.channels.Channel
@@ -28,8 +28,8 @@ class GroupDetailsViewModel @Inject constructor(
     private val dateUtil: DateUtil
 ) : BaseViewModel() {
 
-    private val _currentMonth = MutableLiveData<GroupMonthDomain>()
-    val currentMonth: LiveData<GroupMonthDomain> = _currentMonth
+    private val _currentMonth = MutableLiveData<GroupMonth>()
+    val currentMonth: LiveData<GroupMonth> = _currentMonth
 
     private val _isMembersProgressBarVisible = MutableLiveData<Boolean>()
     val isMembersProgressBarVisible: LiveData<Boolean> = _isMembersProgressBarVisible

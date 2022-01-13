@@ -5,7 +5,7 @@ import kotlinx.parcelize.Parcelize
 import java.math.BigDecimal
 
 @Parcelize
-data class GroupMonthDomain (
+data class GroupMonth (
     val id: String = "",
     val totalExpenses: BigDecimal = BigDecimal.ZERO,
     val isSettledUp: Boolean = false

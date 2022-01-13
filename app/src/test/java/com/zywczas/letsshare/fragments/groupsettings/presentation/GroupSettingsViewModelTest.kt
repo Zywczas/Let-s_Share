@@ -7,7 +7,7 @@ import com.zywczas.letsshare.SessionManager
 import com.zywczas.letsshare.fragments.groupsettings.domain.GroupSettingsRepository
 import com.zywczas.letsshare.mockdata.GroupMemberDomainMocks
 import com.zywczas.letsshare.models.Friend
-import com.zywczas.letsshare.models.GroupMonthDomain
+import com.zywczas.letsshare.models.GroupMonth
 import com.zywczas.letsshare.testrules.TestCoroutineRule
 import com.zywczas.letsshare.utils.LiveDataTestUtil
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -38,7 +38,7 @@ class GroupSettingsViewModelTest {
 
     @Test
     fun getMonthSettings_shouldGetTotalPercentage() = coroutineTest.runBlockingTest {
-        tested.getMonthSettings(GroupMonthDomain("2021-03"))
+        tested.getMonthSettings(GroupMonth("2021-03"))
         val actual = LiveDataTestUtil.getValue(tested.totalPercentage)
 
         verify(repository).getMembers("2021-03")
@@ -50,7 +50,7 @@ class GroupSettingsViewModelTest {
         val expected = listOf(groupMemberDomainMocks.groupMemberDomain1, groupMemberDomainMocks.groupMemberDomain2)
 
 
-        tested.getMonthSettings(GroupMonthDomain("3.21"))
+        tested.getMonthSettings(GroupMonth("3.21"))
         val actual = LiveDataTestUtil.getValue(tested.members)
 
         assertThat(actual).isEqualTo(expected)
@@ -60,7 +60,7 @@ class GroupSettingsViewModelTest {
     fun getMonthSettings_shouldGetMessage() = coroutineTest.runBlockingTest {
         whenever(repository.getMembers(any())).thenReturn(null)
 
-        tested.getMonthSettings(GroupMonthDomain("3.21"))
+        tested.getMonthSettings(GroupMonth("3.21"))
         val actual = LiveDataTestUtil.getValue(tested.message)
 
         assertThat(actual).isEqualTo(R.string.cant_get_group_members)
@@ -85,7 +85,7 @@ class GroupSettingsViewModelTest {
         whenever(repository.isFriendIn5GroupsAlready(any())).thenReturn(false)
         whenever(repository.addMemberIfBelow7PeopleInGroup(any(), any())).thenReturn(null)
 
-        tested.getMonthSettings(GroupMonthDomain(isSettledUp = false))
+        tested.getMonthSettings(GroupMonth(isSettledUp = false))
         tested.addNewMember(newFriend)
         val actual = LiveDataTestUtil.getValue(tested.members)
 
@@ -100,7 +100,7 @@ class GroupSettingsViewModelTest {
         whenever(repository.isFriendIn5GroupsAlready(any())).thenReturn(false)
         whenever(repository.addMemberIfBelow7PeopleInGroup(any(), any())).thenReturn(null)
 
-        tested.getMonthSettings(GroupMonthDomain(isSettledUp = false))
+        tested.getMonthSettings(GroupMonth(isSettledUp = false))
         tested.addNewMember(Friend())
         val actual = LiveDataTestUtil.getValue(tested.areSettingsChanged)
 
@@ -113,7 +113,7 @@ class GroupSettingsViewModelTest {
         whenever(repository.isFriendIn5GroupsAlready(any())).thenReturn(false)
         whenever(repository.addMemberIfBelow7PeopleInGroup(any(), any())).thenReturn(expected)
 
-        tested.getMonthSettings(GroupMonthDomain(isSettledUp = false))
+        tested.getMonthSettings(GroupMonth(isSettledUp = false))
         tested.addNewMember(Friend())
         val actual = LiveDataTestUtil.getValue(tested.message)
 
@@ -124,7 +124,7 @@ class GroupSettingsViewModelTest {
     fun addNewMember_shouldGetMessage_whenIsFriendIn5GroupsAlreadyIsNull() = coroutineTest.runBlockingTest {
         whenever(repository.isFriendIn5GroupsAlready(any())).thenReturn(null)
 
-        tested.getMonthSettings(GroupMonthDomain(isSettledUp = false))
+        tested.getMonthSettings(GroupMonth(isSettledUp = false))
         tested.addNewMember(Friend())
         val actual = LiveDataTestUtil.getValue(tested.message)
 
@@ -135,7 +135,7 @@ class GroupSettingsViewModelTest {
     fun addNewMember_shouldGetMessage_whenIsFriendIn5GroupsAlreadyIsTrue() = coroutineTest.runBlockingTest {
         whenever(repository.isFriendIn5GroupsAlready(any())).thenReturn(true)
 
-        tested.getMonthSettings(GroupMonthDomain(isSettledUp = false))
+        tested.getMonthSettings(GroupMonth(isSettledUp = false))
         tested.addNewMember(Friend())
         val actual = LiveDataTestUtil.getValue(tested.message)
 
@@ -144,7 +144,7 @@ class GroupSettingsViewModelTest {
 
     @Test
     fun addNewMember_shouldGetMessage_whenIsFriendInTheGroupAlreadyIsTrue() = coroutineTest.runBlockingTest {
-        tested.getMonthSettings(GroupMonthDomain(isSettledUp = false))
+        tested.getMonthSettings(GroupMonth(isSettledUp = false))
         tested.addNewMember(Friend(id = "memberId1"))
         val actual = LiveDataTestUtil.getValue(tested.message)
 
@@ -155,7 +155,7 @@ class GroupSettingsViewModelTest {
     fun addNewMember_shouldGetMessage_whenIsFriendInTheGroupAlreadyIsNull() = coroutineTest.runBlockingTest {
         Mockito.reset(repository)
 
-        tested.getMonthSettings(GroupMonthDomain(isSettledUp = false))
+        tested.getMonthSettings(GroupMonth(isSettledUp = false))
         tested.addNewMember(Friend(id = "memberId1"))
         val actual = LiveDataTestUtil.getValue(tested.message)
 
@@ -164,7 +164,7 @@ class GroupSettingsViewModelTest {
 
     @Test
     fun addNewMember_shouldGetMessage_whenMonthIsSettledUp() = coroutineTest.runBlockingTest {
-        tested.getMonthSettings(GroupMonthDomain(isSettledUp = true))
+        tested.getMonthSettings(GroupMonth(isSettledUp = true))
         tested.addNewMember(Friend(id = "memberId1"))
         val actual = LiveDataTestUtil.getValue(tested.message)
 

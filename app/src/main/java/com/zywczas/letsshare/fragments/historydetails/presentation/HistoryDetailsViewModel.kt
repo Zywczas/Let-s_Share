@@ -2,13 +2,13 @@ package com.zywczas.letsshare.fragments.historydetails.presentation
 
 import androidx.lifecycle.*
 import com.zywczas.letsshare.R
-import com.zywczas.letsshare.activitymain.domain.withBalance
-import com.zywczas.letsshare.activitymain.presentation.BaseViewModel
+import com.zywczas.letsshare.models.withBalance
+import com.zywczas.letsshare.fragments.BaseViewModel
 import com.zywczas.letsshare.di.modules.DispatchersModule.DispatchersIO
 import com.zywczas.letsshare.fragments.historydetails.domain.HistoryDetailsRepository
 import com.zywczas.letsshare.models.Expense
 import com.zywczas.letsshare.models.GroupMember
-import com.zywczas.letsshare.models.GroupMonthDomain
+import com.zywczas.letsshare.models.GroupMonth
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -18,8 +18,8 @@ class HistoryDetailsViewModel @Inject constructor(
     private val repository: HistoryDetailsRepository
 ) : BaseViewModel() {
 
-    private val _month = MutableLiveData<GroupMonthDomain>()
-    private val month: LiveData<GroupMonthDomain> = _month
+    private val _month = MutableLiveData<GroupMonth>()
+    private val month: LiveData<GroupMonth> = _month
 
     private val _isMembersProgressBarVisible = MutableLiveData<Boolean>()
     val isMembersProgressBarVisible: LiveData<Boolean> = _isMembersProgressBarVisible
@@ -58,7 +58,7 @@ class HistoryDetailsViewModel @Inject constructor(
         }
     }
 
-    fun getMonthDetails(month: GroupMonthDomain){
+    fun getMonthDetails(month: GroupMonth){
         viewModelScope.launch(dispatchersIO) {
             _month.postValue(month)
         }
@@ -72,7 +72,7 @@ class HistoryDetailsViewModel @Inject constructor(
                     it.isSettledUp -> postMessage(R.string.settled_up_message)
                     else -> {
                         repository.settleUpMonth(it.id)?.let { error -> postMessage(error) }
-                            ?: getMonthDetails(GroupMonthDomain(it.id, it.totalExpenses, isSettledUp = true))
+                            ?: getMonthDetails(GroupMonth(it.id, it.totalExpenses, isSettledUp = true))
                     }
                 }
                 showProgressBar(false)

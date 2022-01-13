@@ -11,18 +11,18 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.extentions.getColorFromAttr
-import com.zywczas.letsshare.models.GroupMonthDomain
+import com.zywczas.letsshare.models.GroupMonth
 import java.util.*
 
 class GroupMonthAdapter(
     private val currency: String,
-    private val onClick: (GroupMonthDomain) -> Unit
-) : ListAdapter<GroupMonthDomain, GroupMonthAdapter.ViewHolder>(object : DiffUtil.ItemCallback<GroupMonthDomain>() {
+    private val onClick: (GroupMonth) -> Unit
+) : ListAdapter<GroupMonth, GroupMonthAdapter.ViewHolder>(object : DiffUtil.ItemCallback<GroupMonth>() {
 
-    override fun areItemsTheSame(oldItem: GroupMonthDomain, newItem: GroupMonthDomain): Boolean =
+    override fun areItemsTheSame(oldItem: GroupMonth, newItem: GroupMonth): Boolean =
         oldItem.id == newItem.id
 
-    override fun areContentsTheSame(oldItem: GroupMonthDomain, newItem: GroupMonthDomain): Boolean =
+    override fun areContentsTheSame(oldItem: GroupMonth, newItem: GroupMonth): Boolean =
         oldItem.id == newItem.id && oldItem.isSettledUp == newItem.isSettledUp
 }) {
 
@@ -31,7 +31,7 @@ class GroupMonthAdapter(
         private val expenses: TextView = itemView.findViewById(R.id.expenses)
         private val isSettledUp: ImageView = itemView.findViewById(R.id.isSettledUp)
 
-        fun bindMonth(month: GroupMonthDomain) {
+        fun bindMonth(month: GroupMonth) {
             name.text = month.id
             expenses.text = String.format(Locale.UK, "%.2f $currency", month.totalExpenses)
             if (month.isSettledUp){

@@ -145,7 +145,7 @@
         tools:layout="@layout/fragment_group_settings">
         <argument
             android:name="month"
-            app:argType="com.zywczas.letsshare.models.GroupMonthDomain" />
+            app:argType="com.zywczas.letsshare.models.GroupMonth" />
         <action
             android:id="@+id/toGroupsFragment"
             app:destination="@id/groupsFragment"
@@ -215,7 +215,7 @@
             app:argType="com.zywczas.letsshare.models.firestore.GroupFire" />
         <argument
             android:name="groupMonth"
-            app:argType="com.zywczas.letsshare.models.GroupMonthDomain" />
+            app:argType="com.zywczas.letsshare.models.GroupMonth" />
         <action
             android:id="@+id/toGroupSettingsFragment"
             app:enterAnim="@anim/slide_in_right"

@@ -3,7 +3,7 @@ package com.zywczas.letsshare.fragments.groups.presentation
 import androidx.lifecycle.*
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.SessionManager
-import com.zywczas.letsshare.activitymain.presentation.BaseViewModel
+import com.zywczas.letsshare.fragments.BaseViewModel
 import com.zywczas.letsshare.di.modules.DispatchersModule.DispatchersIO
 import com.zywczas.letsshare.fragments.groups.domain.GroupsRepository
 import com.zywczas.letsshare.models.firestore.GroupFire

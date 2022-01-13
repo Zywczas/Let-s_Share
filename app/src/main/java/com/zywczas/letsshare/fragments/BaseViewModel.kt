@@ -1,4 +1,4 @@
-package com.zywczas.letsshare.activitymain.presentation
+package com.zywczas.letsshare.fragments
 
 import androidx.annotation.StringRes
 import androidx.lifecycle.LiveData

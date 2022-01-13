@@ -15,7 +15,7 @@ import com.zywczas.letsshare.fragments.groupdetails.domain.GroupDetailsRepositor
 import com.zywczas.letsshare.fragments.groups.presentation.GroupsFragmentDirections
 import com.zywczas.letsshare.mockdata.GroupMemberDomainMocks
 import com.zywczas.letsshare.models.firestore.GroupFire
-import com.zywczas.letsshare.models.GroupMonthDomain
+import com.zywczas.letsshare.models.GroupMonth
 import com.zywczas.letsshare.testrules.TestCoroutineRule
 import com.zywczas.letsshare.uirobots.GroupDetailsFragmentRobot
 import com.zywczas.letsshare.utils.wrappers.DateUtil
@@ -80,7 +80,7 @@ class GroupDetailsFragmentTest {
 
     @Test
     fun startFragment_shouldGetToolbarTitle() = coroutineTest.runBlockingTest {
-        whenever(repository.getLastMonth()).thenReturn(GroupMonthDomain(id = "2021-05", totalExpenses = BigDecimal("123.45")))
+        whenever(repository.getLastMonth()).thenReturn(GroupMonth(id = "2021-05", totalExpenses = BigDecimal("123.45")))
         whenever(dateUtil.presentMonthId()).thenReturn("2021-05")
 
         launchGroupDetailsFragment()
@@ -90,7 +90,7 @@ class GroupDetailsFragmentTest {
 
     @Test
     fun startFragment_shouldGetMembers() = coroutineTest.runBlockingTest {
-        whenever(repository.getLastMonth()).thenReturn(GroupMonthDomain(id = "2021-05", totalExpenses = BigDecimal("300.00")))
+        whenever(repository.getLastMonth()).thenReturn(GroupMonth(id = "2021-05", totalExpenses = BigDecimal("300.00")))
         whenever(dateUtil.presentMonthId()).thenReturn("2021-05")
         whenever(repository.getMembers(any())).thenReturn(listOf(groupMemberDomainMocks.groupMemberDomain1, groupMemberDomainMocks.groupMemberDomain2))
 
