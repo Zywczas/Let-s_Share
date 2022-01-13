@@ -2,9 +2,9 @@ package com.zywczas.letsshare.fragments.historydetails.presentation
 
 import androidx.lifecycle.*
 import com.zywczas.letsshare.R
-import com.zywczas.letsshare.models.withBalance
-import com.zywczas.letsshare.fragments.BaseViewModel
 import com.zywczas.letsshare.di.modules.DispatchersModule.DispatchersIO
+import com.zywczas.letsshare.fragments.BaseViewModel
+import com.zywczas.letsshare.fragments.groupdetails.presentation.GroupDetailsViewModel.Companion.withBalance
 import com.zywczas.letsshare.fragments.historydetails.domain.HistoryDetailsRepository
 import com.zywczas.letsshare.models.Expense
 import com.zywczas.letsshare.models.GroupMember

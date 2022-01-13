@@ -3,9 +3,8 @@ package com.zywczas.letsshare.fragments.groupdetails.presentation
 import androidx.lifecycle.*
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.SessionManager
-import com.zywczas.letsshare.models.withBalance
-import com.zywczas.letsshare.fragments.BaseViewModel
 import com.zywczas.letsshare.di.modules.DispatchersModule.DispatchersIO
+import com.zywczas.letsshare.fragments.BaseViewModel
 import com.zywczas.letsshare.fragments.groupdetails.domain.GroupDetailsRepository
 import com.zywczas.letsshare.models.Expense
 import com.zywczas.letsshare.models.ExpenseNotification
@@ -27,6 +26,22 @@ class GroupDetailsViewModel @Inject constructor(
     private val sessionManager: SessionManager,
     private val dateUtil: DateUtil
 ) : BaseViewModel() {
+
+    companion object {
+        fun List<GroupMember>.withBalance(groupTotalExpense: BigDecimal): List<GroupMember> {
+            forEach { member ->
+                val whatShouldPay = groupTotalExpense.multiply(member.share).divide(BigDecimal((100)))
+                val balance = whatShouldPay.minus(member.expenses)
+                if (balance > BigDecimal.ZERO) {
+                    member.owesOrOver = R.string.owes
+                } else {
+                    member.owesOrOver = R.string.over
+                }
+                member.difference = balance.setScale(2, BigDecimal.ROUND_HALF_UP).abs()
+            }
+            return this
+        }
+    }
 
     private val _currentMonth = MutableLiveData<GroupMonth>()
     val currentMonth: LiveData<GroupMonth> = _currentMonth
