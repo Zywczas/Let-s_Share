@@ -5,7 +5,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.firestore.ktx.toObjects
 import com.zywczas.letsshare.R
-import com.zywczas.letsshare.models.toDomain
 import com.zywczas.letsshare.db.FriendsDao
 import com.zywczas.letsshare.db.UserDao
 import com.zywczas.letsshare.extentions.logD

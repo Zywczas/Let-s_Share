@@ -14,8 +14,8 @@ import com.zywczas.letsshare.di.factories.UniversalViewModelFactory
 import com.zywczas.letsshare.fragments.groupdetails.domain.GroupDetailsRepository
 import com.zywczas.letsshare.fragments.groups.presentation.GroupsFragmentDirections
 import com.zywczas.letsshare.mockdata.GroupMemberDomainMocks
-import com.zywczas.letsshare.models.firestore.GroupFire
 import com.zywczas.letsshare.models.GroupMonth
+import com.zywczas.letsshare.models.firestore.GroupFire
 import com.zywczas.letsshare.testrules.TestCoroutineRule
 import com.zywczas.letsshare.uirobots.GroupDetailsFragmentRobot
 import com.zywczas.letsshare.utils.wrappers.DateUtil

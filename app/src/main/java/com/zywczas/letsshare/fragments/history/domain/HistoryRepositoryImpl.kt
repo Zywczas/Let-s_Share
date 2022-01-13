@@ -2,10 +2,10 @@ package com.zywczas.letsshare.fragments.history.domain
 
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.toObjects
-import com.zywczas.letsshare.models.toDomain
 import com.zywczas.letsshare.extentions.logD
-import com.zywczas.letsshare.models.firestore.GroupMonthFire
 import com.zywczas.letsshare.models.GroupMonth
+import com.zywczas.letsshare.models.firestore.GroupMonthFire
+import com.zywczas.letsshare.models.toDomain
 import com.zywczas.letsshare.utils.wrappers.CrashlyticsWrapper
 import com.zywczas.letsshare.utils.wrappers.DateUtil
 import com.zywczas.letsshare.utils.wrappers.FirestoreReferences

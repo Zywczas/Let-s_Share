@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.zywczas.letsshare.SessionManager
-import com.zywczas.letsshare.fragments.BaseViewModel
 import com.zywczas.letsshare.di.modules.DispatchersModule.DispatchersIO
+import com.zywczas.letsshare.fragments.BaseViewModel
 import com.zywczas.letsshare.fragments.settings.domain.SettingsRepository
 import com.zywczas.letsshare.models.local.UserLocal
 import kotlinx.coroutines.CoroutineDispatcher
