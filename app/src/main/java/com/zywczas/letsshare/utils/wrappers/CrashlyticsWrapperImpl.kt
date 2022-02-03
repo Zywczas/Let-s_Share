@@ -2,12 +2,9 @@ package com.zywczas.letsshare.utils.wrappers
 
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.zywczas.letsshare.db.UserDao
-import com.zywczas.letsshare.di.modules.DispatchersModule.DispatchersIO
-import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Inject
 
 class CrashlyticsWrapperImpl @Inject constructor(
-    @DispatchersIO private val dispatchersIO: CoroutineDispatcher,
     private val crashlytics: FirebaseCrashlytics,
     private val userDao: UserDao
 ) : CrashlyticsWrapper {
