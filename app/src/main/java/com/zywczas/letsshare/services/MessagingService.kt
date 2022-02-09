@@ -15,6 +15,10 @@ import com.zywczas.letsshare.SessionManager
 import com.zywczas.letsshare.activitymain.presentation.MainActivity
 import com.zywczas.letsshare.extentions.getColorFromAttr
 import dagger.android.AndroidInjection
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class MessagingService : FirebaseMessagingService() {
@@ -26,6 +30,8 @@ class MessagingService : FirebaseMessagingService() {
     @Inject
     lateinit var sessionManager: SessionManager
 
+    private val scope = CoroutineScope(Dispatchers.IO)
+
     private val ownerNameKey = "ownerName"
     private val groupNameKey = "groupName"
 
@@ -35,23 +41,25 @@ class MessagingService : FirebaseMessagingService() {
     }
 
     override fun onNewToken(token: String) {
-        sessionManager.saveMessagingToken(token)
+        scope.launch {
+            sessionManager.saveMessagingToken(token)
+        }
     }
 
     override fun onMessageReceived(message: RemoteMessage) {
         val expenseOwner = message.data[ownerNameKey]
         val groupName = message.data[groupNameKey]
-        sendBroadcastNotification(getString(R.string.new_expense_notification_title, expenseOwner), getString(R.string.new_expense_notification_message, groupName))
+        sendNewExpenseNotification(getString(R.string.new_expense_notification_title, expenseOwner), getString(R.string.new_expense_notification_message, groupName))
     }
 
-    private fun sendBroadcastNotification(title : String, message : String){
+    private fun sendNewExpenseNotification(title : String, message : String){
         val notifyIntent = Intent(this, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             putExtra(KEY_IS_FROM_EXPENSE_NOTIFY, true)
         }
-        val notifyPendingIntent = PendingIntent.getActivity(this, 0, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val notifyPendingIntent = PendingIntent.getActivity(this, 0, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
 
-        val builder = NotificationCompat.Builder(this, ChannelIds.EXPENSE)
+        val builder = NotificationCompat.Builder(this, ChannelIds.NEW_EXPENSE)
             .setSmallIcon(R.mipmap.ic_launcher_round)
             .setColor(getColorFromAttr(R.attr.colorPrimary))
             .setLargeIcon(ContextCompat.getDrawable(this, R.mipmap.ic_launcher_round)!!.toBitmap())
@@ -64,7 +72,12 @@ class MessagingService : FirebaseMessagingService() {
             .setPriority(NotificationManager.IMPORTANCE_HIGH)
             .setCategory(NotificationCompat.CATEGORY_SOCIAL)
 
-        NotificationManagerCompat.from(this).notify(10001, builder.build())
+        NotificationManagerCompat.from(this).notify(NotificationsIds.NEW_EXPENSE, builder.build())
+    }
+
+    override fun onDestroy() {
+        scope.cancel()
+        super.onDestroy()
     }
 
 }

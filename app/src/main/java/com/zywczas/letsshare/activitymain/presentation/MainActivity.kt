@@ -6,6 +6,7 @@ import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.zywczas.letsshare.R
@@ -14,6 +15,7 @@ import com.zywczas.letsshare.di.factories.UniversalFragmentFactory
 import com.zywczas.letsshare.services.ChannelIds
 import com.zywczas.letsshare.services.MessagingService
 import dagger.android.AndroidInjection
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
@@ -31,7 +33,7 @@ class MainActivity : AppCompatActivity() {
         lifecycle.addObserver(sessionManager)
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainer) as NavHostFragment
         goToGroupsFragment(navHostFragment.navController)
-        sessionManager.wakeUpServer()
+        lifecycleScope.launch { sessionManager.wakeUpServer() }
         createNotificationChannel()
     }
 
@@ -47,11 +49,10 @@ class MainActivity : AppCompatActivity() {
             val name = getString(R.string.new_expense)
             val descriptionText = getString(R.string.new_expense_notification_info)
             val importance = NotificationManager.IMPORTANCE_HIGH
-            val channel = NotificationChannel(ChannelIds.EXPENSE, name, importance).apply {
+            val channel = NotificationChannel(ChannelIds.NEW_EXPENSE, name, importance).apply {
                 description = descriptionText
             }
-            val notificationManager: NotificationManager =
-                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            val notificationManager: NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
         }
     }

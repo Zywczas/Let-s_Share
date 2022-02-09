@@ -14,9 +14,7 @@ import com.zywczas.letsshare.models.ExpenseNotification
 import com.zywczas.letsshare.utils.wrappers.CrashlyticsWrapper
 import com.zywczas.letsshare.utils.wrappers.FirestoreReferences
 import com.zywczas.letsshare.webservices.NotificationService
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -36,13 +34,14 @@ class SessionManagerImpl @Inject constructor(
     private var isConnected = false
     private var isLoggedIn = false
 
-    private val cm  = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    private val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
     private val networkCallback = object : ConnectivityManager.NetworkCallback() {
         override fun onAvailable(network: Network) {
             super.onAvailable(network)
             isConnected = true
         }
+
         override fun onLost(network: Network) {
             super.onLost(network)
             isConnected = false
@@ -62,8 +61,9 @@ class SessionManagerImpl @Inject constructor(
     override suspend fun isNetworkAvailable(): Boolean = isConnected
 
     override suspend fun isUserLoggedIn(): Boolean =
-        if (isLoggedIn) { true }
-        else {
+        if (isLoggedIn) {
+            true
+        } else {
             isLoggedIn = firebaseAuth.currentUser != null && firebaseAuth.currentUser!!.isEmailVerified
             isLoggedIn
         }
@@ -73,36 +73,37 @@ class SessionManagerImpl @Inject constructor(
         isLoggedIn = false
     }
 
-    override fun saveMessagingToken(newToken: String?) {
-        GlobalScope.launch(dispatchersIO){
-            try {
-                val token = newToken ?: messaging.token.await()
-                val user = userDao.getUser()
-                firestoreRefs.userRefs(user.id).update(firestoreRefs.messagingTokenField, token).await()
-            } catch (e: Exception){
-                crashlytics.sendExceptionToFirebase(e)
-                logD(e)
-            }
+    override suspend fun saveMessagingToken(newToken: String?) {
+        try {
+            val token = newToken ?: messaging.token.await()
+            val user = userDao.getUser()
+            firestoreRefs.userRefs(user.id).update(firestoreRefs.messagingTokenField, token).await()
+        } catch (e: Exception) {
+            crashlytics.sendExceptionToFirebase(e)
+            logD(e)
         }
     }
 
-    override fun wakeUpServer() {
-        GlobalScope.launch(dispatchersIO){
+    override suspend fun wakeUpServer() {
+        withContext(dispatchersIO) {
             try {
                 notificationService.wakeUpTheServer()
-            } catch (e: Exception){
+            } catch (e: Exception) {
                 logD("Waking up server: ${e.message}")
             }
         }
     }
 
     override fun sendNotification(notification: ExpenseNotification) {
-        GlobalScope.launch(dispatchersIO){
+        val scope = CoroutineScope(dispatchersIO)
+        scope.launch {
             try {
                 notificationService.sendNotification(notification)
+                scope.cancel()
             } catch (e: Exception){
                 crashlytics.sendExceptionToFirebase(e)
                 logD("'sendNotification' exception: ${e.message}")
+                scope.cancel()
             }
         }
     }
