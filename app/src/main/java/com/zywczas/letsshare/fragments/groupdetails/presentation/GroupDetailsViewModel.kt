@@ -125,7 +125,7 @@ class GroupDetailsViewModel @Inject constructor(
         }
     }
 
-    private suspend fun sendNotification(groupName: String){
+    private suspend fun sendNotification(groupName: String) {
         val user = repository.getUser()
         members.value.takeIf { it.isNullOrEmpty().not() }
             ?.filterNot { it.id == user.id }
@@ -140,7 +140,7 @@ class GroupDetailsViewModel @Inject constructor(
         }
     }
 
-    fun deleteExpense(position: Int){
+    fun deleteExpense(position: Int) {
         viewModelScope.launch(dispatchersIO){
             showProgressBar(true)
             repository.deleteExpense(currentMonth.value!!.id, expenses.value!![position])?.let { error ->
