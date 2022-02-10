@@ -14,7 +14,9 @@ import com.zywczas.letsshare.models.ExpenseNotification
 import com.zywczas.letsshare.utils.wrappers.CrashlyticsWrapper
 import com.zywczas.letsshare.utils.wrappers.FirestoreReferences
 import com.zywczas.letsshare.webservices.NotificationService
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -34,7 +36,7 @@ class SessionManagerImpl @Inject constructor(
     private var isConnected = false
     private var isLoggedIn = false
 
-    private val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    private val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
     private val networkCallback = object : ConnectivityManager.NetworkCallback() {
         override fun onAvailable(network: Network) {
@@ -50,12 +52,12 @@ class SessionManagerImpl @Inject constructor(
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     private fun registerNetworkCallback() {
-        cm.registerDefaultNetworkCallback(networkCallback)
+        connectivityManager.registerDefaultNetworkCallback(networkCallback)
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     private fun unregisterNetworkCallback() {
-        cm.unregisterNetworkCallback(networkCallback)
+        connectivityManager.unregisterNetworkCallback(networkCallback)
     }
 
     override suspend fun isNetworkAvailable(): Boolean = isConnected
@@ -73,19 +75,21 @@ class SessionManagerImpl @Inject constructor(
         isLoggedIn = false
     }
 
-    override suspend fun saveMessagingToken(newToken: String?) {
-        try {
-            val token = newToken ?: messaging.token.await()
-            val user = userDao.getUser()
-            firestoreRefs.userRefs(user.id).update(firestoreRefs.messagingTokenField, token).await()
-        } catch (e: Exception) {
-            crashlytics.sendExceptionToFirebase(e)
-            logD(e)
+    override fun saveMessagingToken(newToken: String?) {
+        GlobalScope.launch(dispatchersIO) {
+            try {
+                val token = newToken ?: messaging.token.await()
+                val user = userDao.getUser()
+                firestoreRefs.userRefs(user.id).update(firestoreRefs.messagingTokenField, token).await()
+            } catch (e: Exception) {
+                crashlytics.sendExceptionToFirebase(e)
+                logD(e)
+            }
         }
     }
 
-    override suspend fun wakeUpServer() {
-        withContext(dispatchersIO) {
+    override fun wakeUpServer() {
+        GlobalScope.launch(dispatchersIO) {
             try {
                 notificationService.wakeUpTheServer()
             } catch (e: Exception) {
@@ -95,15 +99,12 @@ class SessionManagerImpl @Inject constructor(
     }
 
     override fun sendNotification(notification: ExpenseNotification) {
-        val scope = CoroutineScope(dispatchersIO)
-        scope.launch {
+        GlobalScope.launch(dispatchersIO) {
             try {
                 notificationService.sendNotification(notification)
-                scope.cancel()
-            } catch (e: Exception){
+            } catch (e: Exception) {
                 crashlytics.sendExceptionToFirebase(e)
                 logD("'sendNotification' exception: ${e.message}")
-                scope.cancel()
             }
         }
     }

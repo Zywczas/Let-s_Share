@@ -6,8 +6,6 @@ import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
-import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.zywczas.letsshare.R
 import com.zywczas.letsshare.SessionManager
@@ -15,7 +13,6 @@ import com.zywczas.letsshare.di.factories.UniversalFragmentFactory
 import com.zywczas.letsshare.services.ChannelIds
 import com.zywczas.letsshare.services.MessagingService
 import dagger.android.AndroidInjection
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
@@ -31,13 +28,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         lifecycle.addObserver(sessionManager)
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainer) as NavHostFragment
-        goToGroupsFragment(navHostFragment.navController)
-        lifecycleScope.launch { sessionManager.wakeUpServer() }
+        goToGroupsFragment()
+        sessionManager.wakeUpServer()
         createNotificationChannel()
     }
 
-    private fun goToGroupsFragment(navController: NavController){
+    private fun goToGroupsFragment() {
+        val navController = (supportFragmentManager.findFragmentById(R.id.fragmentContainer) as NavHostFragment).navController
         val isActivityOpenedFromExpenseNotification = intent.getBooleanExtra(MessagingService.KEY_IS_FROM_EXPENSE_NOTIFY, false)
         if (isActivityOpenedFromExpenseNotification){
             navController.navigate(R.id.groupsFragment)

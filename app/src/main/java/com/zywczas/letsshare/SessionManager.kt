@@ -11,9 +11,9 @@ interface SessionManager : LifecycleObserver {
 
     suspend fun logout()
 
-    suspend fun saveMessagingToken(newToken: String? = null)
+    fun saveMessagingToken(newToken: String? = null)
 
-    suspend fun wakeUpServer()
+    fun wakeUpServer()
 
     fun sendNotification(notification: ExpenseNotification)
 

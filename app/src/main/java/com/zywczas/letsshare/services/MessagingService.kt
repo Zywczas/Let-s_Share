@@ -15,10 +15,6 @@ import com.zywczas.letsshare.SessionManager
 import com.zywczas.letsshare.activitymain.presentation.MainActivity
 import com.zywczas.letsshare.extentions.getColorFromAttr
 import dagger.android.AndroidInjection
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class MessagingService : FirebaseMessagingService() {
@@ -30,8 +26,6 @@ class MessagingService : FirebaseMessagingService() {
     @Inject
     lateinit var sessionManager: SessionManager
 
-    private val scope = CoroutineScope(Dispatchers.IO)
-
     private val ownerNameKey = "ownerName"
     private val groupNameKey = "groupName"
 
@@ -41,9 +35,7 @@ class MessagingService : FirebaseMessagingService() {
     }
 
     override fun onNewToken(token: String) {
-        scope.launch {
-            sessionManager.saveMessagingToken(token)
-        }
+        sessionManager.saveMessagingToken(token)
     }
 
     override fun onMessageReceived(message: RemoteMessage) {
@@ -73,11 +65,6 @@ class MessagingService : FirebaseMessagingService() {
             .setCategory(NotificationCompat.CATEGORY_SOCIAL)
 
         NotificationManagerCompat.from(this).notify(NotificationsIds.NEW_EXPENSE, builder.build())
-    }
-
-    override fun onDestroy() {
-        scope.cancel()
-        super.onDestroy()
     }
 
 }
