@@ -1,4 +1,4 @@
-package com.zywczas.letsshare.webservices
+package com.zywczas.letsshare.retrofitapi
 
 import com.google.gson.annotations.SerializedName
 

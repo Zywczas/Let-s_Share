@@ -1,4 +1,4 @@
-package com.zywczas.letsshare.webservices
+package com.zywczas.letsshare.retrofitapi
 
 import com.zywczas.letsshare.models.ExpenseNotification
 import retrofit2.Response
@@ -6,7 +6,7 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 
-interface NotificationService {
+interface NotificationRetrofitApi {
 
     /**
      * Simple function to wake up the Heroku server,

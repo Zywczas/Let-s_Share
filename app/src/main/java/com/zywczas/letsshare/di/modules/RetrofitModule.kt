@@ -1,6 +1,6 @@
 package com.zywczas.letsshare.di.modules
 
-import com.zywczas.letsshare.webservices.NotificationService
+import com.zywczas.letsshare.retrofitapi.NotificationRetrofitApi
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -20,6 +20,6 @@ class RetrofitModule {
         .build()
 
     @Provides
-    fun provideNotificationService(retrofit: Retrofit): NotificationService = retrofit.create(NotificationService::class.java)
+    fun provideNotificationRetrofitApi(retrofit: Retrofit): NotificationRetrofitApi = retrofit.create(NotificationRetrofitApi::class.java)
 
 }

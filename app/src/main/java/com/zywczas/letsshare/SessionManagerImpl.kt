@@ -13,7 +13,7 @@ import com.zywczas.letsshare.extentions.logD
 import com.zywczas.letsshare.models.ExpenseNotification
 import com.zywczas.letsshare.utils.wrappers.CrashlyticsWrapper
 import com.zywczas.letsshare.utils.wrappers.FirestoreReferences
-import com.zywczas.letsshare.webservices.NotificationService
+import com.zywczas.letsshare.retrofitapi.NotificationRetrofitApi
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -30,7 +30,7 @@ class SessionManagerImpl @Inject constructor(
     private val firestoreRefs: FirestoreReferences,
     private val crashlytics: CrashlyticsWrapper,
     private val userDao: UserDao,
-    private val notificationService: NotificationService
+    private val notificationRetrofitApi: NotificationRetrofitApi
 ) : SessionManager {
 
     private var isConnected = false
@@ -91,7 +91,7 @@ class SessionManagerImpl @Inject constructor(
     override fun wakeUpServer() {
         GlobalScope.launch(dispatchersIO) {
             try {
-                notificationService.wakeUpTheServer()
+                notificationRetrofitApi.wakeUpTheServer()
             } catch (e: Exception) {
                 logD("Waking up server: ${e.message}")
             }
@@ -101,7 +101,7 @@ class SessionManagerImpl @Inject constructor(
     override fun sendNotification(notification: ExpenseNotification) {
         GlobalScope.launch(dispatchersIO) {
             try {
-                notificationService.sendNotification(notification)
+                notificationRetrofitApi.sendNotification(notification)
             } catch (e: Exception) {
                 crashlytics.sendExceptionToFirebase(e)
                 logD("'sendNotification' exception: ${e.message}")
