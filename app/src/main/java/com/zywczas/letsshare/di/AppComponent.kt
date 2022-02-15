@@ -20,7 +20,7 @@ import javax.inject.Singleton
     ViewModelFactoryModule::class,
     RoomModule::class,
     UtilsModule::class,
-    RetrofitModule::class,
+    NetworkModule::class,
     ServiceBuilderModule::class
 ])
 interface AppComponent : AndroidInjector<BaseApp> {
